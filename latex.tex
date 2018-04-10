@@ -1,0 +1,52 @@
+\documentclass[a4paper,12pt,italian]{report}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{appendix}
+\usepackage{amscd}
+\usepackage{subfig}
+\usepackage{cite}
+\usepackage[autostyle,italian=guillemets]{csquotes}
+\usepackage{bm}
+%\usepackage{vmargin}
+\usepackage[Glenn]{fncychap}%Conny
+\ChRuleWidth{0.5pt}
+\usepackage{braket}
+\usepackage{booktabs}
+
+
+\DeclareMathOperator{\sen}{sin}
+
+\begin{document}
+
+\begin{titlepage}
+\title{Tesi}
+\maketitle  
+\thispagestyle{empty}
+  \begin{center}
+      \noindent\begin{minipage}{0.4\textwidth}%
+%      \includegraphics[width=1.\textwidth]{eb}%
+    \end{minipage}
+  \end{center}
+
+\end{titlepage}
+
+\tableofcontents
+
+\include{Introduzione}
+\include{parte1}
+\include{parte2}
+\include{conclusioni}
+
+
+\begin{thebibliography}{1}
+
+\bibitem{} .
+
+\end{thebibliography}
+
+
+\end{document}
