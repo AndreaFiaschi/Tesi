@@ -1,10 +1,14 @@
 # Tesi
-Istruzioni GitHub per fare il merge da remoto:
+-Istruzioni per clonare la tesi
 
-git add *.tex
+$ git clone https://github.com/AndreaFiaschi/Tesi.git
 
-git commit -m 'commento'
+-Istruzioni GitHub per fare il merge da remoto:
 
-git pull
+$ git add *.tex
 
-git push
+$ git commit -m 'commento'
+
+$ git pull
+
+$ git push
