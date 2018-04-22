@@ -16,23 +16,31 @@
 \ChRuleWidth{0.5pt}
 \usepackage{braket}
 \usepackage{booktabs}
+\usepackage{afterpage}
 
 
 \DeclareMathOperator{\sen}{sin}
 
 \begin{document}
+\include{titlepage}
+%\begin{titlepage}
+%\title{Tesi}
+%\maketitle  
+%\thispagestyle{empty}
+%  \begin{center}
+%      \noindent\begin{minipage}{0.4\textwidth}%
+%%      \includegraphics[width=1.\textwidth]{eb}%
+%    \end{minipage}
+%  \end{center}
+%
+%\end{titlepage}
 
-\begin{titlepage}
-\title{Tesi}
-\maketitle  
+
+
+\clearpage
+\null
 \thispagestyle{empty}
-  \begin{center}
-      \noindent\begin{minipage}{0.4\textwidth}%
-%      \includegraphics[width=1.\textwidth]{eb}%
-    \end{minipage}
-  \end{center}
-
-\end{titlepage}
+\clearpage
 
 \tableofcontents
 
@@ -40,13 +48,7 @@
 \include{parte1}
 \include{parte2}
 \include{conclusioni}
-
-
-\begin{thebibliography}{1}
-
-\bibitem{} .
-
-\end{thebibliography}
+\include{biblio}
 
 
 \end{document}

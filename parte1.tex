@@ -1,7 +1,7 @@
-\chapter{Serial Powering}
-L'alimentazione seriale dei moduli è una tra i candidati come sistema di distribuzione dell'alimentazione in grado di rispettare i requisiti per un rivelatore a pixel di fase due. 
+\chapter{Alimentazione seriale}
+L'alimentazione seriale dei moduli è il candidato scelto come sistema di distribuzione dell'alimentazione in grado di rispettare i requisiti per un rivelatore a pixel di fase due. 
 I chip utilizzati saranno fabbricati in tecnologia CMOS a 65 nm e richiederanno livelli di corrente elevati, fino anche a 2A, al fine di funzionare correttamente nonostante l'alto numero di pixel (canali da leggere) e l'alto rate di eventi.
-Inoltre gli alti livelli di radiazione e del campo magnetico insieme al bisogno di minimizzare il più possibile  l'interazione delle particelle con spessori morti scoraggiano l'utilizzo di convertitori DC-DC all'interno del volume del tracciatore. Una soluzione potrebbe essere l'utilizzo di un sistema di alimentazione seriale. 
+Inoltre gli alti livelli di radiazione e del campo magnetico insieme al bisogno di minimizzare il più possibile  l'interazione delle particelle con spessori morti scoraggiano l'utilizzo di convertitori DC-DC all'interno del volume del tracciatore. La soluzione scelta richiede l'utilizzo di un sistema di alimentazione seriale. 
 
 \section{Caratteristiche dell'alimentazione seriale}
 In un sistema di alimentazione seriale il generatore alimenta una catena di moduli, mentre nella classica alimentazione in parallelo la tensione di alimentazione è comune a tutti i moduli ed in ciascuno scorre una corrente diversa.
@@ -33,7 +33,9 @@ Inoltre in questo modo le fluttuazioni di tensione dei vari elementi influiscono
 %lo schema consiste in due loop di controllo accoppiati, il primo fa si che il transistor M4 faccia passare tutta la corrente che non è consumata dal carico attivo. Mentre un voltage regulator (A1+M1) assicura che il carico attivo (nel nostro caso RD53A) sia alimentato con una tensione costante, indipendentemente dalla corrente consumata e indipendentemente dalla correte che viene immessa nella catena seriale.
 % 
 Caratteristica importante dello ShuntLDO è che esternamente è visto come una resistenza efficace $R_{eff}$, in serie ad un offset di tensione $V_{offset}$, mentre il carico attivo, nel nostro caso il chip, non è visibile e dunque non lo sono nemmeno le sue le sue variazioni. 
-Questa comportamento resistivo permette l'utilizzo di più SLDO in parallelo tra cui la corrente si suddivide in modo ben preciso, definito dalla resistenza effettiva di ciascun SLDO. Il valore resistivo può essere configurato con una resistenza esterna, consentendo così di definire in che modo la corrente si spartisce nel parallelo di più elementi, ad esempio nel chipRD53A, che verrà trattato nei capitoli seguenti, ci sono due regioni alimentate separatamente da due ShuntLDO, una zona analogica ed una digitale. Esternamente sarà dunque visibile il parallelo tra i due SLDO. Come si può vedere in figura \ref{VVC} I valori di $R_{eff}$ e $V_{offset}$ sono scelti andando a considerare i due punti di lavoro estremi. La tensione minima necessaria al regolatore (all'incirca $1.4V$) deve essere raggiunta con la minima corrente di lavoro, che è data dai consumi del chip. Naturalmente per garantire un corretto funzionamento è necessario fornire un certo margine di corrente in eccesso, vedi figura \ref{SLDOprinciple}. 
+Questa comportamento resistivo permette l'utilizzo di più SLDO in parallelo tra cui la corrente si suddivide in modo ben preciso, definito dalla resistenza effettiva di ciascun SLDO. 
+Il valore resistivo può essere configurato con una resistenza esterna, consentendo così di definire in che modo la corrente si spartisce nel parallelo di più elementi, ad esempio nel chipRD53A, che verrà trattato nei capitoli seguenti, ci sono due regioni alimentate separatamente da due ShuntLDO, una zona analogica ed una digitale. Esternamente sarà dunque visibile il parallelo tra i due SLDO. 
+Come si può vedere in figura \ref{VVC} I valori di $R_{eff}$ e $V_{offset}$ sono scelti andando a considerare i due punti di lavoro estremi. La tensione minima necessaria al regolatore (all'incirca $1.4V$) deve essere raggiunta con la minima corrente di lavoro, che è data dai consumi del chip. Naturalmente per garantire un corretto funzionamento è necessario fornire un certo margine di corrente in eccesso, vedi figura \ref{SLDOprinciple}. 
 \begin{figure}
 \centering
 \includegraphics[scale=.5]{Immagini/ShuntRegulatorPrinciple}
@@ -275,6 +277,9 @@ Una tensione di offset alta consente di raggiungere il punto di lavoro prima, ci
 \label{VoutVsVoffset}
 \end{figure}
 
+Andando a misurare $V_{in}$ al variare della corrente in ingresso è possibile ricavare, con un fit lineare nella regione di funzionamento del circuito, l'intercetta con l'asse y che corrisponde all'offset. 
+Questi valori sono riportati nella tabella seguente:
+
 \begin{figure}
 \centering
 \includegraphics[scale=.4]{Immagini/VinVsVoffset}
@@ -294,6 +299,8 @@ Offset 0.4 V & Offset 0.6 V & Offset 0.8 V  \\
 \bottomrule
 \end{array}
 \]
+
+Come si può vedere il valore effettivo è sempre leggermente minore. 
 
 \section{Comportamento dinamico}
 
@@ -346,5 +353,6 @@ Va ricordato che lo SLDO è alimentato in corrente con $1.5A$, dunque nel moment
 
 
 Per ciascun valore di $R_{load}$, come detto in precedenza, è stata fatta variare la corrente assorbita dal mosfet $I_{mosfet}$ ed è stato misurato l'effetto di undershoot e overshoot sulle tensioni di $V_{out}$ e $V_{in}$.
- 
+
+\section{}
 

@@ -10,40 +10,126 @@ Questo chip è la base di partenza per arrivare al progetto finale, in cui sarà
 \label{RD53ALayout}
 \end{figure}
 
-%Floorplan
-%RD53A uses a 9 metal layer stack, consisting of 7 thin, 1 thick and 1 ultra-thick metal layers.
-%In addition, the 28K AP layer is also used for power lines distribution. In Fig. 2 and Fig. 3 the
-%layout and functional view of RD53A floorplan are shown. The sensitive area of the chip is placed
-%at the top of the chip and is arranged as a matrix of 192 x 400 pixels of 50 μm × 50 μm. At
-%the top is a row of test pads for debugging purposes, which should be removed in a production
-%chip. The peripheral circuitry is placed at the bottom of the chip and contains all global analog and
-%digital circuitry needed to bias, configure, monitor and readout the chip. The wire bonding pads are
-%organized as a single row at the bottom chip edge and are separated from the first row of bumps by
-%1.7 mm in order to allow for wire bonding after sensor flip-chip (Sec. 4). However, the wire bond
-%pads are also designed compatible with Thru-Silicon Via post processing.
-%The pixel matrix is built up of 8 by 8 pixel cores. The 64 front ends within a core are placed as
-%16 so-called analog islands with 4 fronts ends each, which are embedded in a flat digital synthesized
-%“sea” as shown in Fig. 4. The circuitry around each island is not identical but depends on the
-%placement of gates by the synthesis tool. Prototype tests have shown that, within the digital/analog
-%isolation scheme used, this approach does not introduce any visible systematic differences between
-%islands. Furthermore, a core is small enough that it can be checked with a transistor level analog
-%simulation. In the chip periphery, all the analog building blocks are grouped in a macroblock called
-%Analog Chip Bottom (ACB), which is fully assembled and characterized in an analog environment
-%(Sec. 8). All the building blocks have been previously prototyped, tested and characterized in
-%radiation environment at least up to 500 Mrad TID. The ACB block is surrounded by a synthesized
-%block, called Digital Chip Bottom (DCB), which implements the Input, Output and Configuration
-%digital logic, as described in (Sec. 7) and (Sec. 9).
-\section{Single Chip Card}
+L'area del chip che sarà bondata al sensore è posta nella parte alta ed è organizzata secondo una matrice di 192 x 400 pixel di area 50 $\mu$m x 50 $\mu$m, sopra a questa è presente una fila di pad utilizzate per debug, questa sarà eliminata nella versione finale. La parte di circuito necessaria per configurare monitorare e leggere il chip è posta nella parte bassa, sotto cui è posta una fila di pad per i wire-bond. 
+La matrice di pixel è organizzata in \textit{cores} di 8 x 8 pixel, all'interno i 64 front end sono disposti in gruppi di 4, chiamati isole analogiche. 
+Queste isole sono circondate da un "mare" digitale, il circuito introno ad ogni isola è differente. 
+Nelle parti più esterne del chip tutti i blocchi analogici sono raggruppati in macro blocchi chiamati Analog Chip Bottom (ACB). Il blocco ACB è circondato dal blocco Digital Chip Bottom (DCB) che implementa la logica digitale per Input, Output e configurazione.
 
-\section{Misure con chip}
+\section{SLDO}
+In RD53A la parte di SLDO differisceda quella presente sulla PCB di test, in particolare la tensione di offset è generata con un circuito diverso, vedi figura \ref{SLDO_RD53A}. Infatti, è possibile applicare al terminale $I_{ofs}$ una resistenza che con la sua caduta di tensione determina il valore di $V_{ofs}$. 
+Questa resistenza va saldata sulla Single Chip Card nell'apposito slot. Il valore di $I_{ofs}$ è 2 $\mu$A, quindi:
+\begin{equation}
+V_{ofs} = 2 \mu m \cdot R_{iofs}
+\end{equation}
+Questa tensione viene raddopiata tramite l'azione dell'anello di reazione di A5, prima di essere mandata ad A4.
+Riepilogando il comportamento della tensione in ingresso sarà:
+\begin{equation}
+V_{in}= 2 \cdot V_{ofs} + \dfrac{R3}{1000} \cdot I_{in}
+\end{equation}
+Nelle misure che sono presentate nelle sezioni sucessive ogni volta che si parlerà di R3 e $V_{ofs}$ interni si farà riferimento ai seguenti valori:
+
+\begin{center}
+\begin{tabular}{lc}
+\hline
+$\mathrm{R3}$ & 620 $\Omega$ \\
+$\mathrm{R_{iofs}}$ & 250 k$\Omega$\\ 
+\hline
+\end{tabular}
+\end{center}
+
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/iv_5x8_12_plt_01}
+\includegraphics[scale=.6]{Immagini/SLDO_RD53A}
 \caption{.}
-\label{iv_5x8_12_plt_01}
+\label{SLDO_RD53A}
+\end{figure}
+
+Per quanto riguarda le tensioni di riferimento, come $V_{ref}$, queste vengono generate all'interno del chip da un circuito dedicato in cui vengono utilizzati bandgap. Il valore di uscita dei bandgap è configurabile, di default ha un valore 16 
+
+\section{Single Chip Card}
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/SLDOmode}
+\caption{Configurazione di default .}
+\label{SLDOmode}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/LDOmodeDefault}
+\caption{Configurazione di default .}
+\label{LDOmodeDefault}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/DirectPowering}
+\caption{Configurazione di default .}
+\label{DirectPowering}
+\end{figure}
+
+\section{Misure Statiche con chip}
+Misure in configurazione SLDO
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/IUI2}
+\caption{.}
+\label{IUI}
+\end{figure}
+causato da una distribuzione non uguale delle correnti nei due SLDO, quando si attiva la parte digitale ha un picco di assorbimento di corrente che causa un drop nella parte analogica. questo perchè benchè le alimentazioni siano separate all'interno del chip ci sono comunque zone di 'dialogo' tra regione analogica e digitale.
+
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=.27]{Immagini/IUISubPlotVofs}
+\caption{.}
+\label{IUISubPlotVofs}
+\end{figure}
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+&Digitale  &Analogica \\ \hline
+$\mathrm{R_{eq}}$ & 0.753 $\Omega$& 0.724 $\Omega$ \\ \hline
+$\mathrm{V_{ofs}}$ & 0.845 V & 0.900 V\\ \hline
+\end{tabular}
+\end{center}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/IDI2}
+\caption{.}
+\label{IDI}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/IUEVref2}
+\caption{.}
+\label{IDEVref}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/IUEViofs2}
+\caption{.}
+\label{IDEViofs}
 \end{figure}
 
 
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/PUI}
+\caption{.}
+\label{PUI}
+\end{figure}
+
+
+
+
+
+\afterpage{\clearpage}
 
 \subsection{LDOvsSLDO}
 
@@ -54,14 +140,38 @@ Questo chip è la base di partenza per arrivare al progetto finale, in cui sarà
 \label{alllin1}
 \end{figure}
 
+%\begin{figure}
+%\centering
+%\includegraphics[scale=.3]{Immagini/}
+%\caption{.}
+%\label{}
+%\end{figure}
 
 \section{Front End}
-\subsubsection{Torino}
-\subsubsection{LBNL}
-\subsubsection{Bonn}
-\section{Sistemi di acquisizione dati}
-\section{Setup}
+Come detto in precedenza RD53A non è il chip finale, ma un prototipo, al cui interno sono presenti tre differenti Front End per la parte anlogica. Si tratta di tre differenti progetti e sono indicati con i nomi: Sincrono, Lineare e Differenziale, vedi figura \ref{FrontEnd}. 
+Questi tre circuiti sono stati progettati da tre differenti gruppi e tra di loro ci sono importanti differenze. Il FE Sincrono sfrutta un sistema di auto-zeroing della linea di base, campionando periodicamente la linea di base invecedi aggiutre la soglia pixel per pixel. 
+Il Lineare implementa un amplificatore lineare all'ingesso del comparatore, il cui compito è confrontare il segnale con una certa soglia. 
+Nel Differenziale è presente uno stadio di guadagno differenziale  all'ingresso del discriminatore e sbilanciando i due canali implementa la soglia..
+Le caratteristiche comuni sono le piazzole per i bump-bond e il layout. Inoltre è comune anche la rete di polarizzazione ed il circuito per iniettare segnali di calibrazione, in modo da poter comparare direttamente le prestazioni. 
+I tre FE condividono l'area del sensore e dato che la matrice è larga 400 pixel ed è suddivisa in core da 8 $\times$ 8 pixel, dunque non è possibile avere una egual area per i tre tipi di FE. Due avranno 17 core e uno solo ne avrà 16. I FE Lineare e Differenziale sono stati posti accanto in quanto hanno funzionalità simili e metterli vicino consente di avere un'area maggiore con una risposta il più uniforme possibile. 
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/FrontEnd}
+\caption{.}
+\label{FrontEnd}
+\end{figure}
 
+\begin{itemize}
+\item \textbf{Torino}
+\item \textbf{LBNL}
+\item \textbf{Bonn}
+\end{itemize}
+
+\section{Sistemi di acquisizione dati}
+
+
+\section{Setup}
+LDO mode
 %3.3 ESD Protection and Safe Wire Bonding
 %
 %%In the bottom pad frame the four power domains (VDDA, VDDD, VDD_CML, and VDD_PLL) are
@@ -85,3 +195,6 @@ Questo chip è la base di partenza per arrivare al progetto finale, in cui sarà
 %order. The top row pads can be left floating, but if wire bonded then start with the GND pads (T2,
 %T51 and T97) followed by the VDD pads (T1, T50 and T96) and then all other pads.
 \section{Scansioni}
+
+
+\section{Sviluppi}
