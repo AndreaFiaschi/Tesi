@@ -35,7 +35,7 @@ Inoltre in questo modo le fluttuazioni di tensione dei vari elementi influiscono
 Caratteristica importante di questo particolare regolatore è che esternamente è visto come una resistenza efficace $R_{eff}$, in serie ad un offset di tensione $V_{offset}$, mentre il carico attivo, nel nostro caso il chip RD53A, non è visibile e dunque non lo sono nemmeno le sue le sue variazioni. 
 Questa comportamento resistivo permette l'utilizzo di più SLDO in parallelo tra cui la corrente si suddivide in modo ben preciso, definito dalla resistenza effettiva di ciascun SLDO. 
 Il valore resistivo può essere configurato con una resistenza esterna, consentendo così di definire in che modo la corrente si spartisce nel parallelo di più elementi, ad esempio in RD53A, che verrà trattato nei capitoli seguenti, ci sono due regioni alimentate separatamente da due ShuntLDO, una zona analogica ed una digitale, questo vuol dire che esternamente sarà visibile il parallelo tra i due SLDO. 
-Come si può vedere in figura \ref{VVC} I valori di $R_{eff}$ e $V_{offset}$ sono scelti andando a considerare i due punti di lavoro estremi. La tensione minima necessaria al per il funzionamento del chip (all'incirca $1.4V$) deve essere raggiunta con la minima corrente di lavoro.. Naturalmente per garantire un corretto funzionamento è necessario fornire un certo margine di corrente in eccesso, questo perché i consumi sono soggetti a fluttuazioni, vedi figura \ref{SLDOprinciple}. 
+Come si può vedere in figura \ref{VVC} I valori di $R_{eff}$ e $V_{offset}$ sono scelti andando a considerare i due punti di lavoro estremi. La tensione minima necessaria al per il funziionamento del chip (all'incirca $1.4V$) deve essere raggiunta con la minima corrente di lavoro.. Naturalmente per garantire un corretto funzionamento è necessario fornire un certo margine di corrente in eccesso, questo perché i consumi sono soggetti a fluttuazioni, vedi figura \ref{SLDOprinciple}. 
 \begin{figure}
 \centering
 \includegraphics[scale=.5]{Immagini/ShuntRegulatorPrinciple}
@@ -59,11 +59,11 @@ Al fine di ridurre il consumo di potenza, la resistenza effettiva dello SLDO pu�
 \end{figure}
 
 L'obiettivo per l'alimentazione è aver una catena di moduli ognuno dei quali ospita quattro chip in parallelo, in figura \ref{MCM} è riportato uno schema con due moduli in serie. 
-Prima di procedere è interessante fare un esempio dei consumi di questo tipo di alimentazione. Prendiamo come modello la situazione in cui si ha un serie di 8 moduli con 4 chip ciascuno, assumiamo che $V_{offset}=0.8V$ e $R_{eff}=0.3 \Omega$ per ciascun chip\footnote{$R_{eff}$ del singolo SLDO è circa 0.600 $\Omega$, nel chip sono presenti due SLDO in parallelo uno per l'alimentazione della parte digitale ed uno per quella analogica. La $R_{eff}$ con cui viene visto il chip è dunque la metà, 0.300 $\Omega$.}. 
+Prima di procedere è interessantefare un esempio dei consumi di questo tipo di alimentazione. Prendiamo come modello la situazione in cui si ha un serie di 8 moduli con 4 chip ciascuno, assumiamo che $V_{offset}=0.8V$ e $R_{eff}=0.3 \Omega$ per ciascun chip\footnote{$R_{eff}$ del singolo SLDO è circa 0.600 $\Omega$, nel chip sono presenti due SLDO in parallelo uno per l'alimentazione della parte digitale ed uno per quella analogica. La $R_{eff}$ con cui viene visto il chip è dunque la metà, 0.300 $\Omega$.}. 
 Con una corrente di $\mathrm{I_{in}=2.0 A}$ per chip\footnote{Che vale a dire 1A per ciascuno dei due SLDO presenti nel chip.} ($\mathrm{I=8.0 A}$ per modulo) si avrà un $\mathrm{V_{modulo}=1.4 V}$, per avere un po' di margine incrementiamo la corrente di un 20$\%$, nei moduli entra quindi una corrente I = 9.6A. 
 
 In questa situazione $V_{modulo}=1.52$V, perciò la caduta di tensione su tutta la catena formata da 8 moduli è di  $12.16V$, inoltre c'è un altro fattore da tenere in considerazione, ed è resistenza dovuta ai cavi, in questo esempio assumiamo valga $\mathrm{2 \Omega}$. 
-La tensione di uscita del generatore è dunque $\mathrm{V=I \cdot 2 \Omega +12.6V=31.8V}$\footnote{Circa il $60 \%$ della potenza è dissipata sui cavi, questo fatto potrebbe sembrare un pessimo traguardo, in realtà è un miglioramento rispetto alla situazione attuale, nella quale l'alimentazione è in parallelo.}. 
+La tensione di uscita del generatore è dunque $\mathrm{V=I \cdot 2 \Omega +12.6V=31.8V}$\footnote{Circa il $60 \%$ della potenza è dissipata sui cavi, questo fatto potrebbe sembrare un pessimo traguardo, in realtà è un miglioramento rispetto alla situazione attuale, nella quale l'alimentazione è in parallello.}. 
 Il generatore sarà limitato in corrente , mentre il limite per la tensione sarà posto leggermente maggiore ad esempio 34 V. 
 In questo modo la potenza che il generatore può erogare è maggiore di quella necessaria per la catena. Vedremo infatti, come questo sia necessario utile nel caso in cui alcuni chip smettano di funzionare. 
 La potenza massima erogabile è dal generatore sarà $\mathrm{34V \cdot 9.6 A = 326.4 W}$, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli si ottiene una potenza per modulo di $17.76 W$. Questo a fronte  di una potenza assorbita, nelle normali condizioni di lavoro, di $\mathrm{W = 4 \cdot W_{chip} = I \cdot V_{modulo} = 14.6}$W per modulo.
@@ -71,7 +71,7 @@ La potenza massima erogabile è dal generatore sarà $\mathrm{34V \cdot 9.6 A = 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/MultiChipModules}
-\caption{Schema di una catena seriale con moduli, ognuno formato da 4 chip. Il chip in rosso si riferisce all'ipotesi di un faure.}
+\caption{Schema di una catena seriale con moduli, ognuno formato da 4 chip. Il chip in rosso si riferisce all'ipotesi di un failure.}
 \label{MCM}
 \end{figure}
 
@@ -80,7 +80,7 @@ Dato che l'alimentazione è in corrente, ciascuno dei tre chip rimanenti dovrà 
 Questo porta ad un aumento della caduta di tensione sul modulo $\mathrm{V_{modulo} = 3.2 A \cdot 0.3 \Omega + 0.8 V = 1.76 V}$, la potenza dissipata su questo modulo sarà $W = 3 \cdot W_{chip} = 3 \cdot I \cdot V_{modulo} = 16.9 W$, un incremento di $2 W$ sul singolo modulo, che corrisponde al $13 \%$. Per la catena di 8 moduli l'incremento è appena di $1.7\%$. 
 Questo causerà anche un lieve aumento della tensione erogata dal generatore, che però rimarrà sotto ai 34 V.\footnote{Come visto alla tensione massima di  34 V il generatore riesce a distribuire una potenza di $17.76$ W per ciascun modulo.} 
 
-All'interno del chip RD53A la gestione dell'alimentazione è assegnata al regolatore SLDO, il cui studio è oggetto di questa tesi, partiamo dunque con il descrivere il circuito partendo dai primi prototipi, fino ad arrivare alla versione attualmente presente in RD53A.
+All'interno del chip RD53A la gestione dell'alimentazione è assegnata al regolatore SLDO, il cui studio è ogetto di questa tesi, partiamo dunque con il descrivere il circuito partendo dai primi prototipi, fino ad arrivare alla versione attualmente presente in RD53A.
 %Lo studio dell'alimentazione seriale parte dunque dalla caratterizzazione dello SLDO. Componente che sarà poi utilizzato all'interno del chip RD53A per la generazione delle tensioni di alimentazione della parte analogica e digitale. .......continuare discorso....
 
 
@@ -204,7 +204,7 @@ Dal momento che l'interesse maggiore è per il prototipo a 2 A questo tipo di mi
 %\caption{.}
 %\label{PCB2A}
 %\end{figure}
-Rispetto a quanto visto in precedenza, nella versione da 2 A è possibile gestire anche l'offset attraverso un potenziometro RP2 che va ad agire sulla tensione in uscita generata dal bandgap, la stessa che viene utilizzata per generare $\mathrm{V_{ref}}$ regolando un secondo potenziometro RP1. 
+Rispetto a quanto visto in precedenza, nella versione da 2 A è possibile gestire anche l'offset attraverso un potenziometro RP2 che va ad agire sulla tensione in uscita generata dal bangap, la stessa che viene utilizzata per generare $\mathrm{V_{ref}}$ regolando un secondo potenziometro RP1. 
 
 \section{Comportamento statico}
 La parte di caratterizzazione statica è di nuovo eseguita andando a variare la corrente di alimentazione in ingresso e al contempo misurando $\mathrm{V_{out}}$, $\mathrm{V_{ref}}$ e $\mathrm{V_{in}}$, figura \ref{SLDO2Astatic}.
@@ -218,7 +218,7 @@ La parte di caratterizzazione statica è di nuovo eseguita andando a variare la 
 
 Questo andamento è stato ottenuto ponendo\footnote{Per selezionare il valore voluto è necessario regolare il potenziometro RP1 che si trova in serie al bandgap sulla PBC.} $\mathrm{V_{ref} = 0.5} V$ e applicando un carico resistivo di 1 $\Omega$ a $\mathrm{V_{out}}$. Il bandgap è alimentato esternamente con una tensione di 5 V. 
 Come si vede dal grafico \ref{SLDO2Astatic} delle IV $\mathrm{V_{ref}}$ non è costante nella parte iniziale, questo può essere dovuto al fatto che nella fase in cui lo shunt LDO non è attivo si ha uno scorrimento di corrente nel ramo di $\mathrm{V_{ref}}$, ciò causa una maggiore caduta di tensione sul potenziometro e quindi una minore tensione all'ingresso di A4. 
-Idealmente, nel ramo di $\mathrm{V_{ref}}$ dovrebbe scorrere una corrente molto piccola in regime di lavoro\footnote{Questo perché nello SLDO il $\mathrm{V_{ref}}$ è in ingresso al comparatore A1 e viene confrontato con una tensione che sarà circa uguale in una situazione di equilibrio. La corrente che scorre tra ingresso + e - sarà piccola, poiché il comparatore in ingresso ha una grossa resistenza.}, mentre al momento dell'accensione, all'ingresso di A1 si ha una notevole differenza tra + e -, e quindi scorrerà una corrente maggiore, questo è causa di una variazione del $\mathrm{V_{ref}}$. Di seguito riportiamo in tabella i valori che si riferiscono al grafico \ref{SLDO2Astatic}: 
+Idealmente, nel ramo di $\mathrm{V_{ref}}$ dovrebbe scorrere una corrente molto piccola in regime di lavoro\footnote{Questo perché nello SLDO il $\mathrm{V_{ref}}$ è in ingresso al comparatore A1 e viene confrontato con una tensione che sarà circa uguale in una situazione di equilibrio. La corrente che scorre tra ingresso + e - sarà piccola, poichè il comparatore in ingresso ha una grossa resistenza.}, mentre al momento dell'accensione, all'ingresso di A1 si ha una notevole differenza tra + e -, e quindi scorrerà una corrente maggiore, questo è causa di una variazione del $\mathrm{V_{ref}}$. Di seguito riportiamo in tabella i valori che si riferiscono al grafico \ref{SLDO2Astatic}: 
 
 \[
 \begin{array}{ccccc}
@@ -236,7 +236,7 @@ V_{ref} & V_{out} & 2 \cdot V_{ref}- V_{out} & R_{eff} & V_{offset} \\
 
 \subsection{Differenze tra GND PCB e GND SLDO}
 Prima di procedere oltre è interessante fare alcune riflessioni per porre attenzione su un aspetto che influenza le misure. 
-Tutte le tensioni misurate, come per esempio il $\mathrm{V_{out}}$, sono eseguite utilizzando pin sulla PCB. Questo vuol dire che, per esempio, quando viene misurato $\mathrm{V_{out}}$ la tensione letta sull'oscilloscopio o attraverso i multimetri è la differenza di tensione tra il pin di $\mathrm{V_{out}}$ sulla PCB e la terra (GND) della medesima. Dal momento che questi punti di misura sono collegati al $\mathrm{V_{out}}$ dello ShuntLDO attraverso wire bond si introduce una resistenza, che causa una caduta di tensione. L'entità di questa caduta di tensione dipende dalla resistenza dei wire bond e dalla corrente, dunque nel caso di una caratterizzazione con carico statico si presenta come un offset, mentre nel caso di carico dinamico varia al variare della corrente. 
+Tutte le tensioni misurate, come per esempio il $\mathrm{V_{out}}$, sono eseguite utilizzando pin sulla PCB. Questo vuol dire che, per esempio, quando viene misurato $\mathrm{V_{out}}$ la tensione letta sull'oscilloscopio o attraverso i multimetri è la differenza di tensione tra il pin di $\mathrm{V_{out}}$ sulla PCB e la terra (GND) della medesima. Dal momento che questi punti di misura sono collegati al $\mathrm{V_{out}}$ dello ShuntLDO attraverso wire bond si introduce una resistenza, che causa una caduta di tensione. L'entità di questa caduta di tensione dipende dalla resitenza dei wire bond e dalla corrente, dunque nel caso di una caratterizzazione con carico statico si presenta come un offset, mentre nel caso di carico dinamico varia al variare della corrente. 
 I wire bond si presentano con tante resistenze in parallelo, perciò il valore di questa resistenza dipende dal numero di wire bond eseguiti. Dunque maggiore sarà il numero di questi ultimi minore sarà il valore della resistenza equivalente e dunque minore sarà l'effetto su $\mathrm{V_{out}}$. Questo problema è riportato schematicamente in figura \ref{Ground}.
 
 \begin{figure}
@@ -342,7 +342,7 @@ In una situazione in cui il carico del regolatore è il chip le variazioni sareb
 Un impulso di breve durata avrebbe il problema di sovrapporre questi due effetti, non permettendo di valutarne l'effettiva entità, in quanto i contributi sono opposti e su tempi brevi si sovrappongono cancellandosi.
 In queste misure l'attenzione sarà focalizzata su variazioni di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$ in ampiezza e sul tempo di recupero al variare di $\mathrm{I_{mosfet}}$ per una data $\mathrm{R_{load}}$.
 
-L'introduzione di questo carico, in parallelo alla resistenza connessa a $\mathrm{V_{out}}$, è possibile posizionando un jumper sul pin P10 della PCB. Già dalle prime misure con l'oscilloscopio è visibile come che l'utilizzo del mosfet come carico dinamico non sia esente da problematiche che vanno ad alterare i segnali, rendendo difficile una corretta interpretazione. 
+L'introduzione di questo carico, in parallelo alla resistenza connessa a $\mathrm{V_{out}}$, è possibile posizionando un jumper sull pin P10 della PCB. Già dalle prime misure con l'oscilloscopio è visibile come che l'utilizzo del mosfet come carico dinamico non sia esente da problematiche che vanno ad alterare i segnali, rendendo difficile una corretta interpretazione. 
 Prendendo a riferimento la figura \ref{TransientTest} si nota innanzitutto un'asimmetria nelle variazioni di $\mathrm{V_{out}}$, posto in basso a sinistra e di colore arancione, mentre in $\mathrm{V_{in}}$, posto in alto a sinistra e di colore giallo, la risposta è simmetrica. In azzurro è riportata la differenza tra le tensioni misurate ai capi di R5, che invece sono riportate in blu e in verde, da cui è possibile calcolare la corrente che scorre tra Drain e Source del mosfet. 
 Inoltre sono visibili delle oscillazioni in corrispondenza del momento in cui il mosfet si spegne e smette di assorbire corrente. Questo comportamento si riflette su $\mathrm{V_{out}}$, ed è quindi all'origine dell'asimmetria. Questo aspetto è stato approfondito prima di procedere a misure della risposta dinamica nelle varie combinazioni $\mathrm{I_{mosfet}}$-$\mathrm{R_{load}}$, al fine di capire a cosa fosse dovuto, sospettando un contributo del mosfet non trascurabile.
 In questa prima fase l'impulso utilizzato ha le seguenti caratteristiche: frequenza 50 Hz, durata 3 $\mu$ s, durata del fronte di salita 40 ns.
@@ -373,7 +373,7 @@ Per esaminare il comportamento del mosfet in risposta all'impulso mandato sul ga
 Come è possibile vedere dalla figura \ref{MosfetBehaviour}, le oscillazioni sono presenti anche una volta isolato il mosfet, segno che sono generate da quest'ultimo nel momento in cui il canale che collega drain e source si interrompe, inoltre il fronte di salita è circa 100 ns e non 40 ns come ci aspetteremmo da un mosfet ideale con risposta istantanea. Andando a esaminare la documentazione del mosfet presente sulla PCB 
 %footnote{ZXMN20B28KTC http://www.mouser.com/ds/2/115/ZXMN20B28K-94822.pdf
 si può verificare che effettivamente il tempo di "accensione" è superiore a 40 ns (Turn-on rise time 76,9 ns) e inoltre sono presenti capacità in ingresso di $\mathrm{358 pF}$. Tutto questo rende impossibile vedere la risposta dello SLDO a segnali più veloci della risposta del mosfet, per questo motivo le misure successive sono state prese impostando un tempo di salita del segnale del generatore di impulsi di 200 ns.
-In figura \ref{RiseTime} è visibile come la situazione precedente, in cui l'impulso ha un tempo di salita di 40 ns, migliora visibilmente passando a 200 ns, in questo modo quello che viene simulato all'uscita dello ShuntLDO è un variazione di carico più lenta ma il cui comportamento è affetto in modo minore dalle caratteristiche del mosfet. 
+In figura \ref{RiseTime} è visibile come la situazione precedente, in cui l'impulso ha un tempo di salita di 40 ns, migliora visibilmente passando a 200 ns, in questo modo quello che viene simulato all'uscita dello ShuntLDO è un variazione di carico più lenta ma il cui comportamento è affetto in modo minore dalle carattesistiche del mosfet. 
 
 \subsubsection{Misure}
 A questo punto si è proceduto con le misure della tensione di ingresso $\mathrm{V_{in}}$ e di uscita $\mathrm{V_{out}}$ per tre differenti valori di $\mathrm{R_{load}}$ al variare di $\mathrm{I_{mosfet}}$. I valori di $\mathrm{R_load}$ scelti sono stati $1 \Omega$, $2.1 \Omega$ e $4 \Omega$, e dato che $\mathrm{V_{out}=1V}$ in termini di correnti  $\mathrm{I_{load}}$ corrispondono rispettivamente 1 A, 0.475 A e 0.250 A. A questo punto per vari valori di $\mathrm{I_{mosfet}}$ sono stati misurate le variazioni in ampiezza e il tempo di recupero di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$.
@@ -383,5 +383,29 @@ Va ricordato che lo SLDO è alimentato in corrente con 1.5 A, dunque nel momento
 
 
 Per ciascun valore di $\mathrm{R_{load}}$, come detto in precedenza, è stata fatta variare la corrente assorbita dal mosfet $\mathrm{I_{mosfet}}$ ed è stato misurato l'effetto di undershoot e overshoot sulle tensioni di $\mathrm{V_{out}}$ e $\mathrm{V_{in}}$.
-
+% Con corrente totale si intende la somma di quella assorbita dal mosfet e dalla resistenza di carico.
+\begin{figure}
+\centering
+\includegraphics[scale=.44]{Immagini/VoutUnd}
+\caption{Grafici che riportano l'entità dell'undershoot del $\mathrm{V_{out}}$ in funzone della corrente totale, grafico di sinistra, e della corrente del mosfet, grafico di destra.}
+\label{VoutUnd}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[scale=.44]{Immagini/VoutOver}
+\caption{Grafici che riportano l'entità dell'overshoot del $\mathrm{V_{out}}$ in funzone della corrente totale, grafico di sinistra, e della corrente del mosfet, grafico di destra.}
+\label{VoutOver}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[scale=.45]{Immagini/VinUnd}
+\caption{Grafici che riportano l'entità dell'undershoot del $\mathrm{V_{in}}$ in funzone della corrente totale, grafico di sinistra, e della corrente del mosfet, grafico di destra.}
+\label{VinUnd}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[scale=.45]{Immagini/VinOver}
+\caption{Grafici che riportano l'entità dell'undershoot del $\mathrm{V_{in}}$ in funzone della corrente totale, grafico di sinistra, e della corrente del mosfet, grafico di destra.}
+\label{VinOver}
+\end{figure}
 
