@@ -16,7 +16,7 @@ Queste isole sono circondate da un "mare" digitale, il circuito introno ad ogni 
 Nelle parti più esterne del chip tutti i blocchi analogici sono raggruppati in macro blocchi chiamati Analog Chip Bottom (ACB). Il blocco ACB è circondato dal blocco Digital Chip Bottom (DCB) che implementa la logica digitale per Input, Output e configurazione.
 
 \section{SLDO}
-In RD53A la parte di SLDO differisceda quella presente sulla PCB di test, in particolare la tensione di offset è generata con un circuito diverso, vedi figura \ref{SLDO_RD53A}. Infatti, è possibile applicare al terminale $I_{ofs}$ una resistenza che con la sua caduta di tensione determina il valore di $V_{ofs}$. 
+In RD53A la parte di SLDO differisce da quella presente sulla PCB di test, in particolare la tensione di offset è generata con un circuito diverso, vedi figura \ref{SLDO_RD53A}. Infatti, è possibile applicare al terminale $I_{ofs}$ una resistenza che con la sua caduta di tensione determina il valore di $V_{ofs}$. 
 Questa resistenza va saldata sulla Single Chip Card nell'apposito slot. Il valore di $I_{ofs}$ è 2 $\mu$A, quindi:
 \begin{equation}
 V_{ofs} = 2 \mu m \cdot R_{iofs}
@@ -76,7 +76,11 @@ Misure in configurazione SLDO
 \caption{.}
 \label{IUI}
 \end{figure}
-causato da una distribuzione non uguale delle correnti nei due SLDO, quando si attiva la parte digitale ha un picco di assorbimento di corrente che causa un drop nella parte analogica. questo perchè benchè le alimentazioni siano separate all'interno del chip ci sono comunque zone di 'dialogo' tra regione analogica e digitale.
+causato da una distribuzione non uguale delle correnti nei due SLDO, quando si attiva la parte digitale ha un picco di assorbimento di corrente che causa un drop nella parte analogica. questo perchè benchè le alimentazioni siano separate all'interno del chip ci sono comunque zone di 'dialogo' tra regione analogica e digitale. 
+La parte digitale si attiva a un valore di $\mathrm{I_{in}}$ di 0.56 A non riuscendo però ad andare a regime, anche perché la tensione in ingresso non è abbastanza alta da consentire un corretto funzionamento. 
+Questo è dovuto al ritardo con cui il $\mathrm{V_{iofs}}$ digitale arriva al valore corretto.
+VINA diminuisce di circa 150 mV mentre VDDA di circa 60 mV.
+Questi problemi sono legati all'accensione infatti spariscono nele momento in cui lo scan è fatto partendo da valori alti di corrente e scendendo.
 
 
 
@@ -125,7 +129,18 @@ $\mathrm{V_{ofs}}$ & 0.845 V & 0.900 V\\ \hline
 \label{PUI}
 \end{figure}
 
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+ & \multicolumn{2}{c|}{Digitale} & \multicolumn{2}{c|}{Analogica} \\ \hline
+ 
+& media & errore & media & errore \\ \hline
 
+$\mathrm{R_{eq}}$ & 0.7441 $\Omega$ & 0.0002 $\Omega$& 0.7396 $\Omega$ & 0.0009 $\Omega$ \\ \hline
+$\mathrm{V_{ofs}}$ & 0.8635 V& 0.003 V & 0.8688 V & 0.0011 V\\ \hline      
+
+\end{tabular}
+\end{center}
 
 
 
