@@ -1,12 +1,12 @@
 \chapter{RD53A}
 
-Il progetto di RD53A è stato approvato nell'autunno del 2015, dopo la revisione da parte delle collaborazioni ATLAS, CMS e RD53A. Nel 2016 è iniziata la progettazione del chip, con RD53A si vuole dimostrare la possibilità di utilizzare tecnologia CMOS  in 65 nm per l'aggiornamento in vista della fase ad alta luminosità di ATLAS e CMS, e quindi la tolleranza al danneggiamneto da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci. 
-RD53A non deve essere inteso come il prodotto finale, infatti possiede molte modifiche di desing utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front-end (FE), già questo causa una non uniformità del chip. 
+Il progetto di RD53A è stato approvato nell'autunno del 2015, dopo la revisione da parte delle collaborazioni ATLAS, CMS e RD53A. Nel 2016 è iniziata la progettazione, con questo nuovo chip si vuole dimostrare la possibilità di utilizzare tecnologia CMOS  in 65 nm per l'aggiornamento in vista della fase ad alta luminosità di ATLAS e CMS, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci. 
+RD53A non deve essere inteso come il prodotto finale, infatti possiede molte modifiche di design utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front-end (FE), già questo causa una non uniformità del chip. 
 Questo chip è la base di partenza per arrivare al progetto finale, in cui sarà scelto uno dei front end e sarà utilizzato uniformemente su tutta la matrice di pixel. In RD53a la matrice di pixel ha 400 colonne e 192 righe, nel progetto finale si avrà un aumento del numero di pixel, infatti il sistema di alimentazione e di contropolarizzazione dei pixel è progettato per un numero di righe massimo pari a 384, figura \ref{RD53ALayout}.
 \begin{figure}
 \centering
 \includegraphics[scale=.4]{Immagini/RD53ALayout}
-\caption{RD53A layout. Il chip è largo 20mm per 400 pixel e l'altezza è 11.8 mmm per 192 pixel.}
+\caption{RD53A layout. Il chip è largo 20mm per 400 pixel e l'altezza è 11.8 mm per 192 pixel.}
 \label{RD53ALayout}
 \end{figure}
 
@@ -19,14 +19,15 @@ Nelle parti più esterne del chip tutti i blocchi analogici sono raggruppati in 
 In RD53A la parte di SLDO differisce da quella presente sulla PCB di test, in particolare la tensione di offset è generata con un circuito diverso, vedi figura \ref{SLDO_RD53A}. Infatti, è possibile applicare al terminale $I_{ofs}$ una resistenza che con la sua caduta di tensione determina il valore di $V_{ofs}$. 
 Questa resistenza va saldata sulla Single Chip Card nell'apposito slot. Il valore di $I_{ofs}$ è 2 $\mu$A, quindi:
 \begin{equation}
-V_{ofs} = 2 \mu m \cdot R_{iofs}
+\label{eq:Vofs}
+V_{ofs} = 2 \mu A \cdot R_{iofs}
 \end{equation}
-Questa tensione viene raddopiata tramite l'azione dell'anello di reazione di A5, prima di essere mandata ad A4.
+Questa tensione viene raddoppiata tramite l'azione dell'anello di reazione di A5, prima di essere mandata ad A4.
 Riepilogando il comportamento della tensione in ingresso sarà:
 \begin{equation}
 V_{in}= 2 \cdot V_{ofs} + \dfrac{R3}{1000} \cdot I_{in}
 \end{equation}
-Nelle misure che sono presentate nelle sezioni sucessive ogni volta che si parlerà di R3 e $V_{ofs}$ interni si farà riferimento ai seguenti valori:
+Nelle misure che sono presentate nelle sezioni successive ogni volta che si parlerà di R3 e $V_{ofs}$ interni si farà riferimento ai seguenti valori:
 
 \begin{center}
 \begin{tabular}{lc}
@@ -36,7 +37,7 @@ $\mathrm{R_{iofs}}$ & 250 k$\Omega$\\
 \hline
 \end{tabular}
 \end{center}
-
+Per quanto detto in precedenza, equazione \ref{eq:Vofs}, una $\mathrm{R_{iofs}}$ di 250 k$\Omega$ corrisponde ad una tensione di offset di circa 0.5 V. Perciò nell'andamento della tensione in ingresso, in funzione della corrente, ci aspettiamo un offset di circa 1 V.
 \begin{figure}
 \centering
 \includegraphics[scale=.6]{Immagini/SLDO_RD53A}
@@ -44,90 +45,82 @@ $\mathrm{R_{iofs}}$ & 250 k$\Omega$\\
 \label{SLDO_RD53A}
 \end{figure}
 
-Per quanto riguarda le tensioni di riferimento, come $V_{ref}$, queste vengono generate all'interno del chip da un circuito dedicato in cui vengono utilizzati bandgap. Il valore di uscita dei bandgap è configurabile, di default ha un valore 16 
+Per quanto riguarda le tensioni di riferimento, come $\mathrm{V_{ref}}$, queste vengono generate all'interno del chip da un circuito dedicato in cui vengono utilizzati bandgap. Il valore di uscita dei bandgap è configurabile, di default ha un valore 16 che corrisponde circa a una tensione di 1.15 V. 
+Questo valore varia leggermente da un chip all'altro, un esempio è riportato in figura \ref{bandgap_trimming}, dove sono riportati gli andamenti di $\mathrm{V_{ref}}$ al variare del valore di configurazione per differenti chip. (fatte da dominik)
+
+\begin{figure}
+\centering
+\includegraphics[scale=.5]{Immagini/bandgap_trimming}
+\caption{.}
+\label{bandgap_trimming}
+\end{figure}
 
 \section{Single Chip Card}
+Analogamente a quanto visto per gli SLDO, per  testare i quali si fa uso di una PCB di test, per il chip RD53A è necessario l'utilizzo di una SCC (\textit{Single Chip Card}). 
+Il chip è fissato al centro di questa scheda e attraverso wire bond è connesso ai vari elementi della scheda (pin di monitoraggio, molex di alimentazione, DisplayPort per la trasmissione/ricezione di dati, jumper per la configurazione, etc...). 
+Il chip viene montato sulla scheda in un apposito spazio ai cui bordi arrivano le varie piste da connettere e sotto cui, al posto della vetronite, c'è uno spessore metallico con via termici in modo da permettere l'applicazione di un sistema refrigerante sulla parte posteriore della SCC. 
+La presenza di un raffreddamento è necessaria nel momento in cui l'alimentazione è data utilizzando i due SLDO, la corrente non necessaria al chip viene dissipata sui due shunt che diventano punti molto caldi. 
+Al fine di evitare danneggiamenti del chip e dell'eventuale sensore che vi può essere collegato il chip va raffreddato con l'utilizzo di dissipatori di calore. 
 
+Dal momento che il chip è un prototipo è stata lasciata la possibilità di poter configurare l'alimentazione esternamente scegliendo tra tre diverse configurazioni e inoltre è possibile mantenere separate a livello di alimentazione la regione digitale e quella analogica\footnote{Nel chip finale gli ShuntLDO della parte digitale e analogica saranno in parallelo.}.
+Le possibili configurazioni sono:
+\begin{itemize}
+
+\item Alimentazione del attraverso il circuito di ShuntLDO, in questo caso il generatore utilizzato sarà di corrente e sulla SCC card la configurazione dei jumper sarà quella riportata in figura \ref{SLDOmode}. 
+Per operare con il chip in configurazione SLDO è necessario l'utilizzo di un sistema di raffreddamento per il chip. 
+In normali condizioni di lavoro è sufficiente un dissipatore passivo, va però sottolineato che nella misura delle varie tensioni l'effetto di deriva termica non è trascurabile, dunque l'ideale sarebbe l'utilizzo di un sistema di raffreddamento attivo, con un buon contatto termico, che permetta di controllare le temperature.
+
+\item Alimentazione senza Shunt, utilizzando solo il regolatore LDO. Questa configurazione necessita di una alimentazione in tensione, in questo caso sarà il generatore esterno a dover generare più o meno corrente al variare dei consumi del chip. L'utilizzo del solo regolatore permette di avere un consumo minimo in termini di potenza e dunque di operare con il chip senza il bisogno di un sistema di raffreddamento. In questo caso la configurazione dei jumper è quella riportata in figura \ref{LDOmode}.
+
+\item Alimentazione diretta. In questo caso il circuito con regolatore e shunt viene completamente escluso ed il chip è alimentato direttamente dal generatore di tensione. 
+Questa configurazione è riportata in figura \ref{DirectPowering}, l'utilizzo dell'alimentazione diretta è delicato per varie ragioni, prima fra tutte il rischio di danneggiamento di RD53A. 
+La presenza del regolatore LDO, anche privo di shunt, assicura che sbalzi di tensione all'ingresso dell'alimentazione non siano trasmessi al chip, inoltre il regolatore può sopportare tensioni fino a 2 V, mentre il chip già sopra 1.35 V rischia di danneggiarsi. 
+\end{itemize}
 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/SLDOmode}
-\caption{Configurazione di default .}
+\caption{Configurazione dei jumper per l'utilizzo di RD53A alimentato attraverso il circuito di ShuntLDO, sia per la regione analogica sia per quella digitale.}
 \label{SLDOmode}
 \end{figure}
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/LDOmodeDefault}
-\caption{Configurazione di default .}
-\label{LDOmodeDefault}
+\caption{Configurazione dei jumper per l'utilizzo di RD53A alimentato dal regolatore LDO senza la parte di shunt.}
+\label{LDOmode}
 \end{figure}
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/DirectPowering}
-\caption{Configurazione di default .}
+\caption{Configurazione dei jumper per l'utilizzo di RD53A alimentato direttamente, escludendo il circuito di ShuntLDO.}
 \label{DirectPowering}
 \end{figure}
 
+
 \section{Misure Statiche con chip}
-Misure in configurazione SLDO
+
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/IUI2}
-\caption{.}
+\caption{IUI.}
 \label{IUI}
 \end{figure}
-causato da una distribuzione non uguale delle correnti nei due SLDO, quando si attiva la parte digitale ha un picco di assorbimento di corrente che causa un drop nella parte analogica. questo perchè benchè le alimentazioni siano separate all'interno del chip ci sono comunque zone di 'dialogo' tra regione analogica e digitale. 
-La parte digitale si attiva a un valore di $\mathrm{I_{in}}$ di 0.56 A non riuscendo però ad andare a regime, anche perché la tensione in ingresso non è abbastanza alta da consentire un corretto funzionamento. 
-Questo è dovuto al ritardo con cui il $\mathrm{V_{iofs}}$ digitale arriva al valore corretto.
-VINA diminuisce di circa 150 mV mentre VDDA di circa 60 mV.
-Questi problemi sono legati all'accensione infatti spariscono nele momento in cui lo scan è fatto partendo da valori alti di corrente e scendendo.
-
-
-
-\begin{figure}
-\centering
-\includegraphics[scale=.27]{Immagini/IUISubPlotVofs}
-\caption{.}
-\label{IUISubPlotVofs}
-\end{figure}
-
+Utilizzando il chip in configurazione ShuntLDO, raffreddato in modo passivo con un radiatore messo a contatto termico con il retro del chip, si è proceduto ad una caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip\footnote{Uno per la parte analogica ed uno per quella digitale.}. 
+Le prime misure sono state eseguite utilizzando come riferimento per $\mathrm{V_{out}}$ e $\mathrm{V_{iofs}}$ le tensioni generate internamente al chip. Le misure per i due SLDO, che sono stati tenuti indipendenti, sono state eseguite a livelli di corrente crescenti, partendo da 0 A fino ad arrivare a 1.5 A a passi di 10 mA. 
+L'andamento ottenuto è quello riportato in figura \ref{IUI}. L'undershoot ben visibile sulla tensione in ingresso e in uscita della parte analogica è causato da una distribuzione non uguale delle correnti nei due SLDO. 
+Quando si attiva la parte digitale si ha un picco di assorbimento di corrente, che causa un drop nella parte analogica:
 \begin{center}
-\begin{tabular}{|l|c|c|}
+\begin{tabular}{ccc }
 \hline
-&Digitale  &Analogica \\ \hline
-$\mathrm{R_{eq}}$ & 0.753 $\Omega$& 0.724 $\Omega$ \\ \hline
-$\mathrm{V_{ofs}}$ & 0.845 V & 0.900 V\\ \hline
+$\Delta \mathrm{V_{INA}}$ & $\Delta \mathrm{V_{DDA}}$ &$\Delta \mathrm{V_{DDA}}$  \\ \hline
+$\sim$0.150 A & $\sim$ 0.030 A& $\sim$0.060 A\\ \hline     
 \end{tabular}
 \end{center}
 
-\begin{figure}
-\centering
-\includegraphics[scale=.3]{Immagini/IDI2}
-\caption{.}
-\label{IDI}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[scale=.3]{Immagini/IUEVref2}
-\caption{.}
-\label{IDEVref}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[scale=.3]{Immagini/IUEViofs2}
-\caption{.}
-\label{IDEViofs}
-\end{figure}
-
-
-\begin{figure}
-\centering
-\includegraphics[scale=.3]{Immagini/PUI}
-\caption{.}
-\label{PUI}
-\end{figure}
+Questo avviene nonostante le alimentazioni dei due SLDO siano separate, in quanto all'interno del chip ci sono zone di 'dialogo' tra regione analogica e digitale. 
+La parte digitale si attiva a un valore di $\mathrm{I_{in}}$ di 0.56 A, non riuscendo però ad andare a regime, anche perché la tensione in ingresso non è abbastanza alta da consentire un corretto funzionamento.
+Questo è dovuto al ritardo con cui il $\mathrm{V_{iofs}}$ digitale arriva al valore corretto. Come introdotto in precedenza la tensione di riferimento dell'offset è ottenuta dalla caduta di tensione su una resistenza, nel nostro caso di $\sim$250 $k\Omega$, data dal passaggio di una corrente di 2$\mu$A. Se per vari motivi il circuito che genera questa corrente ha un ritardo nell'accensione questo si ripercuote nell'accensione del chip.  
+Se tutti questi problemi sono effettivamente legati all'accensione, dovranno scomparire nel momento in cui lo scan sia eseguito partendo da valori alti di corrente per poi scendere fino a 0 A.
 
 \begin{center}
 \begin{tabular}{|l|c|c|c|c|}
@@ -136,18 +129,194 @@ $\mathrm{V_{ofs}}$ & 0.845 V & 0.900 V\\ \hline
  
 & media & errore & media & errore \\ \hline
 
-$\mathrm{R_{eq}}$ & 0.7441 $\Omega$ & 0.0002 $\Omega$& 0.7396 $\Omega$ & 0.0009 $\Omega$ \\ \hline
-$\mathrm{V_{ofs}}$ & 0.8635 V& 0.003 V & 0.8688 V & 0.0011 V\\ \hline      
+$\mathrm{R_{eq}}$ & 0.752 $\Omega$ & 0.0003 $\Omega$& 0.7178 $\Omega$ & 0.0003 $\Omega$ \\ \hline
+$\mathrm{V_{ofs}}$ & 0.844 V& 0.004 V & 0.9025 V & 0.0003 V\\ \hline     
+
+\end{tabular}
+\end{center}
+
+%\begin{figure}
+%\centering
+%\includegraphics[scale=.27]{Immagini/IUISubPlotVofs}
+%\caption{.}
+%\label{IUISubPlotVofs}
+%\end{figure}
+
+%\begin{center}
+%\begin{tabular}{|l|c|c|}
+%\hline
+%&Digitale  &Analogica \\ \hline
+%$\mathrm{R_{eq}}$ & 0.753 $\Omega$& 0.724 $\Omega$ \\ \hline
+%$\mathrm{V_{ofs}}$ & 0.845 V & 0.900 V\\ \hline
+%\end{tabular}
+%\end{center}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/IDI2}
+\caption{IDI.}
+\label{IDI}
+\end{figure}
+
+Una seconda serie di misure, il cui andamento è riportato in figura \ref{IDI}, è stata ottenuta partendo da una corrente in ingresso di 1.5 A e diminuendola fino a 0 A. 
+Dal grafico si può notare come gli undershoot presenti nella precedente scansione non siano più visibili, questo è in accordo con la giustificazione data, cioè che siano dovuti all'attivazione del chip, che in questa fase ha consumi più elevati. 
+Una volta che il chip ha raggiunto la configurazione di default, i consumi sono di circa 50 mA per la parte digitale e 400 mA per quella analogica. Questo fin tanto che il chip non riceve un segnale di clock esterno. 
+Questa differenza in consumi di corrente tra parte analogica e digitale si riflette nel fatto che, diminuendo ulteriormente la corrente, la prima regione ha mostrare problemi è quella analogica, mentre la parte digitale riesce a rimanere attiva anche con correnti inferiori a 200 mA. 
+Inoltre, partendo da valori di corrente elevati, e quindi tensioni in ingresso ben al di sopra di quelle minime, non si hanno neppure problemi dovuti a differenti istanti di accensione di parte analogica e digitale.
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+ & \multicolumn{2}{c|}{Digitale} & \multicolumn{2}{c|}{Analogica} \\ \hline
+ 
+& media & errore & media & errore \\ \hline
+
+$\mathrm{R_{eq}}$ & 0.73475 $\Omega$ & 0.00008 $\Omega$& 0.7153 $\Omega$ & 0.0006 $\Omega$ \\ \hline
+$\mathrm{V_{ofs}}$ & 0.86530 V& 0.00007 V & 0.9043 V & 0.0005 V\\ \hline     
+
+\end{tabular}
+\end{center}
+
+Continuando a tenere i due circuiti di alimentazione separati è interessante vedere cosa cambia andando a fornire esternamente le varie tensioni di riferimento. 
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/IUEVref2}
+\caption{IUEVref.}
+\label{IUEVref}
+\end{figure}
+Il grafico riportato in figura \ref{IUEVref} è ottenuto fornendo esternamente  $\mathrm{V_{ref}}=0.550 \V$  sia per la parte analogica che quella digitale. Il comportamento della parte digitale è pressoché analogo a quello ottenuto nel primo grafico \ref{IUI}, mentre per la parte analogica si vede come fornendo $\mathrm{V_{ref}}$ esternamente, non si ha un suo undershoot e dunque non lo si ha nemmeno su $\mathrm{V_{DDA}}$, che però risente ancora del comportamento della parte digitale. Fino a che $\mathrm{V_{iofs\_ m \_ D}}$ non arriva al valore corretto non si ha una situazione stabile (...da riscrivere....).
+
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+ & \multicolumn{2}{c|}{Digitale} & \multicolumn{2}{c|}{Analogica} \\ \hline
+ 
+& media & errore & media & errore \\ \hline
+
+$\mathrm{R_{eq}}$ & 0.7539 $\Omega$ & 0.00007 $\Omega$& 0.7448 $\Omega$ & 0.0002 $\Omega$ \\ \hline
+$\mathrm{V_{ofs}}$ & 0.84199 V& 0.00011 V & 0.8706 V & 0.0003 V\\ \hline     
 
 \end{tabular}
 \end{center}
 
 
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/IUEViofs2}
+\caption{IUEViofs.}
+\label{IUEViofs}
+\end{figure}
+Le stesse misure sono state ripetute fornendo esternamente il solo $\mathrm{V_{iofset}}=0.400 \V$ e quindi utilizzando per $\mathrm{V_{ref}}$ quello interno. In questo caso gli andamenti ottenuti sono decisamente migliori e sono riportati in figura \ref{IUEViofs}. 
+Il $\mathrm{V_{iofset}}$ esterno permette di evitare problemi visti in precedenza, quali un differente valore di $\mathrm{I_{in}}$ di attivazione tra parte analogica e digitale.  
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+ & \multicolumn{2}{c|}{Digitale} & \multicolumn{2}{c|}{Analogica} \\ \hline
+ 
+& media & errore & media & errore \\ \hline
 
+$\mathrm{R_{eq}}$ & 0.7871 $\Omega$ & 0.0013 $\Omega$& 0.7554 $\Omega$ & 0.0013 $\Omega$ \\ \hline
+$\mathrm{V_{ofs}}$ & 0.6824 V& 0.0013 V & 0.7403 V & 0.0012 V\\ \hline     
+
+\end{tabular}
+\end{center}
+
+%\begin{figure}
+%\centering
+%\includegraphics[scale=.3]{Immagini/IUEAll}
+%\caption{IUEAll viofs e vref si sovrappongono .}
+%\label{IUEAll}
+%\end{figure} 
+%Infine riportiamo il grafico degli andamenti nal caso in cui sia $\mathrm{V_{ref}}$ che $\mathrm{V_{iofset}}$ sono forniti esternamente. entrambi valgono 0.400, mancanza di kitley
+
+%\begin{center}
+%\begin{tabular}{|l|c|c|c|c|}
+%\hline
+% & \multicolumn{2}{c|}{Digitale} & \multicolumn{2}{c|}{Analogica} \\ \hline
+% 
+%& media & errore & media & errore \\ \hline
+%
+%$\mathrm{R_{eq}}$ & 0.7461 $\Omega$ & 0.0004 $\Omega$& 0.7448 $\Omega$ & 0.0004 $\Omega$ \\ \hline
+%$\mathrm{V_{ofs}}$ & 0.7452 V& 0.0004 V & 0.7563 V & 0.0004 V\\ \hline 
+%\end{tabular}
+%\end{center}  
+
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/PUI}
+\caption{PUI sulle x c'è la corrente totale.}
+\label{PUI}
+\end{figure}
+Come detto in precedenza in RD53A è stata lasciata la possibilità di tenere separate le alimentazioni dei due SLDO, nella versione finale i due SLDO si troveranno in parallelo. 
+In questa configurazione gli andamenti delle tensioni in ingresso (VINA VIND) e di quelle in uscita (VDDD e VDDA) risultano migliori, come si può vedere dal grafico riportato in figura \ref{PUI}. 
+Questo perché la corrente a disposizione per i due Shunt si può suddividere in modo non uguale, fatto che effettivamente accade, lo sbilanciamento nella ripartizioni delle correnti ha inizio quando si 'attiva' $\mathrm{V_{ofs}}$ analogico e termina quando anche $\mathrm{V_{ofs}}$  digitale sale, l'andamento delle correnti è riportato in figura \ref{CurrentSharing}.
+\begin{center}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+ & \multicolumn{2}{c|}{Digitale} & \multicolumn{2}{c|}{Analogica} \\ \hline
+ 
+& media & errore & media & errore \\ \hline
+
+$\mathrm{R_{eq}}$ & 0.7441 $\Omega$ & 0.0002 $\Omega$& 0.7396 $\Omega$ & 0.0009 $\Omega$ \\ \hline
+$\mathrm{V_{ofs}}$ & 0.8635 V& 0.003 V & 0.8688 V & 0.0011 V\\ \hline 
+\end{tabular}
+\end{center}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.4]{Immagini/CurrentSharing}
+\caption{Suddivisione delle correnti, misure eseguite da dominik.inizia quando ViofsetA parte e finisce quando si alza anche quello digitale}%meeting del 16 aprile
+\label{CurrentSharing}
+\end{figure}
+
+\subsubsection{Variazioni di carico}
+Per lo SLDO il carico è rappresentato dal chip, che fino a che si trova nella configurazione di default ha consumi di corrente fissi:
+\begin{center}
+\begin{tabular}{cc }
+\hline
+Regione Analogica & Regione Digitale \\ \hline
+$\sim$0.400 A & $\sim$ 0.050 A\\ \hline     
+\end{tabular}
+\end{center}
+Le misure riportate di seguito sono invece ottenute andando a variare il carico che è applicato al VDDD/VDDA, questo è stato possibile andando a porre in parallelo al chip un Kitley utilizzato dome sink di corrente...
+Per queste misure la corrente in ingresso è stata fissata a 1 A per ciascuno dei due SLDO. 
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/LoadVDDD}
+\caption{LoadVDDD}
+\label{LoadVDDD}
+\end{figure}
+$\sim$ 18 mV
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/LoadVDDA}
+\caption{LoadVDDA.}
+\label{LoadVDDA}
+\end{figure}
+$\sim$ 15 mV
 \afterpage{\clearpage}
 
-\subsection{LDOvsSLDO}
 
+\subsubsection{Fast ramp up}
+Fino ad ora gli scan sono stati eseguiti lentamente in confronto al tempo di risposta del circuito di alimentazione, tra un valore di corrente ed il successivo vi è quasi un secondo.
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/rd-powup-dir6}
+\caption{rd-powup-dir6.}
+\label{rd-powup-dir6}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/rd-powup-dir7}
+\caption{rd-powup-dir7.}
+\label{rd-powup-dir7}
+\end{figure}
+
+
+\subsection{LDOvsSLDO}
+Da problemi la figura?
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/alllin1}
@@ -163,8 +332,8 @@ $\mathrm{V_{ofs}}$ & 0.8635 V& 0.003 V & 0.8688 V & 0.0011 V\\ \hline
 %\end{figure}
 
 \section{Front End}
-Come detto in precedenza RD53A non è il chip finale, ma un prototipo, al cui interno sono presenti tre differenti Front End per la parte anlogica. Si tratta di tre differenti progetti e sono indicati con i nomi: Sincrono, Lineare e Differenziale, vedi figura \ref{FrontEnd}. 
-Questi tre circuiti sono stati progettati da tre differenti gruppi e tra di loro ci sono importanti differenze. Il FE Sincrono sfrutta un sistema di auto-zeroing della linea di base, campionando periodicamente la linea di base invecedi aggiutre la soglia pixel per pixel. 
+Come detto in precedenza RD53A non è il chip finale, ma un prototipo, al cui interno sono presenti tre differenti Front End per la parte analogica. Si tratta di tre differenti progetti e sono indicati con i nomi: Sincrono, Lineare e Differenziale, vedi figura \ref{FrontEnd}. 
+Questi tre circuiti sono stati progettati da tre differenti gruppi e tra di loro ci sono importanti differenze. Il FE Sincrono sfrutta un sistema di auto-zeroing della linea di base, campionando periodicamente la linea di base invece di aggiustare la soglia pixel per pixel. 
 Il Lineare implementa un amplificatore lineare all'ingesso del comparatore, il cui compito è confrontare il segnale con una certa soglia. 
 Nel Differenziale è presente uno stadio di guadagno differenziale  all'ingresso del discriminatore e sbilanciando i due canali implementa la soglia..
 Le caratteristiche comuni sono le piazzole per i bump-bond e il layout. Inoltre è comune anche la rete di polarizzazione ed il circuito per iniettare segnali di calibrazione, in modo da poter comparare direttamente le prestazioni. 
