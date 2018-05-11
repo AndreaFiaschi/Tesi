@@ -3,7 +3,7 @@
 Il progetto di RD53A è stato approvato nell'autunno del 2015, dopo la revisione da parte delle collaborazioni ATLAS, CMS e RD53A. Nel 2016 è iniziata la progettazione, con questo nuovo chip si vuole dimostrare la possibilità di utilizzare tecnologia CMOS  in 65 nm per l'aggiornamento in vista della fase ad alta luminosità di ATLAS e CMS, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
 
 \section{Organizzazione del chip} 
-RD53A non deve essere inteso come il prodotto finale, infatti possiede molte modifiche di design utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front-end (FE), già questo causa una non uniformità del chip. 
+RD53A non deve essere inteso come il prodotto finale, infatti possiede molte modifiche di design utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front end (FE), già questo causa una non uniformità del chip. 
 Questo chip è la base di partenza per arrivare al progetto finale, in cui sarà scelto uno dei front end e sarà utilizzato uniformemente su tutta la matrice di pixel. In RD53A la matrice di pixel ha 400 colonne e 192 righe, nel progetto finale si avrà un aumento del numero di pixel, infatti il sistema di alimentazione e di contropolarizzazione dei pixel è progettato per un numero di righe massimo pari a 384, figura \ref{RD53ALayout}.
 \begin{figure}
 \centering
@@ -49,7 +49,12 @@ Di seguito è riportata una breve descrizione del funzionamento di ciascuno dei 
 Questo front end consta di un CSA a stadio singolo con Krummenacher feedback accoppiato in AC ad un discriminatore sincrono formato da un amplificatore differenziale e un latch di feedback positivo. 
 Il Krummenacher feedback è progettato in modo da fornire sia la compensazione alla corrente dispersa dal sensore sia la corrente di scarica per la capacità presente nell'anello di reazione. Maggiore è la corrente più veloce il segnale del pre amplificatore tornerà alla baseline. 
 Consideriamo come riferimento che, una carica di di 10k$e^{-}$, che produce 10 nA di corrente e un segnale che dura 400 ns è ridotta circa ad un segnale di 40 nA corrente per una durata di 100 ns.  
-Al fine di avere due differenti valori di guadagno sono incluse due capacità, rispettivamente di 2.5 fF e 4 fF.
+Al fine di avere due differenti valori di guadagno sono incluse due capacità, rispettivamente di 2.5 fF e 4 fF. 
+A causa di piccole differenze, che sono rilevanti a scale di 65 nm, si hanno fluttuazioni abbastanza ampie della baseline in uscita dal primo stadio (dell'ordine delle decine di millivolt) tra canali differenti. 
+Per eliminare queste differenze si è reso necessario un accoppiamento in AC al dicriminatore. 
+In ogni caso le differenze tra transistor si traducono in un offset della tensione in uscita dal discriminatore tra i vari pixel. 
+Questo effetto normalmente è compensato con DAC usati localmente per regolazioni fini, invece, nel front end Sincrono l'offset è compensato attraverso un meccanismo di auto azzeramento. 
+Ciò richiede l'acquisizione del livello di tensione della baseline ogni 100 $\mu$s o meno. Durante le collisioni, la differenza tra segnale e la baseline letta è inviato ad uno stadio che fa il confronto e genera il segnale di uscita del discriminatore.  
 
 \begin{figure}
 \centering
@@ -464,7 +469,7 @@ LDO mode
 \section{Scansioni}
 
 \subsection{LDOvsSLDO}
-Dà problemi la figura?
+Riportiamo di seguito una misura che aiuta a capite quali siano i vantaggi effettivi di utilizzare un circuito di alimentazione che implementi uno Shunt oltre al regolatore. Quello che è stato fatto è monitorare le tensioni di alimentazione del chip VDDD e VDDA mentre il chip 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/alllin1}
@@ -477,7 +482,7 @@ Dà problemi la figura?
 \centering
 \includegraphics[scale=.3]{Immagini/alllin2}
 \caption{.}
-\label{alllin1}
+\label{alllin2}
 \end{figure}
 %\begin{figure}
 %\centering
