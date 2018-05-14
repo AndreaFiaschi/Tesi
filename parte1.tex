@@ -1,12 +1,17 @@
 \chapter{Alimentazione seriale}
 %L'alimentazione seriale dei moduli è il sistema scelto per l'alimentazione, in grado di rispettare i requisiti per il nuovo tracciatore a pixel di fase due. 
-Tenendo conto dei requisiti richiesti per il tracciatore di fase due (tolleranza a radiazione, alta risoluzione, riduzione del materiale, etc..) si è puntato allo sviluppo di un sistema di alimentazione alternativo che non utilizzi i convertitori DC-DC\footnote{L'attuale tracciatore ha una alimentazione in parallelo dei moduli, i quali attraverso convertitori DC-DC generano localmente le tensioni necessarie al funzionamento del chip. L'utilizzo di convertitori DC-DC all'interno del volume del tracciatore è scoraggiato  dagli alti livelli di radiazione e del campo magnetico.}, questo nuovo sistema di alimentazione sarà seriale e sarà gestito all'interno dl chip da circuiti dedicati stampati in tecnologia CMOS a 65 nm.
+Nel capitolo precedente si sono discussi i requisiti richiesti per il tracciatore di fase due: tolleranza agli alti livelli di radiazione, alta risoluzione, riduzione del materiale, alta risoluzione, riduzione del materiale, etc... Per rispettare queste condizioni si è deciso di sviluppare un sistema di alimentazione innovativo e alternativoagli attuali convertitori DC-DC\footnote{L'attuale tracciatore utilizza un sistema di alimentazione in parallelo dei moduli, in cui i convertitori DC-DC generano localmente le tensioni necessarie al funzionamento del chip.}. 
+Questi, infatti, non resisterebbero ai più alti livelli di radiazione L'utilizzo di questi all'interno del volume del tracciatore è scoraggiato  dagli alti livelli di radiazione che si avranno in fase due e del campo magnetico. 
+Il nuovo sistema di alimentazione  prevede una distribuzione seriale e sarà gestito, all'interno del chip, da circuiti dedicati prodotti in tecnologia CMOS a 65 nm.
 
 
 \section{Caratteristiche dell'alimentazione seriale}
-In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di moduli posti in successione, questo significa che in ogni elemento scorre la medesima corrente, ma l'intervallo di tensione in cui viene a trovarsi è differente per ciascuno di essi. Fino ad ora il metodo di alimentazione utilizzato era quelo parallelo, tutti i moduli si trovano ad un potenziale comune ma su rami separati, questo implica che nel cavo principale scorre una corrente pari alla somma di quella che passa in tutti i rami e dunque sarà necessario l'utilizzo di un cavo con sezione notevolmente maggiore a quello necessario in una alimentazione seriale.
-Ciò dipende dal fatto che nel caso di alimentazione seriale la corrente sia riutilizzata n-volte riducendo così le perdite di potenza nei cavi, rispetto ad una alimentazione in parallelo, questo consente l'impiego di cavi più sottili riducendo così il materiale all'interno del tracciatore. 
-Inoltre un'alimentazione seriale, rispetto ad una in parallelo, permette di ridurre la potenza dissipata a parità del numero di moduli alimentati. 
+In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di moduli posti in successione. 
+A differenza del sistema di alimentazione parallelo attuale, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e, dal momento che ogni modulo ha un suo ramo, in cui la corrente totale  erogata è somma di quella che scorre in tutti i rami, in un sistema seriale la corrente è la stessa per ciascun modulo ed è la tensione di lavoro a cambiare\footnote{L'intervallo di tensione in cui lavora ciascun modulo è lo stesso in ampiezza, ma ognuno si trova ad un potenziale di riferimento differente.}. 
+Dato che la corrente viene "riutilizzata" in ciascun modulo, il generatore, rispetto ad un sistema di alimentazione parallelo, deve fornire correnti minori. Per questo motivo le perdite di potenza nei cavi sono ridotte ed è quindi posibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
+%Questo significa che in ogni elemento scorre la medesima corrente, ma l'intervallo di tensione in cui viene a trovarsi è differente per ciascuno di essi. Fino ad ora il metodo di alimentazione utilizzato era quelo parallelo, tutti i moduli si trovano ad un potenziale comune ma su rami separati, questo implica che nel cavo principale scorre una corrente pari alla somma di quella che passa in tutti i rami e dunque sarà necessario l'utilizzo di un cavo con sezione notevolmente maggiore a quello necessario in una alimentazione seriale.
+%Ciò dipende dal fatto che nel caso di alimentazione seriale la corrente sia riutilizzata n-volte riducendo così le perdite di potenza nei cavi, rispetto ad una alimentazione in parallelo, questo consente l'impiego di cavi più sottili riducendo così il materiale all'interno del tracciatore. 
+%Inoltre un'alimentazione seriale, rispetto ad una in parallelo, permette di ridurre la potenza dissipata a parità del numero di moduli alimentati. 
 Trascurando le inefficienze date dal circuito di SLDO possiamo calcolare il rapporto tra la potenza assorbita da n moduli in parallelo con quella di n moduli in serie:
 \begin{equation}
 \mathrm{W_{parallelo} = n \cdot I \cdot V + (I\cdot n)^2 \cdot R}
@@ -81,11 +86,9 @@ Questo porta ad una caduta di tensione sul modulo $\mathrm{V_{modulo} = 3.2 A \c
 Questo causerà anche un lieve aumento della tensione erogata dal generatore, che però rimarrà al di sotto dei 34 V\footnote{Come visto alla tensione massima di  34 V il generatore riesce a distribuire una potenza di $17.76$ W per ciascun modulo.}.
  %mettere un recap con il senso di questi conti
 %Lo studio dell'alimentazione seriale parte dunque dalla caratterizzazione dello SLDO. Componente che sarà poi utilizzato all'interno del chip RD53A per la generazione delle tensioni di alimentazione della parte analogica e digitale. .......continuare discorso....
-
+Aver chiaro come il chip viene visto esternamente e quali siano i suoi consumi è importante per poter progettare al meglio il sistema di alimentazione seriale.
 
 \section{Evoluzione design SLDO}
-Il design del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm capace di lavorare con una corrente massima di 2A.
-
 \begin{figure}
 \centering
 \includegraphics[scale=3.5]{Immagini/SLDObase}
@@ -93,7 +96,9 @@ Il design del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad
 \label{SLDOprova}
 \end{figure}
 
-Partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. Lo SLDO è alimentato in corrente $\mathrm{I_{in}}$, una frazione di questa corrente scorrerà nel ramo di R3, la indichiamo con $\mathrm{I_{ref}}$, questa sarà la corrente di riferimento all'interno dello shunt. 
+Il design del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm capace di lavorare con una corrente massima di 2A.
+Partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. 
+Lo SLDO è alimentato in corrente $\mathrm{I_{in}}$, una frazione di questa corrente scorrerà nel ramo di R3, la indichiamo con $\mathrm{I_{ref}}$, questa sarà la corrente di riferimento all'interno dello shunt. 
 La parte che agisce come regolatore di tensione è A1 + M1, A1 fa in modo di tenere la tensione sul carico uguale ad un valore di riferimento, che per ora trascuriamo come sia generato, andando ad aprire o chiudere il gate del mosfet M1 e dunque facendo scorrere più o meno corrente. 
 Questo di per se causerebbe un aumento di $\mathrm{I_{ref}}$ e conseguentemente di $\mathrm{V_{in}}$ proporzionale ad R3. Nello schema è però presente un ramo in parallelo al carico, in cui la corrente che scorre è regolata da M4+A3, A3 è la parte attiva dello shunt, che fa sì che la corrente nel ramo con M1 sia 1000 volte quella che scorre in R3 andando a regolare $\mathrm{I_{shunt}}$ modificando la tensione di gate del mosfet M4. 
 La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno variazioni dinamiche del carico.
@@ -134,7 +139,7 @@ Sulla PCB sono presenti connettori molex per l'alimentazione, jumper di configur
 \label{PCBTestSLDO}
 \end{figure}
 
-Aggiungere immagini reali.....
+%Aggiungere immagini reali?
 
 L'alimentazione è fornita tramite il molex J01 la linea 1 fornisce la tensione Vcc utilizzata dal bandgap U02 per la generazione del Vref.
 
