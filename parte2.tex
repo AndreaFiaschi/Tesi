@@ -437,14 +437,11 @@ Digitale  &  &  & Int. & - & Ext. & 0.400 & 0.7871  & 0.6824 \\ \hline
 
 Analogico & \multirow{2}{*}{Paral.} & \multirow{2}{*}{Cres.} & Int. & - & Int. & - & 0.7396 & 0.8688 \\
 Digitale  &  &  & Int. & - & Int. & - & 0.7441  & 0.8635 \\ \hline
-
 \end{tabular}
 \caption{Risultati ....}
 \label{table:results}
 \end{table}
 \end{center}
-\afterpage{\clearpage}
-
 
 errori statistici trascurabili, fluttuazioni dovute a configurazioni 
 sempre Requivalente sovrastimata e voff sottostimato
@@ -452,10 +449,37 @@ visto anche negli studi del progettista
 per quanto riguarda R3 sembra ci sia in serie una resistenza passiva di circa 0.2 $\Omega$
 mentre
 
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/R3Karagounis}
+\caption{ .}%meeting del 13 aprile
+\label{R3Karagounis}
+\end{figure}
+
+Dal confronto con i valori aspettati risulta evidente che la pendenza della retta caretteristica dello SLDO è sistematicamente maggiore, viceversa l'offset è sistematicamente minore. 
+Questo comportamento è stato osservato anche in altri test eseguiti su chip da altri membri all'interno della collaborazione, in particolare sono stati eseguiti test su questo aspetto in modo più approfondito, al fine di comprenderne le cause. 
+In figura \ref{R3Karagounis} è riportato l'andamento della pendenza e dell'offset al variare della resistenza R3\footnote{\`E stata utilizzata una resistenza esterna regolabile.}, per interpretare correttamente il grafico ricordiamo che data la presenza nel circuito di un current-mirror con rapporto k = 1000 la pendenza della retta relativa a VIN nel grafico corrente-tensione sarà $\dfrac{R3}{k}$. 
+Dal fit lineare risulta che la relazione tra la resistenza esterna e la pendenza è $0.001x + 0.1963$, ciò evidenzia che effettivamente k è 1000, ma vi è una qualche resistenza spuria in serie del valore di circa 0.2 $\Omega$. 
+Per quanto riguarda l'offset una sua sottostima è di più difficile interpretazione. 
+\begin{figure}
+\centering
+\includegraphics[scale=.25]{Immagini/OffsetKaragounis}
+\caption{ .}%meeting del 13 aprile
+\label{OffsetKaragounis}
+\end{figure}
+Anche in questo caso attraverso ulteriori test è stato osservato l'andamento riportato in grafico \ref{OffsetKaragounis} anche perché non dipende solo dal termine noto, ma anche da unfattore moltiplicativo che è maggiore di quello aspettato(2). 
+Infine vi è una relazione tra offset e Requivalente, su questo ultimo aspetto sono tutt'ora in corso studi al fine di eliminare questa dipendenza.
+
+
+
+
+
+
+
 \subsection{Variazioni di carico}
 Per lo SLDO il carico è rappresentato dal chip, che fino a che si trova nella configurazione di default ha consumi di corrente fissi:
 \begin{center}
-\begin{tabular}{cc }
+\begin{tabular}{cc}
 \hline
 Regione Analogica & Regione Digitale \\ \hline
 $\sim$0.400 A & $\sim$ 0.050 A\\ \hline     
@@ -512,24 +536,52 @@ Per queste ragioni si è proceduto ad eseguire scansioni in corrente passando da
 Come già visto in precedenza parte digitale e analogica non si attivano nello stesso momento, in particolare VDDD si attiva dopo, questo è in accordo con le misure precedenti.
 
 
+\section{Sviluppi}
+Questi studi sull'alimentazione del chip si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due. In contemporanea a questi viene portato avanti lo sviluppo di sistemi di acquisizione dati in grado di dialogare con il chip e si stanno effettuando test sui tre front end per studiarne la risposta sia prima che dopo processi di irraggiamento. 
+In questo situazione lo sviluppo del circuito di alimentazione ha importanti legami con lo sviluppo del resto del chip, come detto il chip ha due regioni alimentate separatamente, digitale e analogica, questa scelta è dettata anche dalla necessità di proteggere la parte analogica, più sensibile, dal rumore della parte digitale. Se l'alimentazione fosse comune il rumore della parte digitale del chip andrebbe ad intaccare la parte analogica che è molto sensibile da questo punto di vista. 
+Inoltre per operare una qualsiasi azione a livello di chip è necessario che lo stesso, una volta acceso, si trovi in una configurazione di default ben precisa, la corretta accensione è un problema legato al circuito di ShuntLDO, regione digitale e analogica devono attivarsi correttamente evitando oscillazioni durante il power-up e drop di tensione. 
+Risulta quindi chiaro lo stretto legame che vi è tra alimentazione e sviluppo del chip. 
 
-\subsection{LDOvsSLDO}
-Riportiamo di seguito una misura che aiuta a capite quali siano i vantaggi effettivi di utilizzare un circuito di alimentazione che implementi uno Shunt oltre al regolatore. Quello che è stato fatto è monitorare le tensioni di alimentazione del chip, VDDD e VDDA, mentre attraverso il sistema di acquisizione dati veniva richiesto al chip di eseguire test come rutine di calibrazione delle soglie dei front end. 
+All'interno del lavoro di tesi è stato possibile anche un primo approccio allo sviluppo del sistema di acquisizione, in quanto lo studio riguarda oggetti attualmente in evoluzione essendo prototipi. L'approccio al sistema di DAQ rappresenta naturale in un'ottica di sviluppo del progetto di RD53A. A seguito diamo una breve descrizione del sistema di acquisizione utilizzato e dei primi risultati ottenuti su soglie di lettura e la relativa distribuzione di rumore. 
+
+
+
+problemi legati a tensioni di riferimento troppo basse non riesce a dare Phase locked loop non sempre riesce, tensioni di otput troppo basse, causa dei vref bassi per problemi di progettazione dei circuiti di band gap, ma se non fa il pll nonn lo posso configurare a valori più alti.
+
+\section{Sistema di acquisizione dati}
+I sistemi di acquisizione dati che attualmente in sviluppo ma che è possibile utilizzare per eseguire alcuni test sono Yarr (Yet Another Rapid Readout) \cite{YARR} e il sistema BDAQ sviluppato dall'Università di Bonn \cite{BDAQ}. 
+%immagine sistema di acquisizione
+Entrambi i istemi di acquisizione sfruttano fpga programmabili xilinx per il dialogo con il chip. 
+Attraverso questi sistemi di acquisizione, sul cui sviluppo e le particolari caratteristiche non ci soffermeremo, non essendo questo il principale obbiettivo di questo lavoro di tesi, è possibile al momento vari test. 
+In particolare riferendoci al sistema di acquisizione di Bonn i test più importanti, tra quelli attualmente disponibili, sono:
+\begin{itemize}
+\item \textbf{scan$\_$digital} This basic scan injects a digital pulse into enabled pixels to test the digital part of the chip.
+\item \textbf{scan$\_$analog}  This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
+\item \textbf{scan$\_$threshold}  This script scans over different amounts of injected charge to find the effective threshold of the enabled pixels.
+\item \textbf{meta$\_$tune$\_$threshold$\_$simple} This meta script simply performs a threshold scan for every possible TDAC to obtainthe optimal value per pixel to get as close to the target threshold as possible. The result is a TDAC mask file.
+\end{itemize}
+Altro file importante è il file contenente i parametri di configurazione dei registri \textbf{default$\_$chip.yaml}, che ogni volta che uno scan viene lanciato vengono scritti nel chip. 
+
+Attraverso questi test è possibile, anche senza aver collegato un sensore al chip, controllare le funzionalità di parte analogica e digitale separatamente, analizzare la risposta dei tre front end ad un segnale di calibrazione, ricavare una distribuzione delle soglie, la distribuzione del rumore e ottimizzare le soglie localmente (per front end lineare e differenziale). 
+A livello di questo lavoro di tesi risulta interessante esaminare il comportamento del circuito di alimentazione mentre il chip dialoga con il sistema di alimentazione così da avere informazioni su cosa accade quando ci sono variazioni nella corrente assorbita, senza dover simulare la cosa esternamente. 
+Ad esempio durante il test scan$\_$threshold la parte analogica verifica il livello di soglia di ogni pixel andando a iniettare un segnale via via più grande nel circuito di lettura, in questa situazione è corretto pensare che ci siano variazioni nella corrente assorbita anche grandi. 
+Una prima prova che è interessante eseguire consiste nel confrontare una situazione in cui è utilizzato il regolatore con lo Shunt e una situazione in cui non è utilizzato lo Shunt e il chip è alimentato in configurazione LDO. In seguito è lecito chiedersi se, effettivamente in una catena seriale di due chip l'attivita di uno non influenza l'altro. Cioè se il circuito di SLDO riesce ad nascondere al chip eventuali fluttuazioni e rumore  che vi sono nella catena.
+
+\subsubsection{LDOvsSLDO}
+Riportiamo di seguito una misura che aiuta a capite quali siano i vantaggi effettivi di utilizzare un circuito di alimentazione che implementi uno Shunt oltre al regolatore. Quello che è stato fatto è monitorare le tensioni di alimentazione del chip, VDDD e VDDA, mentre attraverso il sistema di acquisizione dati veniva richiesto al chip di eseguire il test scan$\_$threshold\footnote{Per cercare di massimizzare gli effetti è stato aumentato il numero di pixel uin cui veniva iniettato contemporaneamente un segnale, anch'esso preso molto grande}. 
 In questo modo è stato possibile verificare cosa accade con variazioni di carico prorpie dell'attività del chip, senza doverle simulare esternamente. 
-Dal confronto tra i risultati ottenuti in configurazione con o senza shunt è emerso chiaramente l'importanza di questo elemento, non solo per evitare cheun malfunzionamento del chip renda inutilizzabile tutta la catena, ma anche per rendere stabili le tensioni generate dal regolatore. 
-In figura \ref{alllin1} sono riportate le tensioni VDDD, in verde con scala 100 mV/div., e VDDA, in blu con scala 20 mV/div., in questo caso è stato scelto di utilizzare il chip senza Shunt (alimentato in tensione) e durante il dialogo con il sistema di acquisizione si sono verificate variazioni notevoli nelle tensioni. (per rendere il tutto estremo iniezione di carica su più canali) Con le stessse condizioni utilizzando lo shunt gli sbalzi di tensione sono pressochè spariti (alimentato in corrente), vedi figura \ref{alllin2}, questo perché le variazioni di carico in presenza dello shunt sono gestite localmente, mentre in modalità LDO l'alimentazione è in tensione ed è ilo generatore esterno che adatta la corrente erogata ai consumi del chip.
+Dal confronto tra i risultati ottenuti in configurazione con o senza shunt è emersa chiaramente l'importanza di questo elemento, non solo per evitare cheun malfunzionamento del chip renda inutilizzabile tutta la catena, ma anche per rendere stabili le tensioni generate dal regolatore. 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/alllin1}
-\caption{.}
+\caption{VDDD in verde con scala 100 mV/div., e VDDA, in blu con scala 20 mV/div.}
 \label{alllin1}
 \end{figure}
-
-
+In figura \ref{alllin1} sono riportate le tensioni VDDD e VDDA in questo caso è stato scelto di utilizzare il chip senza Shunt (alimentato in tensione) e durante il dialogo con il sistema di acquisizione si sono verificate variazioni notevoli nelle tensioni. (per rendere il tutto estremo iniezione di carica su più canali) Con le stessse condizioni utilizzando lo shunt gli sbalzi di tensione sono pressochè spariti (alimentato in corrente), vedi figura \ref{alllin2}, questo perché le variazioni di carico in presenza dello shunt sono gestite localmente, mentre in modalità LDO l'alimentazione è in tensione ed è il generatore esterno che adatta la corrente erogata ai consumi del chip.
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/alllin2}
-\caption{.}
+\caption{VDDD in verde con scala 50 mV/div., e VDDA, in blu con scala 20 mV/div.}
 \label{alllin2}
 \end{figure}
 %\begin{figure}
@@ -539,35 +591,33 @@ In figura \ref{alllin1} sono riportate le tensioni VDDD, in verde con scala 100 
 %\label{}
 %\end{figure}
 
-
-\section{Sviluppi}
-
-
-\section{Sistemi di acquisizione dati}
-
-\section{Setup}
-LDO mode
-%3.3 ESD Protection and Safe Wire Bonding
-%
-%%In the bottom pad frame the four power domains (VDDA, VDDD, VDD_CML, and VDD_PLL) are
-%isolated by power-cut cells. Within a power domain group, the IO pad ESD devices are connected
-%to the respective power rails. To allow an ESD path between power domains a common ESD
-%bus connects to every power domain’s ground rail via sets of anti-parallel diodes. This ESD bus
-%is also used to connect the global substrate of the chip (VSUB). !!!!!!Because the IO pads use ESD
-%devices connecting to the power rails, care must be taken to not drive signals to the chip while it
-%is not powered, as this would supply parasitic power. There are a few pads which have an over-
-%voltage tolerant ESD protection without a current path to the power rail. These pads are used where
-%the input voltage can exceed the VDDA/VDDD rail potentials (input- and bias pads of the shunt
-%regulator blocks, for example). Where low capacitance is mandatory (CML driver output pads) a
-%path to the VDDA/VDDD rails was also omitted.
-%%The top test pads have an independent power domain (VDD_TOP/GND_TOP) which is not
-%connected to the global ESD bus at the chip bottom. Within the top row the IO pads are protected
-%but since there is no connection to the global ESD bus, ESD events between top and bottom pads
-%should be avoided. The IO pads in the top pad frame are all over-voltage tolerant and therefore
-%output signals are not clamped if the top row is not powered.
-%The wire bonding sequence to avoid ESD problems is as follows: Start with the VSUB pads
-%(14, 88 and 184) followed by all GND pads in any order. Finally bond the remaining pads in any
-%order. The top row pads can be left floating, but if wire bonded then start with the GND pads (T2,
-%T51 and T97) followed by the VDD pads (T1, T50 and T96) and then all other pads.
-\section{Scansioni}
-
+\subsubsection{BDAQ}
+Prima di procedere con la presentazione dei risultati è necessario dare almento un'idea guida di che operazione vengono eseguite durante lo scan delle soglie al fine di comprendere meglio il significato delle varie distribuzioni.
+Attraverso i parametri di configurazione è possibile decidere una soglia globale uguale per tutti i canali di lettura, nella pratica però quello che si otterrà è che la soglia varierà leggermente tra un canale e l'altro. 
+Quello che si avrà sarà una distribuzione delle sogglie intorno ad un valore centrale, oltre a questa dispersione delle soglie, a causa del rumore, si avrà che la risposta del circuito di lettura non sarà una theta in funzione della carica raccolta. 
+Alle volte il rumore si sommerà al segnale facendo rispondere il discriminatore anche a segnali più piccoli della soglia. Se sul ciascun canale iniettiamo un segnale via via più grande ripetendo il processo più volte e andando a riportare quante volte si ha risposta in funzione del segnale iniettato si ottengono le così dette Scurves, se non ci fosse rumore si avrebbe un gradino. 
+Per ogni canale si ha una Scurve messe tutte insieme danno un grafico a "tornado" dove il colore indica quanti sono i pixel che a un dato Vcal si sono accesi un dato numero di volte. Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse. 
+Come detto in precedenza l'utilizzo dello shunt ldo dovrebbe evitare il propagarsi del rumore tra parte analogica e digitale(visto che usano due shuntLDO diversi), ma anche evitare che disturbi della linea vengano visti dal carico. Quello che è stato pensato è mettere due chip in serie alimentati in configurazione SLDO e confrontare la distribuzione di rumore ottenuta in una situazione in cui entrambi i chip effettuano uno scan con la distribuzione ottenuta con un solo chip. 
+%immagine setup
+\begin{figure}
+\centering
+\includegraphics[scale=.2]{Immagini/chipserial}
+\caption{.}
+\label{chipserial}
+\end{figure}
+Le misure riportate fanno riferimento solo al front end lineare, in quanto al momento della presa dati era quello su cui era possibile lavorare meglio, sia a livello di ottimizzazione dei vari parametri, sia a livello di software...
+I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
+%immagini distribuzioni
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/NoiseSingle}
+\caption{noisesingle}
+\label{noisesingle}
+\end{figure}
+come si può vedere dalle due distribuzioni messe a confronto
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/NoiseSerial}
+\caption{noiseserial}
+\label{noiseserial}
+\end{figure}
