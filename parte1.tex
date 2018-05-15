@@ -1,18 +1,18 @@
 \chapter{Alimentazione seriale}
 %L'alimentazione seriale dei moduli è il sistema scelto per l'alimentazione, in grado di rispettare i requisiti per il nuovo tracciatore a pixel di fase due. 
-Nel capitolo precedente si sono discussi i requisiti richiesti per il tracciatore di fase due: tolleranza agli alti livelli di radiazione, alta risoluzione, riduzione del materiale, alta risoluzione, riduzione del materiale, etc... Per rispettare queste condizioni si è deciso di sviluppare un sistema di alimentazione innovativo e alternativoagli attuali convertitori DC-DC\footnote{L'attuale tracciatore utilizza un sistema di alimentazione in parallelo dei moduli, in cui i convertitori DC-DC generano localmente le tensioni necessarie al funzionamento del chip.}. 
-Questi, infatti, non resisterebbero ai più alti livelli di radiazione L'utilizzo di questi all'interno del volume del tracciatore è scoraggiato  dagli alti livelli di radiazione che si avranno in fase due e del campo magnetico. 
-Il nuovo sistema di alimentazione  prevede una distribuzione seriale e sarà gestito, all'interno del chip, da circuiti dedicati prodotti in tecnologia CMOS a 65 nm.
+\section{Introduzione}
+Nel capitolo precedente si sono discussi i requisiti richiesti per il tracciatore di fase due: tolleranza agli alti livelli di radiazione, alta risoluzione, riduzione del materiale, etc... Per rispettare queste condizioni si è deciso di sviluppare un sistema di alimentazione innovativo e alternativo agli attuali convertitori DC-DC\footnote{L'attuale tracciatore utilizza un sistema di alimentazione in parallelo dei moduli, in cui i convertitori DC-DC generano localmente le tensioni necessarie al funzionamento del chip.}. 
+Questi, infatti, non resisterebbero ai più alti livelli di radiazione della fase ad alta luminosità, nè sarebbero in grado di operare efficacemente in presenza del campo magnetico previsto.
+Il nuovo sistema di alimentazione prevede una distribuzione seriale e sarà gestito, all'interno del chip, da circuiti dedicati prodotti in tecnologia CMOS a 65 nm.
 
-
-\section{Caratteristiche dell'alimentazione seriale}
+%\section{Caratteristiche dell'alimentazione seriale}
 In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di moduli posti in successione. 
-A differenza del sistema di alimentazione parallelo attuale, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e, dal momento che ogni modulo ha un suo ramo, in cui la corrente totale  erogata è somma di quella che scorre in tutti i rami, in un sistema seriale la corrente è la stessa per ciascun modulo ed è la tensione di lavoro a cambiare\footnote{L'intervallo di tensione in cui lavora ciascun modulo è lo stesso in ampiezza, ma ognuno si trova ad un potenziale di riferimento differente.}. 
-Dato che la corrente viene "riutilizzata" in ciascun modulo, il generatore, rispetto ad un sistema di alimentazione parallelo, deve fornire correnti minori. Per questo motivo le perdite di potenza nei cavi sono ridotte ed è quindi posibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
+A differenza del sistema di alimentazione parallelo attuale, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale attuale la corrente totale è la stessa che scorre in ciascun modulo ed è la tensione di lavoro a cambiare\footnote{La differenza di potenziale è la stessa per ciascun modulo, ma il riferimento di potenziale cambia per ciascuno di questi.}. 
+Dato che la corrente viene ``riutilizzata'' in ciascun modulo, il generatore deve fornire correnti minori, rispetto a quelle di un sistema di alimentazione parallelo. Per questo motivo le perdite di potenza nei cavi sono ridotte ed è quindi posibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
 %Questo significa che in ogni elemento scorre la medesima corrente, ma l'intervallo di tensione in cui viene a trovarsi è differente per ciascuno di essi. Fino ad ora il metodo di alimentazione utilizzato era quelo parallelo, tutti i moduli si trovano ad un potenziale comune ma su rami separati, questo implica che nel cavo principale scorre una corrente pari alla somma di quella che passa in tutti i rami e dunque sarà necessario l'utilizzo di un cavo con sezione notevolmente maggiore a quello necessario in una alimentazione seriale.
 %Ciò dipende dal fatto che nel caso di alimentazione seriale la corrente sia riutilizzata n-volte riducendo così le perdite di potenza nei cavi, rispetto ad una alimentazione in parallelo, questo consente l'impiego di cavi più sottili riducendo così il materiale all'interno del tracciatore. 
-%Inoltre un'alimentazione seriale, rispetto ad una in parallelo, permette di ridurre la potenza dissipata a parità del numero di moduli alimentati. 
-Trascurando le inefficienze date dal circuito di SLDO possiamo calcolare il rapporto tra la potenza assorbita da n moduli in parallelo con quella di n moduli in serie:
+%Inoltre un'alimentazione seriale, rispetto ad una in parallelo, permette di ridurre la potenza dissipata a parità del numero di moduli alimentati.
+Infatti, trascurando le inefficienze date dal circuito di SLDO, è possibile calcolare il rapporto tra la potenza assorbita da n moduli in parallelo e quella di n moduli in serie:
 \begin{equation}
 \mathrm{W_{parallelo} = n \cdot I \cdot V + (I\cdot n)^2 \cdot R}
 \end{equation}
@@ -23,36 +23,64 @@ Trascurando le inefficienze date dal circuito di SLDO possiamo calcolare il rapp
 \mathrm{\frac{W_{parallelo}}{W_{serie}} = \frac{1+ \dfrac{nRI}{V}}{1+\dfrac{RI}{Vn}}}
 \end{equation}
 dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singolo modulo e V è la caduta di tensione su ciascun modulo. 
-Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
-Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
-Il chip è dunque un carico dinamico e in qualsiasi momento l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena. 
-Dal momento che queste variazioni sono molto veloci l'alimentatore di back-end non può essere in grado di compensarle in modo rapido\footnote{Gli alimentatori sono posizionati lontano dall'esperimentpo e dunque i cavi introducono un ritardo (proporzionale alla lunghezza degli stessi), non è quindi possibile pensare di alimentare la catena in tensione. L'alimentazione dovrà essere in corrente, a livello di chip sarà poi implementato un meccanismo di bilanciamento, che gestisca le variazioni di corrente assorbita.}. Questo è un punto critico che richiede un attento studio. 
-La soluzione al problema consiste nell'implementazione di un regolatore con shunt all'interno del chip, che generi una tensione fissa e si adatti dinamicamente all'assorbimento in corrente. 
-Per quanto detto è necessario che le fluttuazioni di carico date dal chip non siano visibili esternamente, dovranno perciò essere gestite localmente. Il circuito all'interno di ciascun chip incaricato di svolgere questo compito è il regolatore con SLDO.
 
-\section{Alimentazione seriale con RD53A}
-Partendo dall'idea di utilizzare un'alimentazione seriale, la prima idea che si può avere, è quella di porre singoli elementi in serie, ciascuno dotati di un regolatore, questa configurazione ha però una criticità molto importante: il fallimento di un singolo elemento rende inutilizzabile l'intera catena, inquanto interrompe il flusso di corrente in tutto il ramo. 
-Va perciò implementato un metodo per ovviare a questo problema e anche per mitigare le fluttuazioni di tensione causate dai vari elementi che influiscono significativamente  sulla tensione generata localmente. Il circuito che si occupa di risolvere queste problematiche è un regolatore di tensione SLDO (Shunt Low Drop Out). 
+\section{L'alimentazione seriale con RD53A}
+
+Nella progettazione del sistema con alimentazione seriale è necessario tenere presente che la rottura di uno degli elementi della catena non deve compromettere il funzionamento degli altri e che il consumo di ciascun chip, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui si trova e dalle operazioni che sta eseguendo. 
+Il chip, infatti, è un carico dinamico e l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena.
+Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori di back-end non sono in grado di compensarle in modo rapido: questi saranno, infatti, posizionati lontano dall'esperimento e i cavi introdurrano un ritardo proporzionale alla lunghezza degli stessi.
+Per ovviare a queste criticità si è deciso di implementare un regolatore capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, lo \textit{Shunt Low Drop Out} o SLDO.
+Con questo tipo di configurazione la corrente erogata dagli alimentatori di back-end deve essere maggiore o uguale a quella necessaria all'elemento con consumo più alto.
+%Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
+%Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
+%Il chip è dunque un carico dinamico e in qualsiasi momento l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena. 
+%Dal momento che queste variazioni sono molto veloci l'alimentatore di back-end non può essere in grado di compensarle in modo rapido\footnote{Gli alimentatori sono posizionati lontano dall'esperimentpo e dunque i cavi introducono un ritardo (proporzionale alla lunghezza degli stessi), non è quindi possibile pensare di alimentare la catena in tensione. L'alimentazione dovrà essere in corrente, a livello di chip sarà poi implementato un meccanismo di bilanciamento, che gestisca le variazioni di corrente assorbita.}. Questo è un punto critico che richiede un attento studio. 
+%La soluzione al problema consiste nell'implementazione di un regolatore con shunt all'interno del chip, che generi una tensione fissa e si adatti dinamicamente all'assorbimento in corrente. 
+%Per quanto detto è necessario che le fluttuazioni di carico date dal chip non siano visibili esternamente, dovranno perciò essere gestite localmente. Il circuito all'interno di ciascun chip incaricato di svolgere questo compito è il regolatore con SLDO.
+%\section{Alimentazione seriale con RD53A}
+%Partendo dall'idea di utilizzare un'alimentazione seriale, la prima idea che si può avere, è quella di porre singoli elementi in serie, ciascuno dotati di un regolatore, questa configurazione ha però una criticità molto importante: il fallimento di un singolo elemento rende inutilizzabile l'intera catena, inquanto interrompe il flusso di corrente in tutto il ramo. 
+%Va perciò implementato un metodo per ovviare a questo problema e anche per mitigare le fluttuazioni di tensione causate dai vari elementi che influiscono significativamente  sulla tensione generata localmente. Il circuito che si occupa di risolvere queste problematiche è un regolatore di tensione SLDO (Shunt Low Drop Out). 
 %lo schema consiste in due loop di controllo accoppiati, il primo fa si che il transistor M4 faccia passare tutta la corrente che non è consumata dal carico attivo. Mentre un voltage regulator (A1+M1) assicura che il carico attivo (nel nostro caso RD53A) sia alimentato con una tensione costante, indipendentemente dalla corrente consumata e indipendentemente dalla correte che viene immessa nella catena seriale.
 % 
-Un importante caratteristica di questo particolare circuito è che esternamente è visto come una resistenza efficace $\mathrm{R_{eff}}$, in serie ad un offset di tensione $\mathrm{V_{offset}}$, mentre il carico attivo, nel nostro caso il chip RD53A, non è visibile e dunque non lo sono nemmeno le sue le sue variazioni. 
-Questa comportamento resistivo permette l'utilizzo di più SLDO in parallelo, tra di essi la corrente si suddivide in modo ben preciso, definito dalla resistenza effettiva di ciascun SLDO. 
-Il valore resistivo può essere configurato con una resistenza esterna, consentendo così di definire in che modo la corrente si spartisce nel parallelo di più elementi, ad esempio in RD53A, che verrà trattato nei capitoli seguenti, ci sono due regioni alimentate separatamente da due ShuntLDO, una zona analogica ed una digitale, questo vuol dire che esternamente sarà visibile il parallelo tra i due SLDO. 
-\begin{figure}
+%\subsection{S$_{unt}$ L$_{ow}$ D$_{rop}$ O$_{ut}$}
+\subsection{SLDO}
+
+Un'importante caratteristica di questo particolare circuito è che esternamente è visto come una resistenza efficace, $\mathrm{R_{eff}}$, in serie ad un offset di tensione, $\mathrm{V_{offset}}$. Le variazioni di potenza del carico attivo, nel nostro caso il chip RD53A, non sono quindi visibili al di fuori del regolatore.
+%Un importante caratteristica di questo particolare circuito è che esternamente è visto come una resistenza efficace $\mathrm{R_{eff}}$, in serie ad un offset di tensione $\mathrm{V_{offset}}$, mentre il carico attivo, nel nostro caso il chip RD53A, non è visibile e dunque non lo sono nemmeno le sue le sue variazioni. 
+Il comportamento resistivo permette l'utilizzo di più SLDO in parallelo fra di loro, con la corrente che si suddivide in base alla resistenza effettiva di ciascuno.
+%Questa comportamento resistivo permette l'utilizzo di più SLDO in parallelo, tra di essi la corrente si suddivide in modo ben preciso, definito dalla resistenza effettiva di ciascun SLDO. 
+Inoltre, utilizzando resistenze esterne, è possibile scegliere il valore di $\mathrm{R_{eff}}$ e, conseguentemente, la quantità di corrente che scorre in ciascun elemento posto in parallelo.
+In particolare in RD53A la parte analogica e la parte digitale sono alimentate separatemente da due regolatori SLDO posti in parallelo.
+%Il valore resistivo può essere configurato con una resistenza esterna, consentendo così di definire in che modo la corrente si spartisce nel parallelo di più elementi, ad esempio in RD53A, che verrà trattato nei capitoli seguenti, ci sono due regioni alimentate separatamente da due ShuntLDO, una zona analogica ed una digitale, questo vuol dire che esternamente sarà visibile il parallelo tra i due SLDO. 
+
+La figura \ref{VVC} mostra l'andamento tensione come funzione della corrente del chip, in cui sono evidenziati i valori operativi massimi e la tensione minima di lavoro.
+\begin{figure}[!htbp]
 \centering
 \includegraphics[scale=.3]{Immagini/VoltageVsCurrent}
-\caption{Andamento tensione vs corrente del comportamento del chip. Le zone tratteggiate sono oltre i valori operativi massimi (4.0 A per la corrente e 2.0 V per la tensione). La linea orizzontale a 1.4 V è la tensione minima di lavoro. La pendenza è la resistenza efficace, combinazioni differenti di resistenze e offset consentono di spostare il punto di lavoro.}
+\caption{Andamento tensione vs corrente del comportamento del chip. Le zone tratteggiate sono oltre i valori operativi massimi (4.0 A per la corrente e 2.0 V per la tensione), la linea orizzontale a 1.4 V è la tensione minima di lavoro, la pendenza è la resistenza efficace. Combinazioni differenti di resistenza e offset consentono di spostare il punto di lavoro.}
 \label{VVC}
 \end{figure}
-Come si può vedere in figura \ref{VVC} I valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ sono scelti andando a considerare i due punti di lavoro. Il primo è dato dalla tensione minima necessaria al funzionamento del circuito di SLDO (all'incirca $1.4 \V$), che deve essere raggiunta per un valore minimo di corrente, in modo che il chip possa funzionare correttamente. Questo vuol dire che per garantire il funzionamento è necessario fornire un certo margine di corrente in eccesso, poiché i consumi sono soggetti a fluttuazioni, un esempio di questo schema di lavoro è riportato in figura \ref{SLDOprinciple}. La corrente fornita allo SLDO è costante nel tempo, mentre quella utilizzata dal chip varia. L'aspetto che è importante sottolineare è la necessità di avere una corrente seriale che sia sempre maggiore del massimo carico in corrente, in modo da evitare fallimenti.
-\begin{figure}
+In particolare vengono mostrati i criteri di scelta per i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$: da una parte sarà necessario avere una corrispondenza fra la massima corrente erogabile (4.0 A) e la massima tensione (2.0 V), dall'altra si dovrà avere che la corrente corrispondente alla tensione minima di lavoro ($1.4 \V$) sia sufficiente per il funzionamento del chip.
+Per garantire un buon funzionamento è indispensabile fornire la corrente con un certo margine, in modo da sopperire alle fluttuazione nei consumi.
+
+La figura \ref{SLDOprinciple} mostra a titolo di esempio una tipica richiesta di corrente in funzione del tempo della parte digitale ed analogica.
+In particolare la corrente assorbita dalla parte analogica e digitale del chip è riportata in celeste, in giallo è indicato il margine di corrente disponibile, mentre la zona rossa mostra un tipico esempio di situazione da evitare in cui la corrente richiesta dal chip è maggiore di quella disponibile
+%Come si può vedere in figura \ref{VVC} I valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ sono scelti andando a considerare i due punti di lavoro.
+%Il primo è dato dalla tensione minima necessaria al funzionamento del circuito di SLDO (all'incirca $1.4 \V$), che deve essere raggiunta per un valore minimo di corrente, in modo che il chip possa funzionare correttamente.
+%Questo vuol dire che per garantire il funzionamento è necessario fornire un certo margine di corrente in eccesso, poiché i consumi sono soggetti a fluttuazioni, un esempio di questo schema di lavoro è riportato in figura \ref{SLDOprinciple}.
+%La corrente fornita allo SLDO è costante nel tempo, mentre quella utilizzata dal chip varia. L'aspetto che è importante sottolineare è la necessità di avere una corrente seriale che sia sempre maggiore del massimo carico in corrente, in modo da evitare fallimenti.
+\begin{figure}[!htbp]
 \centering
 \includegraphics[scale=.5]{Immagini/ShuntRegulatorPrinciple}
-\caption{Sull'asse y è riportata la corrente, mentre sulle x il tempo. La corrente assorbita da parte analogica e digitale del chip è riportata in celeste, mentre in giallo è indicato il margine di corrente disponibile. Quello che si vuole evitare sono situazioni in cui la corrente richiesta dal chip è maggiore di quella discponibile, zona rossa, poiché può causare un guasto.}
+\caption{Sull'asse y è riportata la corrente, mentre sulle x il tempo. La corrente assorbita dalla parte analogica e digitale del chip è riportata in celeste, in giallo è indicato il margine di corrente disponibile. La zona rossa mostra un tipico esempio di situazione da evitare in cui la corrente richiesta dal chip è maggiore di quella disponibile.}
+%\caption{Sull'asse y è riportata la corrente, mentre sulle x il tempo. La corrente assorbita da parte analogica e digitale del chip è riportata in celeste, mentre in giallo è indicato il margine di corrente disponibile. Quello che si vuole evitare sono situazioni in cui la corrente richiesta dal chip è maggiore di quella discponibile, zona rossa, poiché può causare un guasto.}
 \label{SLDOprinciple}
 \end{figure}
-L'altro punto di interesse nel grafico è quello definito da massima tensione e massima corrente a cui è possibile alimentare il circuito. 
-Una volta sicuri che non sarà mai utilizzata una corrente maggiore del massimo per alimentare il dispositivo, si ha la sicurezza che nemmeno la tensione massima sarà raggiunta. La scelta di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ definisce il consumo in potenza:
+%L'altro punto di interesse nel grafico è quello definito da massima tensione e massima corrente a cui è possibile alimentare il circuito. 
+%Una volta sicuri che non sarà mai utilizzata una corrente maggiore del massimo per alimentare il dispositivo, si ha la sicurezza che nemmeno la tensione massima sarà raggiunta.
+
+%% FINO A QUI ANTONIO %%
+La scelta di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ definisce il consumo in potenza:
 \begin{equation}
 \mathrm{W=I_{in}^2R_{eff}+I_{in}V_{offset}}
 \end{equation}
