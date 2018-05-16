@@ -11,7 +11,7 @@ Il nuovo sistema di alimentazione prevede una distribuzione seriale e sarà gest
 
 %\section{Caratteristiche dell'alimentazione seriale}
 In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di moduli posti in successione. 
-A differenza del sistema di alimentazione parallelo attuale, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale attuale la corrente totale è la stessa che scorre in ciascun modulo ed è la tensione di lavoro a cambiare
+A differenza del sistema di alimentazione parallelo attuale, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale la corrente totale è la stessa per tutti i moduli ed è la tensione di lavoro a cambiare
 \footnote{
   La differenza di potenziale è la stessa per ciascun modulo, ma il riferimento di potenziale cambia per ciascuno di questi.
 }.
@@ -37,7 +37,7 @@ dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singo
 Nella progettazione del sistema con alimentazione seriale è necessario tenere presente che la rottura di uno degli elementi della catena non deve compromettere il funzionamento degli altri e che il consumo di ciascun chip, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui si trova e dalle operazioni che sta eseguendo. 
 Il chip, infatti, è un carico dinamico e l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena.
 Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori di back-end non sono in grado di compensarle in modo rapido: questi saranno, infatti, posizionati lontano dall'esperimento e i cavi introdurrano un ritardo proporzionale alla lunghezza degli stessi.
-Per ovviare a queste criticità si è deciso di implementare un regolatore capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, lo \textit{Shunt Low Drop Out} o SLDO.
+Per ovviare a queste criticità si è deciso di implementare un regolatore con Shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, con caratteristiche di \textit{Low Drop Out}, da qui la sigla ShuntLDO.
 Con questo tipo di configurazione la corrente erogata dagli alimentatori di back-end deve essere maggiore o uguale a quella necessaria all'elemento con consumo più alto.
 %Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
 %Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
@@ -59,7 +59,7 @@ Le variazioni di potenza del carico attivo, nel nostro caso il chip RD53A, non s
 Il comportamento resistivo permette l'utilizzo di più SLDO in parallelo fra di loro, con la corrente che si suddivide in base alla resistenza effettiva di ciascuno.
 %Questa comportamento resistivo permette l'utilizzo di più SLDO in parallelo, tra di essi la corrente si suddivide in modo ben preciso, definito dalla resistenza effettiva di ciascun SLDO. 
 Inoltre, utilizzando resistenze esterne, è possibile scegliere il valore di $\mathrm{R_{eff}}$ e, conseguentemente, la quantità di corrente che scorre in ciascun elemento posto in parallelo.
-In particolare in RD53A la parte analogica e la parte digitale sono alimentate, all'interno dello stesso chip, da due regolatori SLDO posti in parallelo.
+In particolare in RD53A la parte analogica e la parte digitale sono alimentate, all'interno dello stesso chip, da due regolatori SLDO posti in parallelo, quindi anche solo con un chip la resistenza vista esternamente è il parallelo di due, solitamente uguali così da avere una suddivisione della corrente a metà.
 %Il valore resistivo può essere configurato con una resistenza esterna, consentendo così di definire in che modo la corrente si spartisce nel parallelo di più elementi, ad esempio in RD53A, che verrà trattato nei capitoli seguenti, ci sono due regioni alimentate separatamente da due ShuntLDO, una zona analogica ed una digitale, questo vuol dire che esternamente sarà visibile il parallelo tra i due SLDO. 
 
 La figura \ref{VVC} mostra l'andamento tensione come funzione della corrente del chip, in cui sono evidenziati i valori operativi massimi e la tensione minima di lavoro.
@@ -103,7 +103,7 @@ Ad esempio si potrebbe avere un \textit{high power mode}, in cui la corrente all
 
 \subsection{Schema di catena di alimentazione con SLDO}
 
-La progettazione del nuovo tracciatore prevede di avere una catena di moduli ospitante ciascuno quattro chip in parallelo.
+La progettazione del nuovo tracciatore prevede di avere una catena di moduli ospitanti ciascuno quattro chip in parallelo.
 La figura \ref{MCM}, ad esempio, riporta lo schema di due moduli posti in serie.
 %L'obiettivo per il nuovo tracciatore è di aver una catena di moduli ognuno dei quali ospita quattro chip in parallelo, in figura \ref{MCM} è riportato uno schema con due moduli in serie. 
 
@@ -126,17 +126,17 @@ Per avere un po' di margine incrementiamo la corrente di un 20$\%$.
 Conseguentemente $\mathrm{I_{in}=2.4}$ A, $\mathrm{I_{modulo}=9.6}$ A, $\mathrm{V_{modulo}=1.52} \V$ e, quindi, la caduta di tensione su tutta la catena, formata da 8 moduli, sarà $12.16 \V$.
 %Con una corrente di $\mathrm{I_{in}=2.0}$ A per chip\footnote{Che vale a dire 1 A per ciascuno dei due SLDO presenti nel chip.} ($\mathrm{I=8.0}$ A per modulo) si avrà un $\mathrm{V_{modulo}=1.4} \V$, per avere un po' di margine incrementiamo la corrente di un 20$\%$, la corrente che arriva nei moduli sarà I = 9.6 A. 
 %In questa situazione $\mathrm{V_{modulo}=1.52}$ V e dunque la caduta di tensione su tutta la catena formata da 8 moduli sarà pari a $12.16 \V$. Questa non è la caduta di tensione totale, va tenuto conto anche della resistenza dovuta ai cavi, in questo esempio assumiamo valga 2 $\Omega$. 
-Tenendo conto anche della resistenza dovuta ai cavi, assumiamo valga 2 $\Omega$, la tensione di uscita del generatore sarà infine $\mathrm{V=I \cdot 2 \Omega +12.16 \V=31.36 \V}$.
+Tenendo conto anche della resistenza dovuta ai cavi, che assumiamo valga 2 $\Omega$, la tensione di uscita al generatore sarà infine $\mathrm{V=I \cdot 2 \Omega +12.16 \V=31.36 \V}$.
   Dai conti fatti risulta che circa il $60 \%$ della potenza è dissipata sui cavi
 \footnote{
   Nonostante il valore elevato in assoluto, bisogna tenere presente che è in realtà un miglioramento rispetto alla situazione attuale, nella quale l'alimentazione è in parallelo.
 }. % sarebbe carino sapere la percentuale di consumo attuale
 %La tensione di uscita del generatore è dunque $\mathrm{V=I \cdot 2 \Omega +12.6 \V=31.8 \V}$\footnote{Circa il $60 \%$ della potenza è dissipata sui cavi, questo fatto potrebbe sembrare un pessimo traguardo, in realtà è un miglioramento rispetto alla situazione attuale, nella quale l'alimentazione è in parallelo.}.% sarebbe carino sapere la percentuale di consumo attuale
 
-Il generatore posto a monte della catena è limitato in corrente e, per fare sì che la potenza che il generatore può erogare sia maggiore di quella necessaria alla catena, si pone il valore limite della tensione leggermente superiore a quello fin qui calcolato, diciamo ad esempio 34 V.
+Il generatore posto a monte della catena è limitato in corrente e, per fare sì che la potenza erogabile sia maggiore di quella necessaria alla catena, si pone il valore limite della tensione leggermente superiore a quello fin qui calcolato, diciamo ad esempio 34 V.
 %In questo sistema il generatore a monte della catena sarà limitato in corrente, mentre il limite per la tensione sarà posto leggermente maggiore a quello minimo, ad esempio 34 V. 
 %In questo modo la potenza che il generatore può erogare è maggiore di quella necessaria per la catena. 
-La potenza massima che il generatore potrà erogare è, quindi, di $34 \V \cdot 9.6$ $A = 326.4$ W, per cui, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli, si ottiene una potenza per modulo di $17.76$ W.
+La potenza massima che il generatore potrà erogare è, quindi, di $34 \V \cdot 9.6$ A = 326.4 W, per cui, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli, si ottiene una potenza per modulo di 17.76 W\footnote{Questo a fronte  di una potenza assorbita, nelle normali condizioni di lavoro, di $\mathrm{W = 4 \cdot W_{chip} = I \cdot V_{modulo} = 14.6}$ W per modulo.}.
 %Vedremo infatti, come questo sia necessario utile nel caso in cui alcuni chip smettano di funzionare. 
 %La potenza massima erogabile dal generatore sarà $34 \V \cdot 9.6$ $A = 326.4$ W, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli si ottiene una potenza per modulo di $17.76$ W. Questo a fronte  di una potenza assorbita, nelle normali condizioni di lavoro, di $\mathrm{W = 4 \cdot W_{chip} = I \cdot V_{modulo} = 14.6}$ W per modulo.
 
@@ -176,11 +176,13 @@ impostati.
 \label{SLDOprova}
 \end{figure}
 
-Il design del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm capace di lavorare con una corrente massima di 2A.
-Partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. 
-Lo SLDO è alimentato in corrente $\mathrm{I_{in}}$, una frazione di questa corrente scorrerà nel ramo di R3, la indichiamo con $\mathrm{I_{ref}}$, questa sarà la corrente di riferimento all'interno dello shunt. 
+Il progetto del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm capace di lavorare con una corrente massima di 2A. Per descrivere il suo funzionamento partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. 
+Come anticipato il circuito di SLDO è alimentato in corrente $\mathrm{I_{in}}$, attraverso il pad di $\mathrm{V_{in}}$. 
+Della corrente in ingresso una frazione scorrerà nel ramo di R3, la indicheremo con $\mathrm{I_{ref}}$, questa sarà la corrente di riferimento all'interno dello shunt, vedremo in seguito perché. 
 La parte che agisce come regolatore di tensione è A1 + M1, A1 fa in modo di tenere la tensione sul carico uguale ad un valore di riferimento, che per ora trascuriamo come sia generato, andando ad aprire o chiudere il gate del mosfet M1 e dunque facendo scorrere più o meno corrente. 
-Questo di per se causerebbe un aumento di $\mathrm{I_{ref}}$ e conseguentemente di $\mathrm{V_{in}}$ proporzionale ad R3. Nello schema è però presente un ramo in parallelo al carico, in cui la corrente che scorre è regolata da M4+A3, A3 è la parte attiva dello shunt, che fa sì che la corrente nel ramo con M1 sia 1000 volte quella che scorre in R3 andando a regolare $\mathrm{I_{shunt}}$ modificando la tensione di gate del mosfet M4. 
+Questo di per se, in assenza della parte di shunt, causerebbe un aumento di $\mathrm{I_{ref}}$ e conseguentemente di $\mathrm{V_{in}}$. 
+Per evitare ciò è stato implementato un ramo in parallelo al carico, in cui la corrente che scorre è regolata da M4+A3, con lo scopo di mantenere la corrente in ingresso a M1 costante, andando a creare un bypass per la corrente non utilizzata dal carico. 
+M4+A3 è la parte attiva dello shunt, A3 fa sì che la corrente nel ramo con M1 sia 1000 volte quella che scorre in R3 andando a regolare $\mathrm{I_{shunt}}$ modificando la tensione di gate del mosfet M4. 
 La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno variazioni dinamiche del carico.
 
 \begin{figure}
@@ -190,11 +192,14 @@ La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno var
 \label{SLDO5A}
 \end{figure}
 
-Questo primo schema permette una comprensione generale del funzionamento dell'oggetto il cui schema semplificato nella versione da $\mathrm{0.5 A}$ è riportato in figura \ref{SLDO5A}. Rispetto a quanto visto fino ad ora si hanno alcune differenze, benché l'idea generale di funzionamento rimanga la stessa. 
-In questo schema il carico sta tra i pin $\mathrm{V_{out}}$ e $\mathrm{I_{out}}$ in parallelo al partitore R1+R2 (R1 e R2 sono resistenze uguali), la tensione di riferimento $\mathrm{V_{ref}}$ è confrontata con la tensione su R2 che è la metà di $V_{out}$. A3 fa un confronto tra le correnti che scorrono nel ramo di R3 ($\mathrm{I_{ref}}$) e in quello di M2 e di conseguenza regola M4. La coppia di mosfet M1-M2 è in configurazione \textit{current-mirror} e il rapporto k tra le due correnti è uguale a 1000 (dato dalle caratteristiche geometriche dei due mosfet). 
-Quindi la corrente che scorre in M1 è 1000 volte $\mathrm{I_{ref}}$. Questo comportamento ci dice che esternamente lo SLDO è visto come un carico resistivo circa uguale a $\frac{R3}{k}$. A2+M3 ha lo scopo di migliorare la precisione di k, tenendo uguale la tensione a valle di M1 e M2. Il valore di R3, per quanto detto, è una importante caratteristica e la sua scelta determina la tensione nel punto di lavoro del grafico IV per una data corrente. 
+Questo primo schema permette una comprensione generale del funzionamento del circuito di SLDO il cui schema nella versione da $\mathrm{0.5 A}$ è riportato in figura \ref{SLDO5A}. Rispetto a quanto visto in precedenza si hanno alcune differenze, benché l'idea generale di funzionamento rimanga la stessa. 
+In questo schema il carico sta tra i pin $\mathrm{V_{out}}$ e $\mathrm{I_{out}}$ in parallelo al partitore R1+R2 (R1 e R2 sono resistenze uguali), la tensione di riferimento $\mathrm{V_{ref}}$\footnote{$\mathrm{V_{ref}}$ non ha niente a che vedere con $\mathrm{I_{ref}}$.} è confrontata con la tensione su R2 che è la metà di $\mathrm{V_{out}}$. L'amplificatore A3, invece, fa un confronto tra le correnti che scorrono nel ramo di R3 ($\mathrm{I_{ref}}$) e in quello di M2 e di conseguenza regola il mosfet M4. 
+La coppia di mosfet M1-M2 è in configurazione \textit{current-mirror} e il rapporto k tra le due correnti è uguale a 1000, quest'ultimo dipende solamente dalle caratteristiche geometriche dei due mosfet\footnote{In un \textit{current-mirror} il rapporto k è uguale a $\dfrac{W_1L_2}{W_2L_1}$ con $W$ e $L$ profondità e lunghezzadel mosfet}. 
+Grazie al \textit{current-mirror} la corrente che scorre in M1 è 1000 volte $\mathrm{I_{ref}}$. Questo comportamento definisce in che modo lo SLDO è visto esternamente, per il generatore risulta come un carico resistivo pari a $\frac{R3}{k}$. 
+A2+M3 ha lo scopo di migliorare la precisione di k. 
+Il valore di R3, per quanto detto, è una importante caratteristica e la sua scelta determina la tensione nel punto di lavoro del grafico IV per una data corrente. 
 
-Per funzionare correttamente questo circuito necessita una tensione in ingresso minima di circa $1.4V$, dunque valori di resistenza maggiori consentiranno di operare con correnti minori, con il vantaggio di consumare minor potenza\footnote{In quanto la corrente in ingresso è fissata e quella non utilizzata viene dissipata sullo shunt, che diventa un punto molto caldo}, ma con lo svantaggio di aver minor spazio per eventuali fluttuazioni del carico. 
+Per funzionare correttamente questo circuito necessita di una tensione in ingresso minima di circa $1.4V$, dunque valori di resistenza maggiori consentiranno di operare con correnti minori, con il vantaggio di consumare minor potenza\footnote{In quanto la corrente in ingresso è fissata e quella non utilizzata viene dissipata sullo shunt, che diventa un punto molto caldo}, ma con lo svantaggio di aver minor spazio per eventuali fluttuazioni del carico. 
 Analogamente resistenze minori avranno l'effetto contrario, tensioni minori con correnti maggiori.
 Sempre nello schematico è indicato con $\mathrm{R_{ext}}$ il punto in cui è possibile collegare una resistenza esterna in sostituzione ad R3, che è quella presente di default all'interno dello SLDO.
 \begin{figure}
@@ -203,15 +208,14 @@ Sempre nello schematico è indicato con $\mathrm{R_{ext}}$ il punto in cui è po
 \caption{Circuito semplificato dello SLDO 2A.}
 \label{SLDO2A}
 \end{figure}
-Nel prototipo a $2A$, rispetto alla versione a $0.5A$, è presente il mosfet M7 sul ramo di R3, il cui gate è controllato da A4 (vedi figura \ref{SLDO2A}). Questo ulteriore stadio inserisce un offset di tensione al comportamento resistivo dello SLDO. In questo caso la corrente di riferimento $\mathrm{I_{ref}}$ sarà:
+Per quanto visto fin ora non c'è traccia della possibilità di avere un offset. Questa caratteristica è introdotta nel prototipo a $2A$.
+Rispetto alla versione a $0.5A$, è presente il mosfet M7 sul ramo di R3, il cui gate è controllato da A4, si faccia riferimento alla figura \ref{SLDO2A}. Questo ulteriore stadio inserisce un offset di tensione al comportamento resistivo dello SLDO. In questo caso la corrente di riferimento $\mathrm{I_{ref}}$ sarà:
 \begin{equation}
 \mathrm{I_{ref} = \frac{V_{in} - V_{ofs}}{R_3}}
 \end{equation}
 
 \subsection{PCB}
-Questa prima parte di studio del comportamento dello SLDO è stato eseguita utilizzando PCB di test nella cui parte centrale lo ShuntLDO è stato collocato e connesso con wire-bond. La PCB riportata nelle immagini è quella relativa al prototipo di ShuntLDO da 2A, figura \ref{PCBTestSLDO}. 
-Sulla PCB sono presenti connettori molex per l'alimentazione, jumper di configurazione, pin per misurare varie tensioni etc. Per semplicità e chiarezza espositiva verranno introdotti solo gli elementi principali.
-
+Fino ad ora ci siamo limitati alla descrizione del funzionamento dello SLDO, prima però di procedere alla presentazione di misure e test è necessario spendere due parole sulla PCB (\textit{Printed Circuit Board}) di test, nella cui parte centrale lo ShuntLDO è stato collocato e connesso con wire-bond. La PCB riportata nelle immagini è quella relativa al prototipo di ShuntLDO da 2A, figura \ref{PCBTestSLDO}. Senza entrare nel dettaglio la PCB è fornita di tutto ciò che è necessario al funzionamento dello SLDO e all'esecuzione di test basilari, sono presenti connettori molex per l'alimentazione, jumper di configurazione, pin per misurare varie tensioni etc.
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/chipcard}
@@ -221,11 +225,9 @@ Sulla PCB sono presenti connettori molex per l'alimentazione, jumper di configur
 
 %Aggiungere immagini reali?
 
-L'alimentazione è fornita tramite il molex J01 la linea 1 fornisce la tensione Vcc utilizzata dal bandgap U02 per la generazione del Vref.
-
 \section{Caratterizzazione ShuntLDO da 0.5A}
-Le prime misure sono state fatte sul prototipo di SLDO da 0.5A prima del passaggio alla versione 2A. La PCB utilizzata è perciò leggermente differente da quella descritta nella sezione precedente, sebbene le funzionalità principali rimangano le stesse. Unica differenza sostanziale è la possibilità di inserire un offset regolabile al $V_{out}$, cosa che è invece possibile con la PCB dello SLDO da 2A.
-Il primo studio affrontato è stato la caratterizzazione dello SLDO, utilizzando una alimentazione in corrente. Le prime misure eseguite sono state le curve tensione corrente (IV), ottenute andando a misurare la tensione in ingresso $\mathrm{V_{in}}$, quella di uscita $\mathrm{V_{out}}$ e quella di riferimento $\mathrm{V_{ref}}$ in funzione della corrente in ingresso.
+Le prime misure sono state fatte sul prototipo di SLDO da 0.5A prima del passaggio alla versione 2A. La PCB utilizzata è perciò leggermente differente, sebbene le funzionalità principali rimangano le stesse. Unica differenza sostanziale è la possibilità di inserire un offset regolabile al $\mathrm{V_{out}}$, cosa che è invece possibile con la PCB dello SLDO da 2A.
+Il primo studio affrontato è stato la caratterizzazione dello SLDO, utilizzando una alimentazione in corrente. Le prime misure sono servite esaminare l'andamento della tensione di $\mathrm{V_{in}}$, $\mathrm{V_{out}}$ e $\mathrm{V_{ref}}$ in funzione della corrente in ingresso.
 \begin{figure}
 \centering
 \includegraphics[scale=.5]{Immagini/provaSLDO5}
@@ -233,7 +235,7 @@ Il primo studio affrontato è stato la caratterizzazione dello SLDO, utilizzando
 \label{provaSLDO5}
 \end{figure}
 
-Le prime curve di IV sono state eseguite sullo shunt da 0.5 A in cui è possibile regolare solo $\mathrm{V_{ref}}$, in figura \ref{provaSLDO5} è riportato il grafico ottenuto andando a variare la corrente in ingresso in configurazione senza carico applicato al $\mathrm{V_{out}}$. Questa è quindi una situazione in cui tutta la corrente fornita dall'alimentazione viene assorbita dallo shunt,  prendendo l'andamento asintotico e disinteressandoci della parte iniziale del grafico, che corrisponde all'accensione dello ShuntLDO, riportiamo in tabella alcuni valori di interesse: 
+In figura \ref{provaSLDO5} è riportato il grafico ottenuto andando a variare la corrente in ingresso in configurazione senza carico applicato al $\mathrm{V_{out}}$. Questa è quindi una situazione in cui tutta la corrente fornita dall'alimentazione viene assorbita dallo shunt,  prendendo l'andamento asintotico e disinteressandoci della parte iniziale del grafico, che corrisponde ad una situazione in cui il regolatore non è attivo, riportiamo in tabella alcuni valori di interesse: 
 
 \[
 \begin{array}{ccccc}
@@ -248,11 +250,12 @@ V_{ref} & V_{out} & 2 \cdot V_{ref}- V_{out} & R_{eff} & V_{offset} \\
 \bottomrule
 \end{array}
 \]
-In questa prima misura non è stato applicato nessun carico al $V_out$, dunque tutta la corrente in ingresso scorre nello Shunt, questa misura ci aiuterà in un confronto successivo con situazioni in cui è presente un carico, sia statico che dinamico. 
+Come detto, in questa prima misura non è stato applicato nessun carico al $\mathrm{V_{out}}$, dunque tutta la corrente in ingresso scorre nello Shunt, andando a scaldare molto l'oggetto, questa misura ci aiuterà in un confronto successivo con situazioni in cui è presente un carico, sia statico che dinamico. 
 
-Un'altra misura di test, che è stata eseguita con questo prototipo di shunt prima del passaggio alla versione da 2A, è un serie di due shunt entrambi con un carico resistivo di $\mathrm{4 \Omega}$. In questo caso i due ShuntLDO hanno $\mathrm{V_{ref}}$ diversi $\mathrm{V_{ref1}=0.497}$ V e $\mathrm{V_{ref2}=0.553 V}$. 
+La successiva misura di test che è stata eseguita con questo prototipo di shunt, prima del passaggio alla versione da 2A, è un serie di due SLDO entrambi con un carico resistivo di $\mathrm{4 \Omega}$. In questo caso i due elementi hanno $\mathrm{V_{ref}}$ diversi $\mathrm{V_{ref1}=0.497}$ V e $\mathrm{V_{ref2}=0.553 V}$. 
+Ciò non rappresenta un problema in quanto il comportamento "esterno " non ne è influenzato.
 Sulla PCB è presente un bandgap la cui alimentazione può essere separata da quella dello SLDO. Il compito di questo bandgap è generare la tensione di riferimento $\mathrm{V_{ref}}$, il suo valore può essere regolato con un potenziometro, anch'esso presente sulla PCB.
-Possiamo vedere a confronto il diverso comportamento nel caso in cui VCC, tensione che alimenta il bandgap sia esterna, con il caso in cui la tensione VCC sia cortocircuitata con l'ingresso di $I_{in}$ e dunque si trovi a tensione uguale a $\mathrm{V_{in}}$, figura \ref{SLDO5Serie}. In questo confronto va tenuto conto che il bandgap presente sulla scheda di test ha un regime di lavoro compreso tra  i 2 e i 18 V. 
+Possiamo vedere a confronto il diverso comportamento del serie di due SLDO nel caso in cui VCC, tensione che alimenta il bandgap, sia esterna e il caso in cui la tensione VCC sia cortocircuitata con l'ingresso di $\mathrm{I_{in}}$ e dunque si trovi a tensione uguale a $\mathrm{V_{in}}$, figura \ref{SLDO5Serie}. In questo confronto va tenuto conto che il bandgap presente sulla scheda di test ha un regime di lavoro compreso tra  i 2 e i 18 V. 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/SLDO5Serie}
@@ -261,7 +264,7 @@ Possiamo vedere a confronto il diverso comportamento nel caso in cui VCC, tensio
 \end{figure}
 Quello che si può notare dai grafici è che fintanto che la tensione di ingresso non supera circa 1 V il bandgap non riesce a generare il giusto livello di tensione $\mathrm{V_{ref}}$ e ciò ha come conseguenza un $\mathrm{V_{out}}$ non stabile, ovvero si arriva ad una stabilità del $\mathrm{V_{out}}$ con correnti più elevate.
 
-
+%magari fare tabellino anche qui
 \subsubsection{Comportamento dinamico}
 \begin{figure}
 \centering
