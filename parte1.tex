@@ -1,14 +1,22 @@
 \chapter{Alimentazione seriale}
 %L'alimentazione seriale dei moduli è il sistema scelto per l'alimentazione, in grado di rispettare i requisiti per il nuovo tracciatore a pixel di fase due. 
 \section{Introduzione}
-Nel capitolo precedente si sono discussi i requisiti richiesti per il tracciatore di fase due: tolleranza agli alti livelli di radiazione, alta risoluzione, riduzione del materiale, etc... Per rispettare queste condizioni si è deciso di sviluppare un sistema di alimentazione innovativo e alternativo agli attuali convertitori DC-DC\footnote{L'attuale tracciatore utilizza un sistema di alimentazione in parallelo dei moduli, in cui i convertitori DC-DC generano localmente le tensioni necessarie al funzionamento del chip.}. 
+Nel capitolo precedente si sono discussi i requisiti richiesti per il tracciatore di fase due: tolleranza agli alti livelli di radiazione, alta risoluzione, riduzione del materiale, etc...
+Per rispettare queste condizioni si è deciso di sviluppare un sistema di alimentazione innovativo e alternativo agli attuali convertitori DC-DC
+\footnote{
+  L'attuale tracciatore utilizza un sistema di alimentazione in parallelo dei moduli, in cui i convertitori DC-DC generano localmente le tensioni necessarie al funzionamento del chip.
+}.
 Questi, infatti, non resisterebbero ai più alti livelli di radiazione della fase ad alta luminosità, nè sarebbero in grado di operare efficacemente in presenza del campo magnetico previsto.
 Il nuovo sistema di alimentazione prevede una distribuzione seriale e sarà gestito, all'interno del chip, da circuiti dedicati prodotti in tecnologia CMOS a 65 nm.
 
 %\section{Caratteristiche dell'alimentazione seriale}
 In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di moduli posti in successione. 
-A differenza del sistema di alimentazione parallelo attuale, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale attuale la corrente totale è la stessa che scorre in ciascun modulo ed è la tensione di lavoro a cambiare\footnote{La differenza di potenziale è la stessa per ciascun modulo, ma il riferimento di potenziale cambia per ciascuno di questi.}. 
-Dato che la corrente viene ``riutilizzata'' in ciascun modulo, il generatore deve fornire correnti minori, rispetto a quelle di un sistema di alimentazione parallelo. Per questo motivo le perdite di potenza nei cavi sono ridotte ed è quindi posibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
+A differenza del sistema di alimentazione parallelo attuale, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale attuale la corrente totale è la stessa che scorre in ciascun modulo ed è la tensione di lavoro a cambiare
+\footnote{
+  La differenza di potenziale è la stessa per ciascun modulo, ma il riferimento di potenziale cambia per ciascuno di questi.
+}.
+Dato che la corrente viene ``riutilizzata'' in ciascun modulo, il generatore deve fornire correnti minori, rispetto a quelle di un sistema di alimentazione parallelo.
+Per questo motivo le perdite di potenza nei cavi sono ridotte ed è quindi posibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
 %Questo significa che in ogni elemento scorre la medesima corrente, ma l'intervallo di tensione in cui viene a trovarsi è differente per ciascuno di essi. Fino ad ora il metodo di alimentazione utilizzato era quelo parallelo, tutti i moduli si trovano ad un potenziale comune ma su rami separati, questo implica che nel cavo principale scorre una corrente pari alla somma di quella che passa in tutti i rami e dunque sarà necessario l'utilizzo di un cavo con sezione notevolmente maggiore a quello necessario in una alimentazione seriale.
 %Ciò dipende dal fatto che nel caso di alimentazione seriale la corrente sia riutilizzata n-volte riducendo così le perdite di potenza nei cavi, rispetto ad una alimentazione in parallelo, questo consente l'impiego di cavi più sottili riducendo così il materiale all'interno del tracciatore. 
 %Inoltre un'alimentazione seriale, rispetto ad una in parallelo, permette di ridurre la potenza dissipata a parità del numero di moduli alimentati.
@@ -42,15 +50,16 @@ Con questo tipo di configurazione la corrente erogata dagli alimentatori di back
 %Va perciò implementato un metodo per ovviare a questo problema e anche per mitigare le fluttuazioni di tensione causate dai vari elementi che influiscono significativamente  sulla tensione generata localmente. Il circuito che si occupa di risolvere queste problematiche è un regolatore di tensione SLDO (Shunt Low Drop Out). 
 %lo schema consiste in due loop di controllo accoppiati, il primo fa si che il transistor M4 faccia passare tutta la corrente che non è consumata dal carico attivo. Mentre un voltage regulator (A1+M1) assicura che il carico attivo (nel nostro caso RD53A) sia alimentato con una tensione costante, indipendentemente dalla corrente consumata e indipendentemente dalla correte che viene immessa nella catena seriale.
 % 
-%\subsection{S$_{unt}$ L$_{ow}$ D$_{rop}$ O$_{ut}$}
-\subsection{SLDO}
+%\section{S$_{unt}$ L$_{ow}$ D$_{rop}$ O$_{ut}$}
+\section{SLDO}
 
-Un'importante caratteristica di questo particolare circuito è che esternamente è visto come una resistenza efficace, $\mathrm{R_{eff}}$, in serie ad un offset di tensione, $\mathrm{V_{offset}}$. Le variazioni di potenza del carico attivo, nel nostro caso il chip RD53A, non sono quindi visibili al di fuori del regolatore.
+Un'importante caratteristica di questo particolare circuito è che esternamente è visto come una resistenza efficace, $\mathrm{R_{eff}}$, in serie ad un offset di tensione, $\mathrm{V_{offset}}$.
+Le variazioni di potenza del carico attivo, nel nostro caso il chip RD53A, non sono quindi visibili al di fuori del regolatore.
 %Un importante caratteristica di questo particolare circuito è che esternamente è visto come una resistenza efficace $\mathrm{R_{eff}}$, in serie ad un offset di tensione $\mathrm{V_{offset}}$, mentre il carico attivo, nel nostro caso il chip RD53A, non è visibile e dunque non lo sono nemmeno le sue le sue variazioni. 
 Il comportamento resistivo permette l'utilizzo di più SLDO in parallelo fra di loro, con la corrente che si suddivide in base alla resistenza effettiva di ciascuno.
 %Questa comportamento resistivo permette l'utilizzo di più SLDO in parallelo, tra di essi la corrente si suddivide in modo ben preciso, definito dalla resistenza effettiva di ciascun SLDO. 
 Inoltre, utilizzando resistenze esterne, è possibile scegliere il valore di $\mathrm{R_{eff}}$ e, conseguentemente, la quantità di corrente che scorre in ciascun elemento posto in parallelo.
-In particolare in RD53A la parte analogica e la parte digitale sono alimentate separatemente da due regolatori SLDO posti in parallelo.
+In particolare in RD53A la parte analogica e la parte digitale sono alimentate, all'interno dello stesso chip, da due regolatori SLDO posti in parallelo.
 %Il valore resistivo può essere configurato con una resistenza esterna, consentendo così di definire in che modo la corrente si spartisce nel parallelo di più elementi, ad esempio in RD53A, che verrà trattato nei capitoli seguenti, ci sono due regioni alimentate separatamente da due ShuntLDO, una zona analogica ed una digitale, questo vuol dire che esternamente sarà visibile il parallelo tra i due SLDO. 
 
 La figura \ref{VVC} mostra l'andamento tensione come funzione della corrente del chip, in cui sono evidenziati i valori operativi massimi e la tensione minima di lavoro.
@@ -61,10 +70,10 @@ La figura \ref{VVC} mostra l'andamento tensione come funzione della corrente del
 \label{VVC}
 \end{figure}
 In particolare vengono mostrati i criteri di scelta per i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$: da una parte sarà necessario avere una corrispondenza fra la massima corrente erogabile (4.0 A) e la massima tensione (2.0 V), dall'altra si dovrà avere che la corrente corrispondente alla tensione minima di lavoro ($1.4 \V$) sia sufficiente per il funzionamento del chip.
-Per garantire un buon funzionamento è indispensabile fornire la corrente con un certo margine, in modo da sopperire alle fluttuazione nei consumi.
+Per garantire un buon funzionamento è indispensabile fornire questa corrente con un certo margine, in modo da sopperire alle fluttuazione nei consumi.
 
 La figura \ref{SLDOprinciple} mostra a titolo di esempio una tipica richiesta di corrente in funzione del tempo della parte digitale ed analogica.
-In particolare la corrente assorbita dalla parte analogica e digitale del chip è riportata in celeste, in giallo è indicato il margine di corrente disponibile, mentre la zona rossa mostra un tipico esempio di situazione da evitare in cui la corrente richiesta dal chip è maggiore di quella disponibile
+In particolare la corrente assorbita dalla parte analogica e digitale del chip è riportata in celeste, in giallo è indicato il margine di corrente disponibile, mentre la zona rossa mostra un tipico esempio di situazione da evitare in cui la corrente richiesta dal chip è maggiore di quella disponibile.
 %Come si può vedere in figura \ref{VVC} I valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ sono scelti andando a considerare i due punti di lavoro.
 %Il primo è dato dalla tensione minima necessaria al funzionamento del circuito di SLDO (all'incirca $1.4 \V$), che deve essere raggiunta per un valore minimo di corrente, in modo che il chip possa funzionare correttamente.
 %Questo vuol dire che per garantire il funzionamento è necessario fornire un certo margine di corrente in eccesso, poiché i consumi sono soggetti a fluttuazioni, un esempio di questo schema di lavoro è riportato in figura \ref{SLDOprinciple}.
@@ -79,45 +88,88 @@ In particolare la corrente assorbita dalla parte analogica e digitale del chip �
 %L'altro punto di interesse nel grafico è quello definito da massima tensione e massima corrente a cui è possibile alimentare il circuito. 
 %Una volta sicuri che non sarà mai utilizzata una corrente maggiore del massimo per alimentare il dispositivo, si ha la sicurezza che nemmeno la tensione massima sarà raggiunta.
 
-%% FINO A QUI ANTONIO %%
-La scelta di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ definisce il consumo in potenza:
+Una volta scelti i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$, il consumo in potenza è completamente definito da:
+%La scelta di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ definisce il consumo in potenza:
 \begin{equation}
 \mathrm{W=I_{in}^2R_{eff}+I_{in}V_{offset}}
 \end{equation}
 %una $R_{eff}$ minore consente di avere minor aumento di potenza all'aumentare della corrente. 
 %e dunque per un corretto funzionamento del chip è possibile utilizzare correnti minori, ovvero lasciando meno margine per le fluttuazioni, proprio perchè con $r_{eff}$ minore le fluttuazioni di corrente
-La posibilità di modificare $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ apre alla possibilità di progettare un modo per avere diverse configurazioni, una di low-power mode e una high power mode. %Al fine di ridurre il consumo di potenza, la resistenza effettiva dello SLDO può avere un offset modificabile. 
-(Low-power mode configuration, che cosa posso dire...).
+Accenniamo qui al fatto che la posibilità di modificare $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ permette di progettare diverse configurazioni di consumo in relazione alle necessità.
+Ad esempio si potrebbe avere un \textit{high power mode}, in cui la corrente alla tensione minima di lavoro sia sufficiente a garantire il funzionamento dei chip accesi e funzionanti alle massime prestazioni, come potrebbe essere il caso della linea rossa in figura \ref{VVC}, e un \textit{low power mode} in cui la stessa sia minore poiché non si richiede il funzionamento ``completo'' dei chip, come ad esempio rappresentato dalla linea blu in Figura \ref{VVC}.
 
-L'obiettivo per il nuovo tracciatore è di aver una catena di moduli ognuno dei quali ospita quattro chip in parallelo, in figura \ref{MCM} è riportato uno schema con due moduli in serie. 
-Per meglio comprendere i risvolti dati dall'utilizzo di un'alimentazione seriale con SLDO è interessante fare un esempio dei consumi di questo tipo di alimentazione. 
-Prendiamo come modello la situazione in cui si ha un serie di 8 moduli con 4 chip ciascuno, assumiamo che $\mathrm{V_{offset}=0.8} \V$ e $\mathrm{R_{eff}=0.3}$ $\Omega$ per ciascun chip\footnote{$\mathrm{R_{eff}}$ del singolo SLDO è circa 0.600 $\Omega$, nel chip sono presenti due SLDO in parallelo uno per l'alimentazione della parte digitale ed uno per quella analogica. La $\mathrm{R_{eff}}$ con cui viene visto il chip è dunque la metà, 0.300 $\Omega$.}. 
-Con una corrente di $\mathrm{I_{in}=2.0}$ A per chip\footnote{Che vale a dire 1 A per ciascuno dei due SLDO presenti nel chip.} ($\mathrm{I=8.0}$ A per modulo) si avrà un $\mathrm{V_{modulo}=1.4} \V$, per avere un po' di margine incrementiamo la corrente di un 20$\%$, la corrente che arriva nei moduli sarà I = 9.6 A. 
+%La posibilità di modificare $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ apre alla possibilità di progettare un modo per avere diverse configurazioni, una di low-power mode e una high power mode. %Al fine di ridurre il consumo di potenza, la resistenza effettiva dello SLDO può avere un offset modificabile. 
+%(Low-power mode configuration, che cosa posso dire...).
 
-In questa situazione $\mathrm{V_{modulo}=1.52}$ V e dunque la caduta di tensione su tutta la catena formata da 8 moduli sarà pari a $12.16 \V$. Questa non è la caduta di tensione totale, va tenuto conto anche della resistenza dovuta ai cavi, in questo esempio assumiamo valga 2 $\Omega$. 
-La tensione di uscita del generatore è dunque $\mathrm{V=I \cdot 2 \Omega +12.6 \V=31.8 \V}$\footnote{Circa il $60 \%$ della potenza è dissipata sui cavi, questo fatto potrebbe sembrare un pessimo traguardo, in realtà è un miglioramento rispetto alla situazione attuale, nella quale l'alimentazione è in parallelo.}.% sarebbe carino sapere la percentuale di consumo attuale
-In questo sistema il generatore a monte della catena sarà limitato in corrente, mentre il limite per la tensione sarà posto leggermente maggiore a quello minimo, ad esempio 34 V. 
-In questo modo la potenza che il generatore può erogare è maggiore di quella necessaria per la catena. 
-Vedremo infatti, come questo sia necessario utile nel caso in cui alcuni chip smettano di funzionare. 
-La potenza massima erogabile dal generatore sarà $34 \V \cdot 9.6$ $A = 326.4$ W, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli si ottiene una potenza per modulo di $17.76$ W. Questo a fronte  di una potenza assorbita, nelle normali condizioni di lavoro, di $\mathrm{W = 4 \cdot W_{chip} = I \cdot V_{modulo} = 14.6}$ W per modulo.
+\subsection{Schema di catena di alimentazione con SLDO}
+
+La progettazione del nuovo tracciatore prevede di avere una catena di moduli ospitante ciascuno quattro chip in parallelo.
+La figura \ref{MCM}, ad esempio, riporta lo schema di due moduli posti in serie.
+%L'obiettivo per il nuovo tracciatore è di aver una catena di moduli ognuno dei quali ospita quattro chip in parallelo, in figura \ref{MCM} è riportato uno schema con due moduli in serie. 
+
+Andiamo adesso a studiare i consumi dovuti a più moduli in serie e come cambiano nel caso della rottura di uno di questi.
+%Per meglio comprendere i risvolti dati dall'utilizzo di un'alimentazione seriale con SLDO è interessante fare un esempio dei consumi di questo tipo di alimentazione. 
+A titolo di esempio, quindi, prendiamo la situazione in cui si ha un serie di 8 moduli, con 4 chip ciascuno.
+Assumiamo anche che $\mathrm{V_{offset}=0.8} \V$ e $\mathrm{R_{eff}=0.3}$ $\Omega$ per ciascun chip
+\footnote{
+  $\mathrm{R_{eff}}$ del singolo SLDO è circa 0.600 $\Omega$.
+  Infatti, come detto in precedenza, nel chip sono presenti due SLDO posti in parallelo, uno per l'alimentazione della parte digitale ed uno per quella analogica.
+  La $\mathrm{R_{eff}}$ con cui viene visto il chip intero è dunque la metà di quella del singolo elemento, i.e. 0.300 $\Omega$.
+}.
+%Prendiamo come modello la situazione in cui si ha un serie di 8 moduli con 4 chip ciascuno, assumiamo che $\mathrm{V_{offset}=0.8} \V$ e $\mathrm{R_{eff}=0.3}$ $\Omega$ per ciascun chip\footnote{$\mathrm{R_{eff}}$ del singolo SLDO è circa 0.600 $\Omega$, nel chip sono presenti due SLDO in parallelo uno per l'alimentazione della parte digitale ed uno per quella analogica. La $\mathrm{R_{eff}}$ con cui viene visto il chip è dunque la metà, 0.300 $\Omega$.}. 
+Con una corrente di lavoro richiesta di $\mathrm{I_{in}=2.0}$ A per chip
+\footnote{
+  Ovvero 1 A per ciascuno dei due SLDO presenti nel chip.
+},
+i.e. $\mathrm{I_{modulo}=8.0}$ A per l'intero modulo, si avrà $\mathrm{V_{modulo}=1.4} \V$.
+Per avere un po' di margine incrementiamo la corrente di un 20$\%$.
+Conseguentemente $\mathrm{I_{in}=2.4}$ A, $\mathrm{I_{modulo}=9.6}$ A, $\mathrm{V_{modulo}=1.52} \V$ e, quindi, la caduta di tensione su tutta la catena, formata da 8 moduli, sarà $12.16 \V$.
+%Con una corrente di $\mathrm{I_{in}=2.0}$ A per chip\footnote{Che vale a dire 1 A per ciascuno dei due SLDO presenti nel chip.} ($\mathrm{I=8.0}$ A per modulo) si avrà un $\mathrm{V_{modulo}=1.4} \V$, per avere un po' di margine incrementiamo la corrente di un 20$\%$, la corrente che arriva nei moduli sarà I = 9.6 A. 
+%In questa situazione $\mathrm{V_{modulo}=1.52}$ V e dunque la caduta di tensione su tutta la catena formata da 8 moduli sarà pari a $12.16 \V$. Questa non è la caduta di tensione totale, va tenuto conto anche della resistenza dovuta ai cavi, in questo esempio assumiamo valga 2 $\Omega$. 
+Tenendo conto anche della resistenza dovuta ai cavi, assumiamo valga 2 $\Omega$, la tensione di uscita del generatore sarà infine $\mathrm{V=I \cdot 2 \Omega +12.16 \V=31.36 \V}$.
+  Dai conti fatti risulta che circa il $60 \%$ della potenza è dissipata sui cavi
+\footnote{
+  Nonostante il valore elevato in assoluto, bisogna tenere presente che è in realtà un miglioramento rispetto alla situazione attuale, nella quale l'alimentazione è in parallelo.
+}. % sarebbe carino sapere la percentuale di consumo attuale
+%La tensione di uscita del generatore è dunque $\mathrm{V=I \cdot 2 \Omega +12.6 \V=31.8 \V}$\footnote{Circa il $60 \%$ della potenza è dissipata sui cavi, questo fatto potrebbe sembrare un pessimo traguardo, in realtà è un miglioramento rispetto alla situazione attuale, nella quale l'alimentazione è in parallelo.}.% sarebbe carino sapere la percentuale di consumo attuale
+
+Il generatore posto a monte della catena è limitato in corrente e, per fare sì che la potenza che il generatore può erogare sia maggiore di quella necessaria alla catena, si pone il valore limite della tensione leggermente superiore a quello fin qui calcolato, diciamo ad esempio 34 V.
+%In questo sistema il generatore a monte della catena sarà limitato in corrente, mentre il limite per la tensione sarà posto leggermente maggiore a quello minimo, ad esempio 34 V. 
+%In questo modo la potenza che il generatore può erogare è maggiore di quella necessaria per la catena. 
+La potenza massima che il generatore potrà erogare è, quindi, di $34 \V \cdot 9.6$ $A = 326.4$ W, per cui, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli, si ottiene una potenza per modulo di $17.76$ W.
+%Vedremo infatti, come questo sia necessario utile nel caso in cui alcuni chip smettano di funzionare. 
+%La potenza massima erogabile dal generatore sarà $34 \V \cdot 9.6$ $A = 326.4$ W, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli si ottiene una potenza per modulo di $17.76$ W. Questo a fronte  di una potenza assorbita, nelle normali condizioni di lavoro, di $\mathrm{W = 4 \cdot W_{chip} = I \cdot V_{modulo} = 14.6}$ W per modulo.
 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/MultiChipModules}
-\caption{Schema di una catena seriale con moduli, ognuno formato da 4 chip. Il chip in rosso si riferisce all'ipotesi di un failure.}
+\caption{Schema di una catena seriale con moduli, ognuno formato da 4 chip. Il chip in rosso si riferisce all'ipotesi di malfunzionamento dello stesso.}
 \label{MCM}
 \end{figure}
 
-Vediamo a questo punto cosa accade nel caso in cui un chip in uno dei moduli sia fuori uso\footnote{Dal momento che nel chip ci sono due SLDO, in realtà lo scenario più probabile è che solo uno dei due sia danneggiato.}.
-Dato che l'alimentazione è in corrente, ciascuno dei tre chip rimanenti dovrà assorbire un terzo di corrente in più, dunque la corrente per ciascun chip sarà $\mathrm{I = 9.6A / 3 = 3.2 A}$. 
-Questo porta ad una caduta di tensione sul modulo $\mathrm{V_{modulo} = 3.2 A \cdot 0.3 \Omega + 0.8 V = 1.76 \V}$ e una potenza dissipata $\mathrm{W = 3 \cdot W_{chip} = 3 \cdot I \cdot V_{modulo} = 16.9}$ W, con un incremento di 2 W per il singolo modulo, che corrisponde al $13 \%$. Per la catena di 8 moduli l'incremento, invece, è di appena $1.7\%$. 
-Questo causerà anche un lieve aumento della tensione erogata dal generatore, che però rimarrà al di sotto dei 34 V\footnote{Come visto alla tensione massima di  34 V il generatore riesce a distribuire una potenza di $17.76$ W per ciascun modulo.}.
+Vediamo a questo punto cosa accade nel caso in cui uno dei chip in uno dei moduli sia fuori uso
+\footnote{
+  Dal momento che nel chip ci sono due SLDO, in realtà lo scenario più probabile è che solo uno dei due sia danneggiato.
+},
+come mostrato in figura \ref{MCM}.
+%Vediamo a questo punto cosa accade nel caso in cui un chip in uno dei moduli sia fuori uso\footnote{Dal momento che nel chip ci sono due SLDO, in realtà lo scenario più probabile è che solo uno dei due sia danneggiato.}.
+Dato che l'alimentazione è in corrente, ciascuno dei tre chip rimanenti dovrà assorbire la corrente che non viene assorbita dal modulo danneggiato, ossia in ciascun chip $\mathrm{I = 9.6A / 3 = 3.2 A}$ corrispondente a un terzo di corrente in più.
+%Dato che l'alimentazione è in corrente, ciascuno dei tre chip rimanenti dovrà assorbire un terzo di corrente in più, dunque la corrente per ciascun chip sarà $\mathrm{I = 9.6A / 3 = 3.2 A}$. 
+Come conseguenza, la caduta di tensione sul modulo sarà $\mathrm{V_{modulo} = 3.2 A \cdot 0.3 \Omega + 0.8 V = 1.76 \V}$ e la potenza dissipata $\mathrm{W = 3 \cdot W_{chip} = 3 \cdot I \cdot V_{modulo} = 16.9}$ W, con un incremento di 2 W per il singolo modulo, corrispondente al $13 \%$.
+Per la catena di 8 moduli l'incremento è, invece, di appena $1.7\%$.
+%Questo porta ad una caduta di tensione sul modulo $\mathrm{V_{modulo} = 3.2 A \cdot 0.3 \Omega + 0.8 V = 1.76 \V}$ e una potenza dissipata $\mathrm{W = 3 \cdot W_{chip} = 3 \cdot I \cdot V_{modulo} = 16.9}$ W, con un incremento di 2 W per il singolo modulo, che corrisponde al $13 \%$. Per la catena di 8 moduli l'incremento, invece, è di appena $1.7\%$. 
+Inoltre ci sarà anche un lieve aumento della tensione erogata dal generatore, $\mathrm{V=I \cdot 2 \Omega +14.08 \V=33.28 \V}$, che è comunque al di sotto dei 34 V
+\footnote{
+  Come visto alla tensione massima di  34 V il generatore riesce a distribuire una potenza di $17.76$ W per ciascun modulo.
+}
+impostati.
+%Questo causerà anche un lieve aumento della tensione erogata dal generatore, che però rimarrà al di sotto dei 34 V\footnote{Come visto alla tensione massima di  34 V il generatore riesce a distribuire una potenza di $17.76$ W per ciascun modulo.}.
  %mettere un recap con il senso di questi conti
 %Lo studio dell'alimentazione seriale parte dunque dalla caratterizzazione dello SLDO. Componente che sarà poi utilizzato all'interno del chip RD53A per la generazione delle tensioni di alimentazione della parte analogica e digitale. .......continuare discorso....
-Aver chiaro come il chip viene visto esternamente e quali siano i suoi consumi è importante per poter progettare al meglio il sistema di alimentazione seriale.
+%Aver chiaro come il chip viene visto esternamente e quali siano i suoi consumi è importante per poter progettare al meglio il sistema di alimentazione seriale.
 
-\section{Evoluzione design SLDO}
-\begin{figure}
+\section{Evoluzione di progetto dello SLDO}
+\begin{figure}[!htbp]
 \centering
 \includegraphics[scale=3.5]{Immagini/SLDObase}
 \caption{Schema di principio dello SLDO.}
