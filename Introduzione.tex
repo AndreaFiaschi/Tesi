@@ -28,7 +28,7 @@ Ad ognuna di queste particelle corrisponde una antiparticella che ha i numeri qu
 \item I {\em gluoni} sono i mediatori dell'interazione forte.
 \end{itemize}
 
-Come detto precedentemente la forza gravitazionale non è descritta dal MS, ma risulta essere trascurabile nelle interazione tra particelle, in quanto la sua intensità, paragonata a quella delle altre tre forze, è vari ordini di grandezza inferiore. Nel MS le interazioni sono descritte come manifestazioni di simmetrie di gauge della Lagrangiana. Queste simmetrie non ammettono termini di massa per i bosoni di gauge poiché questo porterebbe alla rottura delle simmetrie stesse. Tuttavia \`e possibile introdurre un meccanismo di rottura spontanea della simmetria, detto {\em di Higgs}, da cui derivano i termini di massa per i bosoni di gauge e un ulteriore bosone scalare massivo, il {\em bosone di Higgs}. Attraverso il meccanismo di Higgs vengono anche introdotti i termini di massa dei fermioni.
+Come detto precedentemente la forza gravitazionale non è descritta dal MS, ma risulta essere trascurabile nelle interazione tra particelle, in quanto la sua intensità, paragonata a quella delle altre tre forze, è vari ordini di grandezza inferiore. Nel MS le interazioni sono descritte come manifestazioni di simmetrie di gauge della Lagrangiana. Queste simmetrie non ammettono termini di massa per i bosoni di gauge poiché questo porterebbe alla rottura delle simmetrie stesse. Tuttavia \`e possibile introdurre un meccanismo di rottura spontanea della simmetria, detto {\em di Higgs}, da cui derivano i termini di massa per i bosoni di gauge e un ulteriore bosone scalare massivo, il {\em bosone di Higgs} H. Attraverso il meccanismo di Higgs vengono anche introdotti i termini di massa dei fermioni.
 
 {\bf Aggiungere un paragrafetto sulle problematiche del MS (dark matter, teoria efficace a bassa energia etc.). Per questo si costruiscono gli acceleratori ...}
 
@@ -58,12 +58,24 @@ Lo scopo di questi esperimenti è lo studio del MS e la ricerca della materia os
 Altri esperimenti presenti ad LHC, ma di dimensioni minori sono TOTEM e LHCf:
 \begin{itemize}
 \item TOTEM (TOTal Elastic and diffractive cross section Measurement), ha come fine lo studio della fisica diffrettiva a piccolo angolo nelle interazioni protone-protone;
-\item LHCf (LHC forward) è composto da due rivelatori che sono posizionati a $140$m dal punto di collisione di ATLAS per lo studio delle interazioni calorimetriche dei pioni neutri a grande rapidità e altissima energia, con lo scopo di verificare i modelli di simulazione per meglio modellizzare il comportamento dei raggi cosmici primari nell'interazione con l'atmosfera.
+\item LHCf (LHC forward) è composto da due rivelatori che sono posizionati a $140$m dal punto di collisione di ATLAS per lo studio delle interazioni calorimetriche dei pioni neutri a grande rapidità\footnote{
+Il sistema di coordinate convenzionalmente adottato dagli esperimenti LHC è tale che l'origine corrisponde al punto nominale di collisione dei due fasci con asse $y$ verticale orientato verso l'alto e asse $x$ in direzione radiale verso il centro di LHC. L'angolo azimutale $\phi$ è misurato a partire dall'asse $x$ e giace sul piano $x-y$ e la coordinata radiale su questo piano è $r$. L'angolo polare $\theta$ è misurato dall'asse $z$. 
+
+Per lo studio dei processi è utile introdurre anche grandezze invarianti per trasformazioni di Lorentz come $\Delta {\rm y}$ e $\Delta \eta$, dove ${\rm y}$ indica la rapidità e $\eta$ la pseudorapidità:
+\begin{equation}
+{\rm y} = \dfrac{1}{2} ln\Big( \dfrac{E+p_z}{E-p_z}\Big)
+\end{equation}
+
+\begin{equation}
+\eta = - ln \Big( tg\frac{\theta}{2}\Big)
+\end{equation}
+dove $E$ e $p_z$ sono rispettivamente l'energia e il momento lungo l'asse $z$ della particella prodotta. 
+} e altissima energia, con lo scopo di verificare i modelli di simulazione per meglio modellizzare il comportamento dei raggi cosmici primari nell'interazione con l'atmosfera.
 \end{itemize}
 
 In un acceleratore due sono i parametri operativi fondamentali che ne determinano il potenziale di scoperta e la capacit\`a di effettuare accurate misure di fisica: l'energia del centro di massa e la luminosit\`a.
 
-Pi\`u grande l'energia nel centro di massa, maggiore la massa delle particelle che possono essere prodotte e, in generale, a parit\`a di massa, \`e maggiore la sezione d'urto di produzione e quindi il numero di potenziali osservazioni. L'energia nel centro di massa di LHC \`e attualmente $\sqrt{s}=13\TeV$ a cui si \`e arrivati gradualmente: durante il RunI (2010-2012) l'energia del centro di massa \`e stata compresa tra 7 e $8\TeV$ ed \`e stata incrementata al valore attuale per il RunII (2015-2018).  
+Pi\`u grande l'energia nel centro di massa, maggiore la massa delle particelle che possono essere prodotte e, in generale, a parit\`a di massa, \`e maggiore la sezione d'urto di produzione e quindi il numero di potenziali osservazioni. L'energia nel centro di massa di LHC \`e attualmente $\sqrt{s}=13\TeV$ a cui si \`e arrivati gradualmente: durante il RunI (2010-2012) l'energia del centro di massa \`e stata compresa tra 7 e $8\TeV$ ed \`e stata incrementata al valore attuale per il RunII (2015-2018). Durante il RunIII (2021-2023) l'energia del centro di massa raggiunger\`a $\sqrt{s}=14\TeV$.
 
 La struttura non elementare dei protoni, costituiti internamente da partoni (quark e gluoni) che si dividono l'impulso totale, permette di produrre stati di energia intermedia fino al limite cinematico dell'energia del centro di massa e quindi di esplorare un ampio intervallo di energie senza dover modificare i parametri di funzionamento dell'acceleratore. Nella collisione l'interazione effettiva coinvolge solo una coppia di partoni che trasportano una frazione dell'impulso nominale dei due protoni. Questo costituisce un grande vantaggio dei collider adronici rispetto ai collider $\ee$ nell'ambito delle analisi di fisica di scoperta.
 
@@ -75,101 +87,117 @@ P[\GeVc] \sim 0.3 \cdot B[{\mathrm T}] \cdot r[\m]
 \end{equation}
 dove $B$ è il campo magnetico, $r$ il raggio di curvatura e $P$ l'impulso della particella. Dati i parametri di LHC ($r\sim4 \cdot 10^3\m$ e $P=6.5\TeVc$) si ottiene un campo $B$ che in media è pari a $\sim 5.4{\mathrm T}$. Per ottenere un campo di tale intensit\`a è stato necessario sviluppare dipoli magnetici superconduttori, il che ha rappresentato un'importante sfida tecnologica per la progettazione di LHC. Gran parte dell'anello di LHC, infatti, \`e mantentunto a temperature criogeniche di $\sim 2\degrees {\mathrm K}$ grazie ad un complesso sistema di raffreddamento.
 
-{\bf correggere definizione luminosit\`a}
+Oltre all'energia nel centro di massa, la {\em luminosit\`{a} istantanea} ${\cal L}$ \`e il secondo importante parametro che
+caratterizza le prestazioni di un collider. Infatti, il numero di eventi per unit\`a di tempo relativi ad un processo con sezione d'urto $\sigma$ \`e:
+\begin{equation}
+     \frac{dN}{dt} = \sigma {\cal L}.
+\end{equation}
+e, a parit\`a di sezione d'urto, maggiore la luminosit\`a istantanea, maggiore sar\`a la statistica potenzialmente disponibile per lo studio del processo. La luminosit\`a istantanea si misura in $\cm^{-2}\s^{-1}$ e, nel caso di collisioni centrali tra i pacchetti dei due
+fasci, \`e data da:
+\begin{equation}
+   \label{for:luminos}
+   {\cal L} = \frac{N_{1} N_{2} k f_{rev}}{4\pi \sigma _{x} \sigma _{y}}
+\end{equation}
+dove $N_{1}$ ed $N_{2}$ sono il numero di protoni nei due pacchetti collidenti (tipicamente $1--2\cdot10^{11}$), $k$ \`e il numero di pacchetti collidenti orbitanti nell'anello (per LHC normalmente compresi tra $\sim 2000$ e $\sim 2800$), $f_{rev}$ la loro frequenza di rivoluzione ($40\MHz$) e $\sigma_{x} \sigma_{y}$ \`e il prodotto delle standard--deviation delle gaussiane che rappresentano la distribuzione di densit\`a delle particelle dei pacchetti lungo le due dimensioni trasverse (per LHC $\sigma_{x}\sim\sigma_{y}\sim\um$).
 
-La {\em luminosit\`a} \`e proporzionale al numero di interazioni che l'acceleratore pu\`o fornire agli esperimenti ed \`e una grandezza fondamentale per stimare la capacit\`a dell'acceleratore di produrre eventi con piccola sezione d'urto e, quindi, la possibilit\`a degli esperimenti di osservarli. Al fine di ottenere risultati con un'ampia statistica ed una buona precisione è importante per un acceleratore avere una alta luminosità istantanea, un parametro che corrisponde al numero di collisioni prodotte per unità di area e tempo e può essere espressa in funzione del rate R di particelle {\bf(che cazzo vor di'?????)} e della sezione d'urto $\sigma$ 
+Il numero di eventi $N$  di un dato processo prodotti in un certo intervallo di tempo $\Delta t$ \`e dato da 
 \begin{equation}
-L=\frac{R}{\sigma}
+     N = \sigma {\cal L}_{\rm int}
 \end{equation}
-Un altro modo di esprimere la luminosità è metterla in funzione delle variabili che caratterizzano il fascio:
+dove ${\cal L}_{\rm int}$ \`e detta {\em luminosit\`{a} integrata} definita come la luminosit\`a raccolta nell'intervallo di tempo in oggetto:
 \begin{equation}
-L = f \frac{N_1 N_2}{4 \pi \sigma_x \sigma_y}
+   {\cal L}_{int} = \int_{\Delta t} {\cal L}\ dt.
 \end{equation}
-con $N_1$ $N_2$ numerodi protoni per pacchetto, $f$ frequenza collisioni e $4\pi \sigma_x \sigma_y =A$ area efficace. Si parla invece di {\em luminosità integrata} $L_{int}=\int L dt$ per ottenere la relazione tra numero di eventi relativi a un certo processo e la sezione d'urto $\sigma$ del processo stesso:
-\begin{equation}
-N=\sigma L_{int}.
-\end{equation}
+
+Dati i valori tipici ad LHC, la luminosit\`a integrata si misura in $\ifb$.
+
+La luminosit\`a istantanea di LHC \`e salita gradualmente dall'inizio della presa dati nel 2010 come illustrato nella Fig.(
+%{\em mettiamoci https://cms-service-lumi.web.cern.ch/cms-service-lumi/publicplots/peak_lumi_pp.png}
+), dove \`e rappresentata la luminosit\`a istantanea di picco prodotta nel punto di interazione corrispondente all'esperimento CMS, fino a raggiungere il valore di $\sim 2\cdot10^{34}\cm^{-2}\s^{-1}$. L'andamento annuale della luminosit\`a integrata in funzione del tempo raccolta dall'esperimento CMS, al netto dell'efficienza dell'apparato, \`e mostrato in~Fig.(). Per le analisi di fisica, ad oggi, CMS ha a disposizione dati di collisione protone-protone pari a circa $130\ifb$ di luminosit\`a integrata. Alla fine del RunIII, che non vedr\`a aumenti significativi della luminosit\`a istantanea dato che i limiti operativi della macchina sono stati raggiunti, la luminosit\`a integrata totale raggiunta da CMS (come pure da Atlas) \`e stimabile in circa $300/ifb$.
+
+Un parametro molto importante dal punto di vista sperimentale, e proporzionale alla luminosit`a istantanea, \`e il numero di collisioni pp simultanee (in gergo {\em pile up}) che hanno luogo durante un singolo bunch-crossing. Dato che dal punto di vista sperimentale si studia la singola interazione pp, l'esperimento deve essere idealmente in grado di isolare l'interazione di interesse da tutto il resto delle interazioni di pile-up. Ad oggi i valori di pile-up sperimentati da Atlas e CMS hanno raggiunto un valore medio di $\sim 40/\bx$ con picchi pari a $\sim 70/\bx$. Nonostante che gli esperimenti Atlas e CMS siano stati progettati per minimizzare gli effetti del pile-up, nella pratica i prodotti delle interazioni di pile-up, a causa delle risoluzioni sperimentali finite, possono essere confusi con i prodotti della interazione pp di interesse degradando quindi, per quest'ultima, la risoluzione delle osservabili fisiche.
+
+
 
 \section{HL-LHC}
-Il progetto di upgrade HL-LHC, formalmente approvato nel Giugno 2016 dal CERN, permetter\`a di ampliare il campo di indagine di fenomeni fisici rari all'interno del MS ed anche di ricercare processi di nuova fisica BSM (Beyond Standard Model). Questa fase di alta luminosità permetterà a CMS di raggiungere precisioni dell'ordine del per cento sulle misure di accoppiamento del bosone di Higgs e la prima osservazione diretta di vertici trilineari del bosone di Higgs. 
-I processi deboli di scattering di bosoni vettori sono profondamente legati alla rottura della simmetria elettro bedole e dal punto di vista della misura sono una sfida, in quanto le sezioni d'urto sono piccole e i fondi irriducibili sono dominanti. 
+Il progetto {\em High Luminosity LHC} o {\em HL-LHC}, formalmente approvato nel Giugno 2016 dal CERN, prevede un aggiornamento della macchina LHC che porter\`a la luminosit\`a istantanea almeno fino ad un valore di riferimento pari a $\sim 5\cdot10^{34}\cm^{-2}\s^{-1}$ mentre l'energia del centro di massa rimarr\`a pari a $14\TeV$. Secondo scenari operativi pi\`u aggressivi, che sembrano comunque alla portata di HL-HLC, la luminosit\`a istantanea potrebbe raggiungere $\sim 7.5\cdot10^{34}\cm^{-2}\s^{-1}$. HL-LHC partir\`a nel 2026 e, nel corso di dieci anni di presa dati, ATLAS e CMS saranno quindi in grado di raccogliere luminosit\`a integrate comprese tra $\sim3000\ifb$ e $sim4500\ifb$. Dato che la spaziatura tra i pacchetti rimarr\`a di $25\ns$, il pile-up medio sar\`a compreso tra $140/\bx$ e $200/\bx$.
 
-L'aumento di luminosità ad LHC permetterà lo studio di questi canali, per far ciò  l'upgrade di LHC sarà accompagnato da un programma di adeguamento dell'esperimento CMS, al fine di mantenere alte le prestazioni del rivelatore (efficienza, risoluzione,reiezione di processi di fondo...) nonostante l'aumento di radiazione e le più difficili condizioni operative, come ad esempio pile-up più frequente.
-In figura \ref{HL-LHC} è mostrato un prospetto della scaletta dei tempi di LHC dal 2015 in poi. Il Run 2 continuerà fino alla fine del 2018, quando inizierà il Long Shutdown 2 (LS2) e dopo cui si avrà la fase di Run 3.  Entro il 2022 si stima sarà raccolta una luminosità integrata di circa $300 fb^{-1}$. 
-Durante il Long Shutdown 3 (LS3), programmata dal 2022 fino alla metà del 2024, saranno eseguiti gli aggiornamenti principali di LHC e degli esperimenti per la fase di alta luminosità.
+L'aumento della luminosit\`a istantanea seguir\`a a diverse migliorie dell'ottica di fascio ottenute rimpiazzando un centinaio di magneti corrispondenti a pi\`u di un km su $27\km$ di componenti di LHC. Di particolare importanza l'istallazione di nuovi quadrupoli posti in prossimit\`a dei punti di interazione di Atlas e CMS. Questi magneti superconduttori con tecnologia ${\rm Nb_3Sn}$, a differenza della pi\`u convenzionale $NbTi$, garantiranno una maggiore intensit\`a di campo (da 8 a $12\T$) e, grazie alla maggiore apertura, permetteranno un maggior fuocheggiamento dei fasci. 
 
-\subsection{Obiettivi}
+I livelli di radiazione saranno senza precedenti: al centro di CMS, dove saranno istallati gli strati pi\`u interni del tracciatore a pixel, la fluenza equivalente a neutroni da un MeV sar\`a pari a $2.3\cdot 10^{16} {\rm neq}/\cm^2$ e la dose ionizzante totale (TID) a $12\MGy$ ($1.2\Grad$) al raggiungimento del valore di riferimento di luminosit\`a integrata pari a $3000\ifb$.
+
+A seguito del potenziamento di LHC anche gli esperimenti dovranno essere aggiornati al fine di mantenere le prestazioni dei rivelatori in termini di efficienza, risoluzione, reiezione di processi di fondo ecc. nonostante l'aumento di radiazione e le più difficili condizioni operative.
+In figura~\ref{HL-LHC} è mostrato un prospetto del programma di LHC fino a tutto il 2039 che contempla anche i prolungati intervalli di interruzione della presa dati ({\em Long Shutdown} o {\em LS}) necessari per la manutenzione e l'adeguamento di LHC e degli esperimenti. Il RunII, attualmente in corso, continuerà fino alla fine del 2018 quando inizierà il Long Shutdown 2 (LS2) a cui seguir\`a il RunIII. Durante il Long Shutdown 3 (LS3), dal 2024 fino alla metà del 2026, saranno eseguiti gli aggiornamenti principali di LHC e degli esperimenti per HL-LHC.
 \begin{figure}
 \centering
-\includegraphics[scale=.35]{Immagini/HL-LHC}
-\caption{Projected LHC performance through 2035, showing preliminary dates for long shut downs of LHC and projected luminosities.reference LHCC P 008}
+\includegraphics[scale=.35]{Immagini/LHC_lumi_2010_2039.png}
+\caption{L'evoluzione della luminosit\`a istantanea e integrata di LHC fino al 2039 con i previsti periodi di interruzione della presa dati; LHCC P 008}
 \label{HL-LHC}
 \end{figure}
 
-L'idea di aumentare la luminosità di LHC oltre quella decisa nel progetto originale è antecedente alla messa in opera del progetto. Eventuali modifiche importanti alla macchina e agli esperimenti possono essere eseguite solo con lunghi periodi di shut down in cui è possibile accedere al tunnel e alle caverne. Per questo motivo è stato deciso un piano temporale che intervalli periodi di presa dati (Run I, Run II etc.) e periodi in cui si ha uno spegnimento completo per lunghi periodi (LS1, LS2, LS3). In figura \ref{HL-LHC} è possibile vedere la suddivisione temporale tra periodi di presa dati e periodi di spegnimento.
-Run I è stato il periodo di presa dati dal 2011 al 2012. Nel primo periodo di stop LS1 LHC è stato modificato al fine di raggiungere energie  nel centro di massa di 13 TeV, per poi arrivare gradualmente a 14 TeV. In questo momento siamo alla fine del Run II, e nell'esperimento CMS si  hanno una media di 25 interazioni per bunch, ciò vuol dire 25 vertici da ricostruire ogni 25 ns. Attraverso modifiche  e miglioramenti apportati nel LS1 e LS2 verrà aumentata la luminosità, questa parte del processo per l'esperimento CMS va sotto il nome di fase-I. Durante il periodo LS3  saranno invece sostituite vari parti degli esperimenti, che a causa del danneggiamento da radiazione saranno deteriorati e nello contemporaneamente verranno sostituiti i quadrupoli di fuocheggiamento con nuovi modelli capaci di incrementare la luminosità. 
-Il periodo che seguirà LS3 sarà chiamato fase II o HL-LHC (High Luminosity LHC). Nello scenario prefissato la lumiosità istantanea sarà di $5 \cdot 10 34 cm^{-2} s^{-1}$ con picchi di $2 \cdot 10 35 cm^{-2} s^{-1}$, in questo modo gli esperimenti saranno in grado di raccogliere una maggiore statistica con una luminosità di $300 fb^{-1}$ ogni anno per 10 anni(250 o 300)?????%at 5 × 10 34 cm − 2 s − 1 from a potential peak value of 2 × 10 35 cm − 2 s − 1 at the beginning of fills,
-%and to deliver 250 fb − 1 per year for a further 10 years of operation. Under these conditions
-In queste condizioni ci sarà una maggiore probabilità di sovrapposizione di interazioni (Pile Up), questa sarà la grande sfida, insieme alla gestione degli effetti di degradazione in cui incorreranno i rivelatori a seguito delle maggiori dosi di radiazione assorbita. Sempre nella figura \ref{HL-LHC} è possibile vedere le proiezioni di luminosità di picco e luminosità integrata.
+\subsection{Le motivazioni di fisica di HL-LHC}
+
+HL-LHC amplier\`a enormemente il potenziale di fisica di LHC sia per le misure di precisione e per i processi rari nell'ambito del MS, sia per la portata di scoperta di processi previsti da teorie oltre il MS.
  
-%The high luminosity period that follows LS3 with the upgraded LHC is referred to here as HL-LHC or Phase-II. The proposed operating scenario is to level the instantaneous luminosity
-%at 5 × 10 34 cm − 2 s − 1 from a potential peak value of 2 × 10 35 cm − 2 s − 1 at the beginning of fills,
-%and to deliver 250 fb − 1 per year for a further 10 years of operation. Under these conditions the event PU will rise substantially to become a major challenge for the experiments, and the performance degradation due to integrated radiation dose will need to be addressed. This Technical Proposal presents the CMS upgrade program for Phase-II. The schedule of beam operations and long shutdowns, together with projections of the peak and integrated luminosities, is shown in Fig. 1.9, and is, of course, subject to change.
-
-\section{Esperimento CMS}
-CMS è un esperimento ad ampio spettro che opera ad LHC, è installato un centinaio di metri sotto terra CMS nei pressi del paese Cessy, in Francia, tra il lago di Ginevra e il complesso dei monti Jura. Essendo ad ampio spettro i suoi rivelatori sono in grado di distinguere un gran numero di particelle $e$, $\mu$, $\tau$, $\gamma$ etc...
-L'obiettivo principe di LHC è quella di indagare la natura della rottura spontanea della simmetria elettrodebole alla base di cui sta il meccanismo di Higgs. Lo studio sperimentale del meccanismo di Higgs consente inoltre di verificare la consistenza del Modello Standard a scale di energia dei TeV. Inoltre c'è la speranza di nuove scoperte che offrano indicazioni su teorie oltre al Modello Standard, come ad esempio Supersimmetrie o Extra Dimension.
-Ad LHC vengono utilizzati anche fasci di ioni pesanti, che hanno energie 30 volte superiori ai precedenti acceleratori, permettendo così uno studio approfondito della QCD in condizioni estreme di temperatura, densità e frazioni di momento partonico. Con la luminosità ed energia nel centro di massa raggiungibili ad LHC un ampio spettro di fisica diventa accessibile, questo però vincola i vari esperimenti, compreso CMS a richieste stringenti sulle prestazioni e quindi sulla progettazione e messa in opera.
-Con un'energia nel centro di massa di 14 TeV la sezione d'urto protone-protone è circa 100 mb, data la  luminosità questo porta a circa $10^9$ eventi al secondo, che grazie al processo di selezione online viene abbassato fino a 100 eventi al secondo, i quali vengono poi memorizzati per una successiva analisi. 
-Ogni 25 ns vi è una nuova collisione tra bunch di particelle che con le sue circa 20 collisioni produce un alto numero di particelle che dovranno essere rivelate con l'attenzione a distinguerle le une dalle altre. Questo richiede un'alta segmentazione del rivelatore e una buona risoluzione temporale , al fine di evitare effetti di pile-up. Il tutto cercando di ridurre il più possibile i volumi.
-Inoltre dato l'alto flusso di particelle il rivelatore e l'elettronica di lettura devono essere in grado di resistere ad alti livelli di radiazione. Tutti questi motivi hanno  portato alla necessità di alti requisiti per il buon funzionamento dell'esperimento:
-\begin{itemize}
-\item Buona capacità di identificare i muoni e ottima risoluzione degli impulsi su ampio angolo.
-\item Alta efficienza del tracciatore e buona risoluzione dei momenti di particelle cariche.
-\item Buona risoluzione nella misura dell'energia elettromagnetica, copertura maggiore possibile di tutto l'angolo solido e ottima capacità di isolamento di fotoni e leptoni.
-\item Buona risoluzione dell'energia trasversa mancante (MET) e calorimetri adronici con coperture ampia dell'angolo solido e buona segmentazione.
-\end{itemize}
-
-Il sistema di coordinate adottato da CMS è tale che l'origine corrisponde al punto di collisione dei due fasci con asse y verticale orientato verso l'alto e asse x in direzione radiale verso il centro di LHC. L'angolo azimutale $\phi$ è misurato a partire dall'asse x e giace sul piano x-y e la coordinata radiale su questo piano è $r$. L'angolo polare $\theta$ è misurato dall'asse z. 
-
-Per lo studio dei processi è utile introdurre anche grandezze invarianti per trasformazioni di Lorentz come $\Delta y$ e $\Delta \eta$, dove y indica la rapidità e $\eta$ la pseudorapidità:
-\begin{equation}
-y= \dfrac{1}{2} ln\Big( \dfrac{E+p_z}{E-p_z}\Big)
-\end{equation}
-
-\begin{equation}
-\eta = - ln \Big( tg\frac{\theta}{2}\Big)
-\end{equation}
-Infine la differenza nel bilancio dell'energia misurata sul piano trasverso è indicata come $E_T^{miss}$.
-
-
-\subsection{Il rivelatore CMS}
-CMS è un esperimento a simmetria cilindrica, ha un diametro di 15 m ed è lungo 21.6 m, per un peso complessivo di circa 12500 tonnellate. Lo scopo dell'esperimento è studiare una vasta gamma di processi fisici delle interazioni protone-protone, figura \ref{CMS}. 
+Un esempio \`e lo studio degli accoppiamenti di Yukawa del bosone di Higgs che, grazie a HL-LHC, potranno essere misurati da CMS con precisioni dell'ordine di qualche percento anche nel caso del muone che, con una frazione di decadimento di $\sim 10^{-4}$, \`e sperimentalmente ambizioso.
+Il notevole miglioramento della precisione delle misure degli accoppiamenti del bosone di Higgs \`e illustrato in Fig.~\ref{HLLHCCouplings} nel confronto tra i risultati del RunI e la stima di quanto ottenibile a HL-LHC.
 \begin{figure}
 \centering
-\includegraphics[scale=.2]{Immagini/CMS}
-\caption{Vista frontale di CMS durante l'installazione del tracciatore.}
-\label{CMS}
+\includegraphics[scale=.35]{Immagini/HLLHC_Couplings.png}
+\caption{Gli accoppiamenti del bosone di Higgs a fermioni e bosoni parametrizzati come $(g_V/2v)^{1/2}$, dove $v$ \`e il valore di aspettazione di vuoto de campo di Higgs in funzione della massa della particella; a sinistra le misure effettuate a RunI; a destra con l'estrapolazione delle incertezze a HL-LHC per $3000\ifb$ di luminosit\`a integrata assumendo gli accoppiamenti previsti dal MS.}
+\label{HLLHCCouplings}
 \end{figure}
-Per questo motivo è composto da diversi tipi di rivelatori, vedi figura \ref{CMSbis}, disposti in modo concentrico rispetto al punto di collisione dei due fasci:
-\begin{itemize}
-\item \textbf{Tracciatore}: collocato nella parte più interna è in grado di ricostruire la traiettoria delle particelle cariche  nella zona r $< 1.2$ m e $\mid\eta\mid$ $< 2.5$ individuando anche
-eventuali vertici secondari. È suddiviso in due sottorivelatori: un rivelatore di vertice a pixel di silicio e un rivelatore a microstrip di silicio.
 
-\item \textbf{Calorimetro elettromagnetico} (ECAL): è un calorimetro omogeneo composto da cristalli di tungstato di piombo (PbW$\mathrm{O_4}$), collocato nella regione 1.2 m $<$ $\mid$r$\mid$ $< 1.8$ m ed $\mid\eta\mid < 3$ misura l'energia di elettroni e fotoni, oltre che la traiettoria.
+Uno studio fondamentale \`e quello della produzione in coppie di Higgs, che permette di investigare i vertici trilineari con cui il bosone di Higgs interagisce con se stesso, come lo studio dei processi di scattering che coinvolgono i bosoni vettori deboli. Tutti questi processi sono intimamente legati alla rottura spontanea ella simmetria elettrodebole e al ruolo del bosone di Higgs stesso nel MS~\cite{vediTDRref13}. Eventuali deviazioni dalle previsioni del MS sarebbero indizio di nuova fisica oltre il MS stesso. Pur rappresentando una difficile sfida sperimentale per i fondi dominanti, se non irriducibili, e le piccole sezioni d'urto HL-LHC ne consentir\`a uno studio approfondito.
 
-\item \textbf{Calorimetro adronico} (HCAL): posto nella regione con 1.8 m $<$ $\mid$r$\mid$ $< 2.9$ m ed $\mid\eta\mid$ $<$ 5, fornisce informazioni sull’energia e traiettoria delle particelle
-adroniche. Il calorimetro utilizza strati di ottone alternati a strati di scintillatore plastico ed è suddiviso in quattro parti: HB (Barrel Hadronic Calorimeter) e HE (Endcap Hadronic Calorimeter) situati all’interno del magnete nella zona del barrel e dell’endcap, HO (Outer Hadronic Calorimeter) situato all'esterno del magnete e il HF (Forward Hadronic Calorimeter) anch'esso esterno al magnete e posto nella regione in avanti.
+In questi ambiti \`e importante notare come la regione in avanti a grande pseudo-rapidit\`a sia sperimentalmente molto attraente perch\'e, dati i processi di produzione, vi si concentra una frazione non trascurabile del segnale. Si veda, a titolo di esempio, la Fig.~\ref{fig:VBFHtt_HH4b} relativa a processi tra i pi\`u interessanti dal punto di vista sperimentale: il processo H$\rightarrow \tau\tau$ in cui l'Higgs \`e prodotto per scattering di bosoni vettori ({\em Vector Boson Fusion}, VBF) e la produzione in coppia di bosoni di Higgs che decadono successivmante in coppie $\mathrm{b}\overline{\mathrm{b}}$, $\mathrm{HH}\rightarrow \mathrm{b}\overline{\mathrm{b}}\mathrm{b}\overline{\mathrm{b}}$. In entrambi i casi una accettanza di rivelazione estesa a grande pseudo-rapidit\`a permetterebbe di incrementare sensibilmente l'accettanza sperimentale per i processi in oggetto.
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.45\textwidth]{Immagini/VBF_HTT_tau_acceptance.pdf}
+\hfill
+\includegraphics[width=0.45\linewidth]{Immagini/HH4b_acc.pdf}
+\caption{Sinistra: accettanza relativa a leptoni $\tau$ che decadono adronicamente, $\tau_{\mathrm{h}}$, in funzione dell'impulso trasverso visibile  $\tau_{\mathrm{h}}$ $\pt$ generato nella simulazione per tre selezioni in pseudo-rapidit\`a; destra: frazione dei b-jet negli eventi di segnale, stimata con la simulazione, in funzione del $\pt$ del jet stesso per tre selezioni in pseudo-rapidit\`a. Per entrambe le figure le selezioni in pseudo-rapidit\`a sono $|\eta|<2.5$ (rosso), $|\eta|<3$ (blue) e $|\eta|<4$ (verde).
+}
+\label{fig:VBFHtt_HH4b}
+\end{figure}
 
-\item \textbf{Magnete superconduttore solenoidale}: posto nella regione 2.9 m $<$ r $< 3.8$ m, genera un campo magnetico uniforme di 3.8 T lungo la direzione dei fasci. Ciò permette di curvare la traiettoria delle particelle cariche, specialmente dei muoni, consentendo così di misurarne l'impulso trasverso. Il flusso del campo magnetico si richiude su un giogo di
-ferro con diametro circa 14 m e lunghezza 21.6 m. In questa zona è presente una campo residuo di 1.8 T in direzione opposta a quello interno.
+L'aumento di luminosit\`a, rendendo visibili processi con piccola sezione d'urto, amplier\`a il potenziale di scoperta di LHC per le ricerche dirette di nuove particelle previste dai modelli di estensione del MS ({\em beyond standard model} o BSM) inclusi quelli ritenuti pi\`u promettenti come la Supersimmetria e i modelli che prevedono extra-dimensioni o bosoni di gauge alla scala del TeV. Le ricerche indirette di nuova fisica che si basano sulla misura di decadimenti rari godranno di un analogo beneficio. Per esempio l'analisi del canale $B^0_s\to \mu\mu$ diventer\`a una misura di precisione e si stima che l'osservazione del decadimento $B_0\to\mu\mu$ sar\`a statisticamente solida con una significanza statistica di oltre 6 $\sigma$.
 
-\item \textbf{Camere a muoni}: sono poste tra i vari strati del giogo di ritorno del campo magnetico, nella regione 4 m $<$ r $<$ 7.4 m e $\mid\eta\mid$ $<$ 2.4 e come dice il nome hanno il compito di rivelare i muoni. Queste camere a muoni sono di tre tipi, camere a deriva (DT) nel barrel, camere a strisce catodiche (CSC) nelle regioni estreme che chiudono il rivelatore, dette endcap, e camere a piastra resistiva (RPC).
+% \subsection{Obiettivi}
 
-\end{itemize}
-%La parte centrale di CMS è racchiusa in un solenoide superconduttivo lungo 13 metri e con un diametro di 6, capace di generare un campo di $3.8 T$, questo consente  di curvare abbastanza la traiettoria di tutte le particelle cariche e specialmente dei muoni, consentendo così di misurarne l'impulso trasverso. Il campo magnetico del solenoide si richiude su un giogo di ritorno in ferro, inframezzato al ferro del giogo sono posizionati i rivelatori di muoni. Ogni rivelatore di muoni consta di vari strati di Drift Tubes in allumnio (DT) sulla superficie cilindrica e cathode strip chamber (CSC) nelle regioni estreme che chiudono il rivelatore, dette endcap, a questi si aggiungono le resistive plate chamber (RPC). 
-%Nella parte interna del magnete è contenuto il tracciatore e i calorimetri. Per quanto riguarda il tracciatore la parte più interna è composta da 3 piani di rivelatori a pixel in  silicio, più esternamente sono stati installati 10 piani di rivelatori a microstrip di silicio. 
-%Sempre internamente al solenoide sono posti intorno al tracciatore i calorimetri elettomagnetici (ECAL) utilizza cristalli di tungstato di piombo ($PbWO_4$) con copertura in pseudorapidità fino a  $|\eta |< 3.0$. La luce di scintillazione viene letta a fotodiodi a valanga di silicio (APDs) e fototriodi a vuoto (VPTs) nelle regioni di endcup, dove il campo magnetico è basso. 
+% L'idea di aumentare la luminosità di LHC oltre quella decisa nel progetto originale è antecedente alla messa in opera del progetto. Eventuali modifiche importanti alla macchina e agli esperimenti possono essere eseguite solo con lunghi periodi di shut down in cui è possibile accedere al tunnel e alle caverne. Per questo motivo è stato deciso un piano temporale che intervalli periodi di presa dati (Run I, Run II etc.) e periodi in cui si ha uno spegnimento completo per lunghi periodi (LS1, LS2, LS3). In figura \ref{HL-LHC} è possibile vedere la suddivisione temporale tra periodi di presa dati e periodi di spegnimento.
+% Run I è stato il periodo di presa dati dal 2011 al 2012. Nel primo periodo di stop LS1 LHC è stato modificato al fine di raggiungere energie  nel centro di massa di 13 TeV, per poi arrivare gradualmente a 14 TeV. In questo momento siamo alla fine del Run II, e nell'esperimento CMS si  hanno una media di 25 interazioni per bunch, ciò vuol dire 25 vertici da ricostruire ogni 25 ns. Attraverso modifiche  e miglioramenti apportati nel LS1 e LS2 verrà aumentata la luminosità, questa parte del processo per l'esperimento CMS va sotto il nome di fase-I. Durante il periodo LS3  saranno invece sostituite vari parti degli esperimenti, che a causa del danneggiamento da radiazione saranno deteriorati e nello contemporaneamente verranno sostituiti i quadrupoli di fuocheggiamento con nuovi modelli capaci di incrementare la luminosità. 
+% Il periodo che seguirà LS3 sarà chiamato fase II o HL-LHC (High Luminosity LHC). Nello scenario prefissato la lumiosità istantanea sarà di $5 \cdot 10 34 cm^{-2} s^{-1}$ con picchi di $2 \cdot 10 35 cm^{-2} s^{-1}$, in questo modo gli esperimenti saranno in grado di raccogliere una maggiore statistica con una luminosità di $300 fb^{-1}$ ogni anno per 10 anni(250 o 300)?????%at 5 × 10 34 cm − 2 s − 1 from a potential peak value of 2 × 10 35 cm − 2 s − 1 at the beginning of fills,
+% %and to deliver 250 fb − 1 per year for a further 10 years of operation. Under these conditions
+% In queste condizioni ci sarà una maggiore probabilità di sovrapposizione di interazioni (Pile Up), questa sarà la grande sfida, insieme alla gestione degli effetti di degradazione in cui incorreranno i rivelatori a seguito delle maggiori dosi di radiazione assorbita. Sempre nella figura \ref{HL-LHC} è possibile vedere le proiezioni di luminosità di picco e luminosità integrata.
+ 
+% %The high luminosity period that follows LS3 with the upgraded LHC is referred to here as HL-LHC or Phase-II. The proposed operating scenario is to level the instantaneous luminosity
+% %at 5 × 10 34 cm − 2 s − 1 from a potential peak value of 2 × 10 35 cm − 2 s − 1 at the beginning of fills,
+% %and to deliver 250 fb − 1 per year for a further 10 years of operation. Under these conditions the event PU will rise substantially to become a major challenge for the experiments, and the performance degradation due to integrated radiation dose will need to be addressed. This Technical Proposal presents the CMS upgrade program for Phase-II. The schedule of beam operations and long shutdowns, together with projections of the peak and integrated luminosities, is shown in Fig. 1.9, and is, of course, subject to change.
+
+\section{L'esperimento CMS}
+
+Il {\em Compact Muon Solenoid} (CMS) [CMS Collaboration The CMS experiment at LHC JINST 08 (2008) 03] \`e un esperimento polivalente per lo studio generale delle collisioni pp fino ad un’energia di $14\TeV$. Il rivelatore \`e infatti ottimizzato per misurare energia e impulso delle particelle prodotte durante le collisioni. Per garantire la massima ermeticit\`a, l’apparato sperimentale ha una struttura centrale approssimativamente cilindrica, detta {\em barrel}, sigillata ad entrambe le estremit\`a da strutture di chiusura dette {\em endcap} per un diametro complessivo di $15\m$, una lunghezza di $\sim22\m$ e $\sim 12500$ tonnellate di peso. La capacit\`a di identificazione delle particelle prodotte \`e assicurata dai diversi tipi di sotto-rivelatori disposti in strati rispetto al punto di incrocio dei fasci come schematicamente mostrato in Fig.~\ref{fig:spaccatoCMS}: pi\`u internamente i tracciatori di particelle cariche ovvero il rivelatore a pixel di silicio e il rivelatore a microstrip di silicio; all'esterno di quest'ultimo abbiamo il calorimetro elettromagnetico e il calorimetro adronico; il tracciatore e i calorimetri sono collocati all’interno del magnete solenoidale superconduttore che genera un campo magnetico di $3.8\T$ parallelo all'asse dei fasci. Pi\`u esternamente, immerse nel ferro del giogo di ritorno del magnete, si trovano le camere a muoni.
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Immagini/cms_3d.png}
+\caption{Vista dello spaccato dell'attuale esperimento CMS in cui sono schematicamente visibili i vari sotto-rivelatori.}
+\label{fig:spaccatoCMS}
+\end{figure}
+
+L’esperimento \`e collocato in una caverna alla profondit\`a di $\sim 100 m$ in corrispondenza del punto di interazione numero 5 di LHC (IP5). 
+
+Pi\`u nel dettaglio gli attuali sotto-sistemi dell'esperimento CMS sono i seguenti, procedendo dal punto di interazione verso l'esterno:
+
+\begin{description}
+\item[Il tracciatore al silicio.] L'apparato in grado di ricostruire la traiettoria delle particelle cariche fino a $|\eta|<2.5$ misurandone l'impulso trasverso (grazie alla presenza del campo magnetico dato che $\pt [\GeV] = 0.3 B [\T] \rho [\m]$, dove $\rho$ \`e il raggio di curvatura) e individuando i vertici primari di interazione pp e gli eventuali vertici secondari di decadimento di particelle instabili prodotte dall'interazione; occupa il volume $r<1.2\m$, $|z|<250\cm$. \`E composto da due sottorivelatori: un rivelatore di vertice a pixel di silicio e un rivelatore a microstrip di silicio. Si veda la sezione~\ref{} per maggiori dettagli.
+\item[ECAL.] Il calorimetro elettromagnetico (ECAL) misura l’energia di elettroni e fotoni fino a $|\eta|<3$. Collocato esternamente al tracciatore, \`e un calorimetro omogeneo composto da $\sim 76000$ cristalli scintillanti di tungstato di piombo (PbWO$_4$) di lunghezza equivalente a $\sim 25--26X_0$.
+\item[HCAL.] Il calorimetro adronico (HCAL) misura l'energia delle particelle che interagiscono adronicamente fino a $|\eta|<5$ ed \`e. \`E un calorimetro ermetico a campionamento situato a valle di ECAL, rispetto al punto di interazione, composto da strati di ottone e di scintillatore plastico, corrispondenti a $7-11$ lunghezze d'interazione, e integrato da uno strato di scintillatore posto all'esterno del magnete nella parte barrel che ne aumenta lo spessore efficace per il contenimento degli sciami adronici.
+\item[Il magnete superconduttore.] Il campo magnetico che deflette le particelle cariche cos\`i da stimarne l’impulso dalla curvatura \`e generato da un magnete superconduttore solenoidale lungo $13\m$, con un diametro interno di $6\m$, costituito da un un avvolgimento di cavo di NbTi in matrice di alluminio mantenuto alla temperatura di $4\degrees\K$ da un sistema criogenico. Il campo magnetico ha una intensit\`a nominale di $3.8\T$ corrispondenti a $\sim 20\kA$ di corrente,  di intensit\`a richiede circa $20\kA$ di corrente. Le linee di campo sono richiuse tramite un giogo esterno di $10000$ tonnellate di ferro.
+\item[Le camere a muoni.] Il giogo di ritorno del magnete \`e attrezzato con rivelatori dedicati alla tracciatura dei muoni grazie anche al campo residuo di $1.8\T$ presente nel giogo. Nella parte barrel ci sono camere a deriva ({\em drift chamber}) e CSC ({\em cathode strip chamber}) negli endcap, in entrambi i casi integrati con RPC ($resistive plate chamber$).  
+\end{description}
+
+Una rappresentazione schematica dei differenti meccanismi di interazione delle varie particelle nei sotto-rivelatori, sui quali l'identificazione delle stesse \`e basata, \`e visibile in Fig.~\ref{fig:spicchioCMS}.
 \begin{figure}
 \centering
 \includegraphics[scale=0.8]{Immagini/CMSbis}
@@ -177,41 +205,89 @@ ferro con diametro circa 14 m e lunghezza 21.6 m. In questa zona è presente una
 \label{CMSbis}
 \end{figure}
 
-Questa struttura rispecchia la necessità di ricostruire con precisione gli eventi originati dalla collisione di particelle, che avvengono in rapida successione. CMS come anche gli altri esperimenti, può essere paragonato ad una gigantesca macchina fotografica che registra 40 milioni di foto al secondo (digitalizzando l'informazione di decine di milioni di sensori). 
-La struttura a strati consente di avere rivelatori diversi in ogni strato, di cui i più interni sono meno densi, mentre i più esterni sono più densi. Questo perché il tracciatore non deve alterare l'energia delle particelle che poi sarà misurata nei calorimetri e per facilitare la ricostruzione delle tracce è importante evitare fenomeni di multiple scattering.
+La frequenza di $40\MHz$ con cui avvengono i bunch crossing a LHC rende impraticabile il trasferimento integrale per ogni evento dei dati relativi ai $>100$M di canali di lettura di tutto CMS ({\em readout}). Sarebbe inoltre impossibile l'immagazzinamento di questa informazione data l'entit\`a delle memorie di massa che sarebbero richieste. Gli eventi di collisione sono quindi preventivamente filtrati da un sistema di {\em trigger} organizzato in due livelli di crescente complessit\`a che permettono di selezionare gli eventi interessanti per la fisica rispettando le limitazioni del readout e dell'archiviazione a lungo termine dei dati raccolti.
 
-Le particelle che gli scienziati cercano di riprodurre nelle collisioni protone-protone hanno vite medie molto brevi, e decadono rapidamente in particelle più leggere. Dopo un processo di hard-scattering migliaia di queste particelle leggere sono generate elettroni, muoni, fotoni, ma anche protoni, neutroni etc. Tutte queste particelle attraversano i vari strati di cui è composto il rivelatore. 
-Le informazioni raccolte vengono utilizzate per ricostruire l'evento di interazione, per  dedurre l'esistenza di nuove particelle.
+Il primo livello, detto {\em trigger di livello 1} (L1), sfrutta una lettura speciale a bassa risoluzione e granularit\`a dei rivelatori intrinsecamente veloci, ovvero calorimetri e camere a muoni. Questa informazione viene elaborata entro pochi microsecondi ({\em latenza}) compatibilmente con la profondit\`a temporale delle memorie tampone ({\em pipeline}) dell'elettronica di lettura di prossimit\`a ({\em front-end}) di tutti i sotto-rivelatori, che immagazzinano i dati in attesa dell'esito della selezione di L1. Questa \`e basata su semplici tagli sulle osservabili fisiche ricavabili dai dati disponibili al sistema di trigger di L1. La frequenza media di consenso del L1 \`e dell'ordine di qualche decina di $\kHz$.
+
+Con il consenso di L1 tutta l'informazione di CMS relativa all'evento selezionato viene letta, digitalizzata e compressa. L'evento, che a questo punto ha una dimensione di $\sim2$MB, viene indirizzato all'{\em High Level Trigger}, HLT. L'HLT \`e una batteria di normali PC commerciali che, grazie alla pesante parallelizzazione e all'utilizzo di flessibili algoritmi semplificati, sono in grado di analizzare e filtrare ulteriormente gli eventi in tempo reale selezionando, con una frequenza media di qualche centinaio di Hz, quelli meritevoli di essere registrati indefinitamente per l'analisi.
+
+%-------------------------
+
+% Questa struttura rispecchia la necessità di ricostruire con precisione gli eventi originati dalla collisione di particelle, che avvengono in rapida successione. CMS come anche gli altri esperimenti, può essere paragonato ad una gigantesca macchina fotografica che registra 40 milioni di foto al secondo (digitalizzando l'informazione di decine di milioni di sensori). 
+% La struttura a strati consente di avere rivelatori diversi in ogni strato, di cui i più interni sono meno densi, mentre i più esterni sono più densi. Questo perché il tracciatore non deve alterare l'energia delle particelle che poi sarà misurata nei calorimetri e per facilitare la ricostruzione delle tracce è importante evitare fenomeni di multiple scattering.
+
+% Le particelle che gli scienziati cercano di riprodurre nelle collisioni protone-protone hanno vite medie molto brevi, e decadono rapidamente in particelle più leggere. Dopo un processo di hard-scattering migliaia di queste particelle leggere sono generate elettroni, muoni, fotoni, ma anche protoni, neutroni etc. Tutte queste particelle attraversano i vari strati di cui è composto il rivelatore. 
+% Le informazioni raccolte vengono utilizzate per ricostruire l'evento di interazione, per  dedurre l'esistenza di nuove particelle.
 
 
-Le traiettorie delle particelle cariche sono piegate dal campo magnetico, e il loro raggio di curvatura è utilizzata per calcolare il loro impulso: maggiore è la loro energia cinetica, minore è la curvatura. Un'altra componente importante di un rivelatore sono i calorimetri per misurare l'energia delle particelle (sia cariche che non). 
-I calorimetri devono essere abbastanza grandi per assorbire anche le particelle più energetiche. Questi motivi fanno sì che gli esperimenti ad LHC siano così grandi. I rivelatori sono costruiti in modo il più possibile ermetico per raccogliere tutti i prodotti delle interazioni e poter ricostruire gli eventi. 
-Combinando le informazioni di ogni strato del rivelatore è possibile determinare il tipo di particella che ha lasciato una data traccia.
+% Le traiettorie delle particelle cariche sono piegate dal campo magnetico, e il loro raggio di curvatura è utilizzata per calcolare il loro impulso: maggiore è la loro energia cinetica, minore è la curvatura. Un'altra componente importante di un rivelatore sono i calorimetri per misurare l'energia delle particelle (sia cariche che non). 
+% I calorimetri devono essere abbastanza grandi per assorbire anche le particelle più energetiche. Questi motivi fanno sì che gli esperimenti ad LHC siano così grandi. I rivelatori sono costruiti in modo il più possibile ermetico per raccogliere tutti i prodotti delle interazioni e poter ricostruire gli eventi. 
+% Combinando le informazioni di ogni strato del rivelatore è possibile determinare il tipo di particella che ha lasciato una data traccia.
 
-Particelle cariche come elettroni, protoni e muoni, lasciano tracce ionizzando il materiale attraversato. Gli elettroni sono molto leggeri e perciò perdono energia velocemente, mentre i protoni penetrano più in profondità negli strati del rivelatore. I fotoni essendo neutri non rilasciano segnali nel tracciatore, ma nei calorimetri sono convertiti in elettroni e positroni e così ne viene misurata l'energia. 
-L'energia dei neutroni viene invece misurata indirettamente, trasferiscono l'energia ai protoni, che poi sono misurati. I muoni insieme ai neutrini (che non vengono rivelati) sono i soli a raggiungere gli strati più esterni.
+% Particelle cariche come elettroni, protoni e muoni, lasciano tracce ionizzando il materiale attraversato. Gli elettroni sono molto leggeri e perciò perdono energia velocemente, mentre i protoni penetrano più in profondità negli strati del rivelatore. I fotoni essendo neutri non rilasciano segnali nel tracciatore, ma nei calorimetri sono convertiti in elettroni e positroni e così ne viene misurata l'energia. 
+% L'energia dei neutroni viene invece misurata indirettamente, trasferiscono l'energia ai protoni, che poi sono misurati. I muoni insieme ai neutrini (che non vengono rivelati) sono i soli a raggiungere gli strati più esterni.
 
 
+% Ogni parte del rivelatore è connessa ad un sistema di lettura elettronico attraverso migliaia di cavi. Ogni volta che un segnale è raccolto, il sistema registra la sua posizione e l'istante in cui è stato raccolto, se il sistema di trigger decide che l'evento che ha generato Se tale segnale è di interesse, allora l'informazione è letta e portata all'esterno del rivelatore per essere utilizzata nelle analisi offline.
+% Ci sono differenti criteri per selezionare un evento potenzialmente di interesse, in questo modo la mole enorme di eventi registrati in un secondo viene ridotta a poche centinaia, che poi verranno analizzate in dettaglio.
+
+
+\subsection{L'attuale Tracciatore al Silicio di CMS}
+
+Il tracciatore al silicio di CMS attualmente istallato merita una descrizione pi\`u approfondita per introdurre le motivazioni e i miglioramenti del potenziamento previsto per HL-LHC oggetto di questo lavoro di tesi.
+
+Il tracciatore al silicio \`e il rivelatore di CMS pi\`u interno: \`e lungo $\sim6\m$ e ha un diametro esterno di $\sim 2.6\m$ ed \`e composto da un barrel centrale e da due endcap finali in modo tale da avere la massima ermeticit\`e fino a $|\eta|<2.5$.
+
+La particella carica rilascia energia nel sensore di silicio che non \`e altro che un diodo contropolarizzato, per avere un volume di raccolta essenzialmente privo di portatori di carica. La carica di ionizzazione che segue al rilascio di energia viene raccolta dagli elettrodi di giunzione. Un elettrodo di giunzione finemente segmentato permette di avere informazione sulla posizione di passaggio della particella carica.
+
+Il disegno del tracciatore \`e caratterizzato da: un’alta granularit\`a, soprattutto vicino al punto di interazione, dove il flusso di particelle \`e maggiore, per avere risoluzione in impulso e un'ottima ricostruzione di tracce limitando, in media, la frazione di canali interessati dal segnale ({\em occupancy}); un elevato e ridondante numero di punti misurati per traccia, per mitigare le conseguenze di possibili malfunzionamenti.
+% una quantit`a non eccessiva di materiale da attraversare, che deteriora la precisione delle misure a causa dei fenomeni di scattering multiplo e della perdita di energia nel materiale.
+Il tracciatore di CMS, schematicamente rappresentato in Fig.~\ref{fig:CMSTk}, \`e infatti composto di due sotto-rivelatori: il rivelatore a pixel con sensori pi\`u segmentati all'interno e il rivelatore a microstrip pi\`u esternamente. 
+  
 \begin{figure}
 \centering
-\includegraphics[scale=0.7]{Immagini/CMSinterazione}
-\caption{Spaccato di CMS e risposta ai vari tipi di particella.}
-\label{CMSinterazione}
+\includegraphics[width=0.45\textwidth]{Immagini/sketch.pdf}
+\includegraphics[width=0.45\textwidth]{Immagini/layout_rz.pdf}
+\caption{A sinistra: schema semplificato del tracciatore di CMS; a destra: vista $Rz$ di un quadrante del tracciatore di CMS con il primo pixel detector.}
+\label{fig:CMSTk}
 \end{figure}
 
-Ogni parte del rivelatore è connessa ad un sistema di lettura elettronico attraverso migliaia di cavi. Ogni volta che un segnale è raccolto, il sistema registra la sua posizione e l'istante in cui è stato raccolto, se il sistema di trigger decide che l'evento che ha generato Se tale segnale è di interesse, allora l'informazione è letta e portata all'esterno del rivelatore per essere utilizzata nelle analisi offline.
-Ci sono differenti criteri per selezionare un evento potenzialmente di interesse, in questo modo la mole enorme di eventi registrati in un secondo viene ridotta a poche centinaia, che poi verranno analizzate in dettaglio.
-
-
-\subsection{Tracciatore}
-Il tracciatore al silicio  è il rivelatore più vicino al punto dove collidono i due fasci. 
+Una vista di CMS durante l'istallazione del tracciatore \`e visibile in~Fig.~\ref{fig:CMS}.
 \begin{figure}
 \centering
-\includegraphics[scale=0.4]{Immagini/CMStracker2}
-\caption{Schema di un quarto del tracciatore di CMS visto nel piano $rz$. Il rivelatore a pixel è rappresentato in verde, mentre i moduli a strip singoli e doppi sono in rispettivamente in rosso e blu.}
-\label{CMStracker}
+\includegraphics[scale=.2]{Immagini/CMS}
+\caption{Vista frontale di CMS durante l'installazione del tracciatore.}
+\label{fig:CMS}
 \end{figure}
+
+\begin{description}
+
+\item[Il rivelatore a pixel.] Detto anche {\em rivelatore di vertice}, \`e il primo rivelatore che si incontra uscendo dal punto di collisione. CMS ha utilizzato una prima versione del rivelatore di pixel (detta di {\em fase-0}) fino al 2016. A partire dal 2017 \`e operativa una seconda versione evoluta e migliorata, detta di {\em fase-1}. Il rivelatore di vertice, intrinsecamente a bassa occupancy, \`e fondamentale dal momento che fornisce agli algoritmi le proto-tracce ({\em seeding}), poi estrapolate verso l'esterno, con cui la ricostruzione completa delle tracce inizia.
+ 
+Il rivelatore a pixel di fase-0 era composto da una parte barrel di tre strati approssimativamente cilindrici e coassiali lunghi $\sim 53\cm$ e posizionati a $\sim 4.4\cm$, $\sim 7.3\cm$ e $\sim 10.2\cm$ in raggio. Ogni cilindro \`e composto da strutture di supporto e di raffreddamento per i moduli a pixel ({\em ladders}), ognuna contenente 8 moduli. Il rivelatore era completato in avanti da due dischi per lato fino a $z\sim\pm 46.5\cm$ per un totale di 1440 moduli, $1.06\m^2$ di silicio, 66M di canali. I sensori, di $250\mu\m$ di spessore, sono segmentati in pixel di $100\times150\mu\m^2$ tramite impiantazioni di tipo n$^+$-on-n mentre la giunzione \`e realizzata sulla faccia opposta del cristallo. Il segnale \`e letto da appositi chip di lettura ({\em Readout Chips} o ROC) connessi ai sensori tramite {\em bump bonding}. Il ROC \`e un ASIC ({\em Application Specific Integrated Circuit}), realizzato con tecnologia commerciale CMOS a $0.25\mu\m$, e ospita una matrice di $52\times80$ canali. 
+
+Il rivelatore di pixel di fase-0, progettato per una luminosit\`a istantanea di $10^{34}\cm^{-2}\s^{-1}$ al picco, era afflitto da alcune limitazioni che si sono mano a mano manifestate con l'aumento della luminosit\`a istantanea e l'invecchiamento del rivelatore. Tra queste le principali sono: inefficienza dinamica in caso di alta occupancy e elevata frequenza di trigger dovute all'architettura del ROC, anche dell'ordine del 15\% negli strati pi\`u interni a $2\cdot10^{34}\cm^{-2}\s^{-1}$; peggiore ricostruzione delle tracce a causa della riduzione di qualit\`a del seeding a causa del fondo elevato dovuto al PU; danneggiamento da radiazione nei sensori che riduce il segnale di particella e, di conseguenza, la risoluzione spaziale.
+
+Il rivelatore di pixel di fase-1 \`e concepito per superare queste limitazioni. Pur essendo simile alla precedente versione, \`e composto da quattro strati nella parte barrel rispettivamente di $\sim 3.0\cm$, $\sim 6.8\cm$, $\sim 10.2\cm$ e $16.0\cm$ di raggio. Gli endcap sono composti da tre dischi per lato fino a $z\sim\pm 51\cm$ per un totale di 1856 moduli, $1.95\m^2$ di silicio per 124M di canali. L'incremento dei punti di misura e il primo layer pi\`u vicino all'IP rende il seeding pi\`u robusto anche in presenza di PU. I sensori sono identici alla versione precedente ma completamente nuovi e non danneggiati.  L'architettura della nuova generazione di ROC utilizzati permette di ridurre drasticamente l'inefficienza dinamica per le luminosit\`a istantanee previste fino a LS3. 
+
+La geometria delle due versioni del rivelatore a pixel di CMS \`e comparativamente visibile in~Fig.\ref{fig:PXLph0ph1}.
+\begin{figure}
+\centering
+\includegraphics[width=0.98\textwidth]{Immagini/PXLph0ph1.pdf}
+\caption{Rappresentazione schematica della geometria delle due versioni del rivelatore a pixel di CMS nella vista $Rz$ e in una vista prospettica della parte barrel.}
+\label{fig:PXLph0ph1}
+\end{figure}
+
+\end{description}
+
+%\hline
+%\hline
+%\hline
+
 Lo scopo è ricostruire , con la maggior precisione possibile, le traiettorie delle particelle cariche, identificando vertici primari e secondari. La composizione interna del tracciatore è mostrata in figura \ref{CMStracker}. Il raggio esterno è circa 110 cm e la lunghezza totale circa 540 cm.
+
+Le particelle cariche cedono energia al materiale di cui `e composto il rivelatore inte- ragendo elettromagneticamente con quest’ultimo; l’energia rilasciata forma coppie elettrone lacuna nel semiconduttore che porta a una ionizzazione del materiale e quindi a un rilascio di cariche che opportunamente raccolte permettono di ricavare informazioni sulla posizione della particella.
+
 
 Nella zona centrale (barrel) e più interna vi è il rivelatore di vertice a pixel, con tre strati distanti 4, 7 e 11 cm dall'asse dei fasci. La dimensione dei pixel è $100x150$ $\mu m^2$. Più esternamente ci sono rivelatori a microstrip tra 20 e 110 cm. Le parti laterali, dette endcap, sono invece costituite da 2 piani a pixel e 9 a microstrip. La parte di microstrip è divisa in due parti Inner Barrel e Outer Barrel, figura \ref{CMStracker}:
 \begin{itemize}
