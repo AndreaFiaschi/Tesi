@@ -1,10 +1,14 @@
 \chapter{RD53A}
 
-Il progetto di RD53A è stato approvato nell'autunno del 2015, dopo la revisione da parte delle collaborazioni ATLAS, CMS e RD53A. Nel 2016 è iniziata la progettazione, con questo nuovo chip si vuole dimostrare la possibilità di utilizzare tecnologia CMOS  in 65 nm per l'aggiornamento in vista della fase ad alta luminosità di ATLAS e CMS, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
+Lo sviluppo di un sistema di alimentazione seriale e lo sviluppo del circuito di alimentazione SLDO per gestire localmente le tensioni su chip è parte integrante del progetto di RD53A.
+Questoprogetto è stato approvato nell'autunno del 2015, dopo la revisione da parte delle collaborazioni ATLAS, CMS e RD53A, e nel 2016 è iniziata la progettazione. 
+Con questo nuovo chip si vuole dimostrare la possibilità di utilizzare tecnologia CMOS  in 65 nm per l'aggiornamento in vista della fase ad alta luminosità di ATLAS e CMS. 
+%, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
 
 \section{Organizzazione del chip} 
-RD53A non deve essere inteso come il prodotto finale, infatti possiede molte modifiche di design utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front end (FE), già questo causa una non uniformità del chip. 
-Questo chip è la base di partenza per arrivare al progetto finale, in cui sarà scelto uno dei front end e sarà utilizzato uniformemente su tutta la matrice di pixel. In RD53A la matrice di pixel ha 400 colonne e 192 righe, nel progetto finale si avrà un aumento del numero di pixel, infatti il sistema di alimentazione e di contropolarizzazione dei pixel è progettato per un numero di righe massimo pari a 384, figura \ref{RD53ALayout}.
+RD53A non deve essere inteso come il prodotto finale, infatti, al suo interno sono presenti tre differenti front end (FE). Ciò ha lo scopo di permettere un confronto in termini di prestazioni di questi tre circuiti. La presenza di tre FE differenti complica
+% possiede molte modifiche di design utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front end (FE), già questo causa una non uniformità del chip. 
+RD53A è la base di partenza per arrivare al progetto finale, in cui sarà scelto uno dei front end e sarà utilizzato uniformemente su tutta la matrice di pixel. In RD53A la matrice di pixel ha 400 colonne e 192 righe, nel progetto finale si avrà un aumento del numero di pixel, infatti il sistema di alimentazione e di contropolarizzazione dei pixel è progettato per un numero di righe massimo pari a 384, figura \ref{RD53ALayout}.
 \begin{figure}
 \centering
 \includegraphics[scale=.4]{Immagini/RD53ALayout}
@@ -41,7 +45,7 @@ Di seguito è riportata una breve descrizione del funzionamento di ciascuno dei 
 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/SchemaSincrono}
+\includegraphics[width=\textwidth]{Immagini/SchemaSincrono}
 \caption{Schematico del front end Sincrono.}
 \label{SchemaSincrono}
 \end{figure}
@@ -58,7 +62,7 @@ Ciò richiede l'acquisizione del livello di tensione della baseline ogni 100 $\m
 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/SchemaLineare}
+\includegraphics[width=\textwidth]{Immagini/SchemaLineare}
 \caption{Schematico del front end Lineare.}
 \label{SchemaLineare}
 \end{figure}
@@ -98,32 +102,35 @@ Progettato per operare con una soglia di 500 elettroni, la parte analogica ha un
 \section{Alimentazione}
 \begin{figure}
 \centering
-\includegraphics[scale=.6]{Immagini/SLDO_RD53A}
+\includegraphics[width=\textwidth]{Immagini/SLDO_RD53A}
 \caption{Regolatore LDO con Shunt (Shunt-LDO).}
 \label{SLDO_RD53A}
 \end{figure}
 In RD53A l'alimentazione è gestita da due regolatori LDO con shunt, uno per la parte analogica ed uno per quella digitale. 
 Rispetto al circuito di SLDO presentato in precedenza vi sono delle differenze, in particolare la tensione di offset è generata con un circuito diverso, lo schema del circuito di SLDO è riportato in  figura \ref{SLDO_RD53A}. 
 I valori di Input e Output sono riportati nella seguente tabella:
-\begin{center}
-\begin{tiny}
-\begin{tabular}{|c|c|c|c|c|l|}
+
+%\begin{center}
+\begin{small}
+\noindent\setlength\tabcolsep{4pt}%
+\begin{tabularx}{\linewidth}{|c|c|c|c|c|X|}
+%\begin{tabular}{|c|c|c|c|c|l|}
 \hline
-\textbf{Pin} & \textbf{Tipologia} & \textbf{Minimo} & \textbf{Tipico} & \textbf{Massimo} & \textbf{Descrizione} \\ \hline
+\textbf{Pin} & \textbf{Tipologia} & \textbf{Min} & \textbf{Tipico} & \textbf{Max} & \textbf{Descrizione} \\ \hline
 
 $\mathrm{V_{IN}}$ & Alimentazione & 1.4 V & & 2.0 V & Input di alimentazione esterna (in tensione)\\ \hline
  & Power & 0 A & 0.5 A & 2.0 A & Input di alimentazione esterna (in corrente)\\ \hline     
 $\mathrm{V_{SHUNT}}$ & Alimentazione & 1.4 V & & 2.0 V & Tensione di alimentazione per il circuito di shunt\\ \hline
 GND & Ground &  & &  & Terra locale e uscita della corrente di shunt\\ \hline
 VDD & Alimentazione & 1.0 V & 1.2 V & 1.32 V & Tensione di uscita del regolatore\\ \hline
-$\mathrm{V_{REF}}$ & Analogico & 500 mV & 600 mV & 660 mV & Tensione di riferimento (VDD=2$\mathrm{V_{REF}}$\\ \hline
+$\mathrm{V_{REF}}$ & Analogico & 500 mV & 600 mV & 660 mV & Tensione di riferimento (VDD=2$\mathrm{V_{REF}}$)\\ \hline
 $\mathrm{R_{INT}}$ & Analogico &  & $\mathrm{V_{IN}}$ &  & Enable resistenza interna R\\ \hline
 $\mathrm{R_{EXT}}$ & Analogico & 300 $\Omega$ &  &  & Resistenza esterna collegata a $\mathrm{V_{IN}}$\\ \hline
 $\mathrm{I_{OFS}}$ & Analogico &  & 200 k$\Omega$ &  & Resistenza esterna connessa a GND\\ \hline
 $\mathrm{COMP_{ENB}}$ & Digitale &  & GND &  & Segnale per abilitare il circuito di compensazione\\ \hline
-\end{tabular}
-\end{tiny}
-\end{center}
+\end{tabularx}
+\end{small}
+%\end{center}
 
 Infatti, è possibile applicare al terminale $\mathrm{I_{ofs}}$ una resistenza che con la sua caduta di tensione determina il valore di $\mathrm{V_{ofs}}$. 
 Questa resistenza va saldata sulla Single Chip Card nell'apposito slot. Il valore di $\mathrm{I_{ofs}}$ è 2 $\mu$A, quindi:
@@ -210,9 +217,11 @@ Nel far questo sono state scelte diverse configurazioni, le possibili scelte son
 \item Utilizzare $\mathrm{V_{ref}}$ e $\mathrm{V_{iofs}}$ generati internamente o fornirli esternamente.
 \end{itemize}
 
-Nei grafici 
+Di seguito è riportata una descrizione delle abbreviazioni utilizzate per le legende dei grafici:
+
 \begin{center}
-\begin{tabular}{|cc|l|}
+%\noindent\setlength\tabcolsep{4pt}%
+\begin{tabularx}{\linewidth}{|cc|X|}
 \hline
 \multicolumn{2}{|c|}{Abbreviazione} & \multicolumn{1}{c|}{\multirow{2}{*}{Segnale}}\\ 
 Analogico & Digitale & \\
@@ -221,13 +230,13 @@ VINA & VIND & Tensione all'ingresso del regolatore  \\ \hline
 VDDA & VDDD & Tensione in uscita (alimentazione chip) \\ \hline
 $\mathrm{V_{iofs \_ m \_ A}}$ & $\mathrm{V_{iofs \_ m \_ D}}$ & Tensione riferimento offset (va raddoppiata) \\ \hline   
 $\mathrm{V_{ref \_ m \_ A}}$ & $\mathrm{V_{ref \_ m \_ D}}$ & Tensione riferimento per VDDA e VDDD (va raddoppiata)\\ \hline   
-\end{tabular}
+\end{tabularx}
 \end{center}
 
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, tensioni di riferimento interne}
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/IUI2}
+\includegraphics[width=\textwidth]{Immagini/IUI2}
 \caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 0 A a 1.5 A.}
 \label{IUI}
 \end{figure}
@@ -278,7 +287,7 @@ Se tutti questi problemi sono effettivamente legati all'accensione, dovranno sco
 \subsubsection{Alimentazioni indipendenti, rampa di corrente decrescente, tensioni di riferimento interne}
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/IDI2}
+\includegraphics[width=\textwidth]{Immagini/IDI2}
 \caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 1.5 A a 0 A.}
 \label{IDI}
 \end{figure}
@@ -306,7 +315,7 @@ Continuando a tenere i due circuiti di alimentazione separati è interessante ve
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, $\mathrm{V_{ref}}$ esterna} 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/IUEVref2}
+\includegraphics[width=\textwidth]{Immagini/IUEVref2}
 \caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 0 A a 1.5 A, utilizzando un riferimento esterno per $\mathrm{V_{ref}}=0.550 \V$.}
 \label{IUEVref}
 \end{figure}
@@ -328,7 +337,7 @@ Il grafico riportato in figura \ref{IUEVref} è ottenuto fornendo esternamente  
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, $\mathrm{V_{iofs}}$ esterna} 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/IUEViofs2}
+\includegraphics[width=\textwidth]{Immagini/IUEViofs2}
 \caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 0 A a 1.5 A, utilizzando un riferimento esterno per $\mathrm{V_{iofset}}=0.400 \V$.}
 \label{IUEViofs}
 \end{figure}
@@ -370,7 +379,7 @@ Il $\mathrm{V_{iofset}}$ esterno permette di evitare problemi visti in precedenz
 \subsubsection{Alimentazione in parallelo, rampa di corrente crescente, tensioni di riferimento interne} 
 \begin{figure}[h]
 \centering
-\includegraphics[scale=.3]{Immagini/PUI}
+\includegraphics[width=\textwidth]{Immagini/PUI}
 \caption{Grafico corrente-tensione ottenuto con i due regolatori in parallelo e variando la corrente da 0 A a 3.0 A, sull'asse x è riportata la corrente totale che poi si suddivide tra i due regolatori.}
 \label{PUI}
 \end{figure}
@@ -421,22 +430,22 @@ In tabella \ref{table:results} sono riportati i valori di offset e pendenza dell
 
 \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
 \hline
-Regolatore & Alim. & Cres./Decr. & \multicolumn{2}{c|}{Vref [V]} & \multicolumn{2}{c|}{Voffset [V]} & Slope [$\Omega$] & Offset [V]\\ \hline
+Regolatore & Alim. & Rampa & \multicolumn{2}{c|}{Vref [V]} & \multicolumn{2}{c|}{Voffset [V]} & Slope [$\Omega$] & Offset [V]\\ \hline
  
-Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Cres.} & Int. & - & Int. & - & 0.7178 & 0.9025 \\
-Digitale  &  &  & Int. & - & Int. & - & 0.752  & 0.844 \\ \hline
+Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Cres.} & Int. & - & Int. & - & 0.72 & 0.90 \\
+Digitale  &  &  & Int. & - & Int. & - & 0.75  & 0.84 \\ \hline
 
-Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Decr.} & Int. & - & Int. & - & 0.7153 & 0.9043 \\
-Digitale  &  &  & Int. & - & Int. & - & 0.73475  & 0.86530 \\ \hline
+Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Decr.} & Int. & - & Int. & - & 0.71 & 0.90 \\
+Digitale  &  &  & Int. & - & Int. & - & 0.73  & 0.86 \\ \hline
 
-Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Cres.} & Ext. & 0.550 & Int. & - & 0.7448 & 0.8706 \\
-Digitale  &  &  & Ext. & 0.550 & Int. & - & 0.7539  & 0.84199 \\ \hline
+Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Cres.} & Ext. & 0.550 & Int. & - & 0.75 & 0.87 \\
+Digitale  &  &  & Ext. & 0.550 & Int. & - & 0.75  & 0.84 \\ \hline
 
-Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Cres.} & Int. & - & Ext. & 0.400 & 0.7554 & 0.7403 \\
-Digitale  &  &  & Int. & - & Ext. & 0.400 & 0.7871  & 0.6824 \\ \hline
+Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Cres.} & Int. & - & Ext. & 0.400 & 0.75 & 0.74 \\
+Digitale  &  &  & Int. & - & Ext. & 0.400 & 0.79  & 0.68 \\ \hline
 
-Analogico & \multirow{2}{*}{Paral.} & \multirow{2}{*}{Cres.} & Int. & - & Int. & - & 0.7396 & 0.8688 \\
-Digitale  &  &  & Int. & - & Int. & - & 0.7441  & 0.8635 \\ \hline
+Analogico & \multirow{2}{*}{Paral.} & \multirow{2}{*}{Cres.} & Int. & - & Int. & - & 0.74 & 0.87 \\
+Digitale  &  &  & Int. & - & Int. & - & 0.74  & 0.86 \\ \hline
 \end{tabular}
 \caption{Risultati ....}
 \label{table:results}
@@ -447,11 +456,11 @@ errori statistici trascurabili, fluttuazioni dovute a configurazioni
 sempre Requivalente sovrastimata e voff sottostimato
 visto anche negli studi del progettista 
 per quanto riguarda R3 sembra ci sia in serie una resistenza passiva di circa 0.2 $\Omega$
-mentre
+mentre per voffset c'è una correlazione più complicata
 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/R3Karagounis}
+\includegraphics[width=\textwidth]{Immagini/R3Karagounis}
 \caption{ .}%meeting del 13 aprile
 \label{R3Karagounis}
 \end{figure}
@@ -463,7 +472,7 @@ Dal fit lineare risulta che la relazione tra la resistenza esterna e la pendenza
 Per quanto riguarda l'offset una sua sottostima è di più difficile interpretazione. 
 \begin{figure}
 \centering
-\includegraphics[scale=.25]{Immagini/OffsetKaragounis}
+\includegraphics[width=\textwidth]{Immagini/OffsetKaragounis}
 \caption{ .}%meeting del 13 aprile
 \label{OffsetKaragounis}
 \end{figure}
@@ -477,6 +486,15 @@ Infine vi è una relazione tra offset e Requivalente, su questo ultimo aspetto s
 
 
 \subsection{Variazioni di carico}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Immagini/LoadVDDD}
+\caption{LoadVDDD}
+\label{LoadVDDD}
+\includegraphics[width=\textwidth]{Immagini/LoadVIND}
+\caption{LoadVIND}
+\label{LoadVIND}
+\end{figure}
 Per lo SLDO il carico è rappresentato dal chip, che fino a che si trova nella configurazione di default ha consumi di corrente fissi:
 \begin{center}
 \begin{tabular}{cc}
@@ -491,23 +509,14 @@ Dati i diversi consumi tra parte analogica e digitale, l'intervallo in cui è st
 Queste variazioni di carico non sono dinamiche ma piuttosto vanno considerate come statiche. Infatti tensione di ingresso e di uscita vengono misurate ad ogni incremento del valore del carico. 
 Gli andamenti riportati di seguito vanno intesi come una deriva del valore della tensione prodotta dal regolatore. 
 Per primo sono riportati gli andamenti ottenuti con il carico applicato alla parte digitale, figura \ref{LoadVDDD}. 
-\begin{figure}
-\centering
-\includegraphics[scale=.3]{Immagini/LoadVDDD}
-\caption{LoadVDDD}
-\label{LoadVDDD}
-\includegraphics[scale=.3]{Immagini/LoadVIND}
-\caption{LoadVIND}
-\label{LoadVIND}
-\end{figure}
 Come si può vedere in grafico \ref{LoadVDDD}, la tensione di alimentazione della regione digitale diminuisce gradualmente arrivando ad una variazione di $\sim$18 mV per un carico addizionale di 1 A, mentre la parte analogica non risente di queste variazioni, restando costante. 
 L'andamento della tensione in ingresso, figura \ref{LoadVIND}, ha invece una caduta di $\sim$24 mV che però si concentra nella parte finale partendo circa per valori di carico di 0.940 A, questo comportamento è plausibile se si considera che da sola la parte digitale consuma 50 mA e dunque la somma delle correnti assorbite tre chip e carico supera 1 A, che è quella a disposizione. 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/LoadVDDA}
+\includegraphics[width=\textwidth]{Immagini/LoadVDDA}
 \caption{LoadVDDA.}
 \label{LoadVDDA}
-\includegraphics[scale=.3]{Immagini/LoadVINA}
+\includegraphics[width=\textwidth]{Immagini/LoadVINA}
 \caption{LoadVINA}
 \label{LoadVINA}
 \end{figure}
@@ -555,10 +564,10 @@ Entrambi i istemi di acquisizione sfruttano fpga programmabili xilinx per il dia
 Attraverso questi sistemi di acquisizione, sul cui sviluppo e le particolari caratteristiche non ci soffermeremo, non essendo questo il principale obbiettivo di questo lavoro di tesi, è possibile al momento vari test. 
 In particolare riferendoci al sistema di acquisizione di Bonn i test più importanti, tra quelli attualmente disponibili, sono:
 \begin{itemize}
-\item \textbf{scan$\_$digital} This basic scan injects a digital pulse into enabled pixels to test the digital part of the chip.
-\item \textbf{scan$\_$analog}  This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
-\item \textbf{scan$\_$threshold}  This script scans over different amounts of injected charge to find the effective threshold of the enabled pixels.
-\item \textbf{meta$\_$tune$\_$threshold$\_$simple} This meta script simply performs a threshold scan for every possible TDAC to obtainthe optimal value per pixel to get as close to the target threshold as possible. The result is a TDAC mask file.
+\item \textbf{scan$\_$digital} Questo test semplicemente inietta un segnale digitale nei pixel abilitati per verificare la funzionalità della parte digitale del chip.%This basic scan injects a digital pulse into enabled pixels to test the digital part of the chip.
+\item \textbf{scan$\_$analog}  Questo test è l'analogo di scan$\_$digital per la parte analogica. Un impulso con carica specifica viene iniettato nei canali di lettura abilitati in modo da verificare il funzionamento dei front end analogici. %This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
+\item \textbf{scan$\_$threshold}  Questo test trova la soglia effettiva di ogni canale abilitato andando a iniettare segnali con carica via via crescente.%This script scans over different amounts of injected charge to find the effective threshold of the enabled pixels.
+\item \textbf{meta$\_$tune$\_$threshold$\_$simple} Questo script effettua uno scan delle soglie per ogni possibile TDAC al fine di ottenere il valore ottimale per ogni pixel che consente di avvicinarsi alla soglia voluta. Il risultato di questo processo è un mask file.%This meta script simply performs a threshold scan for every possible TDAC to obtainthe optimal value per pixel to get as close to the target threshold as possible. The result is a TDAC mask file.
 \end{itemize}
 Altro file importante è il file contenente i parametri di configurazione dei registri \textbf{default$\_$chip.yaml}, che ogni volta che uno scan viene lanciato vengono scritti nel chip. 
 
@@ -592,11 +601,29 @@ In figura \ref{alllin1} sono riportate le tensioni VDDD e VDDA in questo caso è
 %\end{figure}
 
 \subsubsection{BDAQ}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Immagini/ScanAnalogLinear}
+\caption{ ScanAnalogLinear.}
+\label{ScanAnalogLinear}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Immagini/Scurves}
+\caption{Scurves.}
+\label{Scurves}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Immagini/Threshold}
+\caption{Threshold.}
+\label{Threshold}
+\end{figure}
 Prima di procedere con la presentazione dei risultati è necessario dare almento un'idea guida di che operazione vengono eseguite durante lo scan delle soglie al fine di comprendere meglio il significato delle varie distribuzioni.
 Attraverso i parametri di configurazione è possibile decidere una soglia globale uguale per tutti i canali di lettura, nella pratica però quello che si otterrà è che la soglia varierà leggermente tra un canale e l'altro. 
-Quello che si avrà sarà una distribuzione delle sogglie intorno ad un valore centrale, oltre a questa dispersione delle soglie, a causa del rumore, si avrà che la risposta del circuito di lettura non sarà una theta in funzione della carica raccolta. 
+Quello che si avrà sarà una distribuzione delle soglie intorno ad un valore centrale, oltre a questa dispersione delle soglie, a causa del rumore, si avrà che la risposta del circuito di lettura non sarà una theta in funzione della carica raccolta. 
 Alle volte il rumore si sommerà al segnale facendo rispondere il discriminatore anche a segnali più piccoli della soglia. Se sul ciascun canale iniettiamo un segnale via via più grande ripetendo il processo più volte e andando a riportare quante volte si ha risposta in funzione del segnale iniettato si ottengono le così dette Scurves, se non ci fosse rumore si avrebbe un gradino. 
-Per ogni canale si ha una Scurve messe tutte insieme danno un grafico a "tornado" dove il colore indica quanti sono i pixel che a un dato Vcal si sono accesi un dato numero di volte. Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse. 
+Per ogni canale si ha una Scurve messe tutte insieme danno un grafico come quello riportato in figura \ref{Scurves}, dove il colore indica quanti sono i pixel che a un dato Vcal si sono accesi un dato numero di volte. Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse\ref{Threshold}. 
 Come detto in precedenza l'utilizzo dello shunt ldo dovrebbe evitare il propagarsi del rumore tra parte analogica e digitale(visto che usano due shuntLDO diversi), ma anche evitare che disturbi della linea vengano visti dal carico. Quello che è stato pensato è mettere due chip in serie alimentati in configurazione SLDO e confrontare la distribuzione di rumore ottenuta in una situazione in cui entrambi i chip effettuano uno scan con la distribuzione ottenuta con un solo chip. 
 %immagine setup
 \begin{figure}
@@ -607,17 +634,31 @@ Come detto in precedenza l'utilizzo dello shunt ldo dovrebbe evitare il propagar
 \end{figure}
 Le misure riportate fanno riferimento solo al front end lineare, in quanto al momento della presa dati era quello su cui era possibile lavorare meglio, sia a livello di ottimizzazione dei vari parametri, sia a livello di software...
 I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
+come si può vedere dalle due distribuzioni messe a confronto
 %immagini distribuzioni
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/NoiseMap}
+\caption{NoiseMap}
+\label{NoiseMap}
+\end{figure}
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/NoiseSingle}
 \caption{noisesingle}
 \label{noisesingle}
 \end{figure}
-come si può vedere dalle due distribuzioni messe a confronto
+
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/NoiseSerial}
 \caption{noiseserial}
 \label{noiseserial}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[scale=.3]{Immagini/NoiseParallel}
+\caption{noiseparallel}
+\label{noiseparallel}
 \end{figure}
