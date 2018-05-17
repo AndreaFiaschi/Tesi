@@ -176,8 +176,9 @@ impostati.
 \label{SLDOprova}
 \end{figure}
 
-Il design del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm capace di lavorare con una corrente massima di 2A.
-Partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. 
+Il \textit{design} del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm, capace di lavorare con una corrente massima di 2A.
+Facendo riferimento alla figura \ref{SLDOprova}, descriviamo ora il principio di funzionamento di uno schema estremamente semplificato rispetto a quello attuale, ma che permetterà di comprendere l'idea di fondo.
+%Partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. 
 Lo SLDO è alimentato in corrente $\mathrm{I_{in}}$, una frazione di questa corrente scorrerà nel ramo di R3, la indichiamo con $\mathrm{I_{ref}}$, questa sarà la corrente di riferimento all'interno dello shunt. 
 La parte che agisce come regolatore di tensione è A1 + M1, A1 fa in modo di tenere la tensione sul carico uguale ad un valore di riferimento, che per ora trascuriamo come sia generato, andando ad aprire o chiudere il gate del mosfet M1 e dunque facendo scorrere più o meno corrente. 
 Questo di per se causerebbe un aumento di $\mathrm{I_{ref}}$ e conseguentemente di $\mathrm{V_{in}}$ proporzionale ad R3. Nello schema è però presente un ramo in parallelo al carico, in cui la corrente che scorre è regolata da M4+A3, A3 è la parte attiva dello shunt, che fa sì che la corrente nel ramo con M1 sia 1000 volte quella che scorre in R3 andando a regolare $\mathrm{I_{shunt}}$ modificando la tensione di gate del mosfet M4. 
