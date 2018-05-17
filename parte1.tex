@@ -59,7 +59,7 @@ Le variazioni di potenza del carico attivo, nel nostro caso il chip RD53A, non s
 Il comportamento resistivo permette l'utilizzo di più SLDO in parallelo fra di loro, con la corrente che si suddivide in base alla resistenza effettiva di ciascuno.
 %Questa comportamento resistivo permette l'utilizzo di più SLDO in parallelo, tra di essi la corrente si suddivide in modo ben preciso, definito dalla resistenza effettiva di ciascun SLDO. 
 Inoltre, utilizzando resistenze esterne, è possibile scegliere il valore di $\mathrm{R_{eff}}$ e, conseguentemente, la quantità di corrente che scorre in ciascun elemento posto in parallelo.
-In particolare in RD53A la parte analogica e la parte digitale sono alimentate, all'interno dello stesso chip, da due regolatori SLDO posti in parallelo, quindi anche solo con un chip la resistenza vista esternamente è il parallelo di due, solitamente uguali così da avere una suddivisione della corrente a metà.
+In particolare in RD53A la parte analogica e la parte digitale sono alimentate, all'interno dello stesso chip, da due regolatori SLDO posti in parallelo, quindi, anche solo con un chip, la resistenza vista esternamente è il parallelo di due (solitamente uguali in modo da avere una suddivisione della corrente a metà).
 %Il valore resistivo può essere configurato con una resistenza esterna, consentendo così di definire in che modo la corrente si spartisce nel parallelo di più elementi, ad esempio in RD53A, che verrà trattato nei capitoli seguenti, ci sono due regioni alimentate separatamente da due ShuntLDO, una zona analogica ed una digitale, questo vuol dire che esternamente sarà visibile il parallelo tra i due SLDO. 
 
 La figura \ref{VVC} mostra l'andamento tensione come funzione della corrente del chip, in cui sono evidenziati i valori operativi massimi e la tensione minima di lavoro.
@@ -136,7 +136,7 @@ Tenendo conto anche della resistenza dovuta ai cavi, che assumiamo valga 2 $\Ome
 Il generatore posto a monte della catena è limitato in corrente e, per fare sì che la potenza erogabile sia maggiore di quella necessaria alla catena, si pone il valore limite della tensione leggermente superiore a quello fin qui calcolato, diciamo ad esempio 34 V.
 %In questo sistema il generatore a monte della catena sarà limitato in corrente, mentre il limite per la tensione sarà posto leggermente maggiore a quello minimo, ad esempio 34 V. 
 %In questo modo la potenza che il generatore può erogare è maggiore di quella necessaria per la catena. 
-La potenza massima che il generatore potrà erogare è, quindi, di $34 \V \cdot 9.6$ A = 326.4 W, per cui, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli, si ottiene una potenza per modulo di 17.76 W\footnote{Questo a fronte  di una potenza assorbita, nelle normali condizioni di lavoro, di $\mathrm{W = 4 \cdot W_{chip} = I \cdot V_{modulo} = 14.6}$ W per modulo.}.
+La potenza massima che il generatore potrà erogare è, quindi, di $34 \V \cdot 9.6$ A = 326.4 W, per cui, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli, si ottiene una potenza per modulo di 17.76 W\footnote{Questo a fronte di una potenza assorbita, nelle normali condizioni di lavoro, di $\mathrm{W = 4 \cdot W_{chip} = I \cdot V_{modulo} = 14.6}$ W per modulo.}.
 %Vedremo infatti, come questo sia necessario utile nel caso in cui alcuni chip smettano di funzionare. 
 %La potenza massima erogabile dal generatore sarà $34 \V \cdot 9.6$ $A = 326.4$ W, sottraendo la potenza dissipata sui cavi e dividendo per il numero di moduli si ottiene una potenza per modulo di $17.76$ W. Questo a fronte  di una potenza assorbita, nelle normali condizioni di lavoro, di $\mathrm{W = 4 \cdot W_{chip} = I \cdot V_{modulo} = 14.6}$ W per modulo.
 
@@ -169,6 +169,7 @@ impostati.
 %Aver chiaro come il chip viene visto esternamente e quali siano i suoi consumi è importante per poter progettare al meglio il sistema di alimentazione seriale.
 
 \section{Evoluzione di progetto dello SLDO}
+
 \begin{figure}[!htbp]
 \centering
 \includegraphics[scale=3.5]{Immagini/SLDObase}
@@ -176,16 +177,19 @@ impostati.
 \label{SLDOprova}
 \end{figure}
 
-Il progetto del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm capace di lavorare con una corrente massima di 2A. Per descrivere il suo funzionamento partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. 
+Il progetto del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm, capace di lavorare con una corrente massima di 2A.
+Per descrivere il suo funzionamento partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. 
 Come anticipato il circuito di SLDO è alimentato in corrente $\mathrm{I_{in}}$, attraverso il pad di $\mathrm{V_{in}}$. 
-Della corrente in ingresso una frazione scorrerà nel ramo di R3, la indicheremo con $\mathrm{I_{ref}}$, questa sarà la corrente di riferimento all'interno dello shunt, vedremo in seguito perché. 
+Della corrente in ingresso una frazione, $\mathrm{I_{ref}}$, scorrerà nel ramo di R3.
+Questa sarà la corrente di riferimento all'interno dello shunt, vedremo in seguito perché. 
 La parte che agisce come regolatore di tensione è A1 + M1, A1 fa in modo di tenere la tensione sul carico uguale ad un valore di riferimento, che per ora trascuriamo come sia generato, andando ad aprire o chiudere il gate del mosfet M1 e dunque facendo scorrere più o meno corrente. 
 Questo di per se, in assenza della parte di shunt, causerebbe un aumento di $\mathrm{I_{ref}}$ e conseguentemente di $\mathrm{V_{in}}$. 
 Per evitare ciò è stato implementato un ramo in parallelo al carico, in cui la corrente che scorre è regolata da M4+A3, con lo scopo di mantenere la corrente in ingresso a M1 costante, andando a creare un bypass per la corrente non utilizzata dal carico. 
 M4+A3 è la parte attiva dello shunt, A3 fa sì che la corrente nel ramo con M1 sia 1000 volte quella che scorre in R3 andando a regolare $\mathrm{I_{shunt}}$ modificando la tensione di gate del mosfet M4. 
+M4+A3 è la parte attiva dello shunt, A3 fa sì che la corrente nel ramo con M1 sia 1000 volte quella che scorre in R3 andando a regolare $\mathrm{I_{shunt}}$ modificando la tensione di gate del mosfet M4. 
 La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno variazioni dinamiche del carico.
 
-\begin{figure}
+\begin{figure}[!htbp]
 \centering
 \includegraphics[scale=.3]{Immagini/SLDO5A}
 \caption{Circuito semplificato dello SLDO 0.5 A.}
