@@ -69,7 +69,7 @@ La figura \ref{VVC} mostra l'andamento della tensione come funzione della corren
 \caption{Andamento tensione vs corrente del comportamento del chip. Le zone tratteggiate sono oltre i valori operativi massimi (4.0 A per la corrente e 2.0 V per la tensione), la linea orizzontale a 1.4 V è la tensione minima di lavoro, la pendenza è la resistenza efficace. Combinazioni differenti di resistenza e offset consentono di spostare il punto di lavoro.}
 \label{VVC}
 \end{figure}
-In particolare vengono mostrati i criteri di scelta per i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$: da una parte sarà necessario avere una corrispondenza fra la massima corrente erogabile (4.0 A) e la massima tensione (2.0 V), dall'altra si dovrà avere che la corrente corrispondente alla tensione minima di lavoro ($1.4 \V$) sia sufficiente per il funzionamento del chip.
+In particolare vengono mostrati i criteri di scelta per i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$: da una parte sarà necessario avere una corrispondenza fra la massima corrente erogabile (4.0 A, per il parallelo, il singolo SLDO ha una corrente massima di 2 A) e la massima tensione (2.0 V), dall'altra si dovrà avere che la corrente corrispondente alla tensione minima di lavoro ($1.4 \V$) sia sufficiente per il funzionamento del chip.
 Per garantire che questo sia buono, inoltre, è indispensabile fornire la corrente in oggetto con un certo margine, in modo da sopperire alle fluttuazione nei consumi.
 
 La figura \ref{SLDOprinciple} mostra a titolo di esempio una tipica richiesta di corrente in funzione del tempo della parte digitale ed analogica.
@@ -313,8 +313,11 @@ In figura \ref{SLDO5Serie} possiamo vedere il confronto fra il diverso comportam
 In questo confronto va tenuto conto che il bandgap presente sulla PCB ha un regime di lavoro compreso tra i 2 V e i 18 V. 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/SLDO5Serie}
-\caption{A sinistra i bandgap sono alimentati esternamente, a destra sono alimentati tramite $\mathrm{V_{in}}$.}
+%\subfloat[][Fondo $WW$.]
+\includegraphics[width=.75\textwidth]{Immagini/SLDO5Serie1}
+%\subfloat[][Fondo $WW$.]
+\includegraphics[width=.75\textwidth]{Immagini/SLDO5Serie2}
+\caption{In alto i bandgap sono alimentati esternamente, in basso sono alimentati tramite $\mathrm{V_{in}}$.}
 \label{SLDO5Serie}
 \end{figure}
 %Si può notare dai grafici come finto a che la tensione di ingresso non supera circa 1 V il bandgap non riesce a generare il giusto livello di tensione $\mathrm{V_{ref}}$ e ciò ha come conseguenza un $\mathrm{V_{out}}$ non stabile. Si arriva ad una stabilità del $\mathrm{V_{out}}$, solo a tensioni in ingresso più elevate e dunque, con correnti maggiori.
