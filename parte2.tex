@@ -6,9 +6,9 @@ Con questo RD53A si vuole dimostrare la possibilità di utilizzare tecnologia CM
 %, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
 
 \section{Organizzazione del chip} 
-RD53A non deve essere inteso come il prodotto finale, ma come un prototipo in via di sviluppo. Infatti, al suo interno sono presenti tre differenti front end (FE), ciò ha lo scopo di permettere un confronto in termini di prestazioni di questi tre differenti circuiti di raccolta e lettura del segnale. 
+RD53A non deve essere inteso come il prodotto finale, ma come un prototipo in via di sviluppo. Infatti, al suo interno sono presenti tre differenti \textit{front end} (FE), ciò ha lo scopo di permettere un confronto in termini di prestazioni di questi tre differenti circuiti di raccolta e lettura del segnale. 
 % possiede molte modifiche di design utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front end (FE), già questo causa una non uniformità del chip. 
-RD53A è la base di partenza per arrivare al progetto finale, in cui sarà scelto uno dei front end e sarà utilizzato uniformemente su tutta la matrice di pixel. In RD53A la matrice di pixel ha 400 colonne e 192 righe, nel progetto finale si avrà un aumento del numero di pixel. 
+RD53A è la base di partenza per arrivare al progetto finale, in cui sarà scelto uno dei \textit{front end} e sarà utilizzato uniformemente su tutta la matrice di pixel. In RD53A la matrice di pixel ha 400 colonne e 192 righe, nel progetto finale si avrà un aumento del numero di pixel. 
 Infatti il sistema di alimentazione e di polarizzazione dei pixel è progettato per un numero di righe massimo pari a 384, figura \ref{RD53ALayout}.%letto sul manuale
 \begin{figure}
 \centering
@@ -18,12 +18,12 @@ Infatti il sistema di alimentazione e di polarizzazione dei pixel è progettato 
 \end{figure}
 
 L'area del chip che sarà bondata al sensore è posta nella parte alta ed è organizzata secondo una matrice di 192 $\times$ 400 pixel di area 50 $\mu$m $\times$ 50 $\mu$m, sopra a questa è presente una fila di \textit{pad} utilizzate per \textit{debug}, questa sarà eliminata nella versione finale. La parte di circuito necessaria per configurare monitorare e leggere il chip è posta nella parte bassa, sotto cui è posta una fila di pad per i \textit{wire-bond}. 
-La matrice di pixel è organizzata in \textit{cores} di 8 $\times$ 8 pixel, all'interno del \textit{core} i 64 front end sono disposti in gruppi di 4, chiamati isole analogiche, figura \ref{AnalogIsland}. 
+La matrice di pixel è organizzata in \textit{cores} di 8 $\times$ 8 pixel, all'interno del \textit{core} i 64 \textit{front end} sono disposti in gruppi di 4, chiamati isole analogiche, figura \ref{AnalogIsland}. 
 Queste isole sono circondate da un "mare" digitale, il circuito introno ad ogni isola analogica non è lo stesso, ma cambia a seconda delle esigenze di progetto. 
 \begin{figure}
 \centering
 \includegraphics[scale=.5]{Immagini/AnalogIsland}
-\caption{Immagine al microscopio della disposizione in "isole" dei front end.}
+\caption{Immagine al microscopio della disposizione in "isole" dei \textit{front end}.}
 \label{AnalogIsland}
 \end{figure} 
 Nelle parti più esterne del chip tutti i blocchi analogici sono raggruppati in macro blocchi chiamati Analog Chip Bottom (ACB). Il blocco ACB è circondato dal blocco Digital Chip Bottom (DCB) che implementa la logica digitale per Input, Output e configurazione. 
@@ -39,20 +39,20 @@ I tre FE condividono l'area del sensore e dato che la matrice è larga 400 pixel
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/FrontEnd}
-\caption{Disposizione dei tre differenti Front End rispetto alla matrice di pixel 192 $\times$ 400.}
+\caption{Disposizione dei tre differenti \textit{front end} rispetto alla matrice di pixel 192 $\times$ 400.}
 \label{FrontEnd}
 \end{figure}
-Di seguito è riportata una breve descrizione del funzionamento di ciascuno dei tre Front End:
+Di seguito è riportata una breve descrizione del funzionamento di ciascuno dei tre \textit{front end}:
 \begin{itemize}
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/SchemaSincrono}
-\caption{Schematico del front end Sincrono.}
+\caption{Schematico del \textit{front end} Sincrono.}
 \label{SchemaSincrono}
 \end{figure}
-\item \textbf{Sincrono}. Uno schema a blocchi del front end Sincrono è riportato in figura \ref{SchemaSincrono}. 
-Questo front end consta di un amplificatore di carica (\textit{Charge Sensitive Amplifier} o CSA) a stadio singolo con un Krummenacher feedback accoppiato in AC ad un discriminatore sincrono formato da un amplificatore differenziale e un latch di feedback positivo. 
+\item \textbf{Sincrono}. Uno schema a blocchi del \textit{front end} Sincrono è riportato in figura \ref{SchemaSincrono}. 
+Questo \textit{front end} consta di un amplificatore di carica (\textit{Charge Sensitive Amplifier} o CSA) a stadio singolo con un Krummenacher feedback accoppiato in AC ad un discriminatore sincrono formato da un amplificatore differenziale e un latch di feedback positivo. 
 Il Krummenacher feedback è progettato in modo da compensare sia la corrente dispersa dal sensore sia la corrente di scarica della capacità presente nell'anello di reazione. 
 Maggiore è la corrente più veloce è il segnale del pre amplificatore a tornare al valore di \textit{baseline}. 
 Consideriamo, come riferimento, che una carica di di 10k$e^{-}$, la quale produce 10 nA di corrente e un segnale che dura 400 ns è ridotta circa ad un segnale di 40 nA corrente per una durata di 100 ns.  
@@ -66,14 +66,14 @@ Ciò richiede l'acquisizione del livello di tensione della \textit{baseline} ogn
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/SchemaLineare}
-\caption{Schematico del front end Lineare.}
+\caption{Schematico del \textit{front end} Lineare.}
 \label{SchemaLineare}
 \end{figure}
-\item \textbf{Lineare}. Il front end lineare è mostrato in figura \ref{SchemaLineare}. Il circuito di lettura include un amplificatore di carica con un Krummenacher feedback al fine di far fronte  dell'aumento di corrente di dispersione, indotte dagli alti livelli di radiazione attesa. 
+\item \textbf{Lineare}. Il \textit{front end} lineare è mostrato in figura \ref{SchemaLineare}. Il circuito di lettura include un amplificatore di carica con un Krummenacher feedback al fine di far fronte  dell'aumento di corrente di dispersione, indotte dagli alti livelli di radiazione attesa. 
 La scelta di un amplificatore a stadio singolo è stata dettata dai limiti imposti sui consumi e dallo spazio limitato che è disponibile all'interno del chip. 
 Il segnale ottenuto dall'amplificatore di carica è mandato ad un comparatore che, insieme al contatore ToT (\textit{Time over Threshold}), è utilizzato per fare la conversione a segnale digitale. 
 Canale per canale gli aggiustamenti della tensione di soglia sono gestiti da un circuito locale basato su un \textit{binary weighted} DAC a 4 bit che genera una corrente $\mathrm{I_{DAC}}$, fornendo una regolazione locale della soglia. 
-Questo tipo di front end è stato ottimizzato per una carica massima corrispondete a 30000 elettroni con un consumo complessivo di circa 4 $\mu$A. 
+Questo tipo di \textit{front end} è stato ottimizzato per una carica massima corrispondete a 30000 elettroni con un consumo complessivo di circa 4 $\mu$A. 
 L'amplificatore può essere utilizzato in regime di alto o basso guadagno andando a modificare il bit GAIN$\_$SEL, mentre la corrente di recupero $\mathrm{I_K}$/2 proveniente dal circuito di Krummenacher feedback può essere configurata tramite un DAC. 
 In configurazione di alto guadagno per un segnale di carica pari a 30000 elettroni si ha un ToT di circa 400 ns che risulta in una corrente $\mathrm{I_K}$ di 25 nA. 
 La risoluzione aspettata in configurazione di alto guadagno è di 15 mV/k$e^{-}$, mentre è di 7.5 mV/k$e^{-}$ con basso guadagno. 
@@ -83,13 +83,13 @@ Da simulazioni la dispersione della soglia dovrebbe passare da 380 elettroni a 3
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/SchemaDifferenziale}
-\caption{Schematico del front end Differenziale.}
+\caption{Schematico del \textit{front end} Differenziale.}
 \label{SchemaDifferenziale}
 \end{figure}
-\item \textbf{Differenziale}. Il front end Differenziale è un circuito puramente analogico: non ha al suo interno latches, flip-flop o contatori. 
+\item \textbf{Differenziale}. Il \textit{front end} Differenziale è un circuito puramente analogico: non ha al suo interno latches, flip-flop o contatori. 
 I valori di configurazione sono però forniti da un nucleo digitale, che riceve dalla parte analogica solo il segnale in uscita del comparatore. 
 Naturalmente è necessaria la presenza di un ADC per la digitalizzazione del ToT ottenuto dal comparatore, anch'esso è implementato interamente nella parte digitale. 
-Lo schema a blocchi del front end differenziale è riportato in figura \ref{SchemaDifferenziale}. 
+Lo schema a blocchi del \textit{front end} differenziale è riportato in figura \ref{SchemaDifferenziale}. 
 Il pre amplificatore presente nel primo stadio ha un guadagno continuo, regolabile andando a scegliere tra i due valori possibili di capacità presenti nell'anello di reazione. Questo feedback in corrente è impostato globalmente e non può essere regolato su ogni singolo pixel. 
 Dalle misure sui prototipi è stato visto che la conseguente dispersione nei valori di ToT ha un livello accettabile senza necessità di una pre regolazione.  
 In caso di assenza di segnale il feedback assicura che input e output del preamplificatore siano allo stesso potenzioale.
@@ -554,7 +554,7 @@ Come già visto in precedenza parte digitale e analogica non si attivano nello s
 
 
 \section{Sviluppi}
-Questi studi sull'alimentazione del chip si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due. In contemporanea a questi viene portato avanti lo sviluppo di sistemi di acquisizione dati in grado di dialogare con il chip e si stanno effettuando test sui tre front end per studiarne la risposta sia prima che dopo processi di irraggiamento. 
+Questi studi sull'alimentazione del chip si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due. In contemporanea a questi viene portato avanti lo sviluppo di sistemi di acquisizione dati in grado di dialogare con il chip e si stanno effettuando test sui tre \textit{front end} per studiarne la risposta sia prima che dopo processi di irraggiamento. 
 In questo situazione lo sviluppo del circuito di alimentazione ha importanti legami con lo sviluppo del resto del chip, come detto il chip ha due regioni alimentate separatamente, digitale e analogica, questa scelta è dettata anche dalla necessità di proteggere la parte analogica, più sensibile, dal rumore della parte digitale. Se l'alimentazione fosse comune il rumore della parte digitale del chip andrebbe ad intaccare la parte analogica che è molto sensibile da questo punto di vista. 
 Inoltre per operare una qualsiasi azione a livello di chip è necessario che lo stesso, una volta acceso, si trovi in una configurazione di default ben precisa, la corretta accensione è un problema legato al circuito di ShuntLDO, regione digitale e analogica devono attivarsi correttamente evitando oscillazioni durante il power-up e drop di tensione. 
 Risulta quindi chiaro lo stretto legame che vi è tra alimentazione e sviluppo del chip. 
@@ -573,13 +573,19 @@ Attraverso questi sistemi di acquisizione, sul cui sviluppo e le particolari car
 In particolare riferendoci al sistema di acquisizione di Bonn i test più importanti, tra quelli attualmente disponibili, sono:
 \begin{itemize}
 \item \textbf{scan$\_$digital} Questo test semplicemente inietta un segnale digitale nei pixel abilitati per verificare la funzionalità della parte digitale del chip.%This basic scan injects a digital pulse into enabled pixels to test the digital part of the chip.
-\item \textbf{scan$\_$analog}  Questo test è l'analogo di scan$\_$digital per la parte analogica. Un impulso con carica specifica viene iniettato nei canali di lettura abilitati in modo da verificare il funzionamento dei front end analogici. %This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Immagini/ScanAnalogLinear}
+\caption{Risultato del test \textbf{scan$\_$analog} sulla \textit{front end} lineare, tutti i canali di lettura hanno risposto il 100$\%$ delle volte.}
+\label{ScanAnalogLinear}
+\end{figure}
+\item \textbf{scan$\_$analog}  Questo test è l'analogo di scan$\_$digital per la parte analogica. Un impulso con carica specifica viene iniettato nei canali di lettura abilitati in modo da verificare il funzionamento dei \textit{front end} analogici, figura \ref{ScanAnalogLinear}. %This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
 \item \textbf{scan$\_$threshold}  Questo test trova la soglia effettiva di ogni canale abilitato andando a iniettare segnali con carica via via crescente.%This script scans over different amounts of injected charge to find the effective threshold of the enabled pixels.
 \item \textbf{meta$\_$tune$\_$threshold$\_$simple} Questo script effettua uno scan delle soglie per ogni possibile TDAC al fine di ottenere il valore ottimale per ogni pixel che consente di avvicinarsi alla soglia voluta. Il risultato di questo processo è un mask file.%This meta script simply performs a threshold scan for every possible TDAC to obtainthe optimal value per pixel to get as close to the target threshold as possible. The result is a TDAC mask file.
 \end{itemize}
 Altro file importante è il file contenente i parametri di configurazione dei registri \textbf{default$\_$chip.yaml}, che ogni volta che uno scan viene lanciato vengono scritti nel chip. 
 
-Attraverso questi test è possibile, anche senza aver collegato un sensore al chip, controllare le funzionalità di parte analogica e digitale separatamente, analizzare la risposta dei tre front end ad un segnale di calibrazione, ricavare una distribuzione delle soglie, la distribuzione del rumore e ottimizzare le soglie localmente (per front end lineare e differenziale). 
+Attraverso questi test è possibile, anche senza aver collegato un sensore al chip, controllare le funzionalità di parte analogica e digitale separatamente, analizzare la risposta dei tre \textit{front end} ad un segnale di calibrazione, ricavare una distribuzione delle soglie, la distribuzione del rumore e ottimizzare le soglie localmente (per \textit{front end} lineare e differenziale). 
 A livello di questo lavoro di tesi risulta interessante esaminare il comportamento del circuito di alimentazione mentre il chip dialoga con il sistema di alimentazione così da avere informazioni su cosa accade quando ci sono variazioni nella corrente assorbita, senza dover simulare la cosa esternamente. 
 Ad esempio durante il test scan$\_$threshold la parte analogica verifica il livello di soglia di ogni pixel andando a iniettare un segnale via via più grande nel circuito di lettura, in questa situazione è corretto pensare che ci siano variazioni nella corrente assorbita anche grandi. 
 Una prima prova che è interessante eseguire consiste nel confrontare una situazione in cui è utilizzato il regolatore con lo Shunt e una situazione in cui non è utilizzato lo Shunt e il chip è alimentato in configurazione LDO. In seguito è lecito chiedersi se, effettivamente in una catena seriale di due chip l'attivita di uno non influenza l'altro. Cioè se il circuito di SLDO riesce ad nascondere al chip eventuali fluttuazioni e rumore  che vi sono nella catena.
@@ -612,63 +618,68 @@ In figura \ref{alllin1} sono riportate le tensioni VDDD e VDDA in questo caso è
 \subsubsection{BDAQ}
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{Immagini/ScanAnalogLinear}
-\caption{Risultato del test \textbf{scan$\_$analog} sulla front end lineare, tutti i canali di lettura hanno risposto il 100$\%$ delle volte.}
-\label{ScanAnalogLinear}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=\textwidth]{Immagini/Scurves}
+\includegraphics[width=0.9\textwidth]{Immagini/Scurves}
 \caption{Risultato del test \textbf{scan$\_$threshold}. Sulle x vi è il valore in unitàarbitrarie dell'ampiezza del segnale iniettato nel canale di lettura, sulle y vi è il numero di volte che si è avuto risposta e la scala di colore è il numero di canali.}
 \label{Scurves}
 \end{figure}
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{Immagini/Threshold}
+\includegraphics[width=0.75\textwidth]{Immagini/Threshold}
 \caption{Distribuzione della soglia ottenuta dalle S-curves.}
 \label{Threshold}
 \end{figure}
 Prima di procedere con la presentazione dei risultati è necessario dare almento un'idea guida di che operazione vengono eseguite durante lo scan delle soglie al fine di comprendere meglio il significato delle varie distribuzioni.
-Attraverso i parametri di configurazione è possibile decidere una soglia globale uguale per tutti i canali di lettura, nella pratica però quello che si otterrà è che la soglia varierà leggermente tra un canale e l'altro. 
+Attraverso i parametri di configurazione è possibile decidere una soglia globale uguale per tutti i canali di lettura, nella pratica però la soglia varierà leggermente tra un canale e l'altro. 
 Quello che si avrà sarà una distribuzione delle soglie intorno ad un valore centrale, oltre a questa dispersione delle soglie, a causa del rumore, si avrà che la risposta del circuito di lettura non sarà una theta in funzione della carica raccolta. 
 Alle volte il rumore si sommerà al segnale facendo rispondere il discriminatore anche a segnali più piccoli della soglia. Se sul ciascun canale iniettiamo un segnale via via più grande ripetendo il processo più volte e andando a riportare quante volte si ha risposta in funzione del segnale iniettato si ottengono le così dette Scurves, se non ci fosse rumore si avrebbe un gradino. 
-Per ogni canale si ha una Scurve messe tutte insieme danno un grafico come quello riportato in figura \ref{Scurves}, dove il colore indica quanti sono i pixel che a un dato Vcal si sono accesi un dato numero di volte. Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse, esempio in figura\ref{Threshold} è riportata la distribuzione delle soglie. 
-La soglia è il livello minimo a cui l'elettronica risponde, se non ci fosse rumore le S-curves sarebbero gradini, nella realtà a causa del rumore che si somma al segnale questi gradini ideali diventano curve, meno assomiglia ad un gradino maggiore è il rumore.
-Come detto in precedenza l'utilizzo dello SLDO dovrebbe evitare il propagarsi del rumore tra parte analogica e digitale(visto che usano due shuntLDO diversi), ma anche evitare che disturbi della linea vengano visti dal carico. Quello che è stato pensato è mettere due chip in serie alimentati in configurazione SLDO e confrontare la distribuzione di rumore ottenuta in una situazione in cui entrambi i chip effettuano uno scan con la distribuzione ottenuta con un solo chip. 
-%immagine setup
+Per ogni canale si ha una Scurve messe tutte insieme danno un grafico come quello riportato in figura \ref{Scurves}, dove il colore indica quanti sono i pixel che a un dato Vcal si sono accesi un dato numero di volte. Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse, in figura\ref{Threshold} è riportata la distribuzione delle soglie. 
 \begin{figure}
 \centering
-\includegraphics[scale=.2]{Immagini/chipserial}
+\includegraphics[width=0.9\textwidth]{Immagini/NoiseMap}
+\caption{Mappa del livello di rumore pixel per pixel del FE lineare.}
+\label{NoiseMap}
+\end{figure}
+Oltre alle distribuzioni di soglia e rumore il test restituisce anche una mappa per ogni pixel di questi, questo è utile per verificare se la risposta è omogenea o se per qualche motivo ci sono effetti tali che alcune zone risultano più rumorose, in figura \ref{NoiseMap} è riportata la mappa del rumore ottenuta per il \textit{front end} lineare. 
+La soglia è il livello minimo a cui l'elettronica risponde, se non ci fosse rumore le S-curves sarebbero gradini, nella realtà a causa del rumore che si somma al segnale questi gradini ideali diventano curve, meno assomiglia ad un gradino maggiore è il rumore.
+Come detto in precedenza l'utilizzo dello SLDO dovrebbe evitare il propagarsi del rumore tra parte analogica e digitale(visto che usano due shuntLDO diversi), ma anche evitare che disturbi della linea vengano visti dal carico. 
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{Immagini/chipserial}
 \caption{Fotografia del setup, i due chip posti sulla Single Chip Card sono al centro e ognuno di essi è collegato a una fpga che gestisce la comunicazione tra RD53A e il computer.}
 \label{chipserial}
 \end{figure}
-Le misure riportate fanno riferimento solo al front end lineare, in quanto al momento della presa dati era quello su cui era possibile lavorare meglio, sia a livello di ottimizzazione dei vari parametri, sia a livello di software...
-I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
-\begin{figure}
-\centering
-\includegraphics[scale=.3]{Immagini/NoiseMap}
-\caption{NoiseMap}
-\label{NoiseMap}
-\end{figure}
+Al fine di verificare se vi è una correlazione tra la ditribuzione del rumore e l'utilizzo del chip all'interno di una catena seriale si è proceduto con il mettere a confronto i risultati ottenuti da test eseguiti prima con il chip singolo e poi mettendone due in serie o in parallelo. 
+In figura \ref{chipserial} è riportata un'immagine del setup. 
+Tutte e tre le misure sono state eseguite utilizzando la configurazione di SLDO.  
 
-Come si può vedere dalle distribuzioni del rumore messe a confronto
-\begin{figure}
+Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto al momento della presa dati era quello su cui era possibile lavorare meglio, sia a livello di ottimizzazione dei vari parametri, sia a livello di software.
+I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
+
+\begin{figure}[h]
 \centering
-\includegraphics[scale=.3]{Immagini/NoiseSingle}
-\caption{noisesingle}
+\includegraphics[width=0.75\textwidth]{Immagini/NoiseSingle}
+\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato singolarmente.}
 \label{noisesingle}
 \end{figure}
-
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/NoiseSerial}
-\caption{noiseserial}
+\includegraphics[width=0.75\textwidth]{Immagini/NoiseSerial}
+\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in serie ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
 \label{noiseserial}
 \end{figure}
 
+Trascurando i risultati relativi alla distribuzione delle soglie, che sono indipendenti dalla distribuzione del rumore, riportima in figura le distribuzioni ottenute per il rumore nei tre casi:
+\begin{itemize}
+\item Chip singolo, figura \ref{noisesingle}.
+\item Serie di due chip, figura \ref{noiseserial}.
+\item Parallelo di due chip, figura \ref{noiseparallel}.
+\end{itemize}
+Come si puòvedere nonostante nel caso serie e parallelo anche sul secondo chip fossero eseguiti test, in modo da simularne un'attività, la distribuzione del rumore non peggiora. 
+Questo dimostra che effettivamente esternamente i chip non sono visibili e viceversa il chip non vede le variazioni che ci sono sulla linea.
+
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/NoiseParallel}
-\caption{noiseparallel}
+\includegraphics[width=0.75\textwidth]{Immagini/NoiseParallel}
+\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in parallelo ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
 \label{noiseparallel}
 \end{figure}
