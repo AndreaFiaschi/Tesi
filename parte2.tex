@@ -1,15 +1,16 @@
 \chapter{RD53A}
 
-Lo sviluppo di un sistema di alimentazione seriale e in particolare del circuito di alimentazione SLDO, che gestisce localmente le tensioni su chip, è parte integrante del progetto di RD53A\cite{RD53A}.
-Questo progetto è stato approvato nell'autunno del 2015, dopo la revisione da parte delle collaborazioni ATLAS, CMS e RD53A, e nel 2016 è iniziata il vero e proprio sviluppo. 
-Con questo RD53A si vuole dimostrare la possibilità di utilizzare tecnologia CMOS  in 65 nm per l'aggiornamento in vista della fase ad alta luminosità di ATLAS e CMS. 
+Lo sviluppo di un sistema di alimentazione seriale e, in particolare, del circuito di alimentazione SLDO, che gestisce localmente le tensioni su chip, è parte integrante del progetto di RD53A\cite{RD53A}.
+Questo progetto è stato approvato nell'autunno del 2015, dopo la revisione da parte delle collaborazioni ATLAS, CMS e RD53A, e nel 2016 è iniziato il vero e proprio sviluppo, con lo scopo di dimostrare la possibilità di utilizzare tecnologia CMOS  in 65 nm, in vista della fase ad alta luminosità di ATLAS e CMS. 
 %, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
 
 \section{Organizzazione del chip} 
-RD53A non deve essere inteso come il prodotto finale, ma come un prototipo in via di sviluppo. Infatti, al suo interno sono presenti tre differenti front end (FE), ciò ha lo scopo di permettere un confronto in termini di prestazioni di questi tre differenti circuiti di raccolta e lettura del segnale. 
+RD53A non deve essere inteso come il prodotto finale, ma come un prototipo in via di sviluppo.
+Al suo interno, infatti, sono presenti tre differenti front end (FE), per permettere un loro confronto in termini di prestazioni.
 % possiede molte modifiche di design utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front end (FE), già questo causa una non uniformità del chip. 
-RD53A è la base di partenza per arrivare al progetto finale, in cui sarà scelto uno dei front end e sarà utilizzato uniformemente su tutta la matrice di pixel. In RD53A la matrice di pixel ha 400 colonne e 192 righe, nel progetto finale si avrà un aumento del numero di pixel. 
-Infatti il sistema di alimentazione e di polarizzazione dei pixel è progettato per un numero di righe massimo pari a 384, figura \ref{RD53ALayout}.%letto sul manuale
+RD53A è, quindi, la base di partenza per arrivare al prodotto finale, in cui uno solo dei front end sarà scelto e utilizzato su tutta la matrice di pixel.
+Inoltre, in RD53A, la matrice di pixel ha 400 colonne e 192 righe, mentre nel prodotto finale si avrà un aumento del numero totale dei pixel (!!! quanto è questo numero? Non si sa ancora? Quali sono le possibili opzioni?!!!). 
+Il sistema di alimentazione e di polarizzazione dei pixel è progettato per un numero di righe massimo pari a 384.%letto sul manuale
 \begin{figure}
 \centering
 \includegraphics[scale=.4]{Immagini/RD53ALayout}
@@ -17,32 +18,41 @@ Infatti il sistema di alimentazione e di polarizzazione dei pixel è progettato 
 \label{RD53ALayout}
 \end{figure}
 
-L'area del chip che sarà bondata al sensore è posta nella parte alta ed è organizzata secondo una matrice di 192 $\times$ 400 pixel di area 50 $\mu$m $\times$ 50 $\mu$m, sopra a questa è presente una fila di \textit{pad} utilizzate per \textit{debug}, questa sarà eliminata nella versione finale. La parte di circuito necessaria per configurare monitorare e leggere il chip è posta nella parte bassa, sotto cui è posta una fila di pad per i \textit{wire-bond}. 
-La matrice di pixel è organizzata in \textit{cores} di 8 $\times$ 8 pixel, all'interno del \textit{core} i 64 front end sono disposti in gruppi di 4, chiamati isole analogiche, figura \ref{AnalogIsland}. 
-Queste isole sono circondate da un "mare" digitale, il circuito introno ad ogni isola analogica non è lo stesso, ma cambia a seconda delle esigenze di progetto. 
+Facendo riferimento alla figura \ref{RD53ALayout}, l'area del chip che sarà incollata al sensore è posta nella parte alta ed è organizzata secondo una matrice di 192 $\times$ 400 pixel di area 50 $\mu$m $\times$ 50 $\mu$m.
+Al di sopra di questa è presente una fila di \textit{pad} utilizzate per \textit{debug}, che sarà eliminata nella versione finale.
+La parte di circuito necessaria per configurare, monitorare e leggere il chip, invece, si trova nella parte in basso con posta al di sotto solo una fila di pad per i \textit{wire-bond}. 
+La matrice di pixel è organizzata in \textit{cores} di 8 $\times$ 8 pixel, all'interno di ciascuno dei quali i 64 front end sono disposti in gruppi di 4, chiamati isole analogiche, come mostrato in figura \ref{AnalogIsland}. 
+Queste isole sono circondate da un ``mare'' digitale ed il circuito intorno ad ogni isola analogica non è lo stesso, ma cambia a seconda delle esigenze di progetto. 
 \begin{figure}
 \centering
 \includegraphics[scale=.5]{Immagini/AnalogIsland}
 \caption{Immagine al microscopio della disposizione in "isole" dei front end.}
 \label{AnalogIsland}
 \end{figure} 
-Nelle parti più esterne del chip tutti i blocchi analogici sono raggruppati in macro blocchi chiamati Analog Chip Bottom (ACB). Il blocco ACB è circondato dal blocco Digital Chip Bottom (DCB) che implementa la logica digitale per Input, Output e configurazione. 
+Nelle parti più esterne del chip tutti i blocchi analogici sono raggruppati in macro blocchi chiamati Analog Chip Bottom (ACB).
+Il blocco ACB è circondato dal blocco Digital Chip Bottom (DCB) che implementa la logica digitale per Input, Output e configurazione. 
 
 \section{Front End}
-Come detto in precedenza RD53A non è il chip finale, ma un prototipo, al cui interno sono presenti tre differenti Front End per la parte analogica. 
-Si tratta di tre differenti progetti e sono indicati con i nomi: Sincrono, Lineare e Differenziale, vedi figura \ref{FrontEnd}. 
-Questi tre circuiti sono stati progettati da tre differenti gruppi e tra di loro ci sono importanti differenze. Il FE Sincrono sfrutta un sistema di \textit{auto-zeroing} della linea di base, campionando periodicamente la linea di base invece di aggiustare la soglia pixel per pixel. 
-Il FE Lineare implementa un amplificatore lineare all'ingesso del comparatore, il cui compito è confrontare il segnale con una certa soglia. 
-Il FE Differenziale ha questo nome in quanto presenta uno stadio di guadagno differenziale  all'ingresso del discriminatore. % e sbilanciando i due canali implementa la soglia.
-Le caratteristiche comuni sono le piazzole per i bump-bond e il layout. Inoltre è comune anche la rete di polarizzazione per il sensore ed il circuito per iniettare segnali di calibrazione, in modo da poter comfrontare meglio le prestazioni. 
-I tre FE condividono l'area del sensore e dato che la matrice è larga 400 pixel ed è suddivisa in core da 8 $\times$ 8 pixel non è possibile avere una egual area per i tre tipi di FE. Due avranno 17 core per riga ed uno solo ne avrà 16. I FE Lineare e Differenziale sono stati posti accanto in quanto hanno funzionalità simili e metterli vicino consente di avere un'area maggiore con una risposta il più uniforme possibile anche in termini di consumi. 
+
+Come detto in precedenza, RD53A, non è il chip finale, ma un prototipo al cui interno sono presenti tre differenti Front End per la parte analogica.
+Si tratta di tre progetti diversi sono indicati con i nomi Sincrono, Lineare e Differenziale, vedi figura \ref{FrontEnd}. 
+%Questi tre circuiti sono stati progettati da tre differenti gruppi e tra di loro ci sono importanti differenze.
+
+Il FE Sincrono sfrutta un sistema di \textit{auto-zeroing} della linea di base, campionandola periodicamente, invece di aggiustare la soglia pixel per pixel. 
+Il FE Lineare, invece, utilizza un amplificatore lineare all'ingesso del comparatore, che confronta il segnale con la soglia impostata. 
+Il FE Differenziale ha uno stadio di guadagno differenziale all'ingresso del discriminatore. % e sbilanciando i due canali implementa la soglia.
+Le caratteristiche comuni ai tre FE, invece, sono le piazzole per i bump-bond, il layout, la rete di polarizzazione per il sensore ed il circuito per iniettare segnali di calibrazione.
+Questi ultimi due permettono un miglior confronto fra le prestazioni dei FE.
+Inoltre, i tre FE condividono l'area del sensore e, dato che la matrice è larga 400 pixel ed è suddivisa in core da 8 $\times$ 8 pixel, non è possibile avere una egual area per i tre, ma due avranno 17 core per riga ed uno solo 16.
+I FE Lineare e Differenziale sono stati posti accanto in quanto hanno funzionalità simili e metterli vicino consente di avere un'area con una risposta più uniforme anche in termini di consumi. 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/FrontEnd}
 \caption{Disposizione dei tre differenti Front End rispetto alla matrice di pixel 192 $\times$ 400.}
 \label{FrontEnd}
 \end{figure}
-Di seguito è riportata una breve descrizione del funzionamento di ciascuno dei tre Front End:
+
+Descriviamo ora brevemente il funzionamento di ciascuno dei tre Front End:
 \begin{itemize}
 
 \begin{figure}
@@ -52,16 +62,17 @@ Di seguito è riportata una breve descrizione del funzionamento di ciascuno dei 
 \label{SchemaSincrono}
 \end{figure}
 \item \textbf{Sincrono}. Uno schema a blocchi del front end Sincrono è riportato in figura \ref{SchemaSincrono}. 
-Questo front end consta di un amplificatore di carica (\textit{Charge Sensitive Amplifier} o CSA) a stadio singolo con un Krummenacher feedback accoppiato in AC ad un discriminatore sincrono formato da un amplificatore differenziale e un latch di feedback positivo. 
+Questo consta di un amplificatore di carica (\textit{Charge Sensitive Amplifier} o CSA) a stadio singolo con un Krummenacher feedback accoppiato in AC ad un discriminatore sincrono, formato da un amplificatore differenziale e un latch di feedback positivo. 
 Il Krummenacher feedback è progettato in modo da compensare sia la corrente dispersa dal sensore sia la corrente di scarica della capacità presente nell'anello di reazione. 
-Maggiore è la corrente più veloce è il segnale del pre amplificatore a tornare al valore di \textit{baseline}. 
-Consideriamo, come riferimento, che una carica di di 10k$e^{-}$, la quale produce 10 nA di corrente e un segnale che dura 400 ns è ridotta circa ad un segnale di 40 nA corrente per una durata di 100 ns.  
-Inoltre, al fine di avere due differenti valori di guadagno sono incluse due capacità, rispettivamente di 2.5 fF e 4 fF. 
-A causa di piccole differenze, che sono rilevanti a scale di 65 nm, si hanno fluttuazioni abbastanza ampie della \textit{baseline} in uscita dal primo stadio (dell'ordine delle decine di millivolt) tra canali differenti. 
-Per eliminare queste differenze si è reso necessario un accoppiamento in AC al dicriminatore. 
+Maggiore la corrente maggiore la velocità del segnale del pre amplificatore a tornare al valore di \textit{baseline}. 
+Si tenga presente, come riferimento, che una carica di di 10k$e^{-}$ e che produce 10 nA di corrente e un segnale di 400 ns viene ridotta ad un segnale di 40 nA di corrente di 100 ns.  
+Inoltre, al fine di avere due differenti valori di guadagno, ci sono due capacità, rispettivamente di 2.5 fF e 4 fF. 
+A causa di piccole differenze, che diventano rilevanti a scale di 65 nm, si hanno fluttuazioni della \textit{baseline} in uscita dal primo stadio dell'ordine delle decine di millivolt tra canali differenti.
+Per questo motivo si è reso necessario un accoppiamento in AC al discriminatore. 
 In ogni caso le differenze tra transistor si traducono in un offset della tensione in uscita dal discriminatore tra i vari pixel. 
-Questo effetto normalmente è compensato con DAC usati localmente per regolazioni fini, invece, nel FE Sincrono l'offset è compensato attraverso un meccanismo di auto azzeramento. 
-Ciò richiede l'acquisizione del livello di tensione della \textit{baseline} ogni 100 $\mu$s o meno. Durante le collisioni, la differenza tra segnale e la baseline letta è inviato ad uno stadio che fa il confronto e genera il segnale di uscita del discriminatore.  
+Questo effetto, normalmente, è compensato con DAC locali che permettono regolazioni fini. Nel FE Sincrono, invece, l'offset è compensato attraverso un meccanismo di auto azzeramento (\textit{auto zeroing}). 
+Per fare ciò è necessaria l'acquisizione del livello di tensione della \textit{baseline} ogni 100 $\mu$s o meno.
+Durante le collisioni, la differenza tra segnale e baseline è inviata ad uno stadiodi confronto che genera il segnale di uscita del discriminatore.
 
 \begin{figure}
 \centering
@@ -69,16 +80,17 @@ Ciò richiede l'acquisizione del livello di tensione della \textit{baseline} ogn
 \caption{Schematico del front end Lineare.}
 \label{SchemaLineare}
 \end{figure}
-\item \textbf{Lineare}. Il front end lineare è mostrato in figura \ref{SchemaLineare}. Il circuito di lettura include un amplificatore di carica con un Krummenacher feedback al fine di far fronte  dell'aumento di corrente di dispersione, indotte dagli alti livelli di radiazione attesa. 
-La scelta di un amplificatore a stadio singolo è stata dettata dai limiti imposti sui consumi e dallo spazio limitato che è disponibile all'interno del chip. 
+\item \textbf{Lineare}. Il front end lineare è mostrato in figura \ref{SchemaLineare}.
+  Il circuito di lettura include un amplificatore di carica con un Krummenacher feedback per far fronte all'aumento di corrente di dispersione indotta dagli alti livelli di radiazione attesa. 
+La scelta di un amplificatore a stadio singolo è dettata dai limiti sui consumi e sullo spazio disponibile all'interno del chip. 
 Il segnale ottenuto dall'amplificatore di carica è mandato ad un comparatore che, insieme al contatore ToT (\textit{Time over Threshold}), è utilizzato per fare la conversione a segnale digitale. 
-Canale per canale gli aggiustamenti della tensione di soglia sono gestiti da un circuito locale basato su un \textit{binary weighted} DAC a 4 bit che genera una corrente $\mathrm{I_{DAC}}$, fornendo una regolazione locale della soglia. 
-Questo tipo di front end è stato ottimizzato per una carica massima corrispondete a 30000 elettroni con un consumo complessivo di circa 4 $\mu$A. 
-L'amplificatore può essere utilizzato in regime di alto o basso guadagno andando a modificare il bit GAIN$\_$SEL, mentre la corrente di recupero $\mathrm{I_K}$/2 proveniente dal circuito di Krummenacher feedback può essere configurata tramite un DAC. 
-In configurazione di alto guadagno per un segnale di carica pari a 30000 elettroni si ha un ToT di circa 400 ns che risulta in una corrente $\mathrm{I_K}$ di 25 nA. 
-La risoluzione aspettata in configurazione di alto guadagno è di 15 mV/k$e^{-}$, mentre è di 7.5 mV/k$e^{-}$ con basso guadagno. 
-Le prestazioni del preamplificatore di carica sono determinate principalmente dall'ingresso dell'amplificatore di carica e dalla parte del circuito di feedback  con transistor PMOS. Nelle simulazioni il rumore in carica equivalente, per un rivelatore con capacità di 50 fF, è pari a 87 elettroni. 
-Da simulazioni la dispersione della soglia dovrebbe passare da 380 elettroni a 35 elettroni dopo la messa a punto.
+Gli aggiustamenti della tensione di soglia sono gestiti, canale per canale, da un circuito locale basato su un \textit{binary weighted} DAC, a 4 bit, che genera una corrente $\mathrm{I_{DAC}}$, fornendo una regolazione locale della soglia. 
+Questo tipo di front end è stato ottimizzato per una carica massima di 30000 elettroni e un consumo complessivo di circa 4 $\mu$A. 
+L'amplificatore può essere utilizzato in regime di alto o basso guadagno, modificando il bit GAIN$\_$SEL, mentre la corrente di recupero, $\mathrm{I_K}$/2, proveniente dal circuito di Krummenacher feedback, può essere configurata tramite un DAC. 
+In configurazione di alto guadagno, per un segnale di carica pari a 30000, elettroni si ha un ToT di circa 400 ns, risultante in una corrente $\mathrm{I_K}$ di 25 nA. 
+La risoluzione attesa è di 15 mV/k$e^{-}$, mentre diventa di 7.5 mV/k$e^{-}$ in configurazione di basso guadagno. 
+Le prestazioni del preamplificatore di carica sono determinate, principalmente, dall'ingresso dell'amplificatore di carica e dalla parte del circuito di feedback con transistor PMOS. Dalle simulazioni il rumore in carica equivalente, per un rivelatore con capacità di 50 fF, è di 87 elettroni e, dopo la messa a punto, la dispersione della soglia scende da 380 a 35 elettroni.
+%Da simulazioni la dispersione della soglia dovrebbe passare da 380 elettroni a 35 elettroni dopo la messa a punto.
 
 \begin{figure}
 \centering
@@ -87,17 +99,18 @@ Da simulazioni la dispersione della soglia dovrebbe passare da 380 elettroni a 3
 \label{SchemaDifferenziale}
 \end{figure}
 \item \textbf{Differenziale}. Il front end Differenziale è un circuito puramente analogico: non ha al suo interno latches, flip-flop o contatori. 
-I valori di configurazione sono però forniti da un nucleo digitale, che riceve dalla parte analogica solo il segnale in uscita del comparatore. 
-Naturalmente è necessaria la presenza di un ADC per la digitalizzazione del ToT ottenuto dal comparatore, anch'esso è implementato interamente nella parte digitale. 
+I valori di configurazione sono, però, forniti da un nucleo digitale, che riceve dalla parte analogica solo il segnale in uscita del comparatore. 
+Naturalmente è necessaria la presenza di un ADC per la digitalizzazione del ToT ottenuto dal comparatore, anch'esso implementato interamente nella parte digitale. 
 Lo schema a blocchi del front end differenziale è riportato in figura \ref{SchemaDifferenziale}. 
-Il pre amplificatore presente nel primo stadio ha un guadagno continuo, regolabile andando a scegliere tra i due valori possibili di capacità presenti nell'anello di reazione. Questo feedback in corrente è impostato globalmente e non può essere regolato su ogni singolo pixel. 
-Dalle misure sui prototipi è stato visto che la conseguente dispersione nei valori di ToT ha un livello accettabile senza necessità di una pre regolazione.  
-In caso di assenza di segnale il feedback assicura che input e output del preamplificatore siano allo stesso potenzioale.
-Nel secondo stadio il pre comparatore fornisce un guadagno aggiuntivo e agisce come soglia differenziale. 
-La soglia globale può essere regolata tramite le tensioni VTH1 e VTH2, mentre localmente la soglia è modificata utilizzando un \textit{resistor ladder} a 4 bit in ciascuno dei due rami del pre comparatore. Oltre a i 4 bit c'è un quinto bit che seleziona quale dei due rami modificare. 
-Dopo il pre comparatore si ha uno stadio con un comparatore la cui uscita è collegata alla regione digitale tramite porte logiche. 
+Il pre amplificatore, presente nel primo stadio, ha un guadagno continuo, regolabile tra i due valori di capacità presenti nell'anello di reazione.
+Il feedback in corrente è impostabile globalmente e non può essere regolato su ogni singolo pixel. 
+Dalle misure sui prototipi è stato visto che la dispersione nei valori di ToT che ne consegue ha un livello accettabile anche senza la necessità di una pre regolazione.  
+In caso di assenza di segnale, il feedback assicura che input e output del preamplificatore siano allo stesso potenziale.
+Nel secondo stadio, il pre comparatore fornisce un guadagno aggiuntivo e agisce come soglia differenziale.
+La soglia globale può essere regolata tramite le tensioni VTH1 e VTH2, mentre localmente la soglia è modificata utilizzando un \textit{resistor ladder} a 4 bit in ciascuno dei due rami del pre comparatore.
+Oltre ai 4 bit ce n'è un quinto che seleziona il ramo da modificare. 
+Dopo il pre comparatore si ha uno stadio con un comparatore, la cui uscita è collegata alla regione digitale tramite porte logiche. 
 Progettato per operare con una soglia di 500 elettroni, la parte analogica ha un consumo di 4$\mu$A/pixel, considerando una capacità di 50 fF e 10 nA di corrente dispersa.
-
 
 \end{itemize}
 
@@ -109,8 +122,8 @@ Progettato per operare con una soglia di 500 elettroni, la parte analogica ha un
 \label{SLDO_RD53A}
 \end{figure}
 In RD53A l'alimentazione è gestita da due regolatori LDO con shunt, uno per la parte analogica ed uno per quella digitale. 
-Rispetto al circuito di SLDO presentato in precedenza vi sono delle differenze, in particolare la tensione di offset è generata con un circuito diverso, lo schema del circuito di SLDO è riportato in  figura \ref{SLDO_RD53A}. 
-I valori di Input e Output sono riportati nella seguente tabella:
+Rispetto al circuito di SLDO presentato in precedenza, la tensione di offset è generata con un circuito diverso.
+Lo schema del circuito di SLDO è riportato in  figura \ref{SLDO_RD53A}, mentre i valori di Input e Output sono riportati nella seguente tabella:
 
 %\begin{center}
 \begin{small}
@@ -126,7 +139,7 @@ $\mathrm{V_{SHUNT}}$ & Alimentazione & 1.4 V & & 2.0 V & Tensione di alimentazio
 GND & Ground &  & &  & Terra locale e uscita della corrente di shunt\\ \hline
 VDD & Alimentazione & 1.0 V & 1.2 V & 1.32 V & Tensione di uscita del regolatore\\ \hline
 $\mathrm{V_{REF}}$ & Analogico & 500 mV & 600 mV & 660 mV & Tensione di riferimento (VDD=2$\mathrm{V_{REF}}$)\\ \hline
-$\mathrm{R_{INT}}$ & Analogico &  & $\mathrm{V_{IN}}$ &  & Enable resistenza interna R\\ \hline
+$\mathrm{R_{INT}}$ & Analogico &  & $\mathrm{V_{IN}}$ &  & Abilita la resistenza interna R\\ \hline
 $\mathrm{R_{EXT}}$ & Analogico & 300 $\Omega$ &  &  & Resistenza esterna collegata a $\mathrm{V_{IN}}$\\ \hline
 $\mathrm{I_{OFS}}$ & Analogico &  & 200 k$\Omega$ &  & Resistenza esterna connessa a GND\\ \hline
 $\mathrm{COMP_{ENB}}$ & Digitale &  & GND &  & Segnale per abilitare il circuito di compensazione\\ \hline
@@ -134,8 +147,8 @@ $\mathrm{COMP_{ENB}}$ & Digitale &  & GND &  & Segnale per abilitare il circuito
 \end{small}
 %\end{center}
 
-Il valore di $\mathrm{V_{ofs}}$ è determiinato dalla caduta di tensione sulla resistenza applicata al terminale $\mathrm{I_{ofs}}$. 
-Questa resistenza va saldata sulla Single Chip Card nell'apposito slot. Il valore di $\mathrm{I_{ofs}}$ è 2 $\mu$A, dunque:
+Il valore di $\mathrm{V_{ofs}}$ è determinato dalla caduta di tensione sulla resistenza applicata al terminale $\mathrm{I_{ofs}}$ e che va saldata nell'apposito slot della Single Chip Card.
+Il valore di $\mathrm{I_{ofs}}$ è 2 $\mu$A, dunque:
 \begin{equation}
 \label{eq:Vofs}
 \mathrm{V_{ofs} = 2 \mu A \cdot R_{iofs}}
@@ -145,7 +158,7 @@ Il comportamento della tensione in ingresso sarà:
 \begin{equation}
 \mathrm{V_{in}= 2 \cdot V_{iofs} + \dfrac{R3}{1000} \cdot I_{in}}
 \end{equation}
-Nelle misure che sono presentate nelle sezioni successive ogni volta che si parlerà di R3 e $\mathrm{V_{ofs}}$ interni si farà riferimento ai seguenti valori:
+Le misure presentate nelle sezioni successive sono stati ottenuti con i seguenti valori di R3 e $\mathrm{V_{ofs}}$:
 
 \begin{center}
 \begin{tabular}{lc}
@@ -155,10 +168,12 @@ $\mathrm{R_{iofs}}$ & 250 k$\Omega$\\
 \hline
 \end{tabular}
 \end{center}
-Per quanto scritto in precedenza, equazione \ref{eq:Vofs}, una $\mathrm{R_{iofs}}$ di 250 k$\Omega$ corrisponde ad una tensione di offset di circa 0.5 V. Perciò nell'andamento della tensione in ingresso, in funzione della corrente, ci aspettiamo un valore misurato per l'offset di circa 1 V.
+Dall'equazione \ref{eq:Vofs}, una $\mathrm{R_{iofs}}$ di 250 k$\Omega$ corrisponde ad una tensione di offset di circa 0.5 V.
+Nell'andamento della tensione in ingresso in funzione della corrente, quindi, ci aspettiamo un valore misurato per l'offset di circa 1 V.
 
-Per quanto riguarda le tensioni di riferimento, come $\mathrm{V_{ref}}$, queste vengono generate all'interno del chip da un circuito dedicato in cui vengono utilizzati bandgap. Il valore di uscita dei bandgap è configurabile, di default ha un valore 16 che corrisponde circa a una tensione di 1.15 V. 
-Questo valore varia leggermente da un chip all'altro, un esempio è riportato in figura \ref{bandgap_trimming}, dove sono riportati gli andamenti misurati di $\mathrm{V_{ref}}$ al variare del valore di configurazione per differenti chip.
+Per quanto riguarda le tensioni di riferimento, come $\mathrm{V_{ref}}$, queste vengono generate all'interno del chip da un circuito dedicato, in cui si utilizzano bandgap.
+Il valore di uscita dei bandgap è configurabile e di default è 16, corrispondente a una tensione di circa 1.15 V, variando leggermente da un chip all'altro.
+Un esempio è quello di figura \ref{bandgap_trimming}, in cui sono riportati gli andamenti misurati di $\mathrm{V_{ref}}$ al variare del valore di configurazione, per differenti chip.
 
 \begin{figure}
 \centering
@@ -168,13 +183,19 @@ Questo valore varia leggermente da un chip all'altro, un esempio è riportato in
 \end{figure}
 
 \section{Single Chip Card}
-Analogamente a quanto visto per gli SLDO, per  collaudare i quali si fa uso di una PCB di test, per il chip RD53A è necessario l'utilizzo di una SCC (\textit{Single Chip Card}). 
-Il chip è fissato al centro di questa scheda e attraverso \textit{wire bond} è connesso ai vari elementi della scheda (pin di monitoraggio, molex di alimentazione, DisplayPort per la trasmissione/ricezione di dati, jumper per la configurazione, etc...). 
-Il chip viene montato sulla scheda in un apposito spazio ai cui bordi arrivano le varie piste da connettere e sotto cui, al posto della vetronite, c'è uno spessore metallico con via termici in modo da permettere l'applicazione di un sistema refrigerante sulla parte posteriore della SCC. 
-La presenza di un raffreddamento è necessaria nel momento in cui l'alimentazione è data utilizzando i due SLDO, infatti, la corrente non necessaria al chip viene dissipata sui due shunt che diventano punti molto caldi. 
-Al fine di evitare danneggiamenti del chip e dell'eventuale sensore che vi può essere collegato il chip va raffreddato con l'utilizzo di dissipatori di calore. 
 
-Dal momento che il chip è un prototipo è stata lasciata la possibilità di poter configurare l'alimentazione esternamente scegliendo tra tre diverse configurazioni e inoltre è possibile mantenere separate a livello di alimentazione la regione digitale e quella analogica\footnote{Nel chip finale gli ShuntLDO della parte digitale e analogica saranno in parallelo.}.
+Analogamente a quanto visto per gli SLDO, che vengono collaudati usando una PCB di test, per il chip RD53A è necessario l'utilizzo di una SCC (\textit{Single Chip Card}). 
+Il chip è fissato al centro di questa scheda e, attraverso \textit{wire bond}, è connesso ai vari elementi della scheda (pin di monitoraggio, molex di alimentazione, DisplayPort per la trasmissione/ricezione di dati, jumper per la configurazione, etc...). 
+Il chip viene montato sulla scheda in un apposito spazio, ai cui bordi arrivano le varie piste da connettere e sotto cui, al posto della vetronite, c'è uno spessore metallico con via termici che permettono l'applicazione di un sistema refrigerante sulla parte posteriore della SCC. 
+Nel momento in cui l'alimentazione del chip viene fornita dai due SLDO, infatti, la corrente non utilizzata viene dissipata sui due shunt, che si scaldano rendendo, quindi, necessario un sistema di raffreddamento.
+%La presenza di un raffreddamento è necessaria nel momento in cui l'alimentazione è data utilizzando i due SLDO, infatti, la corrente non necessaria al chip viene dissipata sui due shunt che diventano punti molto caldi. 
+Al fine di evitare danneggiamenti del chip, e dell'eventuale sensore collegato, questo va raffreddato utilizzando dissipatori di calore. 
+
+Dal momento che il chip è un prototipo si è lasciata la possibilità di configurare l'alimentazione esternamente, scegliendo tra tre diverse configurazioni.
+Inoltre è possibile mantenere separate, a livello di alimentazione, la regione digitale e quella analogica
+\footnote{
+Nel chip finale gli ShuntLDO della parte digitale e analogica saranno in parallelo.
+}.
 Le possibili configurazioni sono:
 
 \begin{itemize}
@@ -184,9 +205,9 @@ Le possibili configurazioni sono:
 \caption{Configurazione dei jumper per l'utilizzo di RD53A alimentato attraverso il circuito di ShuntLDO, sia per la regione analogica sia per quella digitale.}
 \label{SLDOmode}
 \end{figure}
-\item Alimentazione attraverso il circuito di ShuntLDO, in questo caso il generatore utilizzato sarà in corrente e sulla SCC card la configurazione dei jumper sarà quella riportata in figura \ref{SLDOmode}. 
-Per operare con il chip in configurazione SLDO è necessario l'utilizzo di un sistema di raffreddamento per il chip. 
-In normali condizioni di lavoro è sufficiente un dissipatore passivo, va però sottolineato che nella misura delle varie tensioni l'effetto di deriva termica non è trascurabile, dunque l'ideale sarebbe l'utilizzo di un sistema di raffreddamento attivo, con un buon contatto termico, che permetta di controllare le temperature, ad esempio l'impiego di peltier.
+\item Alimentazione attraverso il circuito di ShuntLDO. In questo caso il generatore utilizzato sarà in corrente e sulla SCC card la configurazione dei jumper sarà quella riportata in figura \ref{SLDOmode}. 
+Per operare con il chip in configurazione SLDO è necessario l'utilizzo di un sistema di raffreddamento per il chip che, in normali condizioni di lavoro, può essere un semplice dissipatore passivo.
+Nella misura delle varie tensioni, però, l'effetto di deriva termica non è trascurabile e, quindi, è meglio utilizzare un sistema di raffreddamento attivo, con un buon contatto termico e che permetta di controllare le temperature, come, ad esempio, si può ottenere con l'impiego di peltier.
 
 \begin{figure}
 \centering
@@ -194,7 +215,10 @@ In normali condizioni di lavoro è sufficiente un dissipatore passivo, va però 
 \caption{Configurazione dei jumper per l'utilizzo di RD53A alimentato dal regolatore LDO senza la parte di shunt.}
 \label{LDOmode}
 \end{figure}
-\item Alimentazione senza Shunt, utilizzando solo il regolatore LDO. Questa configurazione necessita di una alimentazione in tensione, in questo caso sarà il generatore esterno a dover generare più o meno corrente al variare dei consumi del chip. L'utilizzo del solo regolatore permette di avere un consumo minimo in termini di potenza e dunque di operare con il chip senza il bisogno di un sistema di raffreddamento. In questo caso la configurazione dei jumper è quella riportata in figura \ref{LDOmode}.
+\item Alimentazione senza Shunt, utilizzando solo il regolatore LDO.
+  Questa configurazione necessita di una alimentazione in tensione e sarà il generatore esterno a dover fornire più o meno corrente in relazione ai consumi del chip.
+  L'utilizzo del solo regolatore permette di avere un consumo minimo in termini di potenza e, dunque, di operare con il chip senza il bisogno di un sistema di raffreddamento.
+  In questo caso la configurazione dei jumper è quella riportata in figura \ref{LDOmode}.
 
 \begin{figure}
 \centering
@@ -202,15 +226,16 @@ In normali condizioni di lavoro è sufficiente un dissipatore passivo, va però 
 \caption{Configurazione dei jumper per l'utilizzo di RD53A alimentato direttamente, escludendo il circuito di ShuntLDO.}
 \label{DirectPowering}
 \end{figure}
-\item Alimentazione diretta. Il circuito con regolatore e shunt viene completamente escluso ed il chip è alimentato direttamente dal generatore di tensione. 
-Questa configurazione è riportata in figura \ref{DirectPowering}, l'utilizzo dell'alimentazione diretta è delicato per varie ragioni, prima fra tutte il rischio di danneggiamento di RD53A. 
-La presenza del regolatore LDO, anche privo di shunt, assicura che sbalzi di tensione all'ingresso dell'alimentazione non siano trasmessi al chip, inoltre il regolatore può sopportare tensioni fino a 2 V, mentre il chip già sopra 1.32 V rischia di danneggiarsi, la sua esclusione e la scelta di utilizzare un'alimentazione diretta è perciò sconsigliata. 
+\item Alimentazione diretta.
+  Il circuito con regolatore e shunt viene completamente escluso ed il chip è alimentato direttamente dal generatore di tensione. 
+Questa configurazione è riportata in figura \ref{DirectPowering}.
+L'utilizzo dell'alimentazione diretta è delicato per varie ragioni, fra cui il più importante è il rischio di danneggiamento di RD53A. 
+La presenza del regolatore LDO, anche privo di shunt, assicura che sbalzi di tensione all'ingresso dell'alimentazione non siano trasmessi al chipi ed, inoltre, il regolatore può sopportare tensioni fino a 2 V, mentre il chip già sopra 1.32 V rischia di danneggiarsi. L'esclusione di questa sicurezza con la scelta di utilizzare un'alimentazione diretta è, perciò, sconsigliata. 
 \end{itemize}
 
-
-
-
+% RIPARTIRE DA QUA
 \section{Misure Statiche con RD53A}
+
 Utilizzando il chip in configurazione ShuntLDO, raffreddato in modo passivo con un radiatore messo a contatto termico con il retro del chip, si è proceduto ad una caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip\footnote{Uno per la parte analogica ed uno per quella digitale.}. 
 Nel far questo sono state scelte diverse configurazioni, le scelte principali possono essere riassunte in tre punti:
 \begin{itemize}
