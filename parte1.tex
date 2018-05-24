@@ -37,7 +37,7 @@ dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singo
 Nella progettazione del sistema con alimentazione seriale è necessario tenere presente che la rottura di uno degli elementi della catena non deve compromettere il funzionamento degli altri e che il consumo di ciascun chip, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui si trova e dalle operazioni che sta eseguendo. 
 Il chip, infatti, è un carico dinamico e l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena.
 Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori di back-end non sono in grado di compensarle in modo rapido: questi saranno, infatti, posizionati lontano dall'esperimento e i cavi introdurrano un ritardo proporzionale alla lunghezza degli stessi.
-Per ovviare a queste criticità si è deciso di implementare un regolatore con Shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, con caratteristiche di \textit{Low Drop Out}, da qui la sigla ShuntLDO.
+Per ovviare a queste criticità si è deciso di implementare un regolatore con Shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, con caratteristiche di \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando $\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 V}$.}, da qui la sigla ShuntLDO.
 Con questo tipo di configurazione la corrente erogata dagli alimentatori di back-end deve essere maggiore o uguale a quella necessaria all'elemento con consumo più alto.
 %Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
 %Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
@@ -130,7 +130,13 @@ Con una corrente di lavoro richiesta di $\mathrm{I_{in}=2.0}$ A per chip
   Ovvero 1 A per ciascuno dei due SLDO presenti nel chip.
 },
 i.e. $\mathrm{I_{modulo}=8.0}$ A per l'intero modulo, si avrà $\mathrm{V_{modulo}=1.4} \V$.
-Per avere un po' di margine incrementiamo la corrente di un 20$\%$.
+Per avere un po' di margine incrementiamo la corrente di un 20$\%$, la scelta di dare un margine del 20$\%$, piuttosto che del 40$\%$ è una scelta giustificata qualitativamente dall'ampiezza dei picchi di tensione generati dallo SLDO in concomitanza di un transiente, in figura \ref{LoadTransient} è riportato il valore di picco dell'undershoot/overshoot in funzione del margine di corrente dato su 1 A di alimentazione.
+\begin{figure}
+\centering
+\includegraphics[width=0.75\textwidth]{Immagini/LoadTransientDominik}
+\caption{Il grafico riporta il valore di picco dell'undershoot/overshoot in funzione del margine di corrente dato su 1 A di alimentazione nel caso in cui  i consumi di parte analogica e digitale sono entrambi $\sim$0.5 A, 100$\%$ significa che la corrente fornita al chip è 1 A+1 A.}
+\label{LoadTransient}
+\end{figure}
 Conseguentemente $\mathrm{I_{in}=2.4}$ A, $\mathrm{I_{modulo}=9.6}$ A, $\mathrm{V_{modulo}=1.52} \V$ e, quindi, la caduta di tensione su tutta la catena, formata da 8 moduli, sarà $12.16 \V$.
 %Con una corrente di $\mathrm{I_{in}=2.0}$ A per chip\footnote{Che vale a dire 1 A per ciascuno dei due SLDO presenti nel chip.} ($\mathrm{I=8.0}$ A per modulo) si avrà un $\mathrm{V_{modulo}=1.4} \V$, per avere un po' di margine incrementiamo la corrente di un 20$\%$, la corrente che arriva nei moduli sarà I = 9.6 A. 
 %In questa situazione $\mathrm{V_{modulo}=1.52}$ V e dunque la caduta di tensione su tutta la catena formata da 8 moduli sarà pari a $12.16 \V$. Questa non è la caduta di tensione totale, va tenuto conto anche della resistenza dovuta ai cavi, in questo esempio assumiamo valga 2 $\Omega$. 
@@ -183,7 +189,28 @@ impostati.
  %mettere un recap con il senso di questi conti
 %Lo studio dell'alimentazione seriale parte dunque dalla caratterizzazione dello SLDO. Componente che sarà poi utilizzato all'interno del chip RD53A per la generazione delle tensioni di alimentazione della parte analogica e digitale. .......continuare discorso....
 %Aver chiaro come il chip viene visto esternamente e quali siano i suoi consumi è importante per poter progettare al meglio il sistema di alimentazione seriale.
+%capitolo
+\section{Prova}
+Ricapitolando
+Rispetto ad uno schema di alimentazione parallelo o diretto, dove ogni modulo è alimentato separatamente (e quindi ha un set supo di cavi!!!!!), l'utilizzo di una alimentazione seriale permette una notevole riduzione dei costi e del numero di cavi necessari: per n moduli sono necessari solo due cavi ed un unico generatore. 
+Come detto in precedenza l'utilizzo di una configurazione seriale delle alimentazioni permette una riduzione significativa della corrente necessaria, dipendente dal numero di moduli in serie, e dunque della sezione dei cavi utilizzati e della potenza dissipata su di essi. 
+Oltre a ciò, l'alimentazione seriale ha altri benefici rispetto a sistemi di alimentazione basati sulla tensione!!!modifica. 
+Prima di tutto la caduta di tensione sui cavi non è collegata direttamente alla differenza tra la tensione di lavoro del modulo e la tensione massima che può sopportare ,come invece è per una alimentazione diretta. Ciò permettere di trovare il giusto mezzo tra efficienza e materiale per ogni zona del rivelatore. 
+Inoltre, l'utilizzo dello SLDO consente di regolare la tensione in prossimità del carico, senza necessità di altri cavi per misure di tensione (sense line, non so come tradurrel'alimentazione è locale Point of Load), e di rispondere in modo più celere a cambiamenti del carico in corrente. 
+Infine la corrente che scorre nei moduli è costante non vi dovrebbero essere transienti in ingresso al regolatore. 
+Nell'alimentazione seriale la dissipazione di potenza dei moduli è in media più alta che in configurazioni di alimentazione diretta o parallela. 
+Questo maggiore consumo di potenza è però compensato dalla grande riduzione di potenza dissipata nei cavi. 
+D'altra parte, dal momento che i moduli sono connessi in serie, l'alimentazione seriale comporta deei rischi. 
+Un guasto sulla linea si ripercuote sull'intera catena. Moduli danneggiati o molto rumorosi potenzialmente possono peggiorare le prestazioni anche degli altri moduli presenti sulla catena. 
+Inoltre, i moduli non possono essere spenti/accesi individualmente, e per di più tutti i moduli hanno tensioni di riferimento differenti tra di loro e rispetto al sistema di lettura e al generatore. 
 
+A livello dei singoli moduli si hanno più SLDO in parallelo, questo per  far si che nel caso un regolatore si guasti , la corrente possa essere assorbita da un altro regolatore all'interno del modulo.
+%At module level, the current to voltage conversion should
+%be done using more than one regulator, and by connecting all regulators in parallel. In this
+%way, should one regulator fail, the current flow can still be assured by the other regulators on
+%module. Although these measures assure a very robust design, extra care has to be taken for
+%possible worst case failures, in particular for the case of regulator faults which could cause an
+%over-voltage
 \section{Evoluzione di progetto dello SLDO}
 
 \begin{figure}[!htbp]
@@ -235,7 +262,7 @@ Analogamente resistenze minori avranno l'effetto contrario: tensioni minori con 
 Nello schematico è indicato con $\mathrm{R_{ext}}$ il punto in cui è possibile collegare una resistenza esterna in sostituzione ad R3, presente di default all'interno dello SLDO.
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/SLDO2A}
+\includegraphics[width=\linewidth]{Immagini/SLDO2A}
 \caption{Circuito semplificato dello SLDO 2A.}
 \label{SLDO2A}
 \end{figure}
@@ -392,20 +419,15 @@ Nella fase di accensione, invece, all'ingresso di A1 si trova una grossa differe
 %Idealmente, nel ramo di $\mathrm{V_{ref}}$ dovrebbe scorrere una corrente molto piccola in regime di lavoro\footnote{Questo perché nello SLDO il $\mathrm{V_{ref}}$ è in ingresso al comparatore A1 e viene confrontato con una tensione che sarà circa uguale in una situazione di equilibrio. La corrente che scorre tra ingresso + e - sarà piccola, poiché il comparatore in ingresso ha una grossa resistenza.}, mentre al momento dell'accensione, all'ingresso di A1 si ha una notevole differenza tra + e -, e quindi scorrerà una corrente maggiore, questo è causa di una variazione del $\mathrm{V_{ref}}$. Di seguito riportiamo in tabella i valori che si riferiscono al grafico \ref{SLDO2Astatic}: 
 
 \par \begin{center} !!! SERVE??? COSA CI SI IMPARA? !!! \end{center} \par
-
-\[
-\begin{array}{ccccc}
-
-\toprule
-V_{ref} & V_{out} & 2 \cdot V_{ref}- V_{out} & R_{eff} & V_{offset} \\
-
-\midrule
-
-0.500 V & 0.980 V & 20 mV & 0.880 \Omega & 0.40 V \\
-
-\bottomrule
-\end{array}
-\]
+\begin{center}
+\begin{tabular}{cccccc}
+\hline
+$\mathrm{V_{ref}}$ & $\mathrm{V_{out}}$ & $\mathrm{2 \cdot V_{ref}- V_{out}}$ & $\mathrm{R_{eff}}$ & $\mathrm{V_{offset}}$ \\
+\hline
+0.500 V & 0.980 V & 20 mV & 0.880 $\Omega$ & 0.40 V\\
+\hline
+\end{tabular}
+\end{center}
 \FloatBarrier
 
 \subsection{Differenze tra GND PCB e GND SLDO}
@@ -450,28 +472,28 @@ Si è proceduto a misurare il valore di tensione sul pin $\mathrm{I_{out{\_}Sens
 La misura è stata eseguita per due diversi valori di carico statico: $4 \Omega$ e in assenza di carico per cui il circuito fra $\mathrm{V_{out}}$ e GND è aperto, presentandosi come una resistenza infinita ($\infty$).
 %$4 \Omega$ e $\infty$, con il valore infinito si intende la configurazione in cui il carico è assente e dunque il circuito tra $\mathrm{V_{out}}$ e GND è aperto, presentandosi di fatto come una resistenza infinita. 
 In figura \ref{VioutSense} sono riportati gli andamenti di $\mathrm{V_{out{\_}Sense}}$ in funzione di $\mathrm{I_{in}}$ per le due configurazioni.
-La pendenza delle due curve riportate è la stessa e ci fornisce un'indicazione del valore resistivo, R, dei \textit{wire bond}, mentre l'offset cambia, nel modo in cui ci si aspetterebbe da uno spostamento di tensione dato dalla corrente che scorre verso il GND del chip: maggiore è la corrente richiesta dal carico, minore è l'offset.
+La pendenza delle due curve riportate è la stessa, pari a 4 m$\Omega$, e ci fornisce un'indicazione del valore resistivo, R, dei \textit{wire bond}, mentre l'offset cambia in accordo con quanto ci si aspetterebbe da uno spostamento di tensione dato dalla corrente che scorre verso il GND del chip: maggiore è la corrente richiesta dal carico, minore è l'offset. 
+La differenza tra i due offset è di 1 mV che per l'appunto corrisponde alla caduta di tensione causata dalla diversa corrente che scorre nello shunt nei due casi:
+\begin{equation}
+\mathrm{\Delta V = \Delta I_{shunt} \cdot R_{wire \_ bond} = 0.250 A \cdot 4 m\Omega = 1 mV}
+\end{equation}
 %In figura \ref{VioutSense} è possibile vedere come le due diverse configurazioni di carico influenzino la misura con un offset. 
 %Infatti nei due casi la pendenza è la stessa e dà un'indicazione del valore resistivo R dei wire bond, l'offset invece rispecchia il fatto che lo spostamento di tensione è dato dalla corrente che scorre verso il GND del chip, che nel caso in cui il carico richieda più corrente diminuisce.
 Ad esempio ad 1 A con il carico resistivo da 4 $\Omega$, la corrente che effettivamente scorre verso GND nello shunt è 0.75 A (questo nel caso $\mathrm{V_{out} = 1 V}$).
 
-\par \begin{center} !!! CHE ROBA E'?! CAPTION O ALMENO DESCRIZIONE NEL TESTO !!! \end{center} \par
+%\par \begin{center} !!! CHE ROBA E'?! CAPTION O ALMENO DESCRIZIONE NEL TESTO !!! \end{center} \par
+%
+%\begin{center}
+%\begin{tabular}{cccc}
+%\hline
+%$\mathrm{R_{rossa}}$  & $\mathrm{R_{blu}}$ & $\mathrm{Offset_{rosso}}$ & $\mathrm{Offset_{blu}}$\\
+%\hline
+%4 m$\Omega$ & 4 m$\Omega$ & -1 mV & -2 mV\\
+%\hline
+%\end{tabular}
+%\end{center}
 
-\[
-\begin{array}{cccc}
-
-\toprule
-\mathrm{R_{rossa}}  & \mathrm{R_{blu}} & \mathrm{Offset_{rosso}} & \mathrm{Offset_{blu}} \\
-
-\midrule
-
-\mathrm{4 m} \Omega & \mathrm{4 m}\Omega & \mathrm{-1 mV}  & \mathrm{-2 mV} \\
-
-\bottomrule
-\end{array}
-\]
-
-Il valore della resistenza equivalente è molto piccolo e, come detto, dipende in prima approssimazione dal numero di wire bond.
+Il valore della resistenza equivalente è molto piccolo e, come detto, dipende in prima approssimazione dal numero di \textit{wire bond}.
 Fintantoché lo ShuntLDO è utilizzato come circuito a se stante su una PCB di test, dato che non ci sono problemi di spazio, è possibile utilizzare un gran numero di connessioni per ridurre al minimo differenze tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$, in modo da rendere trascurabile il fenomeno.
 \FloatBarrier
 
@@ -504,19 +526,28 @@ Dalla misura di $\mathrm{V_{in}}$ al variare della corrente in ingresso (figura 
 %Questi valori sono riportati nella tabella seguente:
 Nella tabella seguente sono riportati i valori ottenuti dal fit delle misure:
 
-\[
-\begin{array}{ccc}
-
-\toprule
-\mathrm{Offset 0.4 V} & \mathrm{Offset 0.6 V} & \mathrm{Offset 0.8 V} \\
-
-\midrule
-
-0.352 V & 0.539 V & 0.756 V \\
-
-\bottomrule
-\end{array}
-\]
+\begin{center}
+\begin{tabular}{ccc}
+\hline
+Offset 0.4 V & ffset 0.6 V & Offset 0.8 V\\
+\hline
+0.352 V & 0.539 V & 0.756 V\\
+\hline
+\end{tabular}
+\end{center}
+%\[
+%\begin{array}{ccc}
+%
+%\toprule
+%\mathrm{Offset 0.4 V} & \mathrm{Offset 0.6 V} & \mathrm{Offset 0.8 V} \\
+%
+%\midrule
+%
+%0.352 V & 0.539 V & 0.756 V \\
+%
+%\bottomrule
+%\end{array}
+%\]
 
 Come si può vedere il valore effettivo è sempre leggermente minore di quello impostato. Questo fenomeno è stato osservato anche nelle misure eseguite sullo ShuntLDO presente all'interno del chip RD53A e che descriveremo più avanti.
 \FloatBarrier
@@ -551,11 +582,33 @@ In queste misure l'attenzione sarà focalizzata su variazioni di $\mathrm{V_{in}
 L'introduzione del carico $\mathrm{R_{load}}$ in parallelo alla resistenza connessa a $\mathrm{V_{out}}$ è possibile posizionando un jumper sul pin P10 della PCB.
 Già dalle prime misure con l'oscilloscopio è possibile vedere che che l'utilizzo del mosfet come carico dinamico non è esente da fenomeni di alterazione dei segnali che rendendo difficile una loro corretta interpretazione. 
 \begin{figure}
-\centering
-\includegraphics[scale=.2]{Immagini/TransientTest}
-\caption{Schermata catturata dall'oscilloscopio: in giallo è rappresentata la tensione in ingresso, in arancione quella in uscita e in verde e blu la tensione sui i terminali di R5, la cui differenza è riportata in alto a destra in azzurro. A lato della schermata dell'oscilloscopio è riportato lo schematico della parte di circuito con mosfet e resistenza.} 
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.96\linewidth]{Immagini/zoomTransientTest1}
+  \caption{1a}
+  \label{TransientTest:sfig1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{Immagini/zoomTransientTest2}
+  \caption{1b}
+  \label{TransientTest:sfig2}
+\end{subfigure}
+\begin{subfigure}{.95\textwidth}
+  \centering
+  \includegraphics[width=\linewidth]{Immagini/zoomTransientTest3}
+  \caption{1c}
+  \label{TransientTest:sfig3}
+\end{subfigure}
+\caption{Schermata catturata dall'oscilloscopio: in giallo è rappresentata la tensione in ingresso, in arancione quella in uscita e in verde e blu la tensione sui i terminali di R5, la cui differenza è riportata in alto a destra in azzurro. Nella figura in basso, a lato della schermata dell'oscilloscopio, è riportato lo schematico della parte di circuito con mosfet e resistenza.}
 \label{TransientTest}
-\end{figure} 
+\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[scale=.2]{Immagini/TransientTest}
+%\caption{Schermata catturata dall'oscilloscopio: in giallo è rappresentata la tensione in ingresso, in arancione quella in uscita e in verde e blu la tensione sui i terminali di R5, la cui differenza è riportata in alto a destra in azzurro. A lato della schermata dell'oscilloscopio è riportato lo schematico della parte di circuito con mosfet e resistenza.} 
+%\label{TransientTest}
+%\end{figure} 
 Prendendo come riferimento la figura \ref{TransientTest}, si può notare un'asimmetria nelle variazioni di $\mathrm{V_{out}}$, in arancione in basso a sinistra, mentre in $\mathrm{V_{in}}$, in giallo in alto a sinistra, la risposta è simmetrica.
 In alto a destra, in azzurro, è riportata la differenza tra le tensioni misurate ai capi di R5, tensioni che sono riportate in basso a destra in blu e in verde e da cui è possibile calcolare la corrente che scorre tra Drain e Source del mosfet. 
 Inoltre sono visibili delle oscillazioni in corrispondenza dell'istante in cui il mosfet si spegne smettendo di assorbire corrente.
@@ -571,23 +624,24 @@ L'impulso utilizzato in questa prima fase ha:
 %In questa prima fase l'impulso utilizzato ha le seguenti caratteristiche: frequenza 50 Hz, durata 3 $\mu$s, durata del fronte di salita 40 ns.
 
 \subsubsection{Contributo mosfet}
-
-Per esaminare il comportamento del mosfet in risposta all'impulso mandato sul gate, si è proceduto ad isolare questa parte del circuito dal resto della PCB, connettendo sul pin P10 (connesso al drain del mosfet) una resistenza in serie ad una batteria stilo.
-La batteria ricopre il ruolo di $\mathrm{V_{out}}$, mentre la resistenza è necessaria alla misura delle correnti che scorrono nel mosfet ed ha un valore di 2.7 $\Omega$. 
-
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/MosfetBehaviour}
+\includegraphics[width=\linewidth]{Immagini/MosfetBehaviour}
 \caption{Sulla sinistra è riportato la schermata dell'oscilloscopio, che mostra l'andamento della tensione sui terminali di R in funzione del tempo, sulla destra è invece riportato lo schema della modifica al circuito.}
 \label{MosfetBehaviour}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/RiseTime}
+\includegraphics[width=\linewidth]{Immagini/RiseTime}
 \caption{In alto a sinistra è riportata la risposta del $\mathrm{V_{out}}$ per impulsi con tempo di salita 40 ns, il basso a destra invece è la risposta a impulsi con tempi di salita di 200ns. Sia per il $\mathrm{V_{out}}$ che per le tensioni su R5 il comportamento migliora rallentando l'impulso.}
 \label{RiseTime}
 \end{figure}
+
+Per esaminare il comportamento del mosfet in risposta all'impulso mandato sul gate, si è proceduto ad isolare questa parte del circuito dal resto della PCB, connettendo sul pin P10 (connesso al drain del mosfet) una resistenza in serie ad una batteria stilo.
+La batteria ricopre il ruolo di $\mathrm{V_{out}}$, mentre la resistenza è necessaria alla misura delle correnti che scorrono nel mosfet ed ha un valore di 2.7 $\Omega$. 
+
+
 
 Come si vede dalla figura \ref{MosfetBehaviour}, le oscillazioni in corrispondenza dello spegnimento del mosfet sono presenti anche una volta che questo è stato isolato.
 Questo comportamento è segno del fatto che queste oscillazioni sono generate dal mosfet stesso nel momento in cui il canale, che collega drain e source, si interrompe.
@@ -618,13 +672,13 @@ Facendo riferimento alla figura \ref{VoutUnd}, si possono vedere, in valore asso
 %I primi risultati riportano gli undershoot della tensione di uscita a cui è applicato il carico, riferendosi ai grafici in figura \ref{VoutUnd} sono riportati i valori assoluti di tali variazioni in funzione della corrente che scorre nel mosfet (sinistra) e della corrente totale (destra), la corrente totale è somma di quella assorbita dal carico e dal mosfet. 
 \begin{figure}
 \centering
-\includegraphics[scale=.44]{Immagini/VoutUnd}
+\includegraphics[width=0.9\linewidth]{Immagini/VoutUnd}
 \caption{Grafici che riportano l'entità dell'undershoot del $\mathrm{V_{out}}$ in funzione della corrente totale, grafico di sinistra, e della corrente del mosfet, grafico di destra.}
 \label{VoutUnd}
 \end{figure}
 \begin{figure}
 \centering
-\includegraphics[scale=.44]{Immagini/VoutOver}
+\includegraphics[width=0.9\linewidth]{Immagini/VoutOver}
 \caption{Grafici che riportano l'entità dell'overshoot del $\mathrm{V_{out}}$ in funzione della corrente totale, grafico di sinistra, e della corrente del mosfet, grafico di destra.}
 \label{VoutOver}
 \end{figure}
@@ -640,14 +694,14 @@ Come per il $\mathrm{V_{out}}$ è stato misurato l'undershoot e l'overshoot dell
 
 \begin{figure}
 \centering
-\includegraphics[scale=.45]{Immagini/VinUnd}
+\includegraphics[width=0.9\linewidth]{Immagini/VinUnd}
 \caption{Grafici che riportano l'entità dell'undershoot del $\mathrm{V_{in}}$ in funzione della corrente totale, grafico di sinistra, e della corrente del mosfet, grafico di destra.}
 \label{VinUnd}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[scale=.45]{Immagini/VinOver}
+\includegraphics[width=0.9\linewidth]{Immagini/VinOver}
 \caption{Grafici che riportano l'entità dell'undershoot del $\mathrm{V_{in}}$ in funzione della corrente totale, grafico di sinistra, e della corrente del mosfet, grafico di destra.}
 \label{VinOver}
 \end{figure}
@@ -661,11 +715,27 @@ Questo può essere visto bene utilizzando l'oscilloscopio: in figura \ref{DipVou
 Si nota che le scale di tempo di recupero sono differenti, i.e. alcuni $\mu$s per $\mathrm{V_{in}}$ e circa 300 ns per $\mathrm{V_{out}}$.
 
 \begin{figure}
-\centering
-\includegraphics[scale=.35]{Immagini/DipendenzaVoutdaVin}
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{Immagini/zoomDipendenzaVoutdaVin1}
+  \caption{1a}
+  \label{DipVoutVin:sfig1}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[width=.95\linewidth]{Immagini/zoomDipendenzaVoutdaVin2}
+  \caption{1b}
+  \label{DipVoutVin:sfig2}
+\end{subfigure}
 \caption{Differenze nei tempi di recupero tra $\mathrm{V_{out}}$, in giallo, e $\mathrm{V_{out}}$, in arancione.}
 \label{DipVoutVin}
 \end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[scale=.35]{Immagini/DipendenzaVoutdaVin}
+%\caption{Differenze nei tempi di recupero tra $\mathrm{V_{out}}$, in giallo, e $\mathrm{V_{out}}$, in arancione.}
+%\label{DipVoutVin}
+%\end{figure}
 \FloatBarrier
 
 \subsubsection{Serie di due SLDO}
