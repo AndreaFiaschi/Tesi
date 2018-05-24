@@ -19,7 +19,7 @@ Il sistema di alimentazione e di polarizzazione dei pixel è progettato per un n
 \label{RD53ALayout}
 \end{figure}
 
-Facendo riferimento alla figura \ref{RD53ALayout}, l'area del chip che sarà incollata al sensore è posta nella parte alta ed è organizzata secondo una matrice di 192 $\times$ 400 pixel di area 50 $\mu$m $\times$ 50 $\mu$m.
+Facendo riferimento alla figura \ref{RD53ALayout}, l'area del chip che sarà saldata col sensore è posta nella parte alta ed è organizzata secondo una matrice di 192 $\times$ 400 pixel di area 50 $\mu$m $\times$ 50 $\mu$m.
 Al di sopra di questa è presente una fila di \textit{pad} utilizzate per \textit{debug}, che sarà eliminata nella versione finale.
 La parte di circuito necessaria per configurare, monitorare e leggere il chip, invece, si trova nella parte in basso con posta al di sotto solo una fila di pad per i \textit{wire-bond}. 
 La matrice di pixel è organizzata in \textit{cores} di 8 $\times$ 8 pixel, all'interno di ciascuno dei quali i 64 front end sono disposti in gruppi di 4, chiamati isole analogiche, come mostrato in figura \ref{AnalogIsland}. 
@@ -236,18 +236,24 @@ L'utilizzo dell'alimentazione diretta è delicato per varie ragioni, fra cui il 
 La presenza del regolatore LDO, anche privo di shunt, assicura che sbalzi di tensione all'ingresso dell'alimentazione non siano trasmessi al chipi ed, inoltre, il regolatore può sopportare tensioni fino a 2 V, mentre il chip già sopra 1.32 V rischia di danneggiarsi. L'esclusione di questa sicurezza con la scelta di utilizzare un'alimentazione diretta è, perciò, sconsigliata. 
 \end{itemize}
 
-% RIPARTIRE DA QUA
 \section{Misure Statiche con RD53A}
 
-Utilizzando il chip in configurazione ShuntLDO, raffreddato in modo passivo con un radiatore messo a contatto termico con il retro del chip, si è proceduto ad una caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip\footnote{Uno per la parte analogica ed uno per quella digitale.}. 
-Nel far questo sono state scelte diverse configurazioni, le scelte principali possono essere riassunte in tre punti:
+Utilizzando il chip in configurazione ShuntLDO, raffreddato in modo passivo con un radiatore a contatto termico con il retro, si è proceduto alla caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip
+\footnote{
+  Uno per la parte analogica ed uno per quella digitale.
+}.
+Questa caratterizzazione è stata effettuata con diverse configurazioni, che possono essere riassunte nella scelta dei seguenti tre punti:
+%Nel far questo sono state scelte diverse configurazioni, le scelte principali possono essere riassunte in tre punti:
 \begin{itemize}
-\item Tenere i due regolatori con SLDO in parallelo o con alimentazione indipendenti.
-\item Variare la corrente partendo da 0 A incrementandola via via o partendo da 1.5 A andando poi a decrescere.
-\item Utilizzare $\mathrm{V_{ref}}$ e $\mathrm{V_{iofs}}$ generati internamente o fornirli esternamente.
+  \item Alimentazione dei due regolatori con SLDO: indipendenti o in parallelo fra loro.
+  \item Rampa di corrente: crescente o decrescente.
+  \item Tensioni di riferimento $\mathrm{V_{ref}}$ e $\mathrm{V_{iofs}}$: generate internamente o fornite dall'esterno.
+%\item Tenere i due regolatori con SLDO in parallelo o con alimentazione indipendenti.
+%\item Variare la corrente partendo da 0 A incrementandola via via o partendo da 1.5 A andando poi a decrescere.
+%\item Utilizzare $\mathrm{V_{ref}}$ e $\mathrm{V_{iofs}}$ generati internamente o fornirli esternamente.
 \end{itemize}
 
-Di seguito è riportata una descrizione delle abbreviazioni utilizzate per le legende dei grafici:
+Nella seguente tabella è riportata la descrizione delle abbreviazioni utilizzate per le legende dei grafici:
 
 \begin{center}
 %\noindent\setlength\tabcolsep{4pt}%
@@ -264,28 +270,35 @@ $\mathrm{V_{ref \_ m \_ A}}$ & $\mathrm{V_{ref \_ m \_ D}}$ & Tensione riferimen
 \end{center}
 
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, tensioni di riferimento interne}
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUI2}
 \caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 0 A a 1.5 A.}%allungare descrivendo anche l'undershoot
 \label{IUI}
 \end{figure}
-Le prime misure sono state eseguite utilizzando come riferimento per $\mathrm{V_{out}}$ e $\mathrm{V_{iofs}}$ le tensioni generate internamente al chip. Le misure per i due SLDO, che sono stati tenuti indipendenti, sono state eseguite a livelli di corrente crescenti, partendo da 0 A fino ad arrivare a 1.5 A a passi di 10 mA\footnote{L'incremento di corrente è in contemporanea per i due SLDO.}. 
-L'andamento ottenuto è quello riportato in figura \ref{IUI}. L'undershoot ben visibile sulla tensione in ingresso e in uscita della parte analogica è causato da una distribuzione non uguale delle correnti nei due SLDO. 
-Quando si attiva la parte digitale si ha un picco di assorbimento di corrente, che causa un drop nella parte analogica:
+Le prime misure sono state eseguite utilizzando, come riferimento per $\mathrm{V_{out}}$ e $\mathrm{V_{iofs}}$, le tensioni generate internamente al chip.
+La corrente fornita ai due SLDO, alimentati indipendentemente, è stata variata, contemporaneamente, da 0 A a 1.5 A, a passi di 10 mA.
+L'andamento ottenuto è quello riportato in figura \ref{IUI}.
+
+L'undershoot ben visibile sulla tensione, in ingresso e in uscita, della parte analogica è causato da una distribuzione non uguale delle correnti nei due SLDO: quando si attiva la parte digitale si ha un picco di assorbimento di corrente, che causa un drop nella parte analogica, la cui entità è descritta dalla seguente tabella:
 \begin{center}
 \begin{tabular}{ccc }
 \hline
 $\Delta \mathrm{V_{INA}}$ & $\Delta \mathrm{V_{DDA}}$ &$\Delta \mathrm{V_{DDA}}$  \\ \hline
-$\sim$0.150 A & $\sim$ 0.030 A& $\sim$0.060 A\\ \hline     
+$\sim$0.150 V & $\sim$ 0.030 V& $\sim$0.060 V\\ \hline     
 \end{tabular}
 \end{center}
+Questo fenomeno è stato osservato nonostante la configurazione sia tale da avere i due SLDO, per la parte digitale e analogica, alimentati separatamente, segno che, all'interno del chip, sono presenti delle zone di ``dialogo'' fra i due: un po' di corrente scorre attraverso le connessioni tra le due regioni, causando la caduta di tensione della parte analogica osservata.
+%Questo avviene nonostante le alimentazioni dei due SLDO siano separate, in quanto all'interno del chip ci sono zone di 'dialogo' tra regione analogica e digitale. 
+%Si ha scorrimento di corrente attraverso connessioni tra le due regioni che causano cadute di tensioni nella parte analogica, questo comportamento è pericoloso e va evitato. 
+Questo comportamento è pericoloso e va evitato.
 
-Questo avviene nonostante le alimentazioni dei due SLDO siano separate, in quanto all'interno del chip ci sono zone di 'dialogo' tra regione analogica e digitale. 
-Si ha scorrimento di corrente attraverso connessioni tra le due regioni che causano cadute di tensioni nella parte analogica, questo comportamento è pericoloso e va evitato. 
-La parte digitale si attiva a un valore di $\mathrm{I_{in}}$ di 0.56 A, non riuscendo però ad andare a regime, anche perché la tensione in ingresso non è abbastanza alta da consentire un corretto funzionamento.
-Questo è dovuto al ritardo con cui il $\mathrm{V_{iofs}}$ digitale arriva al valore corretto. Come introdotto in precedenza la tensione di riferimento dell'offset è ottenuta dalla caduta di tensione su una resistenza, nel nostro caso di $\sim$250 k$\Omega$, data dal passaggio di una corrente di 2 $\mu$A. Se per vari motivi il circuito che genera questa corrente ha un ritardo nell'accensione questo si ripercuote nell'accensione del chip.  
-Tutti questi problemi sono effettivamente legati all'accensione, e quindi dovranno scomparire nel momento in cui lo scan sia eseguito partendo da valori alti di corrente per poi scendere fino a 0 A.
+Inoltre, sempre dalla figura \ref{IUI}, si può notare che la parte digitale si attiva a un valore di $\mathrm{I_{in}}$ di 0.56 A, non riuscendo però ad andare a regime, poiché la tensione in ingresso non è abbastanza alta da consentire un corretto funzionamento.
+Questo è dovuto al ritardo con cui il $\mathrm{V_{iofs}}$ digitale arriva al valore corretto.
+Infatti, come introdotto in precedenza, la tensione di riferimento dell'offset è ottenuta dalla caduta di tensione su una resistenza, nel nostro caso di $\sim$250 k$\Omega$, data dal passaggio di una corrente di 2 $\mu$A.
+Se, per vari motivi, il circuito che genera questa corrente ha un ritardo nell'accensione, questo si ripercuote nell'accensione del chip.  
+Tutti questi problemi sono legati all'accensione e, quindi, dovranno scomparire con uno scan eseguito partendo da valori alti di corrente per poi scendere fino a 0 A.
 
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
@@ -315,7 +328,9 @@ Tutti questi problemi sono effettivamente legati all'accensione, e quindi dovran
 %$\mathrm{V_{ofs}}$ & 0.845 V & 0.900 V\\ \hline
 %\end{tabular}
 %\end{center}
+
 \subsubsection{Alimentazioni indipendenti, rampa di corrente decrescente, tensioni di riferimento interne}
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/IDI2}
@@ -323,11 +338,13 @@ Tutti questi problemi sono effettivamente legati all'accensione, e quindi dovran
 \label{IDI}
 \end{figure}
 
-Una seconda serie di misure, il cui andamento è riportato in figura \ref{IDI}, è stata ottenuta partendo da una corrente in ingresso di 1.5 A e diminuendola fino a 0 A. 
-Dal grafico si può notare come gli undershoot presenti nella precedente scansione non siano più visibili, questo è in accordo con la giustificazione data, cioè che siano dovuti all'attivazione del chip, che in questa fase ha consumi più elevati. 
-Una volta che il chip ha raggiunto la configurazione di default, i consumi sono di circa 50 mA per la parte digitale e 400 mA per quella analogica. Questo fin tanto che il chip non riceve un segnale di clock esterno. 
-Questa differenza in consumi di corrente tra parte analogica e digitale si riflette nel fatto che, diminuendo ulteriormente la corrente, la prima regione a mostrare problemi è quella analogica, mentre la parte digitale riesce a rimanere attiva anche con correnti inferiori a 200 mA. 
-Inoltre, partendo da valori di corrente elevati, e quindi tensioni in ingresso ben al di sopra di quelle minime, non si hanno neppure problemi dovuti a differenti istanti di accensione di parte analogica e digitale.
+La seconda serie di misure, il cui andamento è riportato in figura \ref{IDI}, è stata ottenuta con la stessa configurazione del caso precedente, ma con rampa di corrente decrescente fra 1.5 A e 0A.
+Dal grafico si può notare come gli undershoot, presenti nella precedente scansione, non siano più visibili, in accordo con la giustificazione data, cioè che siano dovuti all'attivazione del chip, che richiede consumi più elevati. 
+Una volta che il chip ha raggiunto la configurazione di default, e finché non riceve un segnale di clock esterno, i consumi sono di circa 50 mA, per la parte digitale, e 400 mA, per quella analogica.
+%Questo fin tanto che il chip non riceve un segnale di clock esterno. 
+Questa differenza in consumi di corrente, tra parte analogica e digitale, si riflette nel fatto che, diminuendo ulteriormente la corrente, la prima regione a mostrare problemi è quella analogica, mostrando un primo flesso poco i sotto 400 mA e spegnendosi a 200 mA.
+La parte digitale, invece, riesce a rimanere attiva anche con correnti inferiori a 200 mA. 
+Inoltre, partendo da valori di corrente elevati, e quindi tensioni in ingresso ben al di sopra di quelle minime, non si osservano neppure i problemi dovuti ai differenti istanti di accensione di parte analogica e digitale.
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
 %\hline
@@ -341,16 +358,19 @@ Inoltre, partendo da valori di corrente elevati, e quindi tensioni in ingresso b
 %\end{tabular}
 %\end{center}
 
-Continuando a tenere i due circuiti di alimentazione separati è interessante vedere cosa cambia andando a fornire esternamente le varie tensioni di riferimento.
+Continuando a tenere i due circuiti di alimentazione separati è interessante studiare il comportamento ottenuto fornendo esternamente le varie tensioni di riferimento.
 
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, $\mathrm{V_{ref}}$ esterna} 
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUEVref2}
 \caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 0 A a 1.5 A, utilizzando un riferimento esterno per $\mathrm{V_{ref}}=0.550 \V$.}
 \label{IUEVref}
 \end{figure}
-Il grafico riportato in figura \ref{IUEVref} è ottenuto fornendo esternamente  $\mathrm{V_{ref}}=0.550 \V$  sia per la parte analogica che quella digitale. Il comportamento della parte digitale è pressoché analogo a quello ottenuto nel primo grafico \ref{IUI}, mentre per la parte analogica si vede come fornendo $\mathrm{V_{ref}}$ esternamente, non si ha un suo undershoot e dunque non lo si ha nemmeno su $\mathrm{V_{DDA}}$, che però risente ancora del comportamento della parte digitale. Fino a che $\mathrm{V_{iofs\_ m \_ D}}$ non arriva al valore corretto non si ha una situazione stabile (...da riscrivere....).
+Il grafico riportato in figura \ref{IUEVref} è ottenuto fornendo esternamente  $\mathrm{V_{ref}}=0.550 \V$,  sia per la parte analogica che per quella digitale.
+Il comportamento della parte digitale è analogo a quello ottenuto nel primo grafico di figura \ref{IUI}, mentre, per la parte analogica, non si ha l'undershoot osservato in precedenza per $\mathrm{V_{INA}}$ e, dunque, nemmeno per $\mathrm{V_{DDA}}$.
+Quest'ultima tensione, però, risente ancora del comportamento della parte digitale: fintantoché $\mathrm{V_{iofs\_ m \_ D}}$ non arriva al valore corretto $\mathrm{V_{DDA}}$ non si stabilizza.
 
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
@@ -366,15 +386,16 @@ Il grafico riportato in figura \ref{IUEVref} è ottenuto fornendo esternamente  
 %\end{center}
 
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, $\mathrm{V_{iofs}}$ esterna} 
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUEViofs2}
 \caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 0 A a 1.5 A, utilizzando un riferimento esterno per $\mathrm{V_{iofset}}=0.400 \V$.}
 \label{IUEViofs}
 \end{figure}
-Le stesse misure sono state ripetute fornendo esternamente il solo $\mathrm{V_{iofset}}=0.400 \V$ e quindi utilizzando per $\mathrm{V_{ref}}$ quello interno, sempre tenendo le alimentazioni dei due SLDO indipendenti. 
-In questo caso gli andamenti ottenuti sono decisamente migliori e sono riportati in figura \ref{IUEViofs}. 
-Il $\mathrm{V_{iofset}}$ esterno permette di evitare problemi visti in precedenza, quali un differente valore di $\mathrm{I_{in}}$ di attivazione tra parte analogica e digitale, questo perché l'offset è al valore di riferimento giusto sin dall'inizio.
+Le stesse misure sono state ripetute fornendo esternamente il solo $\mathrm{V_{iofset}}=0.400 \V$, utilizzando per $\mathrm{V_{ref}}$ quello interno e tenendo le alimentazioni dei due SLDO indipendenti. 
+In questo caso gli andamenti ottenuti sono decisamente migliori come si vede in figura \ref{IUEViofs}. 
+Infatti, il $\mathrm{V_{iofset}}$ esterno permette di evitare i problemi riscontrati in precedenza, quali il differente valore di attivazione di $\mathrm{I_{in}}$ tra parte analogica e digitale, poiché l'offset è al valore di riferimento giusto sin dall'inizio.
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
 %\hline
@@ -409,16 +430,17 @@ Il $\mathrm{V_{iofset}}$ esterno permette di evitare problemi visti in precedenz
 %\end{center}  
 
 \subsubsection{Alimentazione in parallelo, rampa di corrente crescente, tensioni di riferimento interne} 
+
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Immagini/PUI}
 \caption{Grafico corrente-tensione ottenuto con i due regolatori in parallelo e variando la corrente da 0 A a 3.0 A, sull'asse x è riportata la corrente totale che poi si suddivide tra i due regolatori.}
 \label{PUI}
 \end{figure}
-Come detto in precedenza in RD53A è stata lasciata la possibilità di tenere separate le alimentazioni dei due SLDO, nella versione finale i due SLDO si troveranno in parallelo. 
-In questa configurazione gli andamenti delle tensioni in ingresso (VINA VIND) e di quelle in uscita (VDDD e VDDA) risultano migliori, nonostante gli offset di parte analogica e digitale si attivino in momenti diversi. 
-Gli andamenti sono riportati in figura \ref{PUI}. Il comportamento migliore può essere attribuito all'utilizzo dell'alimentazione in parallelo dei due SLDO, in questo modo la corrente a disposizione si può suddividere in modo non uguale, fatto che effettivamente accade. 
-Lo sbilanciamento nella ripartizioni delle correnti ha inizio quando si 'attiva' $\mathrm{V_{iofs}}$ analogico e termina quando anche $\mathrm{V_{iofs}}$  digitale sale, questo è visibile in modo esplicito in figura \ref{CurrentSharing}.
+Come detto in precedenza, in RD53A, è stata lasciata la possibilità di tenere separate le alimentazioni dei due SLDO, mentre nella versione finale i due SLDO si troveranno in parallelo. 
+In questa configurazione gli andamenti delle tensioni in ingresso (VINA e VIND) e di quelle in uscita (VDDD e VDDA) risultano migliori, nonostante gli offset di parte analogica e digitale si attivino in momenti diversi, come si può vedere in figura \ref{PUI}.
+Questo miglioramento nel comportamento può essere attribuito all'utilizzo dell'alimentazione in parallelo dei due SLDO, poiché la corrente a disposizione si può suddividere in modo non uguale, come effettivamente accade. 
+Lo sbilanciamento nella ripartizioni delle correnti ha inizio quando si 'attiva' $\mathrm{V_{iofs}}$ analogico e termina quando anche $\mathrm{V_{iofs}}$  digitale sale, come esplicitamente mostrato in figura \ref{CurrentSharing}.
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
 %\hline
@@ -437,16 +459,21 @@ Lo sbilanciamento nella ripartizioni delle correnti ha inizio quando si 'attiva'
 \caption{Misura della suddivisione della corrente tra i due regolatori posti in parallelo, sulle x è riportata la corrente totale fornita al parallelo.}%meeting del 16 aprile
 \label{CurrentSharing}
 \end{figure}
-Questo comportamento è stato osservato anche in altri test e riportato in letteratura\cite{SLDO}. 
-Si ha sbilanciamento delle correnti quando  la tensione di uscita di uno dei due regolatori raggiunge la tensione di riferimento, mentre l'altro è ancora al di sotto del livello di riferimento. 
-Nel momento in cui i due regolatori riescono ad arrivare ad un regime stabile, completando la fase di accensione, la distribuzione delle correnti torna ad essere bilanciata. 
-Questo comportamento è noto e compreso, il meccanismo che la innesca risiede nell'offset dell'amplificatore A2, che è utilizzato nel \textit{current mirror}. 
-Questo offset porta ad un differente $\mathrm{V_{DS}}$ tra i transistor M1 e M2 che va ad influenzare il rapporto k nella regione lineare. Dunque fin tanto che in uno dei due regolatori la tensione di uscita è minore di quella di riferimento si ha uno sbilaciamento delle correnti. 
-Quando viene raggiunto il livello di riferimento M1 e M2 saturano e l'effetto del'offset svanisce.
+Il comportamento descritto è stato osservato anche in altri test e riportato in letteratura\cite{SLDO}. 
+Lo sbilanciamento delle correnti avviene quando la tensione di uscita di uno dei due regolatori raggiunge la tensione di riferimento, mentre l'altro è ancora al di sotto del livello di riferimento. 
+Nel momento in cui i due regolatori raggiungono un regime stabile, completando la fase di accensione, la distribuzione delle correnti torna ad essere bilanciata. 
+Questo comportamento è noto e compreso: il meccanismo che lo innesca risiede nell'offset dell'amplificatore A2, utilizzato nel \textit{current mirror}. 
+L'offset, infatti, implica un differente $\mathrm{V_{DS}}$ tra i transistor M1 e M2 influenzando il rapporto k nella regione lineare.
+Dunque, fintantoché in uno dei due regolatori la tensione di uscita è minore di quella di riferimento, si ha uno sbilaciamento delle correnti. 
+Quando viene raggiunto il livello di riferimento, M1 e M2 saturano e l'effetto dell'offset svanisce.
 
 Questo problema, che si verifica durante l'accensione, può essere mitigato utilizzando particolari architetture con basso offset per l'amplificatore A2.
 
-Da ognuna di queste configurazioni sono stati ricavati, per la regione in cui il regolatore è attivo, offset e pendenza della curva caratteristica. Idealmente ci aspettiamo che la pendenza sia confrontabile con R3 e l'offset con il doppio di $\mathrm{V_{iofs}}$. A questo proposito ricordiamo che per quanto riguarda i valori di default: 
+\subsubsection{Confronti fra le varie configurazioni}
+
+Da ciascuna delle configurazioni, descritte nei paragrafi precedenti, sono stati ricavati, per la regione in cui il regolatore è attivo, offset e pendenza della curva caratteristica.
+Idealmente ci aspettiamo che la pendenza sia confrontabile con R3 e l'offset con il doppio di $\mathrm{V_{iofs}}$.
+A questo proposito ricordiamo che, per quanto riguarda i valori di default: 
 \begin{center}
 \begin{tabular}{lc}
 \hline
@@ -456,11 +483,11 @@ $\mathrm{V_{iofs}}$ & 0.500 V\\
 \end{tabular}
 \end{center}
 
-In tabella \ref{table:results} sono riportati i valori di offset e pendenza dell'andamento caratteristico delle tensioni in ingresso per ciascuna configurazione. Riguardo la configurazione è specificato se i due regolatori sono alimentati in parallelo o indipendentemente, se la corrente è stata fatta variare in modo crescente o decrescente e se le tensioni di riferimento per offset e per VDDD e VDDA sono prese internamente o fornite esternamente.
+In tabella \ref{table:results} sono riportati i valori di offset e pendenza dell'andamento caratteristico delle tensioni in ingresso per ciascuna configurazione.
+Riguardo la configurazione è specificato se i due regolatori sono alimentati in parallelo o indipendentemente, se la corrente è stata fatta variare in modo crescente o decrescente e se le tensioni di riferimento per offset e per VDDD e VDDA sono prese internamente o fornite esternamente.
 
 \begin{center}
 \begin{table}
-
 \begin{tabular}{|l|c|c|c|c|c|c|c|c|}
 \hline
 Regolatore & Alim. & Rampa & \multicolumn{2}{c|}{Vref [V]} & \multicolumn{2}{c|}{Voffset [V]} & Slope [$\Omega$] & Offset [V]\\ \hline
@@ -484,7 +511,11 @@ Digitale  &  &  & Int. & - & Int. & - & 0.74  & 0.86 \\ \hline
 \label{table:results}
 \end{table}
 \end{center}
-La prima cosa che si può notare è che i valori variano da una configurazione all'altra, mentre mantenendo per una stessa configurazione rimangono pressochè uguali, infatti i risultati sono stati ottenuti mediando su più misure. Gli errori statistici relativi al fit lineare fatto per ottenere Offset e Pendenza risultano trascurabili in confronto alla fluttuazioni date da l'utilizzo di una diversa configurazione e da possibili variazioni di temperatura nel tempo. 
+
+I risultati mostrati sono stati ottenuti mediando le varie misure effettuate con la stessa configurazione.
+Queste risultano stabili all'interno di ciascun gruppo (variazioni inferiori ai 3 mV, tipicamente di 1 mV), mentre i valori medi, sia di R3 che di $\mathrm{V_{iofs}}$, variano fra una configurazione e l'altra.
+%La prima cosa che si può notare è che i valori variano da una configurazione all'altra, mentre mantenendo per una stessa configurazione rimangono pressochè uguali, infatti i risultati sono stati ottenuti mediando su più misure.
+Gli errori statistici relativi al fit lineare, da cui si ottengono Offset e Pendenza, sono trascurabili in confronto alle fluttuazioni date sia dall'utilizzo di una diversa configurazione, sia dalle possibili variazioni di temperatura nel tempo. 
 
 \begin{figure}
 \centering
@@ -493,39 +524,41 @@ La prima cosa che si può notare è che i valori variano da una configurazione a
 \label{R3Karagounis}
 \end{figure}
 
-In secondo luogo, dal confronto con i valori aspettati risulta evidente che la pendenza della retta caretteristica dello SLDO è sistematicamente maggiore, viceversa l'offset è sistematicamente minore. 
-Questo comportamento è stato osservato anche in altri test eseguiti su chip da altri membri all'interno della collaborazione, in particolare sono stati eseguiti test su questo aspetto in modo più approfondito, al fine di comprenderne le cause. 
-In figura \ref{R3Karagounis} è riportato l'andamento della pendenza e dell'offset al variare della resistenza R3\footnote{\`E stata utilizzata una resistenza esterna regolabile.}, per interpretare correttamente il grafico ricordiamo che, data la presenza nel circuito di un current-mirror con rapporto k = 1000, la pendenza della retta relativa a VIN nel grafico corrente-tensione sarà $\mathrm{\dfrac{R3}{k}}$. 
-Dal fit lineare risulta che la relazione tra la resistenza esterna e la pendenza è $0.001x + 0.1963$, ciò evidenzia che effettivamente k è 1000, ma vi è una qualche resistenza spuria in serie del valore di circa 0.2 $\Omega$, questo valore può variare da chip a chip. 
-Ciò conferma il risultato ottenuto e giustifica la pendenza maggiore di quella aspettata. 
-Per quanto riguarda l'offset una sua sottostima è di più difficile interpretazione. In parte è fisiologica e dovuta alla differenza tra terra del chip e terra dello shunt?!, 
+Dal confronto con i valori aspettati, inoltre, risulta evidente che la pendenza della retta caretteristica dello SLDO è sistematicamente maggiore e, viceversa, l'offset è sistematicamente minore. 
+Questo comportamento è stato osservato anche in altri test eseguiti su chip da altri membri all'interno della collaborazione.
+In particolare sono stati eseguiti test specifici al fine di comprenderne le cause. 
+In figura \ref{R3Karagounis} è riportato l'andamento della pendenza e dell'offset al variare della resistenza R3
+\footnote{
+  \`E stata utilizzata una resistenza esterna regolabile.
+}.
+Per interpretare correttamente il grafico ricordiamo che, data la presenza nel circuito di un current-mirror con rapporto k = 1000, la pendenza della retta relativa a VIN nel grafico corrente-tensione sarà $\mathrm{\dfrac{R3}{k}}$. 
+Dal fit lineare risulta che la relazione tra la resistenza esterna e la pendenza è $0.001x + 0.1963$, quindi k è effettivamente 1000, ma vi è una qualche resistenza spuria, in serie, del valore di circa 0.2 $\Omega$, che può variare da chip a chip. 
+Questo test conferma il risultato ottenuto e giustifica la pendenza maggiore di quella aspettata. 
+Per quanto riguarda l'offset e la sua sottostima, il fenomeno è di più difficile interpretazione.
+In parte è dovuto alla differenza tra terra del chip e terra dello shunt?!.
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/OffsetKaragounis}
 \caption{Andamento di offset e pendenza al variare della tensione di offset.}%meeting del 13 aprile
 \label{OffsetKaragounis}
 \end{figure}
-Anche in questo caso attraverso ulteriori test è stato osservato l'andamento riportato in grafico \ref{OffsetKaragounis}. 
-L'offset non solo ha un andamento lineare il cui termine noto non è nullo, ma possiede anche un fattore moltiplicativo che è maggiore di quello aspettato (2). 
-Infine, vi è una relazione tra offset e pendenza, su questo ultimo aspetto sono tutt'ora in corso studi al fine di comprenderne la fonte ed eliminarla.
-
-
-
-
-
-
+Anche in questo caso sono stati compiuti test specifici riportati in figura \ref{OffsetKaragounis}. 
+A differenza di quanto osservato con R3, l'offset non solo ha un andamento lineare con termine noto non nullo, ma possiede anche un fattore moltiplicativo maggiore di quello aspettato, i.e. 2. 
+Infine, vi è una relazione tra offset e pendenza, su cui sono tutt'ora in corso studi per comprenderne le cause ed eliminarle.
 
 \subsection{Variazioni di carico}
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/LoadVDDD}
-\caption{Andamento della tensioe di alimentazione della parte analogica VDDA e digitale VDDD in funzione della corrente assorbita in più dal carico applicato allo SLDO digitale.}
+\caption{Andamento della tensione di alimentazione della parte analogica VDDA e digitale VDDD in funzione della corrente assorbita in più dal carico applicato allo SLDO digitale.}
 \label{LoadVDDD}
 \includegraphics[width=\textwidth]{Immagini/LoadVIND}
-\caption{Andamento della tensioe di ingresso del chip in funzione della corrente assorbita in più dal carico applicato allo SLDO digitale.}
+\caption{Andamento della tensione di ingresso del chip in funzione della corrente assorbita in più dal carico applicato allo SLDO digitale.}
 \label{LoadVIND}
 \end{figure}
-Per lo SLDO il carico è rappresentato dal chip, che fino a che si trova nella configurazione di default ha consumi di corrente tipici pari a 
+
+Per lo SLDO il carico è rappresentato dal chip, che fino a che si trova nella configurazione di default, ha consumi di corrente tipici pari a:
 \begin{center}
 \begin{tabular}{cc}
 \hline
@@ -533,31 +566,34 @@ Regione Analogica & Regione Digitale \\ \hline
 $\sim$0.400 A & $\sim$ 0.050 A\\ \hline     
 \end{tabular}
 \end{center}
-Le misure riportate di seguito sono ottenute andando a variare il carico che è applicato al VDDD/VDDA, questo è stato fatto andando a porre in parallelo al chip un Kitley utilizzato come sink di corrente. 
-Per quanto riguarda la configurazione del chip si è utilizzato lo SLDO con i due circuiti di alimentazione in parallelo. 
-Per queste misure la corrente in ingresso è stata fissata a 2 A, che dunque corrisponde ad 1 A per ciascuno dei due SLDO. 
-Dati i diversi consumi tra parte analogica e digitale, l'intervallo in cui è stato fatto variare il carico è stato scelto diversamente. Nel caso in cui il carico sia in parallelo alla parte digitale l'intervallo scelto è tra 0 A e 1 A, mentre nel caso analogico tra 0 A e 0.69 A. 
-Queste variazioni di carico non sono dinamiche, ma piuttosto vanno considerate come statiche. Infatti tensione di ingresso e di uscita vengono misurate ad ogni incremento del valore del carico, su tempi scala lunghi rispetto ai tempi di risposta del circuito di SLDO. 
-Gli andamenti riportati di seguito vanno interpretati come una deriva del valore della tensione prodotta dal regolatore in funzione dell'entità del carico. 
-Per primo sono riportati gli andamenti ottenuti con il carico applicato alla parte digitale, figura \ref{LoadVDDD}. 
-Come si può vedere in grafico \ref{LoadVDDD}, la tensione di alimentazione della regione digitale diminuisce gradualmente arrivando ad una variazione di $\sim$18 mV per un carico addizionale di 1 A, mentre la parte analogica non risente di queste variazioni, restando costante. %pendenza 18 mOhm(ogni 100 mA 1.8 mV
-L'andamento della tensione in ingresso, figura \ref{LoadVIND}, ha invece una caduta di $\sim$24 mV che però si concentra nella parte finale partendo circa per valori di carico di 0.940 A.
-Questo comportamento è plausibile se si considera che da sola la parte digitale consuma 50 mA e dunque la somma delle correnti assorbite tre chip e carico supera 1 A, che è quella a disposizione. 
+Le misure riportate di seguito sono ottenute al variare del carico che applicato al VDDD/VDDA, ponendo in parallelo al chip un alimentatore Keithley utilizzato come sink di corrente. 
+Come configurazione del chip si è utilizzato lo SLDO con i due circuiti di alimentazione in parallelo. 
+La corrente in ingresso è stata fissata a 2 A, corrispondenti ad 1 A per ciascun SLDO. 
+Dati i diversi consumi tra parte analogica e digitale, l'intervallo di variazione del carico è stato scelto diversamente per le due: tra 0 A e 1 Aper la parte digitale, tra 0 A e 0.69 A per l'analogica. 
+Queste variazioni di carico non sono dinamiche, ma vanno considerate come statiche, infatti le tensioni di ingresso e di uscita vengono misurate, ad ogni incremento del valore del carico, su tempi scala lunghi rispetto a quelli di risposta del circuito di SLDO. 
+Gli andamenti riportati di seguito vanno, quindi, interpretati come una deriva del valore della tensione prodotta dal regolatore in funzione dell'entità del carico. 
+In figura \ref{LoadVDDD} sono mostrati gli andamenti ottenuti con il carico applicato alla parte digitale.
+Come si può vedere, la tensione di alimentazione della regione digitale diminuisce gradualmente, arrivando ad una variazione di $\sim$18 mV per un carico addizionale di 1 A.
+La parte analogica, invece, non risente di queste variazioni e rimane costante. %pendenza 18 mOhm(ogni 100 mA 1.8 mV
+L'andamento della tensione in ingresso, figura \ref{LoadVIND}, ha invece una caduta di $\sim$24 mV che però si concentra nella parte finale partendo per valori di carico di circa 0.940 A.
+Questo comportamento è plausibile se si considera che, da sola, la parte digitale consuma 50 mA e, dunque, la somma delle correnti assorbite tra chip e carico supera  quella a disposizione di 1 A. 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/LoadVDDA}
-\caption{Andamento della tensioe di alimentazione della parte analogica VDDA e digitale VDDD in funzione della corrente assorbita in più dal carico applicato allo SLDO analogico.}
+\caption{Andamento della tensione di alimentazione della parte analogica VDDA e digitale VDDD in funzione della corrente assorbita in più dal carico applicato allo SLDO analogico.}
 \label{LoadVDDA}
 \includegraphics[width=\textwidth]{Immagini/LoadVINA}
-\caption{Andamento della tensioe di ingresso del chip in funzione della corrente assorbita in più dal carico applicato allo SLDO analogico.}
+\caption{Andamento della tensione di ingresso del chip in funzione della corrente assorbita in più dal carico applicato allo SLDO analogico.}
 \label{LoadVINA}
 \end{figure}
-Discorso analogo si può fare per quanto riguarda la parte analogica, in questo caso però i consumi minimi per il chip sono $\sim$400 mA. L'andamento della tensione prodotta dal regolatore è riportata in figura \ref{LoadVDDD}, mentre per quanto riguarda la tensione in ingresso il grafico di riferimento è \ref{LoadVINA}. 
-Per la tensione di uscita la caduta è di $\sim$15 mV per un carico di 0.690 A. %21mOhm
-La tensione in ingresso ha invece una diminuzione di $\sim$26 mV in corrispondenza di un carico di 0.690 A, va ricordato che il consumo totale di corrente in questo caso è al di sopra di 1 A. 
-La diminuzione di tensione per $\mathrm{V_{in}}$ ha inizio con un carico di $\sim$0.610 A.
+Un discorso analogo si può fare per la parte analogica, tenendo presente che i consumi minimi per il chip sono $\sim$400 mA.
+L'andamento della tensione prodotta dal regolatore è riportata in figura \ref{LoadVDDA}, mentre, per quanto riguarda quella in ingresso il grafico di riferimento è quello di figura \ref{LoadVINA}. 
+Per la tensione di uscita la caduta è di $\sim$15 mV per un carico di 0.690 A, %21mOhm
+per quella in ingresso si ha, invece, una diminuzione di $\sim$26 mV in corrispondenza di un carico di 0.690 A, anche in questo caso il consumo totale di corrente supera 1 A. 
+La diminuzione di tensione per $\mathrm{V_{in}}$ inizia con un carico di $\sim$0.610 A.
 
 \subsection{Fast ramp-up}
+
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/rd-powup-dir6}
@@ -571,17 +607,19 @@ La diminuzione di tensione per $\mathrm{V_{in}}$ ha inizio con un carico di $\si
 \caption{In giallo è riportata la corrente che in 25 ns passa da 0 A a 2.4 A, in fucsia la tensione in ingresso e in blu la tensione con cui è alimentata la parte analogica del chip VDDD.}
 \label{rd-powup-dir7}
 \end{figure}
-Le misure riportate fino ad ora, per quanto riguarda lo studio dei circuiti di SLDO in RD53A, sono da considerare statiche, in quanto sono ottenute su tempi scala lunghi in confronto al tempo di risposta dello SLDO. 
+
+Le misure riportate fino ad ora, sullo studio dei circuiti di SLDO in RD53A, sono da considerarsi statiche, in quanto sono ottenute su tempi scala lunghi in confronto a quello di risposta dello SLDO. 
 %Fino ad ora gli scan sono stati eseguiti lentamente, in confronto al tempo di risposta del circuito di alimentazione, infatti tra un valore di corrente ed il successivo vi è quasi un secondo.
-Inoltre, nel momento in cui il chip viene collegato ad un sistema di acquisizione dati, il consumo di regione analogica e digitale si modifica e in base alle operazioni richieste, si hanno perciò consumi variabili, che ci aspettiamo il circuito di SLDO sia in grado di gestire. 
-In particolare, una fase ancor più delicata da questo punto di vista è quella di accensione, poiché in quegli istanti le variazioni di corrente sono i maggiori. 
-Per queste ragioni si è proceduto ad eseguire scansioni in corrente passando da 0 A a 2.4 A in 25 ns con un incremento costante. 
-Anche in questo caso i due SLDO sono alimentati in parallelo, quindi si suddividono la corrente erogata dal generatore. 
-Come è possibile vedere dagli screenshoot ottenuti utilizzando l'oscilloscopio non sono presenti oscillazioni durante questa fase di accensione, figura \ref{rd-powup-dir6} e \ref{rd-powup-dir7}. 
-Come già visto in precedenza parte digitale e analogica non si attivano nello stesso momento, in particolare VDDD si attiva dopo, questo è in accordo con le misure precedenti.
+Inoltre, nel momento in cui il chip viene collegato ad un sistema di acquisizione dati, il consumo di regione, analogica e digitale, si modifica e, in base alle operazioni richieste, si hanno consumi variabili, che ci aspettiamo essee gestiti dal circuito di SLDO. 
+Una fase particolarmente delicata, da questo punto di vista, è quella di accensione, poiché le variazioni di corrente sono i maggiori. 
+Si è proceduto, quindi, ad eseguire scansioni in corrente passando da 0 A a 2.4 A in 25 ns con un incremento lineare. 
+Anche in questo caso i due SLDO sono alimentati in parallelo, suddividendosi, quindi, la corrente erogata dal generatore. 
+Come è possibile vedere dagli screenshoot dell'oscilloscopio, figure \ref{rd-powup-dir6} e \ref{rd-powup-dir7}, non sono presenti oscillazioni durante la fase di accensione.
+La parte digitale e analogica non si attivano nello stesso momento, in particolare VDDD si accende dopo, in accordo con le misure precedenti.
 
-
+% RIPARTIRE DA QUI
 \section{Sviluppi}
+
 Questi studi sull'alimentazione del chip si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due. In contemporanea a questi viene portato avanti lo sviluppo di sistemi di acquisizione dati in grado di dialogare con il chip e si stanno effettuando test sui tre \textit{front end} per studiarne la risposta sia prima che dopo processi di irraggiamento. 
 In questo situazione lo sviluppo del circuito di alimentazione ha importanti legami con lo sviluppo del resto del chip, come detto il chip ha due regioni alimentate separatamente, digitale e analogica, questa scelta è dettata anche dalla necessità di proteggere la parte analogica, più sensibile, dal rumore della parte digitale. Se l'alimentazione fosse comune il rumore della parte digitale del chip andrebbe ad intaccare la parte analogica che è molto sensibile da questo punto di vista. 
 Inoltre per operare una qualsiasi azione a livello di chip è necessario che lo stesso, una volta acceso, si trovi in una configurazione di default ben precisa, la corretta accensione è un problema legato al circuito di ShuntLDO, regione digitale e analogica devono attivarsi correttamente evitando oscillazioni durante il power-up e drop di tensione. 
