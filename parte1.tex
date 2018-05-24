@@ -100,7 +100,6 @@ Ad esempio si potrebbe avere un \textit{high power mode}, in cui la corrente all
 
 %La posibilità di modificare $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ apre alla possibilità di progettare un modo per avere diverse configurazioni, una di low-power mode e una high power mode. %Al fine di ridurre il consumo di potenza, la resistenza effettiva dello SLDO può avere un offset modificabile. 
 %(Low-power mode configuration, che cosa posso dire...).
-\FloatBarrier
 
 \subsection{Schema di catena di alimentazione con SLDO}
 
@@ -274,7 +273,6 @@ Questo ulteriore stadio inserisce un offset di tensione al comportamento resisti
 \begin{equation}
 \mathrm{I_{ref} = \frac{V_{in} - V_{ofs}}{R_3}}
 \end{equation}
-\FloatBarrier
 
 \subsection{PCB}
 
@@ -298,7 +296,6 @@ La PCB utilizzata è perciò leggermente differente da quella mostrata in figura
 L'unica differenza sostanziale è che, a differenza della PCB della versione a 2A, in questa non è possibile inserire un valore di offset regolabile al $\mathrm{V_{out}}$.
 Come primo studio abbiamo caratterizzato lo SLDO, utilizzando una alimentazione in corrente.
 Le misure effettuate sono servite ad esaminare l'andamento della tensione di $\mathrm{V_{in}}$, $\mathrm{V_{out}}$ e $\mathrm{V_{ref}}$ in funzione della corrente in ingresso.
-\FloatBarrier
 
 \subsection{Misure in assenza di carico}
 
@@ -329,7 +326,6 @@ V_{ref} & V_{out} & 2 \cdot V_{ref}- V_{out} & R_{eff} & V_{offset} \\
 
 %Come detto, in questa prima misura non è stato applicato nessun carico al $\mathrm{V_{out}}$, dunque tutta la corrente in ingresso scorre nello Shunt, andando a scaldare molto l'oggetto, questa misura ci aiuterà in un confronto successivo con situazioni in cui è presente un carico, sia statico che dinamico. 
 Questa misura in assenza di carico al $\mathrm{V_{out}}$, in cui tutta la corrente in ingresso scorre nello shunt scaldandolo significativamente, è di particolare interesse per i confronti con la configurazione in cui è presente un carico, sia esso statico o dinamico.
-\FloatBarrier
 
 \subsection{Misure di due SLDO in serie con carico da $\mathrm{4 \Omega}$}
 
@@ -350,7 +346,6 @@ In questo confronto va tenuto conto che il bandgap presente sulla PCB ha un regi
 %Si può notare dai grafici come finto a che la tensione di ingresso non supera circa 1 V il bandgap non riesce a generare il giusto livello di tensione $\mathrm{V_{ref}}$ e ciò ha come conseguenza un $\mathrm{V_{out}}$ non stabile. Si arriva ad una stabilità del $\mathrm{V_{out}}$, solo a tensioni in ingresso più elevate e dunque, con correnti maggiori.
 Dai grafici si può notare che se la tensione di ingresso è inferiore ad 1 V, il bandgap non è in grado di generare il giusto livello di tensione $\mathrm{V_{ref}}$, risultando in valori di $\mathrm{V_{out}}$ non stabili.
 La stabilità di $\mathrm{V_{out}}$ si può ottenere solo con tensioni in ingresso più elevate e, dunque, con correnti maggiori.
-\FloatBarrier
 
 %magari fare tabellino anche qui
 \subsection{Comportamento dinamico}
@@ -392,7 +387,6 @@ Lo stesso tipo di test può essere eseguito mettendo due SLDO in serie e verific
 Come abbiamo già detto, un'importante differenza fra la prima versione, con carico massimo da 0.5 A, e la versione da 2 A è la possibilità di modificare l'offset attraverso un potenziometro. In questo modo si può regolare la tensione in uscita generata dal bandgap, la quale può essere usata come $\mathrm{V_{ref}}$ per un secondo potenziometro.
 
 In questa sezione descriveremo i test effettuati per la caratterizzazione dello ShuntLDO, studiando sia il comportamento con carico statico che dinamico.
-\FloatBarrier
 
 \subsection{Comportamento statico}
 
@@ -495,7 +489,6 @@ Ad esempio ad 1 A con il carico resistivo da 4 $\Omega$, la corrente che effetti
 
 Il valore della resistenza equivalente è molto piccolo e, come detto, dipende in prima approssimazione dal numero di \textit{wire bond}.
 Fintantoché lo ShuntLDO è utilizzato come circuito a se stante su una PCB di test, dato che non ci sono problemi di spazio, è possibile utilizzare un gran numero di connessioni per ridurre al minimo differenze tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$, in modo da rendere trascurabile il fenomeno.
-\FloatBarrier
 
 \subsection{Offset}
 
@@ -614,7 +607,6 @@ In alto a destra, in azzurro, è riportata la differenza tra le tensioni misurat
 Inoltre sono visibili delle oscillazioni in corrispondenza dell'istante in cui il mosfet si spegne smettendo di assorbire corrente.
 Questo comportamento si riflette su $\mathrm{V_{out}}$ ed è quindi all'origine dell'asimmetria.
 Prima di procedere alle misure della risposta dinamica nelle varie combinazioni $\mathrm{I_{mosfet}}$-$\mathrm{R_{load}}$ questo aspetto è stato approfondito, al fine di capirne l'origine, probabilmente un contributo del mosfet non trascurabile.
-\FloatBarrier
 L'impulso utilizzato in questa prima fase ha:
 \begin{itemize}
   \item frequenza di 50Hz;
@@ -736,7 +728,6 @@ Si nota che le scale di tempo di recupero sono differenti, i.e. alcuni $\mu$s pe
 %\caption{Differenze nei tempi di recupero tra $\mathrm{V_{out}}$, in giallo, e $\mathrm{V_{out}}$, in arancione.}
 %\label{DipVoutVin}
 %\end{figure}
-\FloatBarrier
 
 \subsubsection{Serie di due SLDO}
 
