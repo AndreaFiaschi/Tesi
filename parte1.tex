@@ -16,7 +16,7 @@ A differenza del sistema di alimentazione parallelo attuale, in cui tutti i modu
   La differenza di potenziale è la stessa per ciascun modulo, ma il riferimento di potenziale cambia per ciascuno di questi.
 }.
 Dato che la corrente viene ``riutilizzata'' in ciascun modulo, il generatore deve fornire correnti minori, rispetto a quelle di un sistema di alimentazione parallelo.
-Per questo motivo le perdite di potenza nei cavi sono ridotte ed è quindi posibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
+Per questo motivo le perdite di potenza nei cavi sono ridotte ed è quindi possibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
 %Questo significa che in ogni elemento scorre la medesima corrente, ma l'intervallo di tensione in cui viene a trovarsi è differente per ciascuno di essi. Fino ad ora il metodo di alimentazione utilizzato era quelo parallelo, tutti i moduli si trovano ad un potenziale comune ma su rami separati, questo implica che nel cavo principale scorre una corrente pari alla somma di quella che passa in tutti i rami e dunque sarà necessario l'utilizzo di un cavo con sezione notevolmente maggiore a quello necessario in una alimentazione seriale.
 %Ciò dipende dal fatto che nel caso di alimentazione seriale la corrente sia riutilizzata n-volte riducendo così le perdite di potenza nei cavi, rispetto ad una alimentazione in parallelo, questo consente l'impiego di cavi più sottili riducendo così il materiale all'interno del tracciatore. 
 %Inoltre un'alimentazione seriale, rispetto ad una in parallelo, permette di ridurre la potenza dissipata a parità del numero di moduli alimentati.
@@ -36,9 +36,9 @@ dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singo
 
 Nella progettazione del sistema con alimentazione seriale è necessario tenere presente che la rottura di uno degli elementi della catena non deve compromettere il funzionamento degli altri e che il consumo di ciascun chip, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui si trova e dalle operazioni che sta eseguendo. 
 Il chip, infatti, è un carico dinamico e l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena.
-Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori di back-end non sono in grado di compensarle in modo rapido: questi saranno, infatti, posizionati lontano dall'esperimento e i cavi introdurrano un ritardo proporzionale alla lunghezza degli stessi.
+Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori di \textit{back-end} non sono in grado di compensarle in modo rapido: questi saranno, infatti, posizionati lontano dall'esperimento e i cavi introdurrano un ritardo proporzionale alla lunghezza degli stessi.
 Per ovviare a queste criticità si è deciso di implementare un regolatore con Shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, con caratteristiche di \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando $\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 V}$.}, da qui la sigla ShuntLDO.
-Con questo tipo di configurazione la corrente erogata dagli alimentatori di back-end deve essere maggiore o uguale a quella necessaria all'elemento con consumo più alto.
+Con questo tipo di configurazione la corrente erogata dagli alimentatori di \textit{back-end} deve essere maggiore o uguale a quella necessaria all'elemento con consumo più alto.
 %Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
 %Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
 %Il chip è dunque un carico dinamico e in qualsiasi momento l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena. 
@@ -66,7 +66,7 @@ La figura \ref{VVC} mostra l'andamento della tensione come funzione della corren
 \begin{figure}[!htbp]
 \centering
 \includegraphics[scale=.3]{Immagini/VoltageVsCurrent}
-\caption{Andamento tensione vs corrente del comportamento del chip. Le zone tratteggiate sono oltre i valori operativi massimi (4.0 A per la corrente e 2.0 V per la tensione), la linea orizzontale a 1.4 V è la tensione minima di lavoro, la pendenza è la resistenza efficace. Combinazioni differenti di resistenza e offset consentono di spostare il punto di lavoro.}
+\caption{Andamento della tensione in funzione della corrente per il chip. Le zone tratteggiate sono oltre i valori operativi massimi (4.0 A per la corrente e 2.0 V per la tensione), la linea orizzontale a 1.4 V è la tensione minima di lavoro, la pendenza è la resistenza efficace. Combinazioni differenti di resistenza e offset consentono di spostare il punto di lavoro.}
 \label{VVC}
 \end{figure}
 In particolare vengono mostrati i criteri di scelta per i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$: da una parte sarà necessario avere una corrispondenza fra la massima corrente erogabile (4.0 A, per il parallelo, il singolo SLDO ha una corrente massima di 2 A) e la massima tensione (2.0 V), dall'altra si dovrà avere che la corrente corrispondente alla tensione minima di lavoro ($1.4 \V$) sia sufficiente per il funzionamento del chip.
@@ -95,7 +95,7 @@ Una volta scelti i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$, il cons
 \end{equation}
 %una $R_{eff}$ minore consente di avere minor aumento di potenza all'aumentare della corrente. 
 %e dunque per un corretto funzionamento del chip è possibile utilizzare correnti minori, ovvero lasciando meno margine per le fluttuazioni, proprio perchè con $r_{eff}$ minore le fluttuazioni di corrente
-Accenniamo qui al fatto che la posibilità di modificare $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ permette di progettare diverse configurazioni di consumo in relazione alle necessità.
+Accenniamo qui al fatto che la possibilità di modificare $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ permette di progettare diverse configurazioni di consumo in relazione alle necessità.
 Ad esempio si potrebbe avere un \textit{high power mode}, in cui la corrente alla tensione minima di lavoro sia sufficiente a garantire il funzionamento dei chip accesi e funzionanti alle massime prestazioni, come potrebbe essere il caso della linea rossa in figura \ref{VVC}, e un \textit{low power mode} in cui la stessa sia minore poiché non si richiede il funzionamento ``completo'' dei chip, come ad esempio rappresentato dalla linea blu in Figura \ref{VVC}.
 
 %La posibilità di modificare $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ apre alla possibilità di progettare un modo per avere diverse configurazioni, una di low-power mode e una high power mode. %Al fine di ridurre il consumo di potenza, la resistenza effettiva dello SLDO può avere un offset modificabile. 
@@ -190,20 +190,33 @@ impostati.
 %Aver chiaro come il chip viene visto esternamente e quali siano i suoi consumi è importante per poter progettare al meglio il sistema di alimentazione seriale.
 %capitolo
 \section{Prova}
-Ricapitolando
-Rispetto ad uno schema di alimentazione parallelo o diretto, dove ogni modulo è alimentato separatamente (e quindi ha un set supo di cavi!!!!!), l'utilizzo di una alimentazione seriale permette una notevole riduzione dei costi e del numero di cavi necessari: per n moduli sono necessari solo due cavi ed un unico generatore. 
+\par \begin{center} !!! Prima parte già presente nell'introduzione !!! \end{center} \par
+Riassumendo quanto già detto rispetto ad uno schema di alimentazione parallelo o diretto, dove ogni modulo è alimentato separatamente (e quindi ha un suo set di cavi!!!!!), l'utilizzo di una alimentazione seriale permette una notevole riduzione dei costi e del numero di cavi necessari: per n moduli sono necessari solo due cavi ed un unico generatore. 
 Come detto in precedenza l'utilizzo di una configurazione seriale delle alimentazioni permette una riduzione significativa della corrente necessaria, dipendente dal numero di moduli in serie, e dunque della sezione dei cavi utilizzati e della potenza dissipata su di essi. 
-Oltre a ciò, l'alimentazione seriale ha altri benefici rispetto a sistemi di alimentazione basati sulla tensione!!!modifica. 
+Oltre a ciò, l'alimentazione seriale ha altri benefici rispetto a sistemi di alimentazione basati sulla tensione. 
 Prima di tutto la caduta di tensione sui cavi non è collegata direttamente alla differenza tra la tensione di lavoro del modulo e la tensione massima che può sopportare ,come invece è per una alimentazione diretta. Ciò permettere di trovare il giusto mezzo tra efficienza e materiale per ogni zona del rivelatore. 
-Inoltre, l'utilizzo dello SLDO consente di regolare la tensione in prossimità del carico, senza necessità di altri cavi per misure di tensione (sense line, non so come tradurrel'alimentazione è locale Point of Load), e di rispondere in modo più celere a cambiamenti del carico in corrente. 
-Infine la corrente che scorre nei moduli è costante non vi dovrebbero essere transienti in ingresso al regolatore. 
-Nell'alimentazione seriale la dissipazione di potenza dei moduli è in media più alta che in configurazioni di alimentazione diretta o parallela. 
-Questo maggiore consumo di potenza è però compensato dalla grande riduzione di potenza dissipata nei cavi. 
-D'altra parte, dal momento che i moduli sono connessi in serie, l'alimentazione seriale comporta deei rischi. 
-Un guasto sulla linea si ripercuote sull'intera catena. Moduli danneggiati o molto rumorosi potenzialmente possono peggiorare le prestazioni anche degli altri moduli presenti sulla catena. 
-Inoltre, i moduli non possono essere spenti/accesi individualmente, e per di più tutti i moduli hanno tensioni di riferimento differenti tra di loro e rispetto al sistema di lettura e al generatore. 
+Inoltre, l'utilizzo dello SLDO consente di regolare la tensione in prossimità del carico, senza necessità di altri cavi per misure delle tensioni locali (alimentazioni dirette), e di rispondere in modo più celere a cambiamenti del carico in corrente. La corrente che scorre nei moduli è costante e perciò non ci sono transienti in ingresso al regolatore. 
+D'altra parte nell'alimentazione seriale la dissipazione di potenza dei moduli è in media più alta che in configurazioni di alimentazione diretta o parallela. 
+Questo maggiore consumo di potenza è però compensato dalla notevole riduzione di quella dissipata nei cavi. 
 
-A livello dei singoli moduli si hanno più SLDO in parallelo, questo per  far si che nel caso un regolatore si guasti , la corrente possa essere assorbita da un altro regolatore all'interno del modulo.
+Inoltre, dal momento che i moduli sono connessi in serie, l'alimentazione seriale comporta dei rischi. 
+Un guasto sulla linea si ripercuote sull'intera catena, moduli danneggiati o molto rumorosi potenzialmente possono peggiorare le prestazioni anche degli altri moduli presenti sulla catena. 
+In una alimentazione seriale i moduli non possono essere spenti/accesi individualmente, e per di più tutti i moduli hanno tensioni di riferimento differenti tra di loro e rispetto al sistema di lettura e al generatore. 
+
+A livello dei singoli moduli si hanno più SLDO in parallelo, questo per far si che nel caso un regolatore si guasti , la corrente possa essere assorbita da un altro regolatore all'interno del modulo. 
+
+Come già detto in uno schema di alimentazione parallelo i regolatori devono essere in grado di lavorare in parallelo, generare differenti tensioni dalle correnti in ingresso e tenere costante il consumo di corrente tramite lo shunt.
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{Immagini/zener2}
+\caption{Schema di un circuito regolatore con shunt che utilizza un diodo zener.}
+\label{zener}
+\end{figure}
+I regolatori con shunt sono utilizzati per convertire la corrente in una tensione costante. Il principio di lavoro è simile ad un diodo zener contropolarizzato, figura \ref{zener}. 
+Il funzionamento è molto semplice, la corrente in ingresso fa una caduta di tensione sulla resistenza R  che deve essere in grado di portare il diodo zener in contropolarizzazione oltre la tensione di soglia, a questo punto sarà lo stesso diodo a mantenere la tensione ai capi del carico costante assorbendo tutta la corrente non necessaria al carico, agendo da shunt. 
+Questo schema però presenta problemi nel momento in cui si vuole mettere più elementi in parallelo, la soglia in cui ogni diodo zener andrà in \textit{break down} sarà leggermente diversa. 
+Questo fa si che, al momento in cui ho più elementi in parallelo, ci sia un diodo zener che va in \textit{break down} prima degli altri assorbendo tutta la corrente che dovrebbe distribuirsi nel parallelo rischiando di bruciare. 
+Da questo primo esempio, si può partire per la descrizione del circuito effettivamente utilizzato come shuntLDO. 
 %At module level, the current to voltage conversion should
 %be done using more than one regulator, and by connecting all regulators in parallel. In this
 %way, should one regulator fail, the current flow can still be assured by the other regulators on
@@ -371,7 +384,7 @@ Gli effetti visibili, nelle situazioni in cui $\mathrm{I_{mosfet} + I_{load} > I
   $\mathrm{I_{load}}$ è la corrente che scorre nel carico resistivo, in questo caso $\mathrm{I_{load} = \dfrac{V_{out}}{R} = 0.250 A}$.
 }. 
 
-Lo stesso tipo di test può essere eseguito mettendo due SLDO in serie e verificando, al variare del carico di uno, che l'altro elemento della catena seriale ne sia inluenzato o meno.
+Lo stesso tipo di test può essere eseguito mettendo due SLDO in serie e verificando, al variare del carico di uno, che l'altro elemento della catena seriale ne sia influenzato o meno.
 
 %ed andando a variare dinamicamente il carico di uno dei due, verificando se esternamente queste variazioni siano visibili, e quindi se influenzino l'altro elemento della catena seriale. 
 %Dal momento che l'interesse maggiore è per il prototipo a 2 A questo tipo di misura non è stato riportato nel caso dello SLDO da 0.5A, in quanto lo scopo di questa prima parte è quello di introdurre un certo tipo di approccio e  prendere confidenza con gli argomenti trattati.
@@ -436,7 +449,7 @@ Prima di procedere oltre è interessante fare alcune riflessioni.% per porre att
 Tutte le tensioni misurate, come per esempio il $\mathrm{V_{out}}$, sono prese da pin/connettori/piste sulla PCB.
 Questo vuol dire che, per esempio, quando viene misurato $\mathrm{V_{out}}$, la tensione letta sull'oscilloscopio o con i multimetri è la differenza di tensione tra il pin di $\mathrm{V_{out}}$ e la terra (GND) della PCB. 
 Dal momento che questi punti di misura sono collegati al $\mathrm{V_{out}}$ dello ShuntLDO attraverso \textit{wire bond}, si introduce una resistenza che causa una caduta di tensione. 
-L'entità di questa caduta di tensione dipende dalla resistenza dei \textit{wire bon}d e dalla corrente, quindi, nel caso di una caratterizzazione con carico statico, si presenta come un offset, mentre nel caso di carico dinamico, varia con la corrente. 
+L'entità di questa caduta di tensione dipende dalla resistenza dei \textit{wire bond} e dalla corrente, quindi, nel caso di una caratterizzazione con carico statico, si presenta come un offset, mentre nel caso di carico dinamico, varia con la corrente. 
 I \textit{wire bond} si presentano come tante resistenze in parallelo, perciò il valore della resistenza equivalente dipende dal numero di queste ultime: maggiore il numero minore il valore della resistenza equivalente e, perciò, minore l'effetto su $\mathrm{V_{out}}$.
 %Questo problema è riportato schematicamente in figura \ref{Ground}.
 
@@ -754,4 +767,4 @@ Il campionamento dei segnali mostrati, acquisiti con l'oscilloscopio, è stato o
 In verde è riportato l'andamento di $\mathrm{V_{out}}$ del secondo SLDO, che mostra importanti undershoot e overshoot, i quali, a loro volta e come visto in precedenza, causano come visto in precedenza, fluttuazioni della tensione in ingresso. 
 La tensione di ingresso dello SLDO2 corrisponde alla terra della PCB su cui si trova lo SLDO1.
 Le visibili fluttuazioni di questa, quindi, si ripercuotono su SLDO2.
-Nonnostante ciò, come risultato importante, si può notare che $\mathrm{V_{out}}$ del primo SLDO sia indipendente da queste.
+Nonostante ciò, come risultato importante, si può notare che $\mathrm{V_{out}}$ del primo SLDO sia indipendente da queste.
