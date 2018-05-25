@@ -1,24 +1,43 @@
-\documentclass[a4paper,12pt,italian]{report}
+\documentclass[a4paper,12pt,italian]{book}
 \usepackage[italian]{babel}
+\usepackage[section]{placeins}
 \usepackage[utf8]{inputenc}
+\usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{appendix}
 \usepackage{amscd}
-\usepackage{subfig}
+%\usepackage{subfig}
+\usepackage{subcaption}
 \usepackage{cite}
 \usepackage[autostyle,italian=guillemets]{csquotes}
 \usepackage{bm}
 %\usepackage{vmargin}
-\usepackage[Glenn]{fncychap}%Conny
+\usepackage[Glenn]{fncychap}%Conny GlennSonny
 \ChRuleWidth{0.5pt}
 \usepackage{braket}
 \usepackage{booktabs}
 \usepackage{afterpage}
 \usepackage{nicefrac}
 \usepackage{multirow}
+\usepackage{tabularx}
+
+\makeatletter%% CORREGGE L?ERRORE DATO DAL PACCHETTO fncychap
+\renewcommand\tableofcontents{%
+    \if@twocolumn
+      \@restonecoltrue\onecolumn
+    \else
+      \@restonecolfalse
+    \fi
+    \chapter*{\contentsname}%
+        \@mkboth{%
+           \MakeUppercase\contentsname}{\MakeUppercase\contentsname}%
+    \@starttoc{toc}%
+    \if@restonecol\twocolumn\fi
+    }
+\makeatother
 
 \DeclareMathOperator{\sen}{sin}
 \input{my_macros}
@@ -44,13 +63,15 @@
 \null
 \thispagestyle{empty}
 \clearpage
-
+\frontmatter
 \tableofcontents
 
+\mainmatter
 \include{Introduzione}
 \include{parte1}
 \include{parte2}
 \include{conclusioni}
+
 \include{biblio}
 
 
