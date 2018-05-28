@@ -1,4 +1,5 @@
 \chapter{Alimentazione seriale}
+\label{AlimentazioneSeriale}
 %L'alimentazione seriale dei moduli è il sistema scelto per l'alimentazione, in grado di rispettare i requisiti per il nuovo tracciatore a pixel di fase due. 
 \section{Introduzione}
 %Nel capitolo precedente si sono discussi i requisiti richiesti per il tracciatore di fase due: tolleranza agli alti livelli di radiazione, alta risoluzione, riduzione del materiale, etc...
@@ -336,7 +337,7 @@ V_{ref} & V_{out} & 2 \cdot V_{ref}- V_{out} & R_{eff} & V_{offset} \\
 Questa misura in assenza di carico al $\mathrm{V_{out}}$, in cui tutta la corrente in ingresso scorre nello shunt scaldandolo significativamente, è di particolare interesse per i confronti con la configurazione in cui è presente un carico, sia esso statico o dinamico.
 
 \subsection{Misure di due SLDO in serie con carico da $\mathrm{4 \Omega}$}
-
+\label{342}
 %La successiva misura di test che è stata eseguita con questo prototipo di shunt, prima del passaggio alla versione da 2A, è un serie di due SLDO entrambi con un carico resistivo di $\mathrm{4 \Omega}$. In questo caso i due elementi hanno $\mathrm{V_{ref}}$ diversi $\mathrm{V_{ref1}=0.497}$ V e $\mathrm{V_{ref2}=0.553 V}$. 
 %Ciò non rappresenta un problema in quanto il comportamento "esterno " non ne è influenzato.
 Sulla PCB è presente un bandgap la cui alimentazione può essere separata da quella dello SLDO. Il compito di questo bandgap è quello di generare la tensione di riferimento $\mathrm{V_{ref}}$, il cui valore può essere regolato con un potenziometro presente sulla PCB.
@@ -357,7 +358,7 @@ La stabilità di $\mathrm{V_{out}}$ si può ottenere solo con tensioni in ingres
 
 %magari fare tabellino anche qui
 \subsection{Comportamento dinamico}
-
+\label{343}
 \begin{figure}[!hbt]
 \centering
 \includegraphics[scale=.5]{Immagini/SLDO5singlepulse}
