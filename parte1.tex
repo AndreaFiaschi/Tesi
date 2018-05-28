@@ -1,5 +1,6 @@
 \chapter{Alimentazione seriale}
 \label{AlimentazioneSeriale}
+
 %L'alimentazione seriale dei moduli è il sistema scelto per l'alimentazione, in grado di rispettare i requisiti per il nuovo tracciatore a pixel di fase due. 
 \section{Introduzione}
 %Nel capitolo precedente si sono discussi i requisiti richiesti per il tracciatore di fase due: tolleranza agli alti livelli di radiazione, alta risoluzione, riduzione del materiale, etc...
@@ -10,46 +11,44 @@
 %Questi, infatti, non resisterebbero ai più alti livelli di radiazione della fase ad alta luminosità, nè sarebbero in grado di operare efficacemente in presenza del campo magnetico previsto.
 %Il nuovo sistema di alimentazione prevede una distribuzione seriale e sarà gestito, all'interno del chip, da circuiti dedicati prodotti in tecnologia CMOS a 65 nm.
 
-In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di moduli posti in successione. 
-A differenza del sistema di alimentazione parallelo, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale la corrente totale è la stessa per tutti i moduli ed è la tensione di lavoro a cambiare
-\footnote{
-  La differenza di potenziale è la stessa per ciascun modulo, ma il riferimento di potenziale cambia per ciascuno di questi.
-}.
+In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di carichi, nel nostro caso i moduli, posti in successione. A differenza del sistema di alimentazione parallelo, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale la corrente totale è la stessa per tutti i moduli ed è la tensione di lavoro a cambiare. Dato che i moduli, e quindi i carichi, sono tutti nominalmente uguali, la differenza di potenziale su ciascun elemento della catena è la stessa, ma il riferimento di potenziale cambia localmente.
 Dato che la corrente viene ``riutilizzata'' in ciascun modulo, il generatore deve fornire correnti minori, rispetto a quelle di un sistema di alimentazione parallelo.
-Per questo motivo le perdite di potenza nei cavi sono ridotte ed è quindi possibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
+Per questo motivo le dissipazioni nei cavi sono ridotte ed è quindi possibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
 %Questo significa che in ogni elemento scorre la medesima corrente, ma l'intervallo di tensione in cui viene a trovarsi è differente per ciascuno di essi. Fino ad ora il metodo di alimentazione utilizzato era quelo parallelo, tutti i moduli si trovano ad un potenziale comune ma su rami separati, questo implica che nel cavo principale scorre una corrente pari alla somma di quella che passa in tutti i rami e dunque sarà necessario l'utilizzo di un cavo con sezione notevolmente maggiore a quello necessario in una alimentazione seriale.
 %Ciò dipende dal fatto che nel caso di alimentazione seriale la corrente sia riutilizzata n-volte riducendo così le perdite di potenza nei cavi, rispetto ad una alimentazione in parallelo, questo consente l'impiego di cavi più sottili riducendo così il materiale all'interno del tracciatore. 
 %Inoltre un'alimentazione seriale, rispetto ad una in parallelo, permette di ridurre la potenza dissipata a parità del numero di moduli alimentati.
-Infatti, trascurando le inefficienze date dal circuito di SLDO, è possibile calcolare il rapporto tra la potenza assorbita da n moduli in parallelo e quella di n moduli in serie:
+
+Infatti è possibile calcolare il rapporto tra la potenza assorbita da n elementi in parallelo e quella di n elementi in serie:
 \begin{equation}
-\mathrm{W_{parallelo} = n \cdot I \cdot V + (I\cdot n)^2 \cdot R}
+\mathrm{W_{parallelo} = n \cdot I \cdot V + (I\cdot n)^2 \cdot R},
 \end{equation}
 \begin{equation}
-\mathrm{W_{serie} = n \cdot I \cdot V + I^2 \cdot R}
+\mathrm{W_{serie} = n \cdot I \cdot V + I^2 \cdot R},
 \end{equation}
 \begin{equation}
-\mathrm{\frac{W_{parallelo}}{W_{serie}} = \frac{1+ \dfrac{nRI}{V}}{1+\dfrac{RI}{Vn}}}
+\mathrm{\frac{W_{parallelo}}{W_{serie}} = \frac{1+ \dfrac{nRI}{V}}{1+\dfrac{RI}{Vn}}},
 \end{equation}
-dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singolo modulo e V è la caduta di tensione su ciascun modulo. 
+dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singolo elemento e V è la caduta di tensione su ciascun elemtno. 
 
-\section{L'alimentazione seriale con SLDO}
+\section{Lo ShuntLDO per l'alimentazione seriale}
 
-Nella progettazione del sistema con alimentazione seriale il consumo di ciascun ROC, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui si trova e dalle operazioni che sta eseguendo. 
-Il chip di lettura, infatti, è un carico dinamico e l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena.
-Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori di \textit{back-end}\footnote{Con sistema di \textit{back end}} non sono in grado di compensarle in modo rapido: questi saranno, infatti, posizionati lontano dall'esperimento e i cavi introdurrano un ritardo proporzionale alla lunghezza degli stessi.
+Nella progettazione del sistema con alimentazione seriale occorre tener conto che il consumo di ciascun ROC, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui il ROC si trova e dalle operazioni che sta eseguendo. 
+Il ROC, infatti, è un carico dinamico e l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena.
+Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori remoti, detti anche di \textit{back-end}, non sarebbero in grado di compensarle in modo rapido: questi saranno posizionati lontano dall'esperimento e i cavi, lunghi anche fino a $\sim 60-80\m$, introducono un ulteriore carico induttivo non trascurabile.
 
-La figura \ref{SLDOprinciple} mostra a titolo di esempio una tipica richiesta di corrente in funzione del tempo della parte digitale ed analogica.
-In particolare la corrente assorbita dalla parte analogica e digitale del chip è riportata in celeste, in giallo è indicato il margine di corrente disponibile, mentre la zona rossa mostra un tipico esempio di situazione da evitare in cui la corrente richiesta dal chip è maggiore di quella disponibile.
-\begin{figure}[!htbp]
+Per queste ragioni un aspetto chiave dell'implementazione di uno schema di alimentazione seriale \`e che le fluttuazioni del carico, il ROC nel nostro caso, non siano visibili esternamente ma siano gestite localmente facendo s\`i che il carico effettivo visto dalla catena sia costante. Questo pu\`o essere ottenuto implementando, in un appropriato circuito di {\em shunt}, un cammino alternativo per la corrente in quel momento non utilizzata dal ROC, tale che $\mathrm{I}_\mathrm{TOT}\sim\mathrm{I}_\mathrm{ROC}+\mathrm{I}_\mathrm{shunt}\sim\mathrm{cost}$. Inoltre \`e necessario che, in prossimit\`a del ROC, venga effettuata l'opportuna regolazione PoL per convertire l'alimentazione in corrente fornita alla catena e quindi a ciascuno dei suoi elementi in una alimentazione in tensione stabile fruibile dal ROC. 
+\begin{figure}
 \centering
-\includegraphics[scale=.5]{Immagini/ShuntRegulatorPrinciple}
-\caption{Sull'asse y è riportata la corrente, mentre sulle x il tempo. La corrente assorbita dalla parte analogica e digitale del chip è riportata in celeste, in giallo è indicato il margine di corrente disponibile. La zona rossa mostra un tipico esempio di situazione da evitare in cui la corrente richiesta dal chip è maggiore di quella disponibile.}
-\label{SLDOprinciple}
+\includegraphics[width=0.5\textwidth]{Immagini/zener2}
+\caption{Schema di principio di un circuito regolatore con shunt che utilizza un diodo Zener.}
+\label{zener}
 \end{figure}
+Per flessibilit\`a e versatilit\`a \`e auspicabile che questa elettronica addizionale sia integrata nel ROC stesso per le motivazioni espresse nella Sezione~\ref{IntroROCIT}.
 
+Un possibile schema di principio di un tale circuito \`e visibile in~Fig.~\ref{zener} in cui si sfrutta un diodo Zener contropolarizzato per ottenere la stabilizzazione in tensione al carico `load'. Il funzionamento è molto semplice, la corrente in ingresso induce una caduta di tensione sulla resistenza R che, pur tuttavia, non deve impedire di portare il diodo Zener in contropolarizzazione oltre la tensione di soglia. A questo punto sarà lo stesso diodo a mantenere la tensione ai capi del carico costante assorbendo tutta la corrente non necessaria al carico, agendo da shunt. 
+Questo schema però presenta problemi operativi nel momento in cui si mettano più regolatori in parallelo come pu\`o essere necessario fare in applicazioni pratiche come, per esempio, nel caso di un ROC dove servono due tensioni generalmente diverse per la parte digitael e la parte analogica ciascuna fornita da un regolatore diverso o nel caso di un modulo dove pi\`u ROC sono alimentati in parallelo condividendo la stessa corrente in ingresso. Il diodo Zener che, per inevitabili tolleranze di fabbricazione, si trovi all'accensione ad entrare in conduzione prima degli altri assorbir\`a tutta la corrente disponibile con effetti imprevedibili e potenzialmente distruttivi. 
 
-
-
+Per ovviare a queste criticità si è stato sviluppato un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando \`e minima la differenza tra la tensione in ingresso e quella in uscita a valle della regolazione; in particolare$\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 V}$.} accoppiato ad un circuito di shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, denominato {\em ShuntLDO}, con caratteristiche elettriche tali da superare le problematiche a cui si \`e sopra accennato.
 
 %Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
 %Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
@@ -69,6 +68,32 @@ In particolare la corrente assorbita dalla parte analogica e digitale del chip �
 %L'altro punto di interesse nel grafico è quello definito da massima tensione e massima corrente a cui è possibile alimentare il circuito. 
 %Una volta sicuri che non sarà mai utilizzata una corrente maggiore del massimo per alimentare il dispositivo, si ha la sicurezza che nemmeno la tensione massima sarà raggiunta.
 
+Il regolatore che va sotto il nome ShuntLDO \`e stato inizialmente sviluppato dalla collaborazione Atlas per un suo utilizzo nell'ambito del progetto {\em Insertable B-Layer} (IBL)~\cite{IBL}. Infatti la famiglia di ROC disegnati per IBL, FE-I3~\cite{ROCFEI3} e FE-I4~\cite{ROCFEI4}, implementano entrambi circuiti ShuntLDO dimensionati per correnti totali di $\sim 0.5\A$. Pur tuttavia IBL non implementa uno schema di alimentazione seriale perch\'e ad esso fu preferito uno schema di alimentazione pi\`u tradizionale.
+
+Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a $65\nm$ dalla collaborazione RD53 per la sfida di HL-LHC: inizialmente in una versione a $\sim 0.5\A$, necessaria per valutare il dispositivo in $65\nm$, per poi arrivare alle attuali versioni dimensionate per corrente massime di $\sim 2\A$.
+
+Per descrivere il suo funzionamento partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla Fig.~\ref{SLDOprova}. 
+Come anticipato il circuito di ShuntLDO è alimentato dalla corrente $\mathrm{I_{in}}$, attraverso il nodo $\mathrm{V_{in}}$.  Della corrente in ingresso una frazione $\mathrm{I_\mathrm{ref}}$ scorrerà nel ramo di R3. Questa sarà la corrente di riferimento all'interno dello shunt, vedremo in seguito perché. 
+La parte che agisce come regolatore di tensione è il mosfet M1 tramite l'amplificatore A1 che equalizza la tensione sul carico al valore di riferimento $\mathrm{V_{ref}}$ aprendo o chiudendo il gate di M1 e, dunque, facendo scorrere più o meno corrente. 
+In assenza della parte di shunt ci sarebbe, quindi, un aumento di $\mathrm{I_{ref}}$ e, conseguentemente, di $\mathrm{V_{in}}$. 
+Per evitare ciò è stato implementato un ramo in parallelo al carico in cui la corrente che scorre è regolata dal mosfet M4 tramite l'amplificatore A3 che, confrontando tramite un opportuno campionamento la corrente nel ramo di M1 e 1000 volte quella nel ramo di R3, ha lo scopo di mantenere la corrente in ingresso a M1 costante. Il complesso costituito da M4 e A3 è la parte attiva dello shunt: A3 fa sì che la corrente nel ramo con M1 sia 1000 volte quella di riferimento che scorre in R3, poiché modifica $\mathrm{I_{shunt}}$ attraverso la variazione della tensione di gate del mosfet M4. 
+La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno variazioni dinamiche del carico.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.75\textwidth]{Immagini/SLDObase}
+\caption{Schema di principio dello SLDO.}
+\label{SLDOprova}
+\end{figure}
+ 
+La Fig.~\ref{SLDOprinciple} mostra graficamente il funzionamento dello ShuntLDO in cui la corrente totale circolante nella catena seriale si divide, in funzione del tempo, in quella indirizzata nello shunt e in quella richiesta dal carico, nelle sue componenti analogica e digitale; \`e esemplificata anche la situazione da evitare, ovvero la richiesta, per tempi prolungati, di una corrente maggiore rispetto a quella disponibile nella catena.
+\begin{figure}[!htbp]
+\centering
+\includegraphics[scale=.5]{Immagini/ShuntRegulatorPrinciple}
+\caption{Andamento qualitativo della corrente assorbita da un ROC in funzione del tempo. Mentre la componente analogica \`e sostanzialmente costante, la componente digitale subisce variazioni, anche repentine. Sono da evitare le situazioni in cui il carico richieda, per lunghi perdiodi di tempo, una corrente in eccesso rispetto a quella circolante nella catena, rappresentata in giallo, mentre picchi veloci possono essere gestiti con opportuno filtraggio.}
+\label{SLDOprinciple}
+\end{figure}
+
+ 
 Una volta scelti i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$, il consumo in potenza è completamente definito da:
 %La scelta di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ definisce il consumo in potenza:
 \begin{equation}
@@ -78,21 +103,6 @@ Una volta scelti i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$, il cons
 %e dunque per un corretto funzionamento del chip è possibile utilizzare correnti minori, ovvero lasciando meno margine per le fluttuazioni, proprio perchè con $r_{eff}$ minore le fluttuazioni di corrente
 Accenniamo qui al fatto che la possibilità di modificare $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ permette di progettare diverse configurazioni di consumo in relazione alle necessità.
 Ad esempio si potrebbe avere un \textit{high power mode}, in cui la corrente alla tensione minima di lavoro sia sufficiente a garantire il funzionamento dei chip accesi e funzionanti alle massime prestazioni, come potrebbe essere il caso della linea rossa in figura \ref{VVC}, e un \textit{low power mode} in cui la stessa sia minore poiché non si richiede il funzionamento ``completo'' dei chip, come ad esempio rappresentato dalla linea blu in Figura \ref{VVC}.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{Immagini/zener2}
-\caption{Schema di un circuito regolatore con shunt che utilizza un diodo zener.}
-\label{zener}
-\end{figure}
-I regolatori accoppiati ad uno shunt sono utilizzati per convertire la corrente in una tensione costante. Il principio di lavoro è simile ad un diodo zener contropolarizzato, figura \ref{zener}. 
-Il funzionamento è molto semplice, la corrente in ingresso fa una caduta di tensione sulla resistenza R  che deve essere in grado di portare il diodo zener in contropolarizzazione oltre la tensione di soglia, a questo punto sarà lo stesso diodo a mantenere la tensione ai capi del carico costante assorbendo tutta la corrente non necessaria al carico, agendo da shunt. 
-Questo schema però presenta problemi nel momento in cui si vuole mettere più elementi in parallelo, la soglia in cui ogni diodo zener andrà in \textit{break down} sarà leggermente diversa. 
-Questo fa si che, al momento in cui ho più elementi in parallelo, ci sia un diodo zener che va in break down prima degli altri assorbendo tutta la corrente che dovrebbe distribuirsi nel parallelo rischiando di bruciare. 
-Da questo primo esempio, si può partire per la descrizione del circuito effettivamente utilizzato come shuntLDO. 
-
-Per ovviare a queste criticità si è deciso di implementare un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando $\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 V}$.} accoppiato ad uno Shunt, capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, da qui la sigla ShuntLDO.
-
 
 %Con questo tipo di configurazione la corrente erogata dagli alimentatori di back-end deve essere maggiore o uguale a quella necessaria all'elemento con consumo più alto.
 
@@ -108,7 +118,7 @@ Per ovviare a queste criticità si è deciso di implementare un regolatore \text
 \label{SLDOprova}
 \end{figure}
 
-Il progetto del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a 65 nm, capace di lavorare con una corrente massima di 2A.
+Il progetto del regolatore SLDO ha subito nel tempo modifiche e migliorie, fino ad arrivare all'attuale versione in tecnologia CMOS a $65\nm$, capace di lavorare con una corrente massima di 2A.
 Per descrivere il suo funzionamento partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla figura \ref{SLDOprova}. 
 Come anticipato il circuito di SLDO è alimentato in corrente $\mathrm{I_{in}}$, attraverso il pad di $\mathrm{V_{in}}$. 
 Della corrente in ingresso una frazione, $\mathrm{I_{ref}}$, scorrerà nel ramo di R3.
@@ -125,20 +135,33 @@ La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno var
 \caption{Circuito semplificato dello SLDO 0.5 A.}
 \label{SLDO5A}
 \end{figure}
-
-Questo primo schema permette una comprensione generale del funzionamento del circuito di SLDO. La figura \ref{SLDO5A} riporta lo schema per la versione con corrente massima da 0.5 A.
+In Fig.~\ref{SLDO5A} \`e mostrato lo schema elettrico dello ShuntLDO in versione a $65\nm$ dimensionato per $0.5\A$ di corrente massima.
 Rispetto a quanto visto in precedenza si hanno alcune differenze, benché l'idea generale di funzionamento rimanga la stessa. 
-In questo schema il carico si trova tra i pin $\mathrm{V_{out}}$ e $\mathrm{I_{out}}$ in parallelo al partitore R1+R2 (R1 e R2 sono resistenze uguali) e la tensione di riferimento $\mathrm{V_{ref}}$\footnote{$\mathrm{V_{ref}}$ non ha niente a che vedere con $\mathrm{I_{ref}}$.} è confrontata con la tensione su R2 che è la metà di $\mathrm{V_{out}}$.
+In questo schema il carico si trova tra i nodi $\mathrm{V_{out}}$ e $\mathrm{I_{out}}$. Grazie al partitore costituito da R1 e R2, con R1=R2, e all'amplificatore A1 $\mathrm{V_{out}}$ risulta essere il doppio della tensione di riferimento $\mathrm{V_{ref}}$.
+%\footnote{$\mathrm{V_{ref}}$ non ha niente a che vedere con $\mathrm{I_{ref}}$.}
 L'amplificatore A3, invece, confronta le correnti che scorrono nel ramo di R3 ($\mathrm{I_{ref}}$) e in quello di M2 e regola il mosfet M4 di conseguenza. 
-La coppia di mosfet M1-M2 è in configurazione \textit{current-mirror} e il rapporto k tra le due correnti è uguale a 1000.
-Quest'ultimo dipende solamente dalle caratteristiche geometriche dei due mosfet
-\footnote{
-  In un \textit{current-mirror} il rapporto k è uguale a $\dfrac{W_1L_2}{W_2L_1}$ con $W$ e $L$ profondità e lunghezza del mosfet.
+La coppia di mosfet M1-M2 costituisce un \textit{current-mirror} configurato in modo tale che il rapporto k tra le due correnti sia uguale a 1000 grazie ad una appropriato dimensionamento dei due dispositivi\footnote{
+  In un \textit{current-mirror} il rapporto k è uguale a $\dfrac{W_1L_2}{W_2L_1}$ dove $W_1$ e $L_1$ e $W_2$ e $L_2$ sono, rispettivamente, profondità e lunghezza dei due mosfet.
 }. 
-Grazie al \textit{current-mirror}, quindi, la corrente che scorre in M1 è 1000 volte $\mathrm{I_{ref}}$.
-Questo comportamento definisce il modo in cui lo SLDO è visto esternamente, infatti per il generatore risulta come un carico resistivo pari a $\frac{R3}{k}$. 
-La coppia A2+M3 ha lo scopo di migliorare la precisione di k. 
-Il valore di R3 è, quindi, una importante caratteristica, la cui scelta determina la tensione nel punto di lavoro per una data corrente, definendo il grafico IV. 
+Grazie al \textit{current-mirror}, quindi, la corrente che scorre in M1 è 1000 volte $\mathrm{I_{ref}}$ e il sistema costituito dall'amplificatore A2 e il mosfet M3 ha lo scopo di migliorare la precisione di questo current mirror.
+Questa scelta progettuale definisce il modo in cui lo ShuntLDO è visto esternamente. Infatti la corrente $\mathrm{I_{ref}}$ che scorre nello ShuntLDO pu\`o essere espressa come
+\begin{equation}
+\mathrm{I_{in} \sim k I_{ref} \sim k \frac{V_{in} - V_{thM6}}{R_3}}
+\end{equation}
+dove $\mathrm{V_{thM6}}$ \`e la tensione di soglia del mosfet M6. Quindi il generatore connesso al nodo $\mathrm{V_{in}}$ vede un carico resistivo pari a $\frac{R3}{k}$ in serie con una piccola tensione di offset. Il valore di R3 è, quindi, un importante parametro, la cui scelta determina la tensione nel punto di lavoro per una data corrente e, pi\`u in generale, la pendenza di $\mathrm{V_{in}}$ in funzione di $\mathrm{I_{in}}$ nella zona di regolazione, come visibile in Fig.~\ref{fig:IVSLDO} che mostra il caratteristico grafico corrente-tensione dello ShuntLDO. 
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.4\textwidth]{Immagini/CaratteristicaSLDO.png}
+\caption{Curva caratteristica corrente-tensione per uno ShuntLDO che mostra $\mathrm{V_{in}}$ () e $\mathrm{V_{out}}$ () in funzione di $\mathrm{I_{in}}$; la 
+Circuito semplificato dello SLDO 0.5 A.}
+\label{SLDO5A}
+\end{figure}
+
+%
+% --------------- arrivato qui
+%
+
+La caratteristica resistiva, inoltre, fa s\`i che due ShuntLDO in parallelo offriranno una resistenza equivalente pari al parallelo delle resistenze equivalenti dei singoli dispositivi superando le problematiche descritte sopra che affliggono un tradizionale circuito shunt basato su diodo Zener.
 
 Per funzionare correttamente questo circuito necessita di una tensione in ingresso minima di circa $1.4V$.
 Valori di resistenza maggiori consentiranno, quindi, di operare con correnti minori, con il vantaggio di consumare minor potenza
