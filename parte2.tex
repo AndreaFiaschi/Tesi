@@ -623,7 +623,7 @@ La parte digitale e analogica non si attivano nello stesso momento, in particola
 Questi studi sull'alimentazione del chip si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due.
 In contemporanea a vengono sviluppi i sistemi di acquisizione dati in grado di dialogare con il chip e si stanno effettuando test sui tre \textit{front end} per studiarne la risposta prima e dopo processi di irraggiamento. 
 Lo sviluppo del circuito di alimentazione ha importanti legami con lo sviluppo del resto del chip.
-Ad esempio, la scelta di alimentare il chip separando la parte analogica da quella digitale deriva dalla necessità del sistema (???OK???) di proteggere la prima, più sensibile, dal rumore della seconda.
+Ad esempio, la scelta di alimentare il chip separando la parte analogica da quella digitale deriva dalla necessità di proteggere la prima, più sensibile, dal rumore della seconda.
 Inoltre, prima di poter effettuare una qualsiasi azione a livello di chip, è necessario che lo stesso, una volta acceso, si trovi in una configurazione di default ben precisa.
 E' importante, quindi, che il processo di accensione, gestito dal circuito di SLDO, avvenga correttamente: regione digitale e analogica devono attivarsi senza oscillazioni, durante il power-up, e drop di tensione. 
 %come detto il chip ha due regioni alimentate separatamente, digitale e analogica, questa scelta è dettata anche dalla necessità di proteggere la parte analogica, più sensibile, dal rumore della parte digitale. Se l'alimentazione fosse comune il rumore della parte digitale del chip andrebbe ad intaccare la parte analogica che è molto sensibile da questo punto di vista. 
@@ -642,10 +642,11 @@ Nei prossimi paragrafi daremo una breve descrizione del sistema di acquisizione 
 
 I due sistemi di acquisizione dati, attualmente in sviluppo, che possono essere utilizzati per effettuare test di funzionamento, sono Yarr (\textit{Yet Another Rapid Readout}) \cite{YARR} e BDAQ, sviluppato dall'Università di Bonn \cite{BDAQ}. 
 %immagine sistema di acquisizione
-Entrambi sfruttano fpga programmabili della xilinx per comunicare con il chip. 
+Entrambi sfruttano fpga programmabili della XILINX per comunicare con il chip. 
 %Attraverso questi sistemi di acquisizione, sul cui sviluppo e le particolari caratteristiche non ci soffermeremo, non essendo questo il principale obbiettivo di questo lavoro di tesi, è possibile al momento vari test. 
 I test effettuati e che verranno descritti in questo lavoro di tesi, sono stati effettuati con il sistema di acquisizione di Bonn.
 In particolare, fra quelli attualmente disponibili, i più importanti sono:
+
 \begin{itemize}
 \item \textbf{scan$\_$digital} Iniezione di un segnale digitale nei pixel abilitati per verificare la funzionalità della parte digitale del chip.%This basic scan injects a digital pulse into enabled pixels to test the digital part of the chip.
 \begin{figure}
@@ -656,7 +657,8 @@ In particolare, fra quelli attualmente disponibili, i più importanti sono:
 \end{figure}
 \item \textbf{scan$\_$analog} Analogo di scan$\_$digital, ma per la parte analogica: un impulso con carica specifica viene iniettato nei canali di lettura abilitati in modo da verificare il funzionamento dei \textit{front end} analogici. Un esempio è mostrato in figura \ref{ScanAnalogLinear}. %This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
 \item \textbf{scan$\_$threshold} Trova la soglia effettiva di ogni canale abilitato iniettando segnali con carica via via crescente.%This script scans over different amounts of injected charge to find the effective threshold of the enabled pixels.
-\item \textbf{meta$\_$tune$\_$threshold$\_$simple} Scan delle soglie per ogni possibile TDAC al fine di ottenere il valore ottimale per ogni pixel che consente di avvicinarsi alla soglia voluta.
+\item \textbf{meta$\_$tune$\_$threshold$\_$simple} Scan fine delle soglie locali utilizzando, canale per canale, un DAC (\textit{Digital to Analog Converter}) a 4 bit per la sua regolazione. Il valore nella configurazione base è di 7.
+  Alla fine del processo il valore di \textit{default} di ogni singolo DAC è sovrascritto da quello ottimale trovato.
 %Il risultato di questo processo è un mask file.%This meta script simply performs a threshold scan for every possible TDAC to obtainthe optimal value per pixel to get as close to the target threshold as possible. The result is a TDAC mask file.
 \end{itemize}
 Questi script sono eseguiti girando degli script in python che leggono i parametri di configurazione dei registri contenuti nel file \textbf{default$\_$chip.yaml} scrivendoli nel chip.
@@ -728,10 +730,14 @@ Ci si aspetta, quindi, una distribuzione delle soglie intorno ad un valore centr
 Inoltre, a causa del rumore, la risposta del circuito di lettura in funzione della carica raccolta non sarà una theta: il rumore, che si somma al segnale, può far scattare il discriminatore anche a segnali più piccoli della soglia.
 Se su ciascun canale iniettiamo un segnale sempre più grande, ripetendo il processo più volte e riportando il numero delle volte in cui il discriminatore scatta in funzione del segnale iniettato, si ottengono le così dette Scurves che, senza rumore, sarebbero a gradino. 
 Mettendo insieme le Scurve di ogni canale, si ottiene un grafico come quello riportato in figura \ref{Scurves}, dove in z si ha il numero di pixel che, a un dato Vcal (in x), si sono accesi un certo numero di volte (in y).
-
-!!! IO QUI RIPORTEREI COME E' FATTO IL FIT !!!
-
-La figura \ref{Threshold} riporta la distribuzione delle soglie dei canali con sovrapposto il fit di una gaussiana (???).
+Dal fit di ogni singola Scurve è possibile ottenere il valore di soglia e di rumore di ogni canale.
+Infatti la Scurve è descritta dalla funzione:
+\begin{equation}
+  \mathrm{S_{curve} = \frac{A}{2} \left( 1 + \erf \left( \frac{q-\mu}{\sqrt{2}\sigma} \right) \right)},
+\end{equation}
+dove A è l'ampiezza della $\erf$, $\mu$ la soglia e $\sigma$ il rumore.
+I valori di $\mu$ e $\sigma$ sono ricavati con il metodo descritto in \cite{ERF}.
+La figura \ref{Threshold} riporta la distribuzione delle soglie dei canali con sovrapposto il fit di una gaussiana.
 %Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse, in figura\ref{Threshold} è riportata la distribuzione delle soglie. 
 \begin{figure}
 \centering
@@ -752,7 +758,7 @@ Come detto in precedenza l'utilizzo dello SLDO dovrebbe evitare il propagarsi de
 Al fine di verificare se c'è una correlazione tra la ditribuzione del rumore e l'utilizzo del chip all'interno di una catena seriale, si sono messi a confronto i risultati ottenuti da test eseguiti con il chip singolo con quelli ottenuti poi mettendone due in serie o in parallelo, usando il setup mostrato in figura \ref{chipserial}.
 Tutte e tre le misure sono state eseguite utilizzando la configurazione di SLDO. 
 
-Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto al momento della presa dati, era quello su cui era possibile lavorare meglio, sia a livello di ottimizzazione dei vari parametri, sia a livello di software (??? NON BELLISSIMO, COSA SI VUOLE DIRE ???).
+Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto, al momento della presa dati, era l'unico con una versione avanzata e stabile del software e con i vari parametri ben definiti.
 I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, ossia per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
 
 \begin{figure}[h]

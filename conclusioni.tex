@@ -1,13 +1,35 @@
 \chapter{Conclusioni}
 
 
-Lo sviluppo del regolatore ShuntLDO è motivato dalla necessità di rendere più efficiente la distribuzione di potenza nel rivelatore a pixel degli esperimenti CMS e ATLAS, gli attuali tracciatori sono composti da milioni di canali, raggruppati in moduli. 
-A causa delle dimensioni del rivelatore, i moduli devono essere alimentati da cavi con una sezione limitata e una lunghezza tra gli 80 e i 100 metri, questo insieme al consumo di corrente tra 1 e 4 A per modulo crea delle importanti perdite di potenza nei cavi, che superano il consumo del rivelatore stesso. 
-L'impiego di cavi più spessi non è possibile, in quanto all'interno del rivelatore si deve evitare interazioni delle particelle con materiale inattivo, che causa un peggioramento delle prestazioni del rivelatore. 
-L'utilizzo del regolatore con SLDO permette l'utilizzo di più elementi in parallelo all'interno del modulo incrementando  l'affidabilità del sistema di alimentazione seriale (più elementi in parallelo meno problemi in caso di guasti). 
-L'utilizzo di più elementi in parallelo all'interno della linea seriale conferisce  flessibilità al sistema , poiché nonostante siano in parallelo possono generare differenti tensioni in uscita. 
-Lo studio di questo prototipo ha confermato l'affidabilità del principio di funzionamento con cui è stato progettato lo SLDO, ha evidenziato gli aspetti cruciali per avere un bilanciamento delle correnti durante l'accensione e ha evidenziato la capacità di isolare il carico dai disturbi esterni presenti sulla linea di alimentazione.
- 
+Lo sviluppo del regolatore ShuntLDO è motivato dalla necessità di rendere più efficiente la distribuzione di potenza nel rivelatore a pixel degli esperimenti CMS e ATLAS.
+A causa del poco spazio disponibile all'interno del tracciatore, i moduli devono essere alimentati da cavi con una sezione limitata. Inoltre dato che gli alimentatori di back end si trovano in una caverna adiacente all'esperimento i cavi hanno una lunghezza tra gli 80 e i 100 metri, questo insieme al consumo di corrente tra 1 e 4 A per modulo crea delle importanti perdite di potenza nei cavi, che superano il consumo del rivelatore stesso. 
+L'impiego di cavi con una sezione maggiore è problematico, in quanto all'interno del rivelatore si deve evitare il più possibile che vi sia materiale inattivo, causa di peggioramento nelle prestazioni del rivelatore. 
+Con il passaggio ad una alimentazione seriale è possibile ridurre le sezioni dei cavi di alimentazione, ma allo stesso tempo vengono introdotte nuove criticità, che è possibile affrontare con l'utilizzo del regolatore ShuntLDO per l'alimentazione dei singoli ROC all'interno dei moduli.
+Lo ShuntLDO permette di installare più elementi in parallelo all'interno del modulo incrementando  l'affidabilità del sistema di alimentazione seriale (più elementi in parallelo meno problemi in caso di guasti) e conferendo  flessibilità al sistema. 
+Alla base del principio di ShuntLDO vi è la necessità di presentare al sistema di alimentazione un carico fisso indipendentemente dai consumi del ROC, questo carico varia a seconda della corrente che scorre nella catena seriale ed è caratterizzato come un offset di tensione $\mathrm{V_{offset}}$ più una resistenza caratteristica R.
+Nel presente lavoro di tesi mi sono concentrato sullo studio del circuito di ShuntLDO sia come elemento a sé stante sia all'interno del ROC RD53A, prototipo del nuovo chip di lettura per il tracciatore di CMS e di ATLAS di fase-2. 
+
+Nel capitolo \ref{AlimentazioneSeriale}, dopo una prima introduzione del concetto di ShuntLDO, sono presentati i risultati e le osservazioni ottenuti dallo studio fatto sulle schede di test con i prototipi a 0.5 e 2 A. 
+In particolare nella sottosezioni \ref{ }(3.4.2 e 3.4.3), riguardanti lo ShuntLDO da 0.5 A, ho messo in luce l'importanza di avere delle tensioni di riferimento stabili per un corretto funzionamento del circuito e la capacità dello ShuntLDO di tenere le fluttuazioni del $\mathrm{V_{out}<5 \mV}$ fin tanto che la somma della corrente assorbita dal carico statico e dal carico variabile\footnote{Replicato utilizzando il mosfet presente sulla scheda di test.} si mantiene inferiore alla corrente con cui il circuito è alimentato. 
+Allo stesso modo per lo ShuntLDO da 2 A, dopo una prima discussione su vari aspetti, quali differenze di GND tra ShuntLDO e scheda di test; regolazione dell'offset e contributo del mosfet alle misure con carico dinamico, ho riportato i risultati dei test, che evidenziano come nell'intervallo tipico di lavoro lo ShuntLDO da 2 A, riesca a mantenere le fluttuazioni sul $\mathrm{V_{out}}$ relativamente piccole. 
+Le fluttuazioni maggiori si hanno quando le variazioni di corrente assorbita dal carico sono 2--3 volte la corrente assorbita dal carico statico, questo caso fisicamente può corrispondere all'accensione del ROC e va tenuto di conto.(le fluttuazioni misurate sono di $\sim 100 \mV$). 
+Infine ho messo in evidenza come in un serie di due ShuntLDO le fluttuazioni che si hanno sulla catena non sono viste dal carico applicato allo stesso...
+
+Nel capitolo \ref{cap:RD53A} ho presentato i risultati dello studio dello ShuntLDO presente nel ROC RD53A. In questo caso va precisato che ci sono due circuiti di alimentazione, uno per la regione analogica del ROC e uno per quella digitale, vi sono dunque due ShuntLDO in parallelo. 
+Lo studio dei due ShuntLDO all'internio di RD53A ha presentato una complicazione?!???
+Dal confronto degli andamenti delle tensioni in ingresso, uscita e di riferimento per varie configurazioni di alimentazione(indipendente parallelo ref ext...) al variare della corrente in ingresso, ho potuto mettere in evidenza vari aspetti. 
+La configurazione con cui si alimenta il parallelo dei due ShuntLDO influenza i risultati, in parte a causa di un non perfetto funzionamento dei circuiti responsabili della generazione delle tensioni di riferimento (bandgap), che causa un differenze nell'accensione dei due ShuntLDO e differente distribuzione delle correnti tra  i due ShuntLDO della parte analogia e digitale. 
+Queste stesse misure hanno evidenziato un sistematico eccesso nel valore della resistenza caratteristicaed un offset inferiore  rispetto ai valori attesi. 
+Questo è indice di resistenze spurie all'interno del circuito e di per offset cosa? 
+Nella sezione\ref{4.5.1 } ho verificato la risposta a variazioni di carico eseguite in modo statico, che hanno evidenziato una dipendenza del $\mathrm{V_{out}}$ dalla corrente assorbita dal carico. 
+
+Fast ramp-up?
+
+Infine con un confronto tra alimentazione con ShuntLDO e con il solo regolatore LDO, ho voluto mettere in evidenza l'importanza dello Shunt nella gestione delle fluttuazioni del carico. 
+Come ultimo test ho utilizzato il sistema di acquisizione di Bonn per ricavare le distribuzioni di rumore del front end lineare e poter verificare che non vengono influenzate dalla presenza di altri elementi in parallelo o in serie nella catena di alimentazione. 
+
+Lo studio di questo prototipo ha confermato l'affidabilità del principio di funzionamento con cui è stato progettato lo ShuntLDO, ha evidenziato gli aspetti cruciali per avere un bilanciamento delle correnti durante l'accensione e ha dimostrato la capacità di isolare il carico dai disturbi esterni presenti sulla linea di alimentazione.
+Allo stesso modo sono state messe in luce criticità e problemi dell'implementazione dello ShuntLDO all'interno del prototipo di ROC RD53A, tutt'ora sotto studio. Tra queste spiccano l'importanza di un circuito che generi le tensioni di riferimento in modo affidabile e la presenza di resistenze spurie e una dipendenza del valore dell'offset dal valore della resistenza caratteristica. 
 
 
 
