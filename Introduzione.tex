@@ -474,8 +474,13 @@ Il disegno dei moduli come risulta dal progetto che viene sviluppato attualmente
 % \end{figure}
 
 \subsubsection{Il ROC per l'IT}
+\label{IntroROCIT}
 
-Il ROC, il componente pi\`u critico per l'Inner Tracker, deve essere resistente alla radiazione, a bassa soglia e basso rumore, adatto quindi ai segnali di rivelatori sottili, a grande banda di lettura e, infine, le celle di $2500 \um^2$ richiedono una miniaturizzazione spinta. La collaborazione RD53 \cite{RD53A}, un progetto comune di Atlas e CMS per lo sviluppo di pixel ROC per HL-LHC,  st\`a sviluppando questo ROC nella tecnologia CMOS a $65\nm$ che, sulla carta, \`e  compatibile con i succitati requisiti.
+Il ROC, il componente pi\`u critico per l'Inner Tracker, deve essere resistente alla radiazione, a bassa soglia e basso rumore, adatto quindi ai segnali di rivelatori sottili, a grande banda di lettura e, infine, le celle di $2500 \um^2$ richiedono una miniaturizzazione spinta. La collaborazione RD53~\cite{RD53}, un progetto comune di Atlas e CMS per lo sviluppo di pixel ROC per HL-LHC, st\`a sviluppando questo ROC nella tecnologia CMOS a $65\nm$ che, sulla carta, \`e compatibile con i succitati requisiti.
+
+J. Christiansen, M. Garcia-Sciveres
+RD Collaboration proposal: Development of pixel readout integrated circuits for extreme rate and radiation CERN-LHCC-2013-008 (2013)
+
 
 Il diagramma a blocchi del progetto concepito da RD53 è mostrato in Fig.~\ref{ChipBlockDiagram}. 
 \begin{figure}
@@ -547,6 +552,7 @@ Il cuore dello schema di alimentazione seriale, che \`e approfondito nel prossim
 Riassumendo, i vantaggi di una alimentazione seriale sono i seguenti:
 \begin{itemize}
 \item la conversione tra la tensione intermedia di alimentazione della catena e la tensione prossima a quella di lavoro del ROC \`e intrinseca nello schema seriale stesso per cui non sono necessari dispositivi di potenza, ovvero in grado di gestire grandi correnti a tensioni intermedie dell'ordine della decina di $\V$ compunque proibitive per tecnologie VLSI, n\'e componentistica passiva ingombrante (come, ad esempio, gli induttori necessari sui convertitori DCDC);
+
 \item per quanto sopra, la circuiteria necessaria per l'implementazione dell'alimentazione seriale \`e compatibile con la tecnologia CMOS a 65nm (che al massimo pu\`o gestire differenze di potenziale di ${\cal O}(\V)$), \`e integrata nel ROC stesso ed \`e quindi miniaturizzata, resistente alla radiazione e insensibile al campo magnetico; 
 \item grazie allo schema adottato la catena di alimentazione seriale si presenta agli alimentatori come un carico costante pilotato in corrente in cui le variazioni di potenza dovute all'attivit\`a del ROC sono gestite localmente dallo SLDO;
 \item la catena di alimentazione seriale, pilotata in corrente, \`e meno sensibile alle cadute di tensione sui cavi.
