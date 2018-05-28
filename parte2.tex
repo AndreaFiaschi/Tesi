@@ -620,43 +620,60 @@ La parte digitale e analogica non si attivano nello stesso momento, in particola
 % RIPARTIRE DA QUI
 \section{Sviluppi}
 
-Questi studi sull'alimentazione del chip si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due. In contemporanea a questi viene portato avanti lo sviluppo di sistemi di acquisizione dati in grado di dialogare con il chip e si stanno effettuando test sui tre \textit{front end} per studiarne la risposta sia prima che dopo processi di irraggiamento. 
-In questo situazione lo sviluppo del circuito di alimentazione ha importanti legami con lo sviluppo del resto del chip, come detto il chip ha due regioni alimentate separatamente, digitale e analogica, questa scelta è dettata anche dalla necessità di proteggere la parte analogica, più sensibile, dal rumore della parte digitale. Se l'alimentazione fosse comune il rumore della parte digitale del chip andrebbe ad intaccare la parte analogica che è molto sensibile da questo punto di vista. 
-Inoltre per operare una qualsiasi azione a livello di chip è necessario che lo stesso, una volta acceso, si trovi in una configurazione di default ben precisa, la corretta accensione è un problema legato al circuito di ShuntLDO, regione digitale e analogica devono attivarsi correttamente evitando oscillazioni durante il power-up e drop di tensione. 
-Risulta quindi chiaro lo stretto legame che vi è tra alimentazione e sviluppo del chip. 
+Questi studi sull'alimentazione del chip si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due.
+In contemporanea a vengono sviluppi i sistemi di acquisizione dati in grado di dialogare con il chip e si stanno effettuando test sui tre \textit{front end} per studiarne la risposta prima e dopo processi di irraggiamento. 
+Lo sviluppo del circuito di alimentazione ha importanti legami con lo sviluppo del resto del chip.
+Ad esempio, la scelta di alimentare il chip separando la parte analogica da quella digitale deriva dalla necessità del sistema (???OK???) di proteggere la prima, più sensibile, dal rumore della seconda.
+Inoltre, prima di poter effettuare una qualsiasi azione a livello di chip, è necessario che lo stesso, una volta acceso, si trovi in una configurazione di default ben precisa.
+E' importante, quindi, che il processo di accensione, gestito dal circuito di SLDO, avvenga correttamente: regione digitale e analogica devono attivarsi senza oscillazioni, durante il power-up, e drop di tensione. 
+%come detto il chip ha due regioni alimentate separatamente, digitale e analogica, questa scelta è dettata anche dalla necessità di proteggere la parte analogica, più sensibile, dal rumore della parte digitale. Se l'alimentazione fosse comune il rumore della parte digitale del chip andrebbe ad intaccare la parte analogica che è molto sensibile da questo punto di vista. 
+%Inoltre per operare una qualsiasi azione a livello di chip è necessario che lo stesso, una volta acceso, si trovi in una configurazione di default ben precisa, la corretta accensione è un problema legato al circuito di ShuntLDO, regione digitale e analogica devono attivarsi correttamente evitando oscillazioni durante il power-up e drop di tensione. 
+%Risulta quindi chiaro lo stretto legame che vi è tra alimentazione e sviluppo del chip. 
 
-All'interno del lavoro di tesi è stato possibile anche un primo approccio allo sviluppo del sistema di acquisizione, in quanto lo studio riguarda oggetti attualmente in evoluzione essendo prototipi. L'approccio al sistema di DAQ rappresenta naturale in un'ottica di sviluppo del progetto di RD53A. A seguito diamo una breve descrizione del sistema di acquisizione utilizzato e dei primi risultati ottenuti su soglie di lettura e la relativa distribuzione di rumore. 
+All'interno del lavoro di tesi è stato possibile approcciarsi allo sviluppo del sistema di acquisizione, attraverso lo studio di alcuni prototipi.
+Nei prossimi paragrafi daremo una breve descrizione del sistema di acquisizione utilizzato e dei primi risultati ottenuti sulle soglie di lettura e sulla relativa distribuzione di rumore. 
+%All'interno del lavoro di tesi è stato possibile anche un primo approccio allo sviluppo del sistema di acquisizione, in quanto lo studio riguarda oggetti attualmente in evoluzione essendo prototipi. L'approccio al sistema di DAQ rappresenta naturale in un'ottica di sviluppo del progetto di RD53A. A seguito diamo una breve descrizione del sistema di acquisizione utilizzato e dei primi risultati ottenuti su soglie di lettura e la relativa distribuzione di rumore. 
 
 
 
-problemi legati a tensioni di riferimento troppo basse non riesce a dare Phase locked loop non sempre riesce, tensioni di otput troppo basse, causa dei vref bassi per problemi di progettazione dei circuiti di band gap, ma se non fa il pll nonn lo posso configurare a valori più alti.
+%problemi legati a tensioni di riferimento troppo basse non riesce a dare Phase locked loop non sempre riesce, tensioni di otput troppo basse, causa dei vref bassi per problemi di progettazione dei circuiti di band gap, ma se non fa il pll nonn lo posso configurare a valori più alti.
 
 \section{Sistema di acquisizione dati}
-I sistemi di acquisizione dati che attualmente in sviluppo ma che è possibile utilizzare per eseguire alcuni test sono Yarr (\textit{Yet Another Rapid Readout}) \cite{YARR} e il sistema BDAQ sviluppato dall'Università di Bonn \cite{BDAQ}. 
+
+I due sistemi di acquisizione dati, attualmente in sviluppo, che possono essere utilizzati per effettuare test di funzionamento, sono Yarr (\textit{Yet Another Rapid Readout}) \cite{YARR} e BDAQ, sviluppato dall'Università di Bonn \cite{BDAQ}. 
 %immagine sistema di acquisizione
-Entrambi i istemi di acquisizione sfruttano fpga programmabili xilinx per il dialogo con il chip. 
-Attraverso questi sistemi di acquisizione, sul cui sviluppo e le particolari caratteristiche non ci soffermeremo, non essendo questo il principale obbiettivo di questo lavoro di tesi, è possibile al momento vari test. 
-In particolare riferendoci al sistema di acquisizione di Bonn i test più importanti, tra quelli attualmente disponibili, sono:
+Entrambi sfruttano fpga programmabili della xilinx per comunicare con il chip. 
+%Attraverso questi sistemi di acquisizione, sul cui sviluppo e le particolari caratteristiche non ci soffermeremo, non essendo questo il principale obbiettivo di questo lavoro di tesi, è possibile al momento vari test. 
+I test effettuati e che verranno descritti in questo lavoro di tesi, sono stati effettuati con il sistema di acquisizione di Bonn.
+In particolare, fra quelli attualmente disponibili, i più importanti sono:
 \begin{itemize}
-\item \textbf{scan$\_$digital} Questo test semplicemente inietta un segnale digitale nei pixel abilitati per verificare la funzionalità della parte digitale del chip.%This basic scan injects a digital pulse into enabled pixels to test the digital part of the chip.
+\item \textbf{scan$\_$digital} Iniezione di un segnale digitale nei pixel abilitati per verificare la funzionalità della parte digitale del chip.%This basic scan injects a digital pulse into enabled pixels to test the digital part of the chip.
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/ScanAnalogLinear}
 \caption{Risultato del test \textbf{scan$\_$analog} sulla \textit{front end} lineare, tutti i canali di lettura hanno risposto il 100$\%$ delle volte.}
 \label{ScanAnalogLinear}
 \end{figure}
-\item \textbf{scan$\_$analog}  Questo test è l'analogo di scan$\_$digital per la parte analogica. Un impulso con carica specifica viene iniettato nei canali di lettura abilitati in modo da verificare il funzionamento dei \textit{front end} analogici, figura \ref{ScanAnalogLinear}. %This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
-\item \textbf{scan$\_$threshold}  Questo test trova la soglia effettiva di ogni canale abilitato andando a iniettare segnali con carica via via crescente.%This script scans over different amounts of injected charge to find the effective threshold of the enabled pixels.
-\item \textbf{meta$\_$tune$\_$threshold$\_$simple} Questo script effettua uno scan delle soglie per ogni possibile TDAC al fine di ottenere il valore ottimale per ogni pixel che consente di avvicinarsi alla soglia voluta. Il risultato di questo processo è un mask file.%This meta script simply performs a threshold scan for every possible TDAC to obtainthe optimal value per pixel to get as close to the target threshold as possible. The result is a TDAC mask file.
+\item \textbf{scan$\_$analog} Analogo di scan$\_$digital, ma per la parte analogica: un impulso con carica specifica viene iniettato nei canali di lettura abilitati in modo da verificare il funzionamento dei \textit{front end} analogici. Un esempio è mostrato in figura \ref{ScanAnalogLinear}. %This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
+\item \textbf{scan$\_$threshold} Trova la soglia effettiva di ogni canale abilitato iniettando segnali con carica via via crescente.%This script scans over different amounts of injected charge to find the effective threshold of the enabled pixels.
+\item \textbf{meta$\_$tune$\_$threshold$\_$simple} Scan delle soglie per ogni possibile TDAC al fine di ottenere il valore ottimale per ogni pixel che consente di avvicinarsi alla soglia voluta.
+%Il risultato di questo processo è un mask file.%This meta script simply performs a threshold scan for every possible TDAC to obtainthe optimal value per pixel to get as close to the target threshold as possible. The result is a TDAC mask file.
 \end{itemize}
-Altro file importante è il file contenente i parametri di configurazione dei registri \textbf{default$\_$chip.yaml}, che ogni volta che uno scan viene lanciato vengono scritti nel chip. 
+Questi script sono eseguiti girando degli script in python che leggono i parametri di configurazione dei registri contenuti nel file \textbf{default$\_$chip.yaml} scrivendoli nel chip.
+%Altro file importante è il file contenente i parametri di configurazione dei registri \textbf{default$\_$chip.yaml}, che ogni volta che uno scan viene lanciato vengono scritti nel chip. 
 
-Attraverso questi test è possibile, anche senza aver collegato un sensore al chip, controllare le funzionalità di parte analogica e digitale separatamente, analizzare la risposta dei tre \textit{front end} ad un segnale di calibrazione, ricavare una distribuzione delle soglie, la distribuzione del rumore e ottimizzare le soglie localmente (per \textit{front end} lineare e differenziale). 
-A livello di questo lavoro di tesi risulta interessante esaminare il comportamento del circuito di alimentazione mentre il chip dialoga con il sistema di alimentazione così da avere informazioni su cosa accade quando ci sono variazioni nella corrente assorbita, senza dover simulare la cosa esternamente. 
-Ad esempio durante il test scan$\_$threshold la parte analogica verifica il livello di soglia di ogni pixel andando a iniettare un segnale via via più grande nel circuito di lettura, in questa situazione è corretto pensare che ci siano variazioni nella corrente assorbita anche grandi. 
-Una prima prova che è interessante eseguire consiste nel confrontare una situazione in cui è utilizzato il regolatore con lo Shunt e una situazione in cui non è utilizzato lo Shunt e il chip è alimentato in configurazione LDO. In seguito è lecito chiedersi se, effettivamente in una catena seriale di due chip l'attivita di uno non influenza l'altro. Cioè se il circuito di SLDO riesce ad nascondere al chip eventuali fluttuazioni e rumore  che vi sono nella catena.
+Questi test, anche in assenza del sensore collegato al chip, permettono di: controllare separatamente le funzionalità di parte analogica e digitale separatamente; analizzare la risposta dei tre \textit{front end} ad un segnale di calibrazione; ricavare la distribuzione delle soglie, e del rumore e ottimizzare localmente le soglie (per \textit{front end} lineare e differenziale). 
+% RIPARTIRE DA QUI
+%Attraverso questi test è possibile, anche senza aver collegato un sensore al chip, controllare le funzionalità di parte analogica e digitale separatamente, analizzare la risposta dei tre \textit{front end} ad un segnale di calibrazione, ricavare una distribuzione delle soglie, la distribuzione del rumore e ottimizzare le soglie localmente (per \textit{front end} lineare e differenziale). 
+A livello di questo lavoro di tesi risulta interessante esaminare il comportamento del circuito di alimentazione mentre il chip dialoga con il sistema di alimentazione, in presenza, quindi, di variazioni nella corrente assorbita, senza dover simulare il fenomeno dall esterno. 
+Ad esempio, durante il test scan$\_$threshold, la parte analogica verifica il livello di soglia di ogni pixel andando a iniettare un segnale via via più grande nel circuito di lettura.
+In questa situazione ci sono variazioni nella corrente assorbita che possono essere anche grandi. 
+Come prima prova confrontiamo la differenza di comportamento del chip quando si utilizza o meno il regolatore con lo Shunt, mantenendo, comunque, sempre attiva la parte di LDO.
+Andremo poi a vedere se, data la catena seriale di due chip, le attività di queste sono indipendenti o si influenzano a vicenda, i.e. se il circuito di SLDO riesce a nascondere, al chip, il rumore e le eventuali fluttuazioni che vi sono nella catena.
+%Una prima prova che è interessante eseguire consiste nel confrontare una situazione in cui è utilizzato il regolatore con lo Shunt e una situazione in cui non è utilizzato lo Shunt e il chip è alimentato in configurazione LDO. In seguito è lecito chiedersi se, effettivamente in una catena seriale di due chip l'attivita di uno non influenza l'altro. Cioè se il circuito di SLDO riesce ad nascondere al chip eventuali fluttuazioni e rumore  che vi sono nella catena.
 
 \subsubsection{LDOvsSLDO}
+
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/alllin1}
@@ -669,10 +686,18 @@ Una prima prova che è interessante eseguire consiste nel confrontare una situaz
 \caption{VDDD in verde con scala 50 mV/div., e VDDA, in blu con scala 20 mV/div.}
 \label{alllin2}
 \end{figure}
-Riportiamo di seguito una misura che aiuta a capite quali siano i vantaggi effettivi di utilizzare un circuito di alimentazione che implementi uno Shunt oltre al regolatore. Quello che è stato fatto è monitorare le tensioni di alimentazione del chip, VDDD e VDDA, mentre attraverso il sistema di acquisizione dati veniva richiesto al chip di eseguire il test scan$\_$threshold\footnote{Per cercare di massimizzare gli effetti è stato aumentato il numero di pixel uin cui veniva iniettato contemporaneamente un segnale, anch'esso preso molto grande}. 
-In questo modo è stato possibile verificare cosa accade con variazioni di carico prorpie dell'attività del chip, senza doverle simulare esternamente. 
-Dal confronto tra i risultati ottenuti in configurazione con o senza shunt è emersa chiaramente l'importanza di questo elemento, non solo per evitare cheun malfunzionamento del chip renda inutilizzabile tutta la catena, ma anche per rendere stabili le tensioni generate dal regolatore. 
-In figura \ref{alllin1} sono riportate le tensioni VDDD e VDDA in questo caso è stato scelto di utilizzare il chip senza Shunt (alimentato in tensione) e durante il dialogo con il sistema di acquisizione si sono verificate variazioni notevoli nelle tensioni. (per rendere il tutto estremo iniezione di carica su più canali) Con le stessse condizioni utilizzando lo shunt gli sbalzi di tensione sono pressochè spariti (alimentato in corrente), vedi figura \ref{alllin2}, questo perché le variazioni di carico in presenza dello shunt sono gestite localmente, mentre in modalità LDO l'alimentazione è in tensione ed è il generatore esterno che adatta la corrente erogata ai consumi del chip.
+
+Studiamo ora i vantaggi effettivi dell'utilizzo di un circuito di alimentazione che implementi uno Shunt oltre al regolatore.
+La misura effettuata consiste nel monitorare le tensioni di alimentazione, VDDD e VDDA, mentre attraverso il sistema di acquisizione si richiede al chip di eseguire il test scan$\_$threshold
+\footnote{
+  Per cercare di massimizzare gli effetti è stato aumentato il numero di pixel in cui viene iniettato contemporaneamente un segnale molto grande.
+}.
+In questo modo è stato possibile verificare gli effetti causati dalle variazioni di carico proprie dell'attività del chip.
+Dal confronto tra i risultati ottenuti in configurazione con o senza shunt è emersa chiaramente l'importanza di questo elemento, non solo per evitare che un malfunzionamento del chip renda inutilizzabile tutta la catena, ma anche per rendere stabili le tensioni generate dal regolatore. 
+In figura \ref{alllin1} sono riportate le tensioni VDDD e VDDA utilizzando il chip senza Shunt (alimentato in tensione).
+Durante il dialogo con il sistema di acquisizione si sono verificate variazioni notevoli nelle tensioni.
+Con le stessse condizioni, ma utilizzando lo shunt, gli sbalzi di tensione, come si può vedere in figura \ref{alllin2}, spariscono poiché le variazioni di carico sono gestite localmente.
+In modalità LDO, invece, l'alimentazione è in tensione ed è il generatore esterno ad adattare la corrente erogata ai consumi del chip.
 
 %\begin{figure}
 %\centering
@@ -682,10 +707,11 @@ In figura \ref{alllin1} sono riportate le tensioni VDDD e VDDA in questo caso è
 %\end{figure}
 
 \subsubsection{BDAQ}
+
 \begin{figure}
 \centering
 \includegraphics[width=0.9\textwidth]{Immagini/Scurves}
-\caption{Risultato del test \textbf{scan$\_$threshold}. Sulle x vi è il valore in unitàarbitrarie dell'ampiezza del segnale iniettato nel canale di lettura, sulle y vi è il numero di volte che si è avuto risposta e la scala di colore è il numero di canali.}
+\caption{Risultato del test \textbf{scan$\_$threshold}. Sulle x vi è il valore, in unità arbitrarie, dell'ampiezza del segnale iniettato nel canale di lettura, sulle y il numero di volte che si è avuto risposta e n z il numero di canali.}
 \label{Scurves}
 \end{figure}
 \begin{figure}
@@ -694,32 +720,40 @@ In figura \ref{alllin1} sono riportate le tensioni VDDD e VDDA in questo caso è
 \caption{Distribuzione della soglia ottenuta dalle S-curves.}
 \label{Threshold}
 \end{figure}
-Prima di procedere con la presentazione dei risultati è necessario dare almento un'idea guida di che operazione vengono eseguite durante lo scan delle soglie al fine di comprendere meglio il significato delle varie distribuzioni.
-Attraverso i parametri di configurazione è possibile decidere una soglia globale uguale per tutti i canali di lettura, nella pratica però la soglia varierà leggermente tra un canale e l'altro. 
-Quello che si avrà sarà una distribuzione delle soglie intorno ad un valore centrale, oltre a questa dispersione delle soglie, a causa del rumore, si avrà che la risposta del circuito di lettura non sarà una theta in funzione della carica raccolta. 
-Alle volte il rumore si sommerà al segnale facendo rispondere il discriminatore anche a segnali più piccoli della soglia. Se sul ciascun canale iniettiamo un segnale via via più grande ripetendo il processo più volte e andando a riportare quante volte si ha risposta in funzione del segnale iniettato si ottengono le così dette Scurves, se non ci fosse rumore si avrebbe un gradino. 
-Per ogni canale si ha una Scurve messe tutte insieme danno un grafico come quello riportato in figura \ref{Scurves}, dove il colore indica quanti sono i pixel che a un dato Vcal si sono accesi un dato numero di volte. Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse, in figura\ref{Threshold} è riportata la distribuzione delle soglie. 
+
+%Prima di procedere con la presentazione dei risultati è necessario dare almento un'idea guida di che operazione vengono eseguite durante lo scan delle soglie al fine di comprendere meglio il significato delle varie distribuzioni.
+Lo scan delle soglie, descritto all'inizio del paragrafo, permette, attraverso i parametri di configurazione, di decidere una soglia globale, uguale per tutti i canali di lettura, che nella pratica, però, varierà leggermente tra un canale e l'altro. 
+%Attraverso i parametri di configurazione è possibile decidere una soglia globale uguale per tutti i canali di lettura, nella pratica però la soglia varierà leggermente tra un canale e l'altro. 
+Ci si aspetta, quindi, una distribuzione delle soglie intorno ad un valore centrale.
+Inoltre, a causa del rumore, la risposta del circuito di lettura in funzione della carica raccolta non sarà una theta: il rumore, che si somma al segnale, può far scattare il discriminatore anche a segnali più piccoli della soglia.
+Se su ciascun canale iniettiamo un segnale sempre più grande, ripetendo il processo più volte e riportando il numero delle volte in cui il discriminatore scatta in funzione del segnale iniettato, si ottengono le così dette Scurves che, senza rumore, sarebbero a gradino. 
+Mettendo insieme le Scurve di ogni canale, si ottiene un grafico come quello riportato in figura \ref{Scurves}, dove in z si ha il numero di pixel che, a un dato Vcal (in x), si sono accesi un certo numero di volte (in y).
+
+!!! IO QUI RIPORTEREI COME E' FATTO IL FIT !!!
+
+La figura \ref{Threshold} riporta la distribuzione delle soglie dei canali con sovrapposto il fit di una gaussiana (???).
+%Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse, in figura\ref{Threshold} è riportata la distribuzione delle soglie. 
 \begin{figure}
 \centering
 \includegraphics[width=0.9\textwidth]{Immagini/NoiseMap}
 \caption{Mappa del livello di rumore pixel per pixel del FE lineare.}
 \label{NoiseMap}
 \end{figure}
-Oltre alle distribuzioni di soglia e rumore il test restituisce anche una mappa per ogni pixel di questi, questo è utile per verificare se la risposta è omogenea o se per qualche motivo ci sono effetti tali che alcune zone risultano più rumorose, in figura \ref{NoiseMap} è riportata la mappa del rumore ottenuta per il \textit{front end} lineare. 
-La soglia è il livello minimo a cui l'elettronica risponde, se non ci fosse rumore le S-curves sarebbero gradini, nella realtà a causa del rumore che si somma al segnale questi gradini ideali diventano curve, meno assomiglia ad un gradino maggiore è il rumore.
-Come detto in precedenza l'utilizzo dello SLDO dovrebbe evitare il propagarsi del rumore tra parte analogica e digitale(visto che usano due shuntLDO diversi), ma anche evitare che disturbi della linea vengano visti dal carico. 
+Il test restituisce, oltre alle distribuzioni, anche le mappe di soglie e rumore utili per verificare l'omogeneità della risposta e la presenza di zone più rumorose o a rumore nullo, sintomatiche di problemi.
+La figura \ref{NoiseMap} riporta la mappa del rumore ottenuta per il \textit{front end} lineare. 
+%La soglia è il livello minimo a cui l'elettronica risponde, se non ci fosse rumore le S-curves sarebbero gradini, nella realtà a causa del rumore che si somma al segnale questi gradini ideali diventano curve, meno assomiglia ad un gradino maggiore è il rumore.
+Come detto in precedenza l'utilizzo dello SLDO dovrebbe evitare il propagarsi del rumore tra parte analogica e digitale ed evitare che disturbi della linea vengano visti dal carico. 
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{Immagini/chipserial}
 \caption{Fotografia del setup, i due chip posti sulla Single Chip Card sono al centro e ognuno di essi è collegato a una fpga che gestisce la comunicazione tra RD53A e il computer.}
 \label{chipserial}
 \end{figure}
-Al fine di verificare se vi è una correlazione tra la ditribuzione del rumore e l'utilizzo del chip all'interno di una catena seriale si è proceduto con il mettere a confronto i risultati ottenuti da test eseguiti prima con il chip singolo e poi mettendone due in serie o in parallelo. 
-In figura \ref{chipserial} è riportata un'immagine del setup. 
-Tutte e tre le misure sono state eseguite utilizzando la configurazione di SLDO.  
+Al fine di verificare se c'è una correlazione tra la ditribuzione del rumore e l'utilizzo del chip all'interno di una catena seriale, si sono messi a confronto i risultati ottenuti da test eseguiti con il chip singolo con quelli ottenuti poi mettendone due in serie o in parallelo, usando il setup mostrato in figura \ref{chipserial}.
+Tutte e tre le misure sono state eseguite utilizzando la configurazione di SLDO. 
 
-Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto al momento della presa dati era quello su cui era possibile lavorare meglio, sia a livello di ottimizzazione dei vari parametri, sia a livello di software.
-I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
+Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto al momento della presa dati, era quello su cui era possibile lavorare meglio, sia a livello di ottimizzazione dei vari parametri, sia a livello di software (??? NON BELLISSIMO, COSA SI VUOLE DIRE ???).
+I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, ossia per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
 
 \begin{figure}[h]
 \centering
@@ -734,14 +768,14 @@ I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conv
 \label{noiseserial}
 \end{figure}
 
-Trascurando i risultati relativi alla distribuzione delle soglie, che sono indipendenti dalla distribuzione del rumore, riportima in figura le distribuzioni ottenute per il rumore nei tre casi:
+Trascurando i risultati relativi alla distribuzione delle soglie, che sono indipendenti dalla distribuzione del rumore, riportiamo in figura le distribuzioni ottenute per il rumore nei tre casi:
 \begin{itemize}
 \item Chip singolo, figura \ref{noisesingle}.
 \item Serie di due chip, figura \ref{noiseserial}.
 \item Parallelo di due chip, figura \ref{noiseparallel}.
 \end{itemize}
-Come si puòvedere nonostante nel caso serie e parallelo anche sul secondo chip fossero eseguiti test, in modo da simularne un'attività, la distribuzione del rumore non peggiora. 
-Questo dimostra che effettivamente esternamente i chip non sono visibili e viceversa il chip non vede le variazioni che ci sono sulla linea.
+Come si può vedere, nonostante sul secondo chip fossero eseguiti test, in modo da simulare un'attività, le distribuzioni del rumore dei setup in serie e in parallelo non peggiorano rispetto al caso con con chip singolo.
+Questo dimostra che, effettivamente, esternamente i chip non sono visibili e, viceversa, il chip non vede le variazioni present presentii sulla linea.
 
 \begin{figure}
 \centering
