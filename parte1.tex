@@ -137,7 +137,7 @@ In Fig.~\ref{SLDO5A} \`e mostrato lo schema elettrico dello ShuntLDO in versione
 Rispetto a quanto visto in precedenza si hanno alcune differenze, benché l'idea generale di funzionamento rimanga la stessa. 
 In questo schema il carico si trova tra i nodi $\mathrm{V_{out}}$ e $\mathrm{I_{out}}$. Grazie al partitore costituito da R1 e R2, con R1=R2, e all'amplificatore A1 $\mathrm{V_{out}}$ risulta essere il doppio della tensione di riferimento $\mathrm{V_{ref}}$.
 %\footnote{$\mathrm{V_{ref}}$ non ha niente a che vedere con $\mathrm{I_{ref}}$.}
-L'amplificatore A3, invece, confronta le correnti che scorrono nel ramo di R3 ($\mathrm{I_{ref}}$) e in quello di M2 e regola il mosfet M4 di conseguenza. 
+L'amplificatore A3, invece, confronta la corrente $\mathrm{I_{ref}}$ che scorre nel ramo di R3 (dato che normalmente i nodi $\mathrm{I_{in}}$ e $\mathrm{R_{in}}$ sono connessi) e quella che scorre in M2 e regola il mosfet M4 di conseguenza. 
 La coppia di mosfet M1-M2 costituisce un \textit{current-mirror} configurato in modo tale che il rapporto k tra le due correnti sia uguale a 1000 grazie ad una appropriato dimensionamento dei due dispositivi\footnote{
   In un \textit{current-mirror} il rapporto k è uguale a $\dfrac{W_1L_2}{W_2L_1}$ dove $W_1$ e $L_1$ e $W_2$ e $L_2$ sono, rispettivamente, profondità e lunghezza dei due mosfet.
 }. 
@@ -146,12 +146,11 @@ Questa scelta progettuale definisce il modo in cui lo ShuntLDO è visto esternam
 \begin{equation}
 \mathrm{I_{in} \sim k I_{ref} \sim k \frac{V_{in} - V_{thM6}}{R_3}}
 \end{equation}
-dove $\mathrm{V_{thM6}}$ \`e la tensione di soglia del mosfet M6. Quindi il generatore connesso al nodo $\mathrm{V_{in}}$ vede un carico resistivo pari a $\frac{R3}{k}$ in serie con una piccola tensione di offset. Il valore di R3 è, quindi, un importante parametro, la cui scelta determina la tensione nel punto di lavoro per una data corrente e, pi\`u in generale, la pendenza di $\mathrm{V_{in}}$ in funzione di $\mathrm{I_{in}}$ nella zona di regolazione, come visibile in Fig.~\ref{fig:IVSLDO} che mostra il caratteristico grafico corrente-tensione dello ShuntLDO. 
+dove $\mathrm{V_{thM6}}$ \`e la tensione di soglia del mosfet M6. Quindi il generatore connesso al nodo $\mathrm{V_{in}}$ vede un carico resistivo pari a $\frac{R3}{k}$ in serie con una piccola tensione di offset. Il valore di R3 è, quindi, un importante parametro, la cui scelta determina la tensione nel punto di lavoro per una data corrente e, pi\`u in generale, la pendenza di $\mathrm{V_{in}}$ in funzione di $\mathrm{I_{in}}$ nella zona di regolazione, come visibile in Fig.~\ref{fig:IVSLDO} che mostra il caratteristico grafico corrente-tensione dello ShuntLDO che approfondiremo in seguito. 
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.4\textwidth]{Immagini/CaratteristicaSLDO.png}
-\caption{Curva caratteristica corrente-tensione per uno ShuntLDO che mostra $\mathrm{V_{in}}$ () e $\mathrm{V_{out}}$ () in funzione di $\mathrm{I_{in}}$; la 
-Circuito semplificato dello SLDO 0.5 A.}
+\includegraphics[width=0.5\textwidth]{Immagini/CaratteristicaSLDO.png}
+\caption{Caratteristica corrente-tensione per uno ShuntLDO che mostra $\mathrm{V_{in}}$ (curva) e $\mathrm{V_{out}}$ (curva) in funzione di $\mathrm{I_{in}}$; la regolazione di  $\mathrm{V_{out}}$ al valore di $$ inizia per $\mathrm{I_{in}}\sim$. Al di sopra di questo valore   $\mathrm{V_{in}}$ ha una pendenza pari a $\sim \frac{R3}{k}$.}
 \label{SLDO5A}
 \end{figure}
 
@@ -162,13 +161,12 @@ Circuito semplificato dello SLDO 0.5 A.}
 La caratteristica resistiva, inoltre, fa s\`i che due ShuntLDO in parallelo offriranno una resistenza equivalente pari al parallelo delle resistenze equivalenti dei singoli dispositivi superando le problematiche descritte sopra che affliggono un tradizionale circuito shunt basato su diodo Zener.
 
 Per funzionare correttamente questo circuito necessita di una tensione in ingresso minima di circa $1.4V$.
-Valori di resistenza maggiori consentiranno, quindi, di operare con correnti minori, con il vantaggio di consumare minor potenza
-\footnote{
+Valori di resistenza maggiori consentiranno, quindi, di operare con correnti minori, con il vantaggio di consumare minor potenza\footnote{
   La corrente in ingresso è fissata e quella non utilizzata viene dissipata sullo shunt, che diventa conseguentemente molto caldo.
 },
 ma con lo svantaggio di aver minor spazio per le fluttuazioni del carico. 
 Analogamente resistenze minori avranno l'effetto contrario: tensioni minori con correnti maggiori.
-Nello schematico è indicato con $\mathrm{R_{ext}}$ il punto in cui è possibile collegare una resistenza esterna in sostituzione ad R3, presente di default all'interno dello SLDO.
+Nello schematico è indicato con $\mathrm{R_{ext}}$ il punto in cui è possibile collegare una resistenza esterna in sostituzione di R3 che \`e integrata nello SLDO.
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{Immagini/SLDO2A}
