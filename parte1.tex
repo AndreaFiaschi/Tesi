@@ -47,11 +47,11 @@ Per flessibilit\`a e versatilit\`a \`e auspicabile che questa elettronica addizi
 Un possibile schema di principio di un tale circuito \`e visibile in~Fig.~\ref{zener} in cui si sfrutta un diodo Zener contropolarizzato per ottenere la stabilizzazione in tensione al carico `load'. Il funzionamento è molto semplice, la corrente in ingresso induce una caduta di tensione sulla resistenza R che, pur tuttavia, non deve impedire di portare il diodo Zener in contropolarizzazione oltre la tensione di soglia. A questo punto sarà lo stesso diodo a mantenere la tensione ai capi del carico costante assorbendo tutta la corrente non necessaria al carico, agendo da shunt. 
 Questo schema però presenta problemi operativi nel momento in cui si mettano più regolatori in parallelo come pu\`o essere necessario fare in applicazioni pratiche come, per esempio, nel caso di un ROC dove servono due tensioni generalmente diverse per la parte digitael e la parte analogica ciascuna fornita da un regolatore diverso o nel caso di un modulo dove pi\`u ROC sono alimentati in parallelo condividendo la stessa corrente in ingresso. Il diodo Zener che, per inevitabili tolleranze di fabbricazione, si trovi all'accensione ad entrare in conduzione prima degli altri assorbir\`a tutta la corrente disponibile con effetti imprevedibili e potenzialmente distruttivi. 
 
-Per ovviare a queste criticità è stato sviluppato un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando \`e minima la differenza tra la tensione in ingresso e quella in uscita a valle della regolazione; in particolare$\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 V}$.} accoppiato ad un circuito di shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, denominato {\em ShuntLDO}, con caratteristiche elettriche tali da superare le problematiche a cui si \`e sopra accennato.
+Per ovviare a queste criticità è stato sviluppato un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando \`e minima la differenza tra la tensione in ingresso e quella in uscita a valle della regolazione; in particolare$\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 \V}$.} accoppiato ad un circuito di shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, denominato {\em ShuntLDO}, con caratteristiche elettriche tali da superare le problematiche a cui si \`e sopra accennato.
 
 Il regolatore, che va sotto il nome ShuntLDO, \`e stato inizialmente sviluppato dalla collaborazione Atlas per un suo utilizzo nell'ambito del progetto {\em Insertable B-Layer} (IBL)~\cite{IBL}. Infatti la famiglia di ROC disegnati per IBL, FE-I3~\cite{ROCFEI3} e FE-I4~\cite{ROCFEI4}, implementano entrambi circuiti ShuntLDO dimensionati per correnti totali di $\sim 0.5\A$. Pur tuttavia IBL non implementa uno schema di alimentazione seriale perch\'e ad esso fu preferito uno schema di alimentazione pi\`u tradizionale.
 
-Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a $65\nm$ dalla collaborazione RD53 per la sfida di HL-LHC: inizialmente in una versione a $\sim 0.5\A$, necessaria per valutare il dispositivo in $65\nm$, per poi arrivare alle attuali versioni dimensionate per corrente massime di $\sim 2\A$.
+Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a 65~nm dalla collaborazione RD53 per la sfida di HL-LHC: inizialmente in una versione a $\sim 0.5\A$, necessaria per valutare il dispositivo in $65\nm$, per poi arrivare alle attuali versioni dimensionate per corrente massime di $\sim 2\A$.
 
 %Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
 %Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
@@ -94,7 +94,7 @@ La Fig.~\ref{SLDOprinciple} mostra graficamente il funzionamento dello ShuntLDO 
 \label{SLDOprinciple}
 \end{figure}
 
-\subsection{Lo ShuntLDO da $0.5\A$ in 65nm}
+\subsection{Lo ShuntLDO da 0.5 A in 65nm}
 
  
 \begin{figure}[!htbp]
@@ -344,7 +344,7 @@ V_{ref} & V_{out} & 2 \cdot V_{ref}- V_{out} & R_{eff} & V_{offset} \\
 %Come detto, in questa prima misura non è stato applicato nessun carico al $\mathrm{V_{out}}$, dunque tutta la corrente in ingresso scorre nello Shunt, andando a scaldare molto l'oggetto, questa misura ci aiuterà in un confronto successivo con situazioni in cui è presente un carico, sia statico che dinamico. 
 Questa misura in assenza di carico al $\mathrm{V_{out}}$, in cui tutta la corrente in ingresso scorre nello shunt scaldandolo significativamente, è di particolare interesse per i confronti con la configurazione in cui è presente un carico, sia esso statico o dinamico.
 
-\subsection{Misure di due ShuntLDO in serie con carico da $\mathrm{4 \Omega}$}
+\subsection{Misure di due ShuntLDO in serie con carico da 4 $\mathrm{\Omega}$}
 
 %La successiva misura di test che è stata eseguita con questo prototipo di shunt, prima del passaggio alla versione da 2A, è un serie di due SLDO entrambi con un carico resistivo di $\mathrm{4 \Omega}$. In questo caso i due elementi hanno $\mathrm{V_{ref}}$ diversi $\mathrm{V_{ref1}=0.497}$ V e $\mathrm{V_{ref2}=0.553 V}$. 
 %Ciò non rappresenta un problema in quanto il comportamento "esterno " non ne è influenzato.
@@ -383,8 +383,8 @@ La prima misura di interesse è la sensibilità di $\mathrm{V_{out}}$ alle varia
 In figura \ref{SLDO5singlepulse} è riportato l'andamento dell'undershoot in funzione della corrente assorbita dal mosfet.
 Le misure sono state effettuate con una alimentazione in corrente $\mathrm{I_{in} = 0.5 A}$, $\mathrm{V_{ref} \sim 0.5 V}$ e carico resistivo su $\mathrm{V_{out}}$ di 4 $\Omega$. 
 Conoscere il valore della corrente in ingresso è importante poiché, nel momento in cui il carico dinamico e statico assorbono una corrente maggiore di quella totale in ingresso, il sistema smette di funzionare in maniera corretta.
-Gli effetti visibili, nelle situazioni in cui $\mathrm{I_{mosfet} + I_{load} > I_{in}}$, non sono direttamente legati alle prestazioni dello ShuntLDO.Al contrario si può vedere dal grafico in figura \ref{SLDO5singlepulse} come gli undershoot siano inferiori a 10 mV fintantoché $\mathrm{I_{mosfet}}$ rimane sotto gli 0.250 A, valore oltre cui $\mathrm{I_{mosfet} + I_{load} > I_{in}}$
-\footnote{
+Gli effetti visibili, nelle situazioni in cui $\mathrm{I_{mosfet} + I_{load} > I_{in}}$, non sono direttamente legati alle prestazioni dello ShuntLDO. 
+Al contrario si può vedere dal grafico in figura \ref{SLDO5singlepulse} come gli undershoot siano inferiori a 10 mV fintantoché $\mathrm{I_{mosfet}}$ rimane sotto gli 0.250 A, valore oltre cui $\mathrm{I_{mosfet} + I_{load} > I_{in}}$~\footnote{
   $\mathrm{I_{load}}$ è la corrente che scorre nel carico resistivo, in questo caso $\mathrm{I_{load} = \dfrac{V_{out}}{R} = 0.250 A}$.
 }. 
 
