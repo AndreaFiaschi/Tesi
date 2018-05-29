@@ -1,0 +1,63 @@
+\documentclass[a4paper,12pt,italian]{article}
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{appendix}
+\usepackage{amscd}
+\usepackage{subfig}
+\usepackage{cite}
+\usepackage[autostyle,italian=guillemets]{csquotes}
+\usepackage{bm}
+\usepackage{vmargin}
+
+\setmarginsrb{30mm}{30mm}{30mm}{20mm}{0pt}{0mm}{0pt}{0mm}
+\hyphenation{ShuntLDO}
+
+\begin{document}
+\pagestyle{plain}
+\pagenumbering{gobble}
+\noindent
+
+\begin{center}
+\textbf{Sviluppo di un sistema innovativo di alimentazione del tracciatore interno di CMS per la fase ad alta luminosità di LHC.}
+\end{center}
+\begin{center}
+Relatore: Dott. Giacomo Sguazzoni, giacomo.sguazzoni@fi.infn.it \\
+Correlatore: Prof. Raffaello D'Alessandro, raffaello.dalessandro@unifi.it \\
+Candidato: Andrea Fiaschi, fiaschi.93@gmail.com
+\end{center}
+
+
+In questo lavoro di tesi è stato studiato il circuito che sarà utilizzato localmente sui ROC (\textit{Read Out Chip}) per gestire l'alimentazione seriale che è prevista per il tracciatore di CMS di fase-2 in vista della fase ad alta luminosità del \textit{Large Hadron Collider} (LHC), chiamata HL-LHC (\textit{High Luminosity-LHC}). 
+Il sistema utilizzato per gestire le tensioni PoL (\textit{Point of Load})sfrutta un circuito innovativo in tecnologia CMOS a 65 nm basato su un regolatore con caratteristiche di LDO (\textit{Low Drop Out}) accoppiato ad uno Shunt, abbreviando ShuntLDO. 
+La scelta di utilizzare un'alimentazione seriale per il tracciatore a pixel di fase-2 è una novità rispetto al tracciatore di fase-0 e quello di fase-1. Il motivo di questa scelta risiede nella necessita di minimizzare la sezione dei cavi all'interno del rivelatore, che sono materiale inerte e causa di un peggioramento delle prestazioni. 
+L'altro possibile approccio, analogo a quello utilizzato per il tracciatore a pixel di fase-1, consta dell'utilizzo di convertitori DCDC. L'impiego di questa soluzione è però afflitta da due limitazioni importanti che ne impediscono l'implementazione. 
+Il primo motivo è che, essendo dispositivi di potenza, la resistenza alla radiazione degli ASIC su cui si basano i DCDC è limitata e dunque dovrebbero essere posizionati a R$\sim$20--25 cm dall'asse dei fasci, richiedendo l'utilizzo di cavi di opportuna sezione per la trasmissione di potenza negli ultimi 10--100 cm, vanificando la riduzione di materiale in una regione molto critica. 
+Il secondo motivo è la scarsa possibilità di miniaturizzazione dei DCDC, poiché al loro interno sono presenti induttanze avvolte su nuclei ferromagnetici (questo per poter operare nel campo magnetico in cui è immerso il tracciatore). 
+
+Il lavoro di tesi si sviluppa a partire dallo studio dei prototipi di ShuntLDO da 0.5 e 2 A per arrivare alla valutazione dello ShuntLDO presente nel prototipo del ROC, RD53A. 
+Caratteristica fondamentale dello ShuntLDO è la capacità del circuito di alimentare un carico, nel nostro caso RD53A, gestendo localmente le variazioni presentandosi alla catena seriale come un carico statico caratterizzato da un offset $\mathrm{V_{offset}}$ ed una resistenza caratteristica R. 
+Questa caratteristica consente di alimentare la catena seriale con una corrente costante, dal momento che sarà lo ShuntLDO a regolare localmente le fluttuazioni del carico e permette di mettere più elementi in parallelo, tra questi la distribuzione di corrente dipenderà dal parallelo delle varie R caratteristiche. 
+Nello studio di questi dispositivi mi sono concentrato sulla caratterizzazione della risposta con un carico prima statico e poi dinamico al variare della corrente di alimentazione e sulla verifica che lo ShuntLDO sia effettivamente capace di isolare il carico dai disturbi sulla linea e vice versa. 
+
+Nel lavoro di tesi sono stato in grado di confermare l'affidabilità del principio
+di funzionamento con cui è stato progettato lo ShuntLDO, evidenziando
+gli aspetti cruciali per avere un bilanciamento delle correnti durante l'accensione e dimostrando la capacità dello ShuntLDO di isolare il carico dai disturbi esterni 
+presenti sulla linea di alimentazione. 
+Allo stesso modo ho evidenziato criticità e problemi dell'implementazione dello ShuntLDO all'interno del ROC RD53A, tutt'ora sotto studio. Tra queste spiccano l'importanza di un circuito che generi le tensioni di riferimento in modo affidabile, la presenza di resistenze spurie e una dipendenza del valore dell'offset dal valore della resistenza caratteristica.
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
