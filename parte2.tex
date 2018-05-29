@@ -1,16 +1,17 @@
 \chapter{RD53A}
-
+\label{cap:RD53A}
 Lo sviluppo di un sistema di alimentazione seriale e, in particolare, del circuito di alimentazione SLDO, che gestisce localmente le tensioni su chip, è parte integrante del progetto di RD53A\cite{RD53A}.
 Questo progetto è stato approvato nell'autunno del 2015, dopo la revisione da parte delle collaborazioni ATLAS, CMS e RD53A, e nel 2016 è iniziato il vero e proprio sviluppo, con lo scopo di dimostrare la possibilità di utilizzare tecnologia CMOS  in 65 nm, in vista della fase ad alta luminosità di ATLAS e CMS. 
 %, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
 
-\section{Organizzazione del chip} 
+\section{Organizzazione del chip}
+\label{Organizzazionechip}
+
 RD53A non deve essere inteso come il prodotto finale, ma come un prototipo in via di sviluppo.
 Al suo interno, infatti, sono presenti tre differenti front end (FE), per permettere un loro confronto in termini di prestazioni.
 % possiede molte modifiche di design utili solo in una prima fase di test, ad esempio al suo interno sono presenti tre diversi front end (FE), già questo causa una non uniformità del chip. 
 RD53A è, quindi, la base di partenza per arrivare al prodotto finale, in cui uno solo dei front end sarà scelto e utilizzato su tutta la matrice di pixel.
-Inoltre, in RD53A, la matrice di pixel ha 400 colonne e 192 righe, mentre nel prodotto finale si avrà un aumento del numero totale dei pixel (!!! quanto è questo numero? Non si sa ancora? Quali sono le possibili opzioni?!!!). 
-Il sistema di alimentazione e di polarizzazione dei pixel è progettato per un numero di righe massimo pari a 384.%letto sul manuale
+Inoltre, in RD53A, la matrice di pixel ha 400 colonne e 192 righe, in realtà il sistema di alimentazione e di polarizzazione dei pixel è progettato per un numero di righe massimo pari a 384.%dal manuale
 
 \begin{figure}
 \centering
@@ -20,8 +21,8 @@ Il sistema di alimentazione e di polarizzazione dei pixel è progettato per un n
 \end{figure}
 
 Facendo riferimento alla figura \ref{RD53ALayout}, l'area del chip che sarà saldata col sensore è posta nella parte alta ed è organizzata secondo una matrice di 192 $\times$ 400 pixel di area 50 $\mu$m $\times$ 50 $\mu$m.
-Al di sopra di questa è presente una fila di \textit{pad} utilizzate per \textit{debug}, che sarà eliminata nella versione finale.
-La parte di circuito necessaria per configurare, monitorare e leggere il chip, invece, si trova nella parte in basso con posta al di sotto solo una fila di pad per i \textit{wire-bond}. 
+Al di sopra di questa è presente una fila di piazzole utilizzate per misure di \textit{debug}, che sarà eliminata nella versione finale.
+La parte di circuito necessaria per configurare, monitorare e leggere il chip, invece, si trova nella parte in basso con posta al di sotto solo una fila di piazzole per i \textit{wire-bond}. 
 La matrice di pixel è organizzata in \textit{cores} di 8 $\times$ 8 pixel, all'interno di ciascuno dei quali i 64 front end sono disposti in gruppi di 4, chiamati isole analogiche, come mostrato in figura \ref{AnalogIsland}. 
 Queste isole sono circondate da un ``mare'' digitale ed il circuito intorno ad ogni isola analogica non è lo stesso, ma cambia a seconda delle esigenze di progetto. 
 
@@ -33,6 +34,7 @@ Queste isole sono circondate da un ``mare'' digitale ed il circuito intorno ad o
 \end{figure} 
 Nelle parti più esterne del chip tutti i blocchi analogici sono raggruppati in macro blocchi chiamati Analog Chip Bottom (ACB).
 Il blocco ACB è circondato dal blocco Digital Chip Bottom (DCB) che implementa la logica digitale per Input, Output e configurazione. 
+La parte più bassa, sopra le piazzole per i wire-bond, ospita gli ShuntLDO che sono distribuiti su 
 
 \section{Front End}
 
@@ -237,7 +239,7 @@ La presenza del regolatore LDO, anche privo di shunt, assicura che sbalzi di ten
 \end{itemize}
 
 \section{Misure Statiche con RD53A}
-
+\label{45}
 Utilizzando il chip in configurazione ShuntLDO, raffreddato in modo passivo con un radiatore a contatto termico con il retro, si è proceduto alla caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip
 \footnote{
   Uno per la parte analogica ed uno per quella digitale.
@@ -547,7 +549,7 @@ A differenza di quanto osservato con R3, l'offset non solo ha un andamento linea
 Infine, vi è una relazione tra offset e pendenza, su cui sono tutt'ora in corso studi per comprenderne le cause ed eliminarle.
 
 \subsection{Variazioni di carico}
-
+\label{451}
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/LoadVDDD}
@@ -591,6 +593,17 @@ L'andamento della tensione prodotta dal regolatore è riportata in figura \ref{L
 Per la tensione di uscita la caduta è di $\sim$15 mV per un carico di 0.690 A, %21mOhm
 per quella in ingresso si ha, invece, una diminuzione di $\sim$26 mV in corrispondenza di un carico di 0.690 A, anche in questo caso il consumo totale di corrente supera 1 A. 
 La diminuzione di tensione per $\mathrm{V_{in}}$ inizia con un carico di $\sim$0.610 A.
+
+
+Un'altra misura di interesse è quella relativa alle fluttuazioni della tensione generata dallo ShuntLDO per variazioni repentine del carico, in funzione del margine di corrente fornito Fig.~\ref{LoadTransient}. 
+Questi risultati sono stati ottenuti andando ad abilitare e disabilitare il clock su parte dei canali di lettura, questo causa una variazione della corrente assorbita dalla sola parte digitale, che quindi è soggetta a fluttuazioni di tensione più o meno importanti.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.65\textwidth]{Immagini/LoadTransientDominik}
+\caption{Il grafico riporta il valore di picco della variazione della tensione VDDD  in funzione del margine di corrente dato su 1 A di alimentazione nel caso in cui  i consumi di parte analogica e digitale sono entrambi $\sim$0.5 A, la fluttuazione è ottenuta abilitando e disabilitando il segnale di clock per una parte dei canali di lettura. 100$\%$ significa che la corrente fornita al chip è 1 A+1 A.}
+\label{LoadTransient}
+\end{figure}
 
 \subsection{Fast ramp-up}
 
