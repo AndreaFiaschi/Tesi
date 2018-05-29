@@ -215,7 +215,7 @@ A titolo di esempio, quindi, prendiamo la situazione in cui si ha una catena ser
 % questo per far si che nel caso un regolatore si guasti , la corrente possa essere assorbita da un altro regolatore all'interno del modulo\footnote{Come già detto i regolatori devono essere in grado d lavorare in parallelo, generare differenti tensioni dalle correnti in ingresso e tenere costante il consumo di corrente tramite lo shunt.}. 
 assumiamo che il punto di lavoro scelto corrisponda a $\mathrm{R_{eff}=0.3\Ohm}$ $\mathrm{V_{offset}=0.8}\V$ per il parallelo tra lo ShuntLDO `analogico' e lo ShuntLDO `digitale' dato che la resistenza equivalente di un singolo ShuntLDO \`e tipicamente $0.600\Ohm$.
 %Prendiamo come modello la situazione in cui si ha un serie di 8 moduli con 4 chip ciascuno, assumiamo che $\mathrm{V_{offset}=0.8} \V$ e $\mathrm{R_{eff}=0.3}$ $\Omega$ per ciascun chip\footnote{$\mathrm{R_{eff}}$ del singolo SLDO è circa 0.600 $\Omega$, nel chip sono presenti due SLDO in parallelo uno per l'alimentazione della parte digitale ed uno per quella analogica. La $\mathrm{R_{eff}}$ con cui viene visto il chip è dunque la metà, 0.300 $\Omega$.}. 
-Con una corrente di lavoro totale richiesta di $\sim\mathrm{I^{ROC}_{in}=2.0}\A$ per ROC, equamente divisa tra parte analogica e parte digitale, la corrente totale da fornire all'intero modulo \`e $\sim \mathrm{I_{in}^{modulo}=8.0}\A$ corrispondente a $\mathrm{V_{modulo}=1.4} \V$.
+Con una corrente di lavoro totale richiesta di $\mathrm{I^{ROC}_{in}\sim2.0}\A$ per ROC, equamente divisa tra parte analogica e parte digitale, la corrente totale da fornire all'intero modulo \`e $\mathrm{I_{in}^{modulo}\sim8.0}\A$ corrispondente a $\mathrm{V_{modulo}=1.4} \V$.
 
 Rispetto a questo valore nominale la corrente circolante nella catena deve essere incrementata per avere un opportuno margine per gestire picchi di carico da parte del ROC a valle del regolatore. Come si vedr\`a pi\`u avanti, per esempio in Fig.~\ref{fig:LoadTransient}, per avere stabilit\`a della regolazione \`e ragionevole avere un $\sim20-25\%$ di corrente in pi\`u rispetto al valore nominale.
 % Per avere un po' di margine incrementiamo la corrente di un 20$\%$, la scelta di dare un margine del 20$\%$, piuttosto che del 40$\%$ è una scelta giustificata qualitativamente dall'ampiezza dei picchi di tensione generati dallo SLDO in concomitanza di un transiente, in figura \ref{LoadTransient} è riportato il valore di picco dell'undershoot/overshoot in funzione del margine di corrente dato su 1 A di alimentazione.
@@ -225,7 +225,7 @@ Rispetto a questo valore nominale la corrente circolante nella catena deve esser
 % \caption{Il grafico riporta il valore di picco dell'undershoot/overshoot in funzione del margine di corrente dato su 1 A di alimentazione nel caso in cui  i consumi di parte analogica e digitale sono entrambi $\sim$0.5 A, 100$\%$ significa che la corrente fornita al chip è 1 A+1 A.}
 % \label{fig:LoadTransient}
 % \end{figure}
-Conseguentemente $\mathrm{I^{ROC}_{in}=2.4}\A$, $\mathrm{I_{in}^{modulo}=9.6}$ A, $\mathrm{V_{modulo}\sim1.5} \V$ e, quindi, la caduta di tensione su tutta la catena, formata da 8 moduli, sarà $\sim 12\V$.
+Conseguentemente $\mathrm{I^{ROC}_{in}=2.4}\A$, $\mathrm{I_{in}^{modulo}=9.6}$ A, $\mathrm{V_{modulo}\sim1.5} \V$ (per un consumo totale di $\sim14.4\W$ per modulo) e, quindi, la caduta di tensione su tutta la catena, formata da 8 moduli, sarà $\sim 12\V$.
 %Con una corrente di $\mathrm{I_{in}=2.0}$ A per chip\footnote{Che vale a dire 1 A per ciascuno dei due SLDO presenti nel chip.} ($\mathrm{I=8.0}$ A per modulo) si avrà un $\mathrm{V_{modulo}=1.4} \V$, per avere un po' di margine incrementiamo la corrente di un 20$\%$, la corrente che arriva nei moduli sarà I = 9.6 A. 
 %In questa situazione $\mathrm{V_{modulo}=1.52}$ V e dunque la caduta di tensione su tutta la catena formata da 8 moduli sarà pari a $12.16 \V$. Questa non è la caduta di tensione totale, va tenuto conto anche della resistenza dovuta ai cavi, in questo esempio assumiamo valga 2 $\Omega$. 
 %Tenendo conto anche della resistenza dovuta ai cavi, che assumiamo valga $2 \Ohm$,
@@ -267,7 +267,7 @@ e la potenza dissipata
 \begin{equation*}
   \mathrm{W_{modulo} = 3 \cdot W_{chip} = 3 \cdot I \cdot V_{modulo} = I_{modulo} \cdot V_{modulo} = 16.9W},
 \end{equation*}
-con un incremento di $2\W$ per il singolo modulo, corrispondente a circa il $13\%$. Sul totale della catena, questa maggior richiesta di potenza \`e dell'ordine del \% e quindi marginale. Un ulteriore malfunzionamento porterebbe la caduta di tensione sul modulo a $\mathrm{V_{modulo} = 4.8\A \cdot 0.3 \Omega + 0.8\V = 2.2 \V}$, quindi oltre la soglia di tolleranza in tensione della tecnologio CMOS a $65\nm$ con la conseguenza di avere l'imminente rottura anche degli ulteriori due ROC. La situazione \`e in generale assai pi\`u critica per i moduli 1x2 dato che, in caso di malfunzionamenti, il ROC rimanente si troverebbe a gestire il doppio della corrente nominale.
+con un incremento di $\sim2.5\W$ per il singolo modulo, corrispondente a circa il $17\%$. Sul totale della catena, questa maggior richiesta di potenza \`e dell'ordine del \% e quindi marginale. Un ulteriore malfunzionamento porterebbe la caduta di tensione sul modulo a $\mathrm{V_{modulo} = 4.8\A \cdot 0.3 \Omega + 0.8\V = 2.2 \V}$, quindi oltre la soglia di tolleranza in tensione della tecnologio CMOS a $65\nm$ con la conseguenza di avere l'imminente rottura anche degli ulteriori due ROC. La situazione \`e in generale assai pi\`u critica per i moduli 1x2 dato che, in caso di malfunzionamenti, il ROC rimanente si troverebbe a gestire il doppio della corrente nominale.
 
 Si spera per\`o che risulti chiaro da questi esempi che la scelta del punto di lavoro (e quindi di  $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$) \`e di importanza fondamentale non solo per le condizioni operative standard, ma anche per la gestione dei malfunzionamenti che spostano localmente il punto di lavoro dei regolatori adiacenti. Non \`e detto per\`o che il meccanismo di rottura pi\`u frequente sia quello in cui il ROC e i suoi regolatori non sono pi\`u attraversati da corrente; \`e ipotizzabile che gli scenari pi\`u frequenti di rottura coinvolgano il solo ROC vero e proprio e che quindi gli ShuntLDO ad esso relativi continuino a funzionare. In questo caso l'inconveniente \`e che tutta la potenza viene dissipata sui mosfet M4 dei regolatori. Per questo motivo nell'implementazione reale dello ShuntLDO sul ROC RD53A e versioni successive, la parte di potenza (essenzialmente il ramo costituito da M1 e M4) \`e ottenuta da un certo numero di repliche connesse in parallelo e distribuite sulla superficie del ROC per evitare un potenziale `hot spot' sia in condizioni standard di funzionamento che in caso di malfunzionamenti.
 
@@ -308,11 +308,23 @@ Si spera per\`o che risulti chiaro da questi esempi che la scelta del punto di l
 %\end{figure}
 
 
-\section{Caratterizzazione ShuntLDO da 0.5A}
+\section{Caratterizzazione dello ShuntLDO da $0.5\A$}
 
-Riportiamo in questo paragrafo le prime misure effettuate sul prototipo di ShuntLDO da 0.5A. A differenza della versione a 2A, in questa non è possibile inserire un valore di offset regolabile al $\mathrm{V_{out}}$.
-Come primo studio abbiamo caratterizzato lo ShuntLDO, utilizzando una alimentazione in corrente.
-Le misure effettuate sono servite ad esaminare l'andamento della tensione di $\mathrm{V_{in}}$, $\mathrm{V_{out}}$ e $\mathrm{V_{ref}}$ in funzione della corrente in ingresso.
+Riportiamo in questo paragrafo alcune misure effettuate sul prototipo di ShuntLDO da $0.5\A$ che hanno permesso di prendere confidenza con i concetti dell'alimentazione seriale e con l'utilizzo dello ShuntLDO.
+%A differenza della versione a $2\A$, in questa non è possibile inserire un valore di offset regolabile al $\mathrm{V_{out}}$.
+
+Questo prototipo nasce come un singolo ASIC realizzato per la verifica e la validazione del solo ShuntLDO. Per il test il chip viene montanto e microsaldato su una scheda di test progettata appositamente e molto versatile. In Fig.~\ref{PCB05A} sono visibili la struttura e una foto del chip stesso, che contiene tre repliche del circuito ShuntLDO, e il disegno del circuito stampato della scheda di test.
+\begin{figure}
+\centering
+\includegraphics[width=0.32\textwidth]{Immagini/chipSLDO05A.png}
+\hfill
+\includegraphics[width=0.32\textwidth]{Immagini/chip05_foto.png}
+\hfill
+\includegraphics[width=0.32\textwidth]{Immagini/pcb05.pdf}
+\caption{La geometria dello ShuntLDO a $0.5\A$ in CMOS a $65\nm$ (sinistra), la foto al microscopio del prototipo montato sulla scheda di test (centro) e il disegno della scheda di test (destra); il chip contiene tre repliche del regolatore e misura circa $2\mm\times 2\mm$ mentre la scheda ha una dimensione di circa $10\cm \times 10\cm$.}
+\label{PCB05A}
+\end{figure}
+Come primo studio abbiamo caratterizzato lo ShuntLDO utilizzando una alimentazione in corrente. Le misure effettuate sono servite ad esaminare l'andamento delle tensioni $\mathrm{V_{in}}$, $\mathrm{V_{out}}$ e $\mathrm{V_{ref}}$ in funzione della corrente in ingresso.
 
 \subsection{Misure in assenza di carico}
 
@@ -322,50 +334,53 @@ Le misure effettuate sono servite ad esaminare l'andamento della tensione di $\m
 \caption{V$_{in}$ (blu), V$_{out}$ (rosso) e V$_{ref}^2$ (giallo) in funzione della corrente di ingresso.}
 \label{provaSLDO5}
 \end{figure}
-
-In figura \ref{provaSLDO5} è riportato il grafico ottenuto variando la corrente in ingresso, in configurazione senza carico sul $\mathrm{V_{out}}$.
-Questa, quindi, è tale per cui tutta la corrente fornita dall'alimentazione viene assorbita dallo shunt.
-La parte a sinistra del grafico corrisponde alla situazione in cui il regolatore non è attivo. Andiamo, quindi, a considerare l'andamento asintotico riportando, in particolare, alcuni valori di interesse:
-
+In Fig.~\ref{provaSLDO5} è riportato il grafico ottenuto variando la corrente in ingresso, in configurazione senza carico al nodo $\mathrm{V_{out}}$ per cui tutta la corrente fornita dall'alimentazione scorre nello shunt scaldandolo significativamente. Questa misura è di particolare interesse per i confronti con la configurazione in cui è presente un carico, sia esso statico o dinamico.
+Dato che la parte a sinistra del grafico corrisponde alla situazione in cui il regolatore non è attivo, consideriamo l'andamento asintotico nella zona di regolazione riportando, in particolare, alcuni valori di interesse:
 \[
-\begin{array}{ccccc}
-
+\begin{array}{cccc}
 \toprule
-V_{ref} & V_{out} & 2 \cdot V_{ref}- V_{out} & R_{eff} & V_{offset} \\
-
+%\mathrm{V_{ref}} & \mathrm{V_{out}} & \mathrm{2 \cdot V_{ref}- V_{out}} & \mathrm{R_{eff}} & \mathrm{V_{offset}} \\
+%\midrule
+%0.516\V & 1.028\V & 8\mV & 2.0\Ohm & 0.40\V \\
+\mathrm{V_{ref}} & \mathrm{V_{out}} & \mathrm{R_{eff}} & \mathrm{V_{offset}} \\
 \midrule
-
-0.516 V & 1.028 V & 8 mV & 2.0 \Omega & 0.40 V \\
-
+0.52\V & 1.03\V & 2.0\Ohm & 0.40\V \\
 \bottomrule
 \end{array}
 \]
-
-%Come detto, in questa prima misura non è stato applicato nessun carico al $\mathrm{V_{out}}$, dunque tutta la corrente in ingresso scorre nello Shunt, andando a scaldare molto l'oggetto, questa misura ci aiuterà in un confronto successivo con situazioni in cui è presente un carico, sia statico che dinamico. 
-Questa misura in assenza di carico al $\mathrm{V_{out}}$, in cui tutta la corrente in ingresso scorre nello shunt scaldandolo significativamente, è di particolare interesse per i confronti con la configurazione in cui è presente un carico, sia esso statico o dinamico.
 
 \subsection{Misure di due ShuntLDO in serie con carico da 4 $\mathrm{\Omega}$}
 
 %La successiva misura di test che è stata eseguita con questo prototipo di shunt, prima del passaggio alla versione da 2A, è un serie di due SLDO entrambi con un carico resistivo di $\mathrm{4 \Omega}$. In questo caso i due elementi hanno $\mathrm{V_{ref}}$ diversi $\mathrm{V_{ref1}=0.497}$ V e $\mathrm{V_{ref2}=0.553 V}$. 
 %Ciò non rappresenta un problema in quanto il comportamento "esterno " non ne è influenzato.
-Sulla PCB è presente un bandgap la cui alimentazione può essere separata da quella dello ShuntLDO. Il compito di questo bandgap è quello di generare la tensione di riferimento $\mathrm{V_{ref}}$, il cui valore può essere regolato con un potenziometro presente sulla PCB.
-In figura \ref{SLDO5Serie} possiamo vedere il confronto fra il diverso comportamento del serie di due ShuntLDO nel caso in cui VCC, tensione che alimenta il bandgap, sia esterna e quello in cui sia cortocircuitata con l'ingresso di $\mathrm{I_{in}}$, trovandosi, dunque, a tensione $\mathrm{V_{in}}$.
-In questo confronto va tenuto conto che il bandgap presente sulla PCB ha un regime di lavoro compreso tra i 2 V e i 18 V. 
+Nella configurazione finale nel ROC per l'esperimento, la tensione $\mathrm{V_{ref}}$ viene generata tramite un regolatore di tensione {\em bandgap}\footnote{Una tensione di riferimento `bandgap' \`e ottenuta tramite una circuiteria che fornisce un voltaggio stabile indipendente dalla temperatura e dalle variazioni della tensione di alimentazione in un ampio margine operativo.} alimentato dalla stessa tensione $\mathrm{V_{in}}$ dello ShuntLDO. 
+Per scopi diagnostici, tramite la scheda di test, \`e possibile definire la tensione di riferimento $\mathrm{V_{ref}}$ sia tramite un circuito bandgap integrato sulla scheda che si appoggia a $\mathrm{V_{in}}$, sia in maniera indipendente dalle altre alimentazione dello ShuntLDO fornendo VCC con una sorgente esterna. 
+%Sulla scheda di test è presente un bandgap la cui alimentazione può essere separata da quella dello ShuntLDO. Il compito di questo bandgap è quello di generare la tensione di %riferimento $\mathrm{V_{ref}}$, il cui valore può essere regolato con un potenziometro presente sulla scheda di test.
+In figura~\ref{SLDO5Serie} possiamo vedere il confronto fra il diverso comportamento di due ShuntLDO in serie nel caso in cui VCC, la tensione che alimenta il bandgap, sia fornita esternamente e quello in cui VCC sia cortocircuitata con l'ingresso di $\mathrm{I_{in}}$, trovandosi, dunque, a tensione $\mathrm{V_{in}}$.
+In questo confronto va tenuto conto che il bandgap presente sulla scheda di test ha un regime di lavoro compreso tra $2\V$ e $18\V$. 
 \begin{figure}
 \centering
 %\subfloat[][Fondo $WW$.]
 \includegraphics[width=.85\textwidth]{Immagini/SLDO5Serie1}
 %\subfloat[][Fondo $WW$.]
 \includegraphics[width=.85\textwidth]{Immagini/SLDO5Serie2}
-\caption{In alto i bandgap sono alimentati esternamente, in basso sono alimentati tramite $\mathrm{V_{in}}$.}
+\caption{Comportamento di due ShuntLDO in serie per due diverse configurazioni di alimentazioni del bandgap integrato sulla scheda che fornisce $\mathrm{V_{ref}}$. In alto i bandgap sono alimentati esternamente, in basso sono alimentati tramite $\mathrm{V_{in}}$.}
 \label{SLDO5Serie}
 \end{figure}
 %Si può notare dai grafici come finto a che la tensione di ingresso non supera circa 1 V il bandgap non riesce a generare il giusto livello di tensione $\mathrm{V_{ref}}$ e ciò ha come conseguenza un $\mathrm{V_{out}}$ non stabile. Si arriva ad una stabilità del $\mathrm{V_{out}}$, solo a tensioni in ingresso più elevate e dunque, con correnti maggiori.
-Dai grafici si può notare che se la tensione di ingresso è inferiore ad 1 V, il bandgap non è in grado di generare il giusto livello di tensione $\mathrm{V_{ref}}$, risultando in valori di $\mathrm{V_{out}}$ non stabili.
-La stabilità di $\mathrm{V_{out}}$ si può ottenere solo con tensioni in ingresso più elevate e, dunque, con correnti maggiori.
+Dai grafici si può notare che, se la tensione di ingresso è inferiore ad $1 \V$, il bandgap non è in grado di generare il giusto livello di tensione $\mathrm{V_{ref}}$, risultando in valori di $\mathrm{V_{out}}$ non stabili. La stabilità di $\mathrm{V_{out}}$ si può ottenere solo con tensioni in ingresso più elevate e, dunque, con correnti maggiori. Questa misura \`e estremamente istruttiva perch\`e illustra l'interazione tra il regolatore e la circuiteria addizionale (in questo caso il bandgap necessario per la tensione di riferimento) nella fase critica dell'accensione. I test di sistema che saranno messi a punto con prototipi pi\`u avanzati dovranno certificare la robustezza dell'approccio utilizzato anche rispetto a queste problematiche.
 
-%magari fare tabellino anche qui
+%magari fare tabellino anche quie
 \subsection{Comportamento dinamico}
+
+\begin{figure}[!hbt]
+\centering
+%\includegraphics[scale=.5]{Immagini/SLDO5singlepulse}
+\caption{Schema elettrico della circuiteria della scheda di test per lo ShuntLDO a $0.5\A$ dedicata all'emulazione di variazioni rapide del carico grazie ad un mosfet di potenza pilotato da un impulso di gate esterno.}
+\label{SLDO5mosfet}
+\end{figure}
+%Prima di passare alla versione da 2A è stata provata una situazione con carico dinamico, per poi riproporla in modo più approfondito ed esaustivo nelle sezioni successive utilizzando però il prototipo da 2A.
+Nella scheda di test è presente un mosfet in parallelo all'uscita $\mathrm{V_{out}}$. Il mosfet pu\`o essere pilotato applicando una tensione sul gate. La corrente assorbita dal mosfet si ricava misurando la caduta su una piccola resistenza in serie. Questa circuiteria, il cui schematico \`e visibile in Fig.~\ref{SLDO5mosfet}, pu\`o essre utilizzata per emulare variazioni rapide sul carico. 
 
 \begin{figure}[!hbt]
 \centering
@@ -373,27 +388,26 @@ La stabilità di $\mathrm{V_{out}}$ si può ottenere solo con tensioni in ingres
 \caption{Entità degli undershoot in tensione in funzione della corrente assorbita dal mosfet.}
 \label{SLDO5singlepulse}
 \end{figure}
-
-%Prima di passare alla versione da 2A è stata provata una situazione con carico dinamico, per poi riproporla in modo più approfondito ed esaustivo nelle sezioni successive utilizzando però il prototipo da 2A.
-I test con carico dinamico qui riportati sono stati ripresi ed approfonditi con il prototipo a 2A e saranno descritti nelle sezioni successive.
-Nella PCB di test è presente, in parallelo all'uscita di $\mathrm{V_{out}}$, un mosfet in serie ad una resistenza, il cui comportamento può essere controllato applicando una tensione dall'esterno sul gate. 
-La corrente assorbita dal mosfet, si ricava misurando la caduta di tensione su questa. 
-
 La prima misura di interesse è la sensibilità di $\mathrm{V_{out}}$ alle variazioni veloci di carico.
-In figura \ref{SLDO5singlepulse} è riportato l'andamento dell'undershoot in funzione della corrente assorbita dal mosfet.
-Le misure sono state effettuate con una alimentazione in corrente $\mathrm{I_{in} = 0.5 A}$, $\mathrm{V_{ref} \sim 0.5 V}$ e carico resistivo su $\mathrm{V_{out}}$ di 4 $\Omega$. 
+In Fig.~\ref{SLDO5singlepulse} è riportato l'andamento dell'entit\`a delle fluttuazioni in basso di $\mathrm{V_{out}}$ ({\em undershoot}) in funzione della corrente assorbita dal mosfet.
+Le misure sono state effettuate con una alimentazione in corrente $\mathrm{I_{in} = 0.5 A}$, $\mathrm{V_{ref} \sim 0.5 V}$ e carico resistivo su $\mathrm{V_{out}}$ di $4\Ohm$. 
 Conoscere il valore della corrente in ingresso è importante poiché, nel momento in cui il carico dinamico e statico assorbono una corrente maggiore di quella totale in ingresso, il sistema smette di funzionare in maniera corretta.
+<<<<<<< HEAD
 Gli effetti visibili, nelle situazioni in cui $\mathrm{I_{mosfet} + I_{load} > I_{in}}$, non sono direttamente legati alle prestazioni dello ShuntLDO. 
 Al contrario si può vedere dal grafico in figura \ref{SLDO5singlepulse} come gli undershoot siano inferiori a 10 mV fintantoché $\mathrm{I_{mosfet}}$ rimane sotto gli 0.250 A, valore oltre cui $\mathrm{I_{mosfet} + I_{load} > I_{in}}$~\footnote{
   $\mathrm{I_{load}}$ è la corrente che scorre nel carico resistivo, in questo caso $\mathrm{I_{load} = \dfrac{V_{out}}{R} = 0.250 A}$.
 }. 
 
 Lo stesso tipo di test può essere eseguito mettendo due ShuntLDO in serie e verificando, al variare del carico di uno, che l'altro elemento della catena seriale ne sia influenzato o meno.
+=======
+Gli effetti visibili, nelle situazioni in cui $\mathrm{I_{mosfet} + I_{load} > I_{in}}$ dove $\mathrm{I_{load}}$ è la corrente che scorre nel carico resistivo, non sono direttamente legati alle prestazioni dello ShuntLDO. Al contrario si può vedere dal grafico in Fig.~\ref{SLDO5singlepulse} come gli undershoot siano inferiori a $10\mV$ fintantoché $\mathrm{I_{mosfet}}$ rimane al di sotto di $250\mA$, valore oltre il quale $\mathrm{I_{mosfet} + I_{load} > I_{in}}$. In questo caso $\mathrm{I_{load} = \dfrac{V_{out}}{R} = 250\mA}$. Queste variazioni di  $\mathrm{V_{out}}$ sono perfettamente compatibili con i requisiti.
+>>>>>>> f3cae74e29bbdd65bed758ab89df0e193820a2ba
 
+%Lo stesso tipo di test può essere eseguito mettendo due ShuntLDO in serie e verificando, al variare del carico di uno, che l'altro elemento della catena seriale ne sia influenzato o %meno.
 %ed andando a variare dinamicamente il carico di uno dei due, verificando se esternamente queste variazioni siano visibili, e quindi se influenzino l'altro elemento della catena seriale. 
 %Dal momento che l'interesse maggiore è per il prototipo a 2 A questo tipo di misura non è stato riportato nel caso dello SLDO da 0.5A, in quanto lo scopo di questa prima parte è quello di introdurre un certo tipo di approccio e  prendere confidenza con gli argomenti trattati.
 
-\section{ShuntLDO 2A}
+\section{Caratterizzazione dello ShuntLDO da $2\A$}
 %\begin{figure}
 %\centering
 %\includegraphics[scale=.3]{Immagini/PCB2A}
@@ -401,15 +415,26 @@ Lo stesso tipo di test può essere eseguito mettendo due ShuntLDO in serie e ver
 %\label{PCB2A}
 %\end{figure}
 %Rispetto a quanto visto in precedenza, nella versione da 2 A è possibile gestire anche l'offset attraverso un potenziometro, che va ad agire sulla tensione in uscita generata dal bangap, la stessa che viene utilizzata anche per generare $\mathrm{V_{ref}}$ regolando un secondo potenziometro. 
-Come abbiamo già detto, un'importante differenza fra la prima versione, con carico massimo da 0.5 A, e la versione da 2 A è la possibilità di modificare l'offset attraverso un potenziometro. In questo modo si può regolare la tensione in uscita generata dal bandgap, la quale può essere usata come $\mathrm{V_{ref}}$ per un secondo potenziometro.
 
-In questa sezione descriveremo i test effettuati per la caratterizzazione dello ShuntLDO, studiando sia il comportamento con carico statico che dinamico.
+Il prototipo ShuntLDO da $2\A$ \`e, analogamente alla versione precedente, un singolo ASIC realizzato a scopo di verifica e validazione che per\`o, a differenza della versione prototipale a $0.5\A$, contiene una sola replica del regolatore. Per questo chip \`e stata messa a punto una scheda di test analoga a quella di cui alla sezione precendente. In Fig.~\ref{PCB2A} sono visibili la struttura e una foto del chip stesso e il disegno del circuito stampato della scheda di test. 
+\begin{figure}
+\centering
+\includegraphics[width=0.32\textwidth]{Immagini/chipSLDO2A.png}
+\hfill
+\includegraphics[width=0.32\textwidth]{Immagini/chip2_foto.png}
+\hfill
+\includegraphics[width=0.32\textwidth]{Immagini/chipcard.png}
+\caption{La geometria dello ShuntLDO a $2\A$ in CMOS a $65\nm$ (sinistra), la foto al microscopio del prototipo montato sulla scheda di test (centro) e il disegno della scheda di test (destra); il chip misura $2\mm\times 2\mm$ mentre la scheda ha una dimensione di circa $10\cm \times 10\cm$.}
+\label{PCB2A}
+\end{figure}
+Come abbiamo già detto, un'importante differenza fra la prima versione, con carico massimo da $0.5\A$, e la versione da $2\A$ è la possibilità di modificare $\mathrm{V_{offset}}$ attraverso la scheda di test. $\mathrm{V_{ref}}$ \`e configurabile, tramite bandgap alimentabile anche esternamente, in modo analogo alla scheda di test per il prototipo a $0.5\A$. In questa sezione descriveremo i test effettuati per la caratterizzazione dello ShuntLDO da $2\A$, studiando sia il comportamento con carico statico che dinamico.
 
 \subsection{Comportamento statico}
 
-La caratterizzazione con carico statico è stata ottenuta usando un carico resistivo da 1 $\Omega$ su $\mathrm{V_{out}}$ e ponendo $\mathrm{V_{ref}} = 0.5 \V$.
-In questa configurazione il bandgap è alimentato esternamente con una tensione di 5V.
-La figura \ref{SLDO2Astatic} mostra i valori misurati di $\mathrm{V_{out}}$, $\mathrm{V_{ref}}$ e $\mathrm{V_{in}}$ al variare della corrente di alimentazione in ingresso.
+\par \begin{center} {\huge\bf QUESTO \`E TUTTO DA RIVEDERE } \end{center} \par
+
+La caratterizzazione con carico statico è stata ottenuta usando un carico resistivo da $1\Ohm$ su $\mathrm{V_{out}}$, per avere una corrente sul carico pi\`u elevata, con $\mathrm{V_{ref}} = 0.5 \V$ ottenuto tramite il bandgap alimentato esternamente.
+I valori misurati di $\mathrm{V_{out}}$, $\mathrm{V_{ref}}$ e $\mathrm{V_{in}}$ al variare della corrente di alimentazione in ingresso sono mostrati in~Fig.~\ref{SLDO2Astatic}.
 %La parte di caratterizzazione statica è di nuovo eseguita andando a variare la corrente di alimentazione in ingresso e al contempo misurando $\mathrm{V_{out}}$, $\mathrm{V_{ref}}$ e $\mathrm{V_{in}}$, figura \ref{SLDO2Astatic}.
 
 \begin{figure}
@@ -418,10 +443,9 @@ La figura \ref{SLDO2Astatic} mostra i valori misurati di $\mathrm{V_{out}}$, $\m
 \caption{Grafico corrente-tensione che riporta gli andamenti di $\mathrm{V_{in}}$, in blu, $\mathrm{V_{ref}\cdot 2}$, in arancione e $\mathrm{V_{out}}$ in rosso.}
 \label{SLDO2Astatic}
 \end{figure}
-
-Si può notare che $\mathrm{V_{ref}}$ non è costante nella parte con bassa $\mathrm{I_{in}}$: questo comportamento è dovuto al fatto che, nella fase in cui lo ShuntLDO non è attivo, nel ramo di $\mathrm{V_{ref}}$ scorre un po' di corrente che causa una maggiore caduta di tensione del potenziometro e, quindi, una minore tensione all'ingresso di A4 (figura \ref{SLDO2A}).
+Si può notare che $\mathrm{V_{ref}}$ non è costante nella parte con bassa $\mathrm{I_{in}}$: questo comportamento è dovuto al fatto che, nella fase in cui lo ShuntLDO \`e al di fuori della regione di regolazione, nel ramo di $\mathrm{V_{ref}}$ scorre un po' di corrente che causa una maggiore caduta di tensione del potenziometro e, quindi, una minore tensione all'ingresso di A4 (vd. Fig.~\ref{SLDO2A}).
 Infatti, dato che $\mathrm{V_{ref}}$ si trova all'ingresso del comparatore A1, in una situazione di equilibrio viene confrontata con una tensione molto simile.
-Il comparatore ha una resistenza molto grossa e la corrente che scorre in questo sarà, quindi, molto piccola.
+Il comparatore ha una impedenza di ingresso molto grossa e la corrente che scorre in questo sarà, quindi, molto piccola.
 Nella fase di accensione, invece, all'ingresso di A1 si trova una grossa differenza fra + e - e, quindi, una corrente non trascurabile, causa, come visto, della variazione di $\mathrm{V_{ref}}$.
 %Questo andamento è stato ottenuto ponendo
 %\footnote{Per selezionare il valore voluto è necessario regolare il potenziometro RP1 che si trova in serie al bandgap sulla PBC.} 
@@ -429,58 +453,53 @@ Nella fase di accensione, invece, all'ingresso di A1 si trova una grossa differe
 %Come si vede dal grafico \ref{SLDO2Astatic} $\mathrm{V_{ref}}$ non è costante nella parte iniziale, questo può essere dovuto al fatto che nella fase in cui lo shunt LDO non è attivo si ha uno scorrimento di corrente nel ramo di $\mathrm{V_{ref}}$, ciò causa una maggiore caduta di tensione sul potenziometro e quindi una minore tensione all'ingresso di A4. 
 %Idealmente, nel ramo di $\mathrm{V_{ref}}$ dovrebbe scorrere una corrente molto piccola in regime di lavoro\footnote{Questo perché nello SLDO il $\mathrm{V_{ref}}$ è in ingresso al comparatore A1 e viene confrontato con una tensione che sarà circa uguale in una situazione di equilibrio. La corrente che scorre tra ingresso + e - sarà piccola, poiché il comparatore in ingresso ha una grossa resistenza.}, mentre al momento dell'accensione, all'ingresso di A1 si ha una notevole differenza tra + e -, e quindi scorrerà una corrente maggiore, questo è causa di una variazione del $\mathrm{V_{ref}}$. Di seguito riportiamo in tabella i valori che si riferiscono al grafico \ref{SLDO2Astatic}: 
 
-\par \begin{center} !!! SERVE??? COSA CI SI IMPARA? !!! \end{center} \par
 \begin{center}
-\begin{tabular}{cccccc}
+\begin{tabular}{ccccc}
 \hline
-$\mathrm{V_{ref}}$ & $\mathrm{V_{out}}$ & $\mathrm{2 \cdot V_{ref}- V_{out}}$ & $\mathrm{R_{eff}}$ & $\mathrm{V_{offset}}$ \\
+%$\mathrm{V_{ref}}$ & $\mathrm{V_{out}}$ & $\mathrm{2 \cdot V_{ref}- V_{out}}$ & $\mathrm{R_{eff}}$ & $\mathrm{V_{offset}}$ \\
+$\mathrm{V_{ref}}$ & $\mathrm{V_{out}}$ & $\mathrm{R_{eff}}$ & $\mathrm{V_{offset}}$ \\
 \hline
-0.500 V & 0.980 V & 20 mV & 0.880 $\Omega$ & 0.40 V\\
+%0.500 V & 0.980 V & 20 mV & 0.880 $\Omega$ & 0.40 V\\
+0.50 V & 0.98 V & $0.88\Ohm$ & 0.40 V\\
 \hline
 \end{tabular}
 \end{center}
 \FloatBarrier
 
-\subsection{Differenze tra GND PCB e GND ShuntLDO}
+\subsection{Effetti spuri della scheda di test}
 
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=.3]{Immagini/Ground}
-\caption{Differenze tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$ nella configurazione ShuntLDO, causate dalla corrente di shunt.}
+\caption{Porzione dello schema elettrico equivalente del prototipo ShuntLDO e della relativa scheda di test in cui \`e resa esplicita la presenza della resistenza spuria denominata $\mathrm{R_{gnd}}$, associata alle microsaldature, tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$.}
 \label{Ground}
 \end{figure}
-Prima di procedere oltre è interessante fare alcune riflessioni.% per porre attenzione su un aspetto che influenza le misure. 
-Tutte le tensioni misurate, come per esempio il $\mathrm{V_{out}}$, sono prese da pin/connettori/piste sulla PCB.
-Questo vuol dire che, per esempio, quando viene misurato $\mathrm{V_{out}}$, la tensione letta sull'oscilloscopio o con i multimetri è la differenza di tensione tra il pin di $\mathrm{V_{out}}$ e la terra (GND) della PCB. 
-Dal momento che questi punti di misura sono collegati al $\mathrm{V_{out}}$ dello ShuntLDO attraverso \textit{wire bond}, si introduce una resistenza che causa una caduta di tensione. 
-L'entità di questa caduta di tensione dipende dalla resistenza dei \textit{wire bond} e dalla corrente, quindi, nel caso di una caratterizzazione con carico statico, si presenta come un offset, mentre nel caso di carico dinamico, varia con la corrente. 
-I \textit{wire bond} si presentano come tante resistenze in parallelo, perciò il valore della resistenza equivalente dipende dal numero di queste ultime: maggiore il numero minore il valore della resistenza equivalente e, perciò, minore l'effetto su $\mathrm{V_{out}}$.
-%Questo problema è riportato schematicamente in figura \ref{Ground}.
-
-%Ricapitolando, nella configurazione di ShuntLDO una frazione della corrente in ingresso scorre attraverso il transistor di shunt (M4), questa corrente confluisce nella linea di terra del regolatore $\mathrm{GND_{REG}}$ e da qui, attraverso i \textit{wire bond} è collegata alla terra della PCB ($\mathrm{GND_{PCB}}$). 
-Facendo riferimento alla figura \ref{Ground}, nella configurazione di ShuntLDO, una frazione della corrente in ingresso scorre attraverso il transistor di shunt (M4), confluisce nella linea di terra del regolatore $\mathrm{GND_{REG}}$ e da qui attraverso i \textit{wire bond} arriva alla terra della PCB ($\mathrm{GND_{PCB}}$). 
-La resistenza di questa linea, schematizzata in figura con una resistenza $\mathrm{R_{GND}}$, è la causa della differenza in tensione tra la terra della PCB e dello Shunt. 
-Questo suggerisce che $\mathrm{V_{ref {\_} ext}}$ sarà sempre leggermente maggiore di $\mathrm{V_{out}}$, in quanto esterno allo shunt.
-Il $\mathrm{V_{out}}$ realmente prodotto dallo ShuntLDO sarà:
+%Prima di procedere oltre è interessante fare alcune riflessioni.% per porre attenzione su un aspetto che influenza le misure. 
+A causa delle maggiori correnti in gioco nel prototipo di ShuntLDO da $2\A$ \`e necessario valutare ed, eventualemente, tenere conto degli effetti dovuti a resistenze spurie presenti nella scheda di test. Per la caratterizzazione del prototipo dello ShuntLDO, infatti, si registrano tensioni misurate su terminali appositamente approntati sulla scheda di test connessi a loro volta ai terminali del chip tramite microsaldature che introducono resistenze in serie che causano cadute di tensione non necessariamente trascurabili nel caso in cui queste ultime siano attraversate da correnti elevate. L'entità di queste cadute di tensione dipende dalla resistenza delle microsaldature e dalla corrente, e quindi, nel caso di una caratterizzazione con carico statico, si presenta come una differenza di potenziale costante mentre, nel caso di carico dinamico, varia con la corrente. Per esempio, come visibile nella Fig.~\ref{PCB2A}, \`e utile introdurre una differenziazione tra il nodo di riferimento locale $\mathrm{GND_{PCB}}$ sulla scheda e il nodo di riferimento locale sul regolatore $\mathrm{GND_{REG}}$. Si pu\`o osservare come la frazione della corrente in ingresso scorre attraverso il transistor di shunt (M4), confluisce nella nodo di riferimento del regolatore $\mathrm{GND_{REG}}$ e da qui attraverso le microsaldature nel nodo di riferimento della scheda di test ($\mathrm{GND_{PCB}}$). 
+La resistenza di questa linea, rappresentata in Fig.~\ref{Ground} col resistore $\mathrm{R_{gnd}}$, causa una differenza di potenziale tra $\mathrm{GND_{REG}}$ e $\mathrm{GND_{PCB}}$. Di conseguenza la tensione del nodo di regolazione sul chip $\mathrm{V_{out{\_}REG}}$ sar\`a sempre leggermente inferiore a $\mathrm{2\times V_{ref {\_} PCB}}$, dove $\mathrm{V_{ref {\_} PCB}}$ \`e il valore di riferimento fornito esternamente. In particolare, il valore di tensione $\mathrm{V_{out{\_}REG}}$ prodotto dallo ShuntLDO sarà:
 \begin{equation}
-  \mathrm{V_{out} = 2 \cdot V_{ref} = 2 \cdot ( V_{ref {\_} ext} - I_{shunt} \cdot R_{gnd} )}
+  \mathrm{V_{out{\_}REG} = 2 \cdot V_{ref{\_}REG} = 2 \cdot ( V_{ref {\_} PCB} - I_{shunt} \cdot R_{gnd} )}.
 \end{equation}
+Questo effetto è visibile in~Fig.~\ref{SLDO2Astatic} dove, all'aumentare della corrente $\mathrm{I_{in}}$, si ha una lieve flessione della tensione in uscita $\mathrm{V_{out{\_}PCB}}$ rispetto a $2 \times V_{ref{\_}PCB}$ dovuta al fenomeno sopra descritto salvo effetti all'ordine superiore. Facendo un fit lineare di $\mathrm{V_{out{\_}PCB}}$ nella zona di regolazione si ottiene una pendenza equivalente a $-0.015\Ohm$. 
 
-Questo effetto è visibile in figura \ref{SLDO2Astatic}, dove all'aumentare della corrente $\mathrm{V_{out}}$ si ha una lieve flessione della tensione in uscita. Facendo un fit lineare dei punti si ottiene una pendenza di - 0.015 $\Omega$. 
+%
+% Sono arrivato qui --------------------------------------------------------------------------------------------------------------------------------
+%
+
 La pendenza ottenuta dal fit non è unicamente data dai \textit{wire bond}, ma ha un contributo aggiuntivo dovuto alla resistenza delle piste e dei connettori.
-Una misura più precisa può essere eseguita sfruttando i pin $\mathrm{V_{out{\_}Sense}}$ e $\mathrm{I_{out {\_} Sense}}$, indicati sulla PCB con P5 e P6, rispettivamente. 
+Una misura più precisa può essere eseguita sfruttando i pin $\mathrm{V_{out{\_}Sense}}$ e $\mathrm{I_{out {\_} Sense}}$, indicati sulla scheda di test con P5 e P6, rispettivamente. 
 Questi due pin di monitoraggio sono collegati al $\mathrm{V_{out}}$ del regolatore e al suo GND.
 Essendo piste in cui non scorre corrente, l'effetto resistivo di \textit{wire bond} è eliminato ed è possibile misurare il valore di tensione del GND locale.
 
 \begin{figure}
 \centering
 \includegraphics[scale=.4]{Immagini/Viout}
-\caption{Andamento della tensione del GND dello shunt rispetto al GND della PCB al variare della corrente di alimentazione del circuito.}
+\caption{Andamento della tensione del GND dello shunt rispetto al GND della scheda di test al variare della corrente di alimentazione del circuito.}
 \label{VioutSense}
 \end{figure}
 
 Si è proceduto a misurare il valore di tensione sul pin $\mathrm{I_{out{\_}Sense}}$ al variare della corrente di alimentazione $\mathrm{I_{in}}$. 
-La misura è stata eseguita per due diversi valori di carico statico: $4 \Omega$ e in assenza di carico per cui il circuito fra $\mathrm{V_{out}}$ e GND è aperto, presentandosi come una resistenza infinita ($\infty$).
+La misura è stata eseguita per due diversi valori di carico statico: $4 \Omega$ e in assenza di carico per cui il circuito fra $\mathrm{V_{out}}$ e GND è aperto, presentandosi come una sresistenza infinita ($\infty$).
 %$4 \Omega$ e $\infty$, con il valore infinito si intende la configurazione in cui il carico è assente e dunque il circuito tra $\mathrm{V_{out}}$ e GND è aperto, presentandosi di fatto come una resistenza infinita. 
 In figura \ref{VioutSense} sono riportati gli andamenti di $\mathrm{V_{out{\_}Sense}}$ in funzione di $\mathrm{I_{in}}$ per le due configurazioni.
 La pendenza delle due curve riportate è la stessa, pari a 4 m$\Omega$, e ci fornisce un'indicazione del valore resistivo, R, dei \textit{wire bond}, mentre l'offset cambia in accordo con quanto ci si aspetterebbe da uno spostamento di tensione dato dalla corrente che scorre verso il GND del chip: maggiore è la corrente richiesta dal carico, minore è l'offset. 
@@ -505,7 +524,7 @@ Ad esempio ad 1 A con il carico resistivo da 4 $\Omega$, la corrente che effetti
 %\end{center}
 
 Il valore della resistenza equivalente è molto piccolo e, come detto, dipende in prima approssimazione dal numero di \textit{wire bond}.
-Fintantoché lo ShuntLDO è utilizzato come circuito a se stante su una PCB di test, dato che non ci sono problemi di spazio, è possibile utilizzare un gran numero di connessioni per ridurre al minimo differenze tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$, in modo da rendere trascurabile il fenomeno.
+Fintantoché lo ShuntLDO è utilizzato come circuito a se stante su una scheda di test di test, dato che non ci sono problemi di spazio, è possibile utilizzare un gran numero di connessioni per ridurre al minimo differenze tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$, in modo da rendere trascurabile il fenomeno.
 
 \subsection{Offset}
 
@@ -580,16 +599,16 @@ Al fine di introdurre un carico dinamico, in parallelo al carico statico, è sta
 La corrente assorbita dal mosfet, indicata con $\mathrm{I_{mosfet}}$, sarà ricavata misurando la caduta di tensione su questa resistenza.
 Il mosfet è pilotato tramite un generatore di impulsi.
 A seconda dell'ampiezza del segnale inviato al gate del mosfet c'è una maggiore o minore corrente che scorre tra drain e source. 
-Il setup di queste misure è rappresentato schematicamente in figura \ref{Setupscheme}: sulla sinistra in verde, la PCB; in grigio sono riportati gli alimentatori; sulla destra l'oscilloscopio con cui sono misurate la tensione in ingresso $\mathrm{V_{in}}$
+Il setup di queste misure è rappresentato schematicamente in figura \ref{Setupscheme}: sulla sinistra in verde, la scheda di test; in grigio sono riportati gli alimentatori; sulla destra l'oscilloscopio con cui sono misurate la tensione in ingresso $\mathrm{V_{in}}$
 \footnote{
 L'alimentazione dello ShuntLDO è comunque in corrente.
-}, rappresentata in giallo, la tensione in uscita $\mathrm{V_{out}}$, in arancione, e le tensioni agli estremi della resistenza R5 in azzurro; infine, sulla sinistra della PCB, collegato al gate del mosfet, è presente un generatore di impulsi. 
+}, rappresentata in giallo, la tensione in uscita $\mathrm{V_{out}}$, in arancione, e le tensioni agli estremi della resistenza R5 in azzurro; infine, sulla sinistra della scheda di test, collegato al gate del mosfet, è presente un generatore di impulsi. 
 Per quanto riguarda la durata dell'impulso da mandare al gate del mosfet, si è scelto di tenere fronte di salita e discesa ben distanti in modo da osservare separatamente gli effetti dovuti all'uno e all'altro.
 In una situazione in cui il carico del regolatore è il chip, infatti, le variazioni sarebbero di minor durata rispetto alla lunghezza dell'impulso utilizzato in queste misure.
 Ad ogni modo lo scopo di queste misure è solo quello di vedere gli effetti al passaggio da un certo consumo di corrente ad uno maggiore e viceversa ed un impulso di breve durata sovrapporrebbe questi due effetti, non permettendo di valutarne l'effettiva entità, in quanto i contributi sono opposti e, su tempi brevi, si sovrapporrebbero cancellandosi a vicenda.
 In queste misure l'attenzione sarà focalizzata su variazioni di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$ in ampiezza e sul tempo di recupero al variare di $\mathrm{I_{mosfet}}$ per una data $\mathrm{R_{load}}$.
 
-L'introduzione del carico $\mathrm{R_{load}}$ in parallelo alla resistenza connessa a $\mathrm{V_{out}}$ è possibile posizionando un jumper sul pin P10 della PCB.
+L'introduzione del carico $\mathrm{R_{load}}$ in parallelo alla resistenza connessa a $\mathrm{V_{out}}$ è possibile posizionando un jumper sul pin P10 della scheda di test.
 Già dalle prime misure con l'oscilloscopio è possibile vedere che che l'utilizzo del mosfet come carico dinamico non è esente da fenomeni di alterazione dei segnali che rendendo difficile una loro corretta interpretazione. 
 \begin{figure}
 \begin{subfigure}{.5\textwidth}
@@ -647,7 +666,7 @@ L'impulso utilizzato in questa prima fase ha:
 \label{RiseTime}
 \end{figure}
 
-Per esaminare il comportamento del mosfet in risposta all'impulso mandato sul gate, si è proceduto ad isolare questa parte del circuito dal resto della PCB, connettendo sul pin P10 (connesso al drain del mosfet) una resistenza in serie ad una batteria stilo.
+Per esaminare il comportamento del mosfet in risposta all'impulso mandato sul gate, si è proceduto ad isolare questa parte del circuito dal resto della scheda di test, connettendo sul pin P10 (connesso al drain del mosfet) una resistenza in serie ad una batteria stilo.
 La batteria ricopre il ruolo di $\mathrm{V_{out}}$, mentre la resistenza è necessaria alla misura delle correnti che scorrono nel mosfet ed ha un valore di 2.7 $\Omega$. 
 
 
@@ -655,7 +674,7 @@ La batteria ricopre il ruolo di $\mathrm{V_{out}}$, mentre la resistenza è nece
 Come si vede dalla figura \ref{MosfetBehaviour}, le oscillazioni in corrispondenza dello spegnimento del mosfet sono presenti anche una volta che questo è stato isolato.
 Questo comportamento è segno del fatto che queste oscillazioni sono generate dal mosfet stesso nel momento in cui il canale, che collega drain e source, si interrompe.
 Inoltre il fronte di salita è circa 100 ns e non 40 ns come ci aspetteremmo da un mosfet ideale con risposta istantanea.
-Esaminando la documentazione del mosfet presente sulla PCB 
+Esaminando la documentazione del mosfet presente sulla scheda di test 
 %footnote{ZXMN20B28KTC http://www.mouser.com/ds/2/115/ZXMN20B28K-94822.pdf
 si può verificare che effettivamente il tempo di "accensione" è superiore a 40 ns (Turn-on rise time 76,9 ns) e, inoltre, sono presenti capacità in ingresso equivalenti a $\mathrm{358 pF}$.
 E', quindi, impossibile vedere la risposta dello ShuntLDO a segnali più veloci della risposta del mosfet, per cui le misure successive sono state prese con un tempo di salita del segnale del generatore di impulsi di 200 ns.
@@ -769,6 +788,6 @@ Il campionamento dei segnali mostrati, acquisiti con l'oscilloscopio, è stato o
 \label{ScreenSerie}
 \end{figure}
 In verde è riportato l'andamento di $\mathrm{V_{out}}$ del secondo ShuntLDO, che mostra importanti undershoot e overshoot, i quali, a loro volta e come visto in precedenza, causano come visto in precedenza, fluttuazioni della tensione in ingresso. 
-La tensione di ingresso dello ShuntLDO2 corrisponde alla terra della PCB su cui si trova lo ShuntLDO1.
+La tensione di ingresso dello ShuntLDO2 corrisponde alla terra della scheda di test su cui si trova lo ShuntLDO1.
 Le visibili fluttuazioni di questa, quindi, si ripercuotono su ShuntLDO2.
 Nonostante ciò, come risultato importante, si può notare che $\mathrm{V_{out}}$ del primo ShuntLDO sia indipendente da queste.
