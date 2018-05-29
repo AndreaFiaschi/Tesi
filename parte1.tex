@@ -215,7 +215,7 @@ A titolo di esempio, quindi, prendiamo la situazione in cui si ha una catena ser
 % questo per far si che nel caso un regolatore si guasti , la corrente possa essere assorbita da un altro regolatore all'interno del modulo\footnote{Come già detto i regolatori devono essere in grado d lavorare in parallelo, generare differenti tensioni dalle correnti in ingresso e tenere costante il consumo di corrente tramite lo shunt.}. 
 assumiamo che il punto di lavoro scelto corrisponda a $\mathrm{R_{eff}=0.3\Ohm}$ $\mathrm{V_{offset}=0.8}\V$ per il parallelo tra lo ShuntLDO `analogico' e lo ShuntLDO `digitale' dato che la resistenza equivalente di un singolo ShuntLDO \`e tipicamente $0.600\Ohm$.
 %Prendiamo come modello la situazione in cui si ha un serie di 8 moduli con 4 chip ciascuno, assumiamo che $\mathrm{V_{offset}=0.8} \V$ e $\mathrm{R_{eff}=0.3}$ $\Omega$ per ciascun chip\footnote{$\mathrm{R_{eff}}$ del singolo SLDO è circa 0.600 $\Omega$, nel chip sono presenti due SLDO in parallelo uno per l'alimentazione della parte digitale ed uno per quella analogica. La $\mathrm{R_{eff}}$ con cui viene visto il chip è dunque la metà, 0.300 $\Omega$.}. 
-Con una corrente di lavoro totale richiesta di $\sim\mathrm{I^{ROC}_{in}=2.0}\A$ per ROC, equamente divisa tra parte analogica e parte digitale, la corrente totale da fornire all'intero modulo \`e $\sim \mathrm{I_{in}^{modulo}=8.0}\A$ corrispondente a $\mathrm{V_{modulo}=1.4} \V$.
+Con una corrente di lavoro totale richiesta di $\mathrm{I^{ROC}_{in}\sim2.0}\A$ per ROC, equamente divisa tra parte analogica e parte digitale, la corrente totale da fornire all'intero modulo \`e $\mathrm{I_{in}^{modulo}\sim8.0}\A$ corrispondente a $\mathrm{V_{modulo}=1.4} \V$.
 
 Rispetto a questo valore nominale la corrente circolante nella catena deve essere incrementata per avere un opportuno margine per gestire picchi di carico da parte del ROC a valle del regolatore. Come si vedr\`a pi\`u avanti, per esempio in Fig.~\ref{fig:LoadTransient}, per avere stabilit\`a della regolazione \`e ragionevole avere un $\sim20-25\%$ di corrente in pi\`u rispetto al valore nominale.
 % Per avere un po' di margine incrementiamo la corrente di un 20$\%$, la scelta di dare un margine del 20$\%$, piuttosto che del 40$\%$ è una scelta giustificata qualitativamente dall'ampiezza dei picchi di tensione generati dallo SLDO in concomitanza di un transiente, in figura \ref{LoadTransient} è riportato il valore di picco dell'undershoot/overshoot in funzione del margine di corrente dato su 1 A di alimentazione.
@@ -225,7 +225,7 @@ Rispetto a questo valore nominale la corrente circolante nella catena deve esser
 % \caption{Il grafico riporta il valore di picco dell'undershoot/overshoot in funzione del margine di corrente dato su 1 A di alimentazione nel caso in cui  i consumi di parte analogica e digitale sono entrambi $\sim$0.5 A, 100$\%$ significa che la corrente fornita al chip è 1 A+1 A.}
 % \label{fig:LoadTransient}
 % \end{figure}
-Conseguentemente $\mathrm{I^{ROC}_{in}=2.4}\A$, $\mathrm{I_{in}^{modulo}=9.6}$ A, $\mathrm{V_{modulo}\sim1.5} \V$ e, quindi, la caduta di tensione su tutta la catena, formata da 8 moduli, sarà $\sim 12\V$.
+Conseguentemente $\mathrm{I^{ROC}_{in}=2.4}\A$, $\mathrm{I_{in}^{modulo}=9.6}$ A, $\mathrm{V_{modulo}\sim1.5} \V$ (per un consumo totale di $\sim14.4\W$ per modulo) e, quindi, la caduta di tensione su tutta la catena, formata da 8 moduli, sarà $\sim 12\V$.
 %Con una corrente di $\mathrm{I_{in}=2.0}$ A per chip\footnote{Che vale a dire 1 A per ciascuno dei due SLDO presenti nel chip.} ($\mathrm{I=8.0}$ A per modulo) si avrà un $\mathrm{V_{modulo}=1.4} \V$, per avere un po' di margine incrementiamo la corrente di un 20$\%$, la corrente che arriva nei moduli sarà I = 9.6 A. 
 %In questa situazione $\mathrm{V_{modulo}=1.52}$ V e dunque la caduta di tensione su tutta la catena formata da 8 moduli sarà pari a $12.16 \V$. Questa non è la caduta di tensione totale, va tenuto conto anche della resistenza dovuta ai cavi, in questo esempio assumiamo valga 2 $\Omega$. 
 %Tenendo conto anche della resistenza dovuta ai cavi, che assumiamo valga $2 \Ohm$,
@@ -267,7 +267,7 @@ e la potenza dissipata
 \begin{equation*}
   \mathrm{W_{modulo} = 3 \cdot W_{chip} = 3 \cdot I \cdot V_{modulo} = I_{modulo} \cdot V_{modulo} = 16.9W},
 \end{equation*}
-con un incremento di $2\W$ per il singolo modulo, corrispondente a circa il $13\%$. Sul totale della catena, questa maggior richiesta di potenza \`e dell'ordine del \% e quindi marginale. Un ulteriore malfunzionamento porterebbe la caduta di tensione sul modulo a $\mathrm{V_{modulo} = 4.8\A \cdot 0.3 \Omega + 0.8\V = 2.2 \V}$, quindi oltre la soglia di tolleranza in tensione della tecnologio CMOS a $65\nm$ con la conseguenza di avere l'imminente rottura anche degli ulteriori due ROC. La situazione \`e in generale assai pi\`u critica per i moduli 1x2 dato che, in caso di malfunzionamenti, il ROC rimanente si troverebbe a gestire il doppio della corrente nominale.
+con un incremento di $\sim2.5\W$ per il singolo modulo, corrispondente a circa il $17\%$. Sul totale della catena, questa maggior richiesta di potenza \`e dell'ordine del \% e quindi marginale. Un ulteriore malfunzionamento porterebbe la caduta di tensione sul modulo a $\mathrm{V_{modulo} = 4.8\A \cdot 0.3 \Omega + 0.8\V = 2.2 \V}$, quindi oltre la soglia di tolleranza in tensione della tecnologio CMOS a $65\nm$ con la conseguenza di avere l'imminente rottura anche degli ulteriori due ROC. La situazione \`e in generale assai pi\`u critica per i moduli 1x2 dato che, in caso di malfunzionamenti, il ROC rimanente si troverebbe a gestire il doppio della corrente nominale.
 
 Si spera per\`o che risulti chiaro da questi esempi che la scelta del punto di lavoro (e quindi di  $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$) \`e di importanza fondamentale non solo per le condizioni operative standard, ma anche per la gestione dei malfunzionamenti che spostano localmente il punto di lavoro dei regolatori adiacenti. Non \`e detto per\`o che il meccanismo di rottura pi\`u frequente sia quello in cui il ROC e i suoi regolatori non sono pi\`u attraversati da corrente; \`e ipotizzabile che gli scenari pi\`u frequenti di rottura coinvolgano il solo ROC vero e proprio e che quindi gli ShuntLDO ad esso relativi continuino a funzionare. In questo caso l'inconveniente \`e che tutta la potenza viene dissipata sui mosfet M4 dei regolatori. Per questo motivo nell'implementazione reale dello ShuntLDO sul ROC RD53A e versioni successive, la parte di potenza (essenzialmente il ramo costituito da M1 e M4) \`e ottenuta da un certo numero di repliche connesse in parallelo e distribuite sulla superficie del ROC per evitare un potenziale `hot spot' sia in condizioni standard di funzionamento che in caso di malfunzionamenti.
 
@@ -311,6 +311,17 @@ Si spera per\`o che risulti chiaro da questi esempi che la scelta del punto di l
 \section{Caratterizzazione ShuntLDO da 0.5A}
 
 Riportiamo in questo paragrafo le prime misure effettuate sul prototipo di ShuntLDO da 0.5A. A differenza della versione a 2A, in questa non è possibile inserire un valore di offset regolabile al $\mathrm{V_{out}}$.
+
+Questo prototipo nasce come un singolo ASIC realizzato per la verifica e la validazione del solo ShuntLDO. Per il test il chip viene montanto e microsaldato su una scheda di test progettata appositamente e molto versatile. In Fig.~\ref{PCB05A} sono visibili la struttura del chip stesso e il disegno del circuito stampato della scheda di test.
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{Immagini/floorplan05}
+\hfill
+\includegraphics[width=0.4\textwidth]{Immagini/PCB05A}
+\caption{.}
+\label{PCB05A}
+\end{figure}
+
 Come primo studio abbiamo caratterizzato lo ShuntLDO, utilizzando una alimentazione in corrente.
 Le misure effettuate sono servite ad esaminare l'andamento della tensione di $\mathrm{V_{in}}$, $\mathrm{V_{out}}$ e $\mathrm{V_{ref}}$ in funzione della corrente in ingresso.
 
