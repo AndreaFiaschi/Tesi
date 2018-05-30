@@ -1,4 +1,5 @@
 \chapter{L'alimentazione seriale}
+\label{AlimentazioneSeriale}
 %L'alimentazione seriale dei moduli è il sistema scelto per l'alimentazione, in grado di rispettare i requisiti per il nuovo tracciatore a pixel di fase due. 
 \section{Introduzione}
 %Nel capitolo precedente si sono discussi i requisiti richiesti per il tracciatore di fase due: tolleranza agli alti livelli di radiazione, alta risoluzione, riduzione del materiale, etc...
@@ -408,7 +409,7 @@ Gli effetti visibili, nelle situazioni in cui $\mathrm{I_{mosfet} + I_{load} > I
 %\end{figure}
 %Rispetto a quanto visto in precedenza, nella versione da 2 A è possibile gestire anche l'offset attraverso un potenziometro, che va ad agire sulla tensione in uscita generata dal bangap, la stessa che viene utilizzata anche per generare $\mathrm{V_{ref}}$ regolando un secondo potenziometro. 
 
-Il prototipo ShuntLDO da $2\A$ \`e, analogamente alla versione precedente, un singolo ASIC realizzato a scopo di verifica e validazione che per\`o, a differenza della versione prototipale a $0.5\A$, contiene una sola replica del regolatore. Per questo chip \`e stata messa a punto una scheda di test analoga a quella di cui alla sezione precendente. In Fig.~\ref{PCB2A} sono visibili la struttura e una foto del chip stesso e il disegno del circuito stampato della scheda di test. 
+Il prototipo ShuntLDO da $2\A$ \`e, analogamente alla versione precedente, un singolo ASIC realizzato a scopo di verifica e validazione che per\`o, a differenza della versione prototipale a $0.5\A$, contiene una sola replica del regolatore. Per questo chip \`e stata messa a punto una scheda di test analoga a quella di cui alla sezione precedente. In Fig.~\ref{PCB2A} sono visibili la struttura e una foto del chip stesso e il disegno del circuito stampato della scheda di test. 
 \begin{figure}
 \centering
 \includegraphics[width=0.32\textwidth]{Immagini/chipSLDO2A.png}
@@ -431,14 +432,19 @@ I valori misurati di $\mathrm{V_{out}}$, $\mathrm{V_{ref}}$ e $\mathrm{V_{in}}$ 
 
 \begin{figure}
 \centering
-\includegraphics[scale=.5]{Immagini/SLDO2Astatic}
+\includegraphics[scale=.5]{Immagini/SLDO2Astaticbis}
 \caption{Grafico corrente-tensione che riporta gli andamenti di $\mathrm{V_{in}}$, in blu, $\mathrm{V_{ref}\cdot 2}$, in arancione e $\mathrm{V_{out}}$ in rosso.}
 \label{SLDO2Astatic}
 \end{figure}
-Si può notare che $\mathrm{V_{ref}}$ non è costante nella parte con bassa $\mathrm{I_{in}}$: questo comportamento è dovuto al fatto che, nella fase in cui lo ShuntLDO \`e al di fuori della regione di regolazione, nel ramo di $\mathrm{V_{ref}}$ scorre un po' di corrente che causa una maggiore caduta di tensione del potenziometro e, quindi, una minore tensione all'ingresso di A4 (vd. Fig.~\ref{SLDO2A}).
-Infatti, dato che $\mathrm{V_{ref}}$ si trova all'ingresso del comparatore A1, in una situazione di equilibrio viene confrontata con una tensione molto simile.
-Il comparatore ha una impedenza di ingresso molto grossa e la corrente che scorre in questo sarà, quindi, molto piccola.
-Nella fase di accensione, invece, all'ingresso di A1 si trova una grossa differenza fra + e - e, quindi, una corrente non trascurabile, causa, come visto, della variazione di $\mathrm{V_{ref}}$.
+
+Guardando gli andamenti si può notare come, al momento in cui il circuito si attiva, $\mathrm{V_{out}}$ cerca di raggiungere il valore di $1 \V$ (stabilito attraverso $\mathrm{V_{ref}}$), ma nel far questo è limitato da $\mathrm{V_{in}}$ di cui ne segue l'andamento tra $0.5 \A$ e $0.75 \A$ restando ad una distanza di $\sim 100 \mV$. 
+Questo è dovuto alle caratteristiche del regolatore LDO, il quale al massimo può generare tensioni di uscita tali che $\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 \V}$. 
+Considerando gli andamenti asintotici delle tensioni nella zona con $\mathrm{I_{in}}>1\A$ si ottengono i seguenti valori:
+%Si può notare che $\mathrm{V_{ref}}$ non è costante nella parte con bassa $\mathrm{I_{in}}$: questo comportamento è dovuto al fatto che, nella fase in cui lo ShuntLDO \`e al di fuori della regione di regolazione, nel ramo di $\mathrm{V_{ref}}$ scorre un po' di corrente che causa una maggiore caduta di tensione del potenziometro e, quindi, una minore tensione all'ingresso di A4 (vd. Fig.~\ref{SLDO2A}).
+%Infatti, dato che $\mathrm{V_{ref}}$ si trova all'ingresso del comparatore A1, in una situazione di equilibrio viene confrontata con una tensione molto simile.
+%Il comparatore ha una impedenza di ingresso molto grossa e la corrente che scorre in questo sarà, quindi, molto piccola.
+%Nella fase di accensione, invece, all'ingresso di A1 si trova una grossa differenza fra + e - e, quindi, una corrente non trascurabile, causa, come visto, della variazione di $\mathrm{V_{ref}}$.
+
 %Questo andamento è stato ottenuto ponendo
 %\footnote{Per selezionare il valore voluto è necessario regolare il potenziometro RP1 che si trova in serie al bandgap sulla PBC.} 
 %$\mathrm{V_{ref} = 0.5} V$ e applicando un carico resistivo di 1 $\Omega$ a $\mathrm{V_{out}}$. In questa situazione il bandgap è alimentato esternamente con una tensione di 5 V. 
@@ -457,8 +463,10 @@ $\mathrm{V_{ref}}$ & $\mathrm{V_{out}}$ & $\mathrm{R_{eff}}$ & $\mathrm{V_{offse
 \end{tabular}
 \end{center}
 \FloatBarrier
+Infine è interessante notare una leggera flessione del $\mathrm{V_{out}}$ all'aumentare  della corrente in ingresso, questo ha stimolato una riflessione su possibili effetti dovuti a differenze di ground tra regolatore e scheda di test.
 
 \subsection{Effetti spuri dell'allestimento di test}
+\label{EffettiSpuri}
 
 \begin{figure}[!ht]
 \centering
@@ -510,11 +518,12 @@ All'attento osservatore non sfuggir\`a che le due curve di Fig.~\ref{VioutSense}
 %\end{tabular}
 %\end{center}
 
-Il valore della resistenza equivalente è molto piccolo e, come detto, dipende in prima approssimazione dal numero di microsaldature.
+Il valore della resistenza equivalente è molto piccolo e, come detto, dipende in prima approssimazione dal numero di \textit{wire bond}.
 Fintantoché lo ShuntLDO è utilizzato come circuito a se stante su una scheda di test di test, dato che non ci sono problemi di spazio, è possibile utilizzare un gran numero di connessioni per ridurre al minimo differenze tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$, in modo da rendere trascurabile il fenomeno. 
 Pi\`u in generale, questa istruttiva misura suggerisce che grande cura dovr\`a essere posta nel disegno finale dei moduli dell'IT e in particolare nella ridondanza delle connessioni dal momento che si tratter\`a di dispositivi a corrente relativamente alta in cui gli eventuali effetti spuri vanno attentamente valutati e, se possibile, minimizzati se non completamente eliminati.
 
 \subsection{La regolazione di  $\mathrm{V_{offset}}$}
+\label{Voffset}
 
 Torniamo adesso a considerare la possibilità, nella versione da 2 A, di regolare esternamente il $\mathrm{V_{offset}}$. 
 Dal momento che $\mathrm{V_{in}}$ dello ShuntLDO deve trovarsi, per funzionare al meglio, $200-300\mV$ al di sopra di $\mathrm{V_{out}=2\times V_{ref}}$, una tensione di offset alta consente di raggiungere la zona di regolazione prima a parit\`a di $\mathrm{I_{in}}$ contenendo cos\`i i consumi totali sempre che la corrente circolante sia sufficiente per le esigenze del carico da alimentare.
