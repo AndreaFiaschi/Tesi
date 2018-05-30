@@ -34,25 +34,25 @@ dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singo
 
 Nella progettazione del sistema con alimentazione seriale occorre tener conto che il consumo di ciascun ROC, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui si trova e dalle operazioni che sta eseguendo. 
 Il ROC, infatti, è un carico dinamico e l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena.
-Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori remoti, detti anche di \textit{back-end}, non sarebbero in grado di compensarle in modo rapido: questi saranno posizionati lontano dall'esperimento e i cavi, lunghi anche fino a $\sim 60-80\m$, introducono un ulteriore carico induttivo non trascurabile.
+Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori remoti, detti anche di \textit{back-end}, non sarebbero in grado di compensarle in modo rapido: questi saranno posizionati lontano dall'esperimento e i cavi, lunghi anche fino a $\sim 40-50\m$, introducono un ulteriore carico induttivo non trascurabile.
 
-Per queste ragioni un aspetto chiave dell'implementazione di uno schema di alimentazione seriale \`e che le fluttuazioni del carico, il ROC nel nostro caso, non siano visibili esternamente ma siano gestite localmente facendo s\`i che il carico effettivo visto dalla catena sia costante. Questo pu\`o essere ottenuto implementando, in un appropriato circuito di {\em shunt}, un cammino alternativo per la corrente in quel momento non utilizzata dal ROC, tale che $\mathrm{I}_\mathrm{TOT}\sim\mathrm{I}_\mathrm{ROC}+\mathrm{I}_\mathrm{shunt}\sim\mathrm{cost}$. Inoltre \`e necessario che, in prossimit\`a del ROC, venga effettuata l'opportuna regolazione PoL per convertire l'alimentazione in corrente fornita alla catena e quindi a ciascuno dei suoi elementi in una alimentazione in tensione stabile fruibile dal ROC. 
+Per queste ragioni un aspetto chiave dell'implementazione di uno schema di alimentazione seriale \`e che le fluttuazioni del carico, il ROC nel nostro caso, non siano visibili esternamente ma siano gestite localmente facendo s\`i che il carico effettivo visto dalla catena sia costante. Questo pu\`o essere ottenuto implementando, in un appropriato circuito di {\em shunt}, un cammino alternativo per la corrente in quel momento non utilizzata dal ROC, tale che $\mathrm{I}_\mathrm{TOT}\sim\mathrm{I}_\mathrm{ROC}+\mathrm{I}_\mathrm{shunt}\sim\mathrm{cost}$. Inoltre \`e necessario che, in prossimit\`a del ROC, venga effettuata l'opportuna regolazione PoL, che converte l'alimentazione in corrente fornita alla catena, e quindi a ciascuno dei suoi elementi, in una alimentazione in tensione stabile, fruibile dal ROC.
 \begin{figure}
 \centering
 \includegraphics[width=0.5\textwidth]{Immagini/zener2}
 \caption{Schema di principio di un circuito regolatore con shunt che utilizza un diodo Zener.}
 \label{zener}
 \end{figure}
-Per flessibilit\`a e versatilit\`a \`e auspicabile che questa elettronica addizionale sia integrata nel ROC stesso per le motivazioni espresse nella Sezione~\ref{IntroROCIT}.
+Per flessibilit\`a, versatilit\`a e le motivazioni espresse nella Sezione~\ref{IntroROCIT} \`e auspicabile che questa elettronica addizionale sia integrata nel ROC stesso.
 
-Un possibile schema di principio di un tale circuito \`e visibile in~Fig.~\ref{zener} in cui si sfrutta un diodo Zener contropolarizzato per ottenere la stabilizzazione in tensione al carico `load'. Il funzionamento è molto semplice, la corrente in ingresso induce una caduta di tensione sulla resistenza R che, pur tuttavia, non deve impedire di portare il diodo Zener in contropolarizzazione oltre la tensione di soglia. A questo punto sarà lo stesso diodo a mantenere la tensione ai capi del carico costante assorbendo tutta la corrente non necessaria al carico, agendo da shunt. 
-Questo schema però presenta problemi operativi nel momento in cui si mettano più regolatori in parallelo come pu\`o essere necessario fare in applicazioni pratiche come, per esempio, nel caso di un ROC dove servono due tensioni generalmente diverse per la parte digitael e la parte analogica ciascuna fornita da un regolatore diverso o nel caso di un modulo dove pi\`u ROC sono alimentati in parallelo condividendo la stessa corrente in ingresso. Il diodo Zener che, per inevitabili tolleranze di fabbricazione, si trovi all'accensione ad entrare in conduzione prima degli altri assorbir\`a tutta la corrente disponibile con effetti imprevedibili e potenzialmente distruttivi. 
+Un possibile schema di principio di tale circuito \`e visibile in~Fig.~\ref{zener} in cui si sfrutta un diodo Zener contropolarizzato per ottenere la stabilizzazione in tensione al carico `load'. Il funzionamento è molto semplice: la corrente in ingresso induce una caduta di tensione sulla resistenza R che, tuttavia, non impedisce di contropolarizzare il diodo Zener oltre la tensione di soglia. A questo punto sarà lo stesso diodo a mantenere la tensione ai capi del carico costante, assorbendo tutta la corrente non necessaria al carico e agendo da shunt. 
+Questo schema però presenta problemi operativi nel momento in cui si mettano più regolatori in parallelo, come pu\`o essere necessario fare in applicazioni pratiche, ad esempio, nel caso di un ROC dove servono due tensioni, generalmente diverse, per la parte digitale e la parte analogica, ciascuna fornita da un regolatore diverso, oppure nel caso di un modulo dove pi\`u ROC sono alimentati in parallelo condividendo la stessa corrente in ingresso. Il diodo Zener che, per inevitabili tolleranze di fabbricazione, si trovi all'accensione ad entrare in conduzione prima degli altri assorbir\`a tutta la corrente disponibile con effetti imprevedibili e potenzialmente distruttivi. 
 
-Per ovviare a queste criticità è stato sviluppato un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando \`e minima la differenza tra la tensione in ingresso e quella in uscita a valle della regolazione; in particolare$\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 \V}$.} accoppiato ad un circuito di shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, denominato {\em ShuntLDO}, con caratteristiche elettriche tali da superare le problematiche a cui si \`e sopra accennato.
+Per ovviare a queste criticità è stato sviluppato un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando \`e minima la differenza tra la tensione in ingresso e quella in uscita a valle della regolazione; in particolare $\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 \V}$.} accoppiato ad un circuito di shunt e capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, denominato {\em ShuntLDO}, con caratteristiche elettriche tali da superare le problematiche a cui si \`e sopra accennato.
 
-Il regolatore, che va sotto il nome ShuntLDO, \`e stato inizialmente sviluppato dalla collaborazione Atlas per un suo utilizzo nell'ambito del progetto {\em Insertable B-Layer} (IBL)~\cite{IBL}. Infatti la famiglia di ROC disegnati per IBL, FE-I3~\cite{ROCFEI3} e FE-I4~\cite{ROCFEI4}, implementano entrambi circuiti ShuntLDO dimensionati per correnti totali di $\sim 0.5\A$. Pur tuttavia IBL non implementa uno schema di alimentazione seriale perch\'e ad esso fu preferito uno schema di alimentazione pi\`u tradizionale.
+Il regolatore ShuntLDO \`e stato inizialmente sviluppato dalla collaborazione Atlas per un suo utilizzo nell'ambito del progetto {\em Insertable B-Layer} (IBL)~\cite{IBL}. Infatti la famiglia di ROC disegnati per IBL, FE-I3~\cite{ROCFEI3} e FE-I4~\cite{ROCFEI4}, implementano entrambi circuiti ShuntLDO dimensionati per correnti totali di $\sim 0.5\A$. Pur tuttavia IBL non implementa uno schema di alimentazione seriale perch\'e ad esso fu preferito uno schema di alimentazione pi\`u tradizionale.
 
-Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a 65~nm dalla collaborazione RD53 per la sfida di HL-LHC: inizialmente in una versione a $\sim 0.5\A$, necessaria per valutare il dispositivo in $65\nm$, per poi arrivare alle attuali versioni dimensionate per corrente massime di $\sim 2\A$.
+Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a 65~nm dalla collaborazione RD53 per la sfida di HL-LHC: inizialmente in una versione a $\sim 0.5\A$, necessaria per valutare il dispositivo in $65\nm$, per poi arrivare alle attuali versioni dimensionate per correnti massime di $\sim 2\A$.
 
 %Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
 %Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
@@ -74,11 +74,12 @@ Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a 65~nm dall
 
 \subsection{Il principio di funzionamento dello ShuntLDO}
 
-Per descrivere il suo funzionamento partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla Fig.~\ref{SLDOprova}. 
+Per descrivere il funzionamento dello ShuntLDO, partiamo da uno schema estremamente semplificato che permetta di comprendere l'idea di fondo, facendo riferimento alla Fig.~\ref{SLDOprova}. 
 Come anticipato il circuito di ShuntLDO è alimentato dalla corrente $\mathrm{I_{in}}$, attraverso il nodo $\mathrm{V_{in}}$.  Della corrente in ingresso una frazione $\mathrm{I_\mathrm{ref}}$ scorrerà nel ramo di R3. Questa sarà la corrente di riferimento all'interno dello shunt, vedremo in seguito perché. 
 La parte che agisce come regolatore di tensione è il mosfet M1 tramite l'amplificatore A1 che equalizza la tensione sul carico al valore di riferimento $\mathrm{V_{ref}}$ aprendo o chiudendo il gate di M1 e, dunque, facendo scorrere più o meno corrente. 
 In assenza della parte di shunt ci sarebbe, quindi, un aumento di $\mathrm{I_{ref}}$ e, conseguentemente, di $\mathrm{V_{in}}$. 
-Per evitare ciò è stato implementato un ramo in parallelo al carico in cui la corrente che scorre è regolata dal mosfet M4 tramite l'amplificatore A3 che, confrontando tramite un opportuno campionamento la corrente nel ramo di M1 e 1000 volte quella nel ramo di R3, ha lo scopo di mantenere la corrente in ingresso a M1 costante. Il complesso costituito da M4 e A3 è la parte attiva dello shunt: A3 fa sì che la corrente nel ramo con M1 sia 1000 volte quella di riferimento che scorre in R3, poiché modifica $\mathrm{I_{shunt}}$ attraverso la variazione della tensione di gate del mosfet M4. 
+%Per evitare ciò è stato implementato un ramo in parallelo al carico in cui la corrente che scorre è regolata dal mosfet M4 tramite l'amplificatore A3 che, confrontando tramite un opportuno campionamento la corrente nel ramo di M1 e 1000 volte quella nel ramo di R3, ha lo scopo di mantenere la corrente in ingresso a M1 costante. Il complesso costituito da M4 e A3 è la parte attiva dello shunt: A3 fa sì che la corrente nel ramo con M1 sia 1000 volte quella di riferimento che scorre in R3, poiché modifica $\mathrm{I_{shunt}}$ attraverso la variazione della tensione di gate del mosfet M4. 
+ Per evitare ciò è implementato il complesso costituito da M4 e A3, cioè la parte attiva dello shunt: A3 fa sì che la corrente nel ramo con M1 sia 1000 volte quella di riferimento, $\mathrm{I_{ref}}$, che scorre in R3, poiché modifica $\mathrm{I_{shunt}}$ attraverso la variazione della tensione di gate del mosfet M4. 
 La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno variazioni dinamiche del carico.
 \begin{figure}[!htbp]
 \centering
@@ -91,11 +92,11 @@ La Fig.~\ref{SLDOprinciple} mostra graficamente il funzionamento dello ShuntLDO 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[scale=.5]{Immagini/ShuntRegulatorPrinciple}
-\caption{Andamento qualitativo della corrente assorbita da un ROC in funzione del tempo. Mentre la componente analogica \`e sostanzialmente costante, la componente digitale subisce variazioni, anche repentine. Sono da evitare le situazioni in cui il carico richieda, per lunghi perdiodi di tempo, una corrente in eccesso rispetto a quella circolante nella catena, rappresentata in giallo, mentre picchi veloci possono essere gestiti con opportuno filtraggio.}
+\caption{Andamento qualitativo della corrente assorbita da un ROC in funzione del tempo. Mentre la componente analogica \`e sostanzialmente costante, la componente digitale subisce variazioni, anche repentine. Sono da evitare le situazioni in cui il carico richieda, per lunghi periodi di tempo, una corrente in eccesso rispetto a quella circolante nella catena, rappresentata in giallo, mentre picchi veloci possono essere gestiti con opportuno filtraggio.}
 \label{SLDOprinciple}
 \end{figure}
 
-\subsection{Lo ShuntLDO da 0.5 A in 65nm}
+\subsection{Lo ShuntLDO da $0.5\A$ in 65nm}
 
  
 \begin{figure}[!htbp]
@@ -119,7 +120,7 @@ Questa scelta progettuale definisce il modo in cui lo ShuntLDO è visto esternam
 \mathrm{I_{in} \sim k I_{ref} \sim k \frac{V_{in} - V_{thM6}}{R_3}}
 \label{eq:IV05amp}
 \end{equation}
-dove $\mathrm{V_{thM6}}$ \`e la tensione di soglia del mosfet M6. Quindi il generatore connesso al nodo $\mathrm{V_{in}}$ vede un carico resistivo pari a $\frac{R3}{k}$ in serie con una piccola tensione di offset. Il valore di R3 è, quindi, un importante parametro, la cui scelta determina la tensione nel punto di lavoro per una data corrente e, pi\`u in generale, la pendenza di $\mathrm{V_{in}}$ in funzione di $\mathrm{I_{in}}$ nella zona di regolazione, come visibile in Fig.~\ref{fig:IVSLDO} che mostra il caratteristico grafico corrente-tensione dello ShuntLDO che approfondiremo in seguito.
+dove $\mathrm{V_{thM6}}$ \`e la tensione di soglia del mosfet M6. Quindi il generatore connesso al nodo $\mathrm{V_{in}}$ vede un carico resistivo pari a $\frac{R3}{k}$ in serie con una piccola tensione di offset. Il valore di R3 è, quindi, un importante parametro, la cui scelta determina la tensione nel punto di lavoro per una data corrente e, pi\`u in generale, la pendenza di $\mathrm{V_{in}}$ in funzione di $\mathrm{I_{in}}$ nella zona di regolazione, come visibile in Fig.~\ref{fig:IVSLDO} che mostra il caratteristico grafico corrente-tensione dello ShuntLDO e che approfondiremo in seguito.
 Il valore di R3 \`e configurabile tramite il terminale indicato con $\mathrm{R_{ext}}$ dove è possibile collegare una resistenza esterna per alterare il valore del resistore integrato nello ShuntLDO.
 \begin{figure}[!htbp]
 \centering
@@ -128,7 +129,8 @@ Il valore di R3 \`e configurabile tramite il terminale indicato con $\mathrm{R_{
 \label{fig:IVSLDO}
 \end{figure}
 
-Per una corretta funzione di regolazione lo ShuntLDO da $0.5\A$ necessita di una tensione in ingresso minima di circa $1.4-1.5\V$ a fronte di un $\mathrm{V_{out}}$ nominale pari a $\sim 1.2\V$ che \`e, entro qualche decina di mV, il valore di tensione necessario sia per la componente analogica che per la componente digitale del futuro ROC per l'IT. Il rapporto tra la differenza tra tensione di ingresso e tensione di regolazione, pari a $\sim 200\mV$, e la tensione in ingresso rappresenta una stima della potenza minima dissipata dallo ShuntLDO pari quindi al $\sim 15-20\%$. A parit\`a di $\mathrm{I_{in}}$ e di $\mathrm{V_{out}}$, la scelta della resistenza R3 definisce $\mathrm{V_{in}}$ e quindi il punto di lavoro dello ShuntLDO in termini di potenza in eccesso che \`e necessario fornire al regolatore.
+Per una corretta funzione di regolazione, lo ShuntLDO da $0.5\A$ necessita di una tensione in ingresso minima di circa $1.4-1.5\V$, a fronte di un $\mathrm{V_{out}}$ nominale pari a $\sim 1.2\V$ corrispondente, entro qualche decina di mV, al valore di tensione necessario sia per la componente analogica che per la componente digitale del futuro ROC per l'IT. Il rapporto della differenza tra tensione di ingresso e tensione di regolazione, pari a $\sim 200\mV$, con la tensione in ingresso rappresenta una stima della potenza minima dissipata dallo ShuntLDO pari, quindi, al $\sim 15-20\%$. A parit\`a di $\mathrm{I_{in}}$ e di $\mathrm{V_{out}}$, la scelta della resistenza R3 definisce $\mathrm{V_{in}}$ e, quindi, il punto di lavoro dello ShuntLDO in termini della potenza in eccesso che \`e necessario fornire al regolatore.
+\FloatBarrier
 
 % Valori di resistenza maggiori consentiranno, quindi, di operare con correnti minori, con il vantaggio di consumare minor potenza\footnote{
 %   La corrente in ingresso è fissata e quella non utilizzata viene dissipata sullo shunt, che diventa conseguentemente molto caldo.
@@ -138,8 +140,8 @@ Per una corretta funzione di regolazione lo ShuntLDO da $0.5\A$ necessita di una
 
 \subsection{Lo ShuntLDO da $2\A$ in 65nm}
 
-La successiva versione del prototipo di ShuntLDO a 65nm, progettata per correnti nominali di $2\A$, implementa un'ulteriore parametro di configurazione della caratteristica IV per una maggiore flessibilit\`a di utilizzo e configurazione. In particolare \`e stata aggiunta una parte circuitale che permette di calibrare la tensione di offset che definisce la corrente di riferimento nella resistenza R3, che, nella versione precedente, era semplicemente pari a $\mathrm{V_{thM6}}$. Nella Fig.~\ref{SLDO2A}, che mostra lo schema elettrico dello ShuntLDO da $2\A$, \`e visibile il complesso aggiunto per questo scopo costituito dal mosfet M7 controllato dall'amplificatore A4.
-\begin{figure}
+La successiva versione del prototipo di ShuntLDO a 65nm, progettata per correnti nominali di $2\A$, implementa un ulteriore parametro di configurazione della caratteristica IV per una maggiore flessibilit\`a di utilizzo e configurazione. In particolare \`e stata aggiunta una parte circuitale che permette di calibrare la tensione di offset che definisce la corrente di riferimento nella resistenza R3, pari semplicemente a $\mathrm{V_{thM6}}$, nella versione precedente. Nella Fig.~\ref{SLDO2A}, che mostra lo schema elettrico dello ShuntLDO da $2\A$, \`e visibile il complesso aggiunto per questo scopo costituito dal mosfet M7 controllato dall'amplificatore A4.
+\begin{figure}[!htbp]
 \centering
 \includegraphics[width=\linewidth]{Immagini/SLDO2A}
 \caption{Circuito semplificato dello ShuntLDO 2A.}
@@ -149,11 +151,11 @@ La successiva versione del prototipo di ShuntLDO a 65nm, progettata per correnti
 %In questo tipo di schematico non è prevista la possibilità di avere una $\mathrm{V_{offset}}$.
 %Questa caratteristica è stata introdotta nel prototipo a $2A$ riportato in figura \ref{SLDO2A}.
 %Facendo riferimento a questa, si può vedere che, rispetto alla versione a $0.5A$, è presente il mosfet M7 sul ramo di R3, il cui gate è controllato da A4.
-Grazie alla presenza di questo ulteriore stadio, la corrente di riferimento $\mathrm{I_{ref}}$ diventa, quindi
+Grazie alla presenza di questo ulteriore stadio, la corrente di riferimento $\mathrm{I_{ref}}$ diventa, quindi,
 \begin{equation}
-\mathrm{I_{ref} = \frac{V_{in} - V_{ofs}}{R_3}}
+\mathrm{I_{ref} = \frac{V_{in} - V_{ofs}}{R_3}},
 \end{equation}
-dove $\mathrm{V_{ofs}}$ \`e la tensione di offset definita tramite l'omonimo terminale da cui segue una relazione tra $\mathrm{V_{in}}$ e $\mathrm{I_{in}}$ leggermente modificata rispetto alla Eq.~\ref{eq:IV05amp}: 
+dove $\mathrm{V_{ofs}}$ \`e la tensione di offset definita tramite l'omonimo terminale, da cui segue una relazione tra $\mathrm{V_{in}}$ e $\mathrm{I_{in}}$ leggermente modificata rispetto alla Eq.~\ref{eq:IV05amp}: 
 \begin{equation}
 \mathrm{I_{in} \sim k I_{ref} \sim k \frac{V_{in} - V_{ofs}}{R_3}}.
 \end{equation}
@@ -161,7 +163,7 @@ La tipologia circuitale dello ShuntLDO a $2\A$ \`e, per il resto, invariata risp
 
 \subsection{Lo ShuntLDO: il circuito equivalente}
 
-Da quanto descritto nelle sezioni precedenti si pu\`o definire regione operativa o di regolazione dello ShuntLDO quell'ambito in cui la corrente $\mathrm{I_{in}}$ \`e tale per cui $\mathrm{V_{in}\gtrsim 2\times V_{ref}}+{\cal O}\mathrm{(200\mV)}$, e quindi $\mathrm{V_{out}\sim 2\times V_{ref}}$, e, al contempo, $\mathrm{V_{in}\lesssim V_{in}^{MAX}}$ dove $\mathrm{V_{in}^{MAX}\sim2.0\V}$, valore limite per un circuito basato su tecnologia CMOS a $65\nm$. In questa regione il comportamento dello ShuntLDO rispetto ai terminali di ingresso \`e schematizzabile come una resistenza efficace, $\mathrm{R_{eff}}$, definita da $\frac{R3}{k}$ in serie ad un generatore di tensione, $\mathrm{V_{offset}}$. Le variazioni di corrente utilizzata dal reale carico attivo, il ROC nel nostro caso, non sono quindi visibili esternamente al regolatore
+Da quanto descritto nelle sezioni precedenti si pu\`o definire regione operativa, o di regolazione dello ShuntLDO, quell'ambito in cui la corrente $\mathrm{I_{in}}$ \`e tale per cui $\mathrm{V_{in}\gtrsim 2\times V_{ref}}+{\cal O}\mathrm{(200\mV)}$, e quindi $\mathrm{V_{out}\sim 2\times V_{ref}}$, e, al contempo, $\mathrm{V_{in}\lesssim V_{in}^{MAX}}$, dove $\mathrm{V_{in}^{MAX}\sim2.0\V}$ è il valore limite per un circuito basato su tecnologia CMOS a $65\nm$. In questa regione il comportamento dello ShuntLDO rispetto ai terminali di ingresso \`e schematizzabile come una resistenza efficace, $\mathrm{R_{eff}}$, definita da $\frac{R3}{k}$, in serie ad un generatore di tensione, $\mathrm{V_{offset}}$. Le variazioni di corrente utilizzata dal reale carico attivo, il ROC nel nostro caso, non sono quindi visibili esternamente al regolatore.
 %Un importante caratteristica di questo particolare circuito è che esternamente è visto come una resistenza efficace $\mathrm{R_{eff}}$, in serie ad un offset di tensione $\mathrm{V_{offset}}$, mentre il carico attivo, nel nostro caso il chip RD53A, non è visibile e dunque non lo sono nemmeno le sue le sue variazioni. 
 Il comportamento resistivo permette l'utilizzo di più ShuntLDO in parallelo fra di loro, con la corrente che si suddivide in base alla resistenza efficace di ciascuno. La resistenza equivalente risultante \`e quella del parallelo delle resistenze efficaci dei singoli dispositivi superando cos\`i le problematiche descritte nella Sezione~\ref{sec:SLDOzener} che affliggono un tradizionale circuito shunt basato su diodo Zener.
 
@@ -210,15 +212,15 @@ Il disegno dell'IT prevede moduli 1x2 e 2x2 organizzati in catene di alimentazio
 
 Nella fase progettuale era stata valutata anche la possibilit\`a di implementare l'alimentazione seriale concatenando in serie 8-12 ROC singoli; la catena sarebbe cio\`e costituita da un certo numero di moduli in serie con i ROC di ciascun modulo concatenati in serie anch'essi. Un tale approccio \`e stato scartato perch\'e il sensore si troverebbe ad operare con i pixel polarizzati ad una tensione differente a seconda del ROC a cui sono connessi con effetti che non sono stati valutati a fondo e che, molto probabilmente, richiederebbero uno specifico disegno delle strutture del sensore.
 
-Andiamo adesso a studiare l'andamento dei consumi dovuti a più moduli in serie e come questi cambiano nel caso di un malfunzionamento di uno di questi (per esempio al livello del regolatore) in seguito al quale si azzera la corrente che scorre nel ramo ad esso relativo.
+Studiamo adesso l'andamento dei consumi dovuti a più moduli in serie e come cambiano nel caso di un malfunzionamento di uno di questi (per esempio al livello del regolatore) in seguito al quale si azzera la corrente che scorre nel relativo ramo.
 %Per meglio comprendere i risvolti dati dall'utilizzo di un'alimentazione seriale con SLDO è interessante fare un esempio dei consumi di questo tipo di alimentazione. 
 A titolo di esempio, quindi, prendiamo la situazione in cui si ha una catena seriale costituita da 8 moduli da 4 ROC ciascuno; 
 % questo per far si che nel caso un regolatore si guasti , la corrente possa essere assorbita da un altro regolatore all'interno del modulo\footnote{Come già detto i regolatori devono essere in grado d lavorare in parallelo, generare differenti tensioni dalle correnti in ingresso e tenere costante il consumo di corrente tramite lo shunt.}. 
-assumiamo che il punto di lavoro scelto corrisponda a $\mathrm{R_{eff}=0.3\Ohm}$ $\mathrm{V_{offset}=0.8}\V$ per il parallelo tra lo ShuntLDO `analogico' e lo ShuntLDO `digitale' dato che la resistenza equivalente di un singolo ShuntLDO \`e tipicamente $0.600\Ohm$.
+assumiamo che il punto di lavoro scelto corrisponda a $\mathrm{R_{eff}=0.3\Ohm}$ $\mathrm{V_{offset}=0.8}\V$ per il parallelo tra lo ShuntLDO `analogico' e lo ShuntLDO `digitale' dato che la resistenza equivalente di un singolo ShuntLDO \`e tipicamente $0.6\Ohm$.
 %Prendiamo come modello la situazione in cui si ha un serie di 8 moduli con 4 chip ciascuno, assumiamo che $\mathrm{V_{offset}=0.8} \V$ e $\mathrm{R_{eff}=0.3}$ $\Omega$ per ciascun chip\footnote{$\mathrm{R_{eff}}$ del singolo SLDO è circa 0.600 $\Omega$, nel chip sono presenti due SLDO in parallelo uno per l'alimentazione della parte digitale ed uno per quella analogica. La $\mathrm{R_{eff}}$ con cui viene visto il chip è dunque la metà, 0.300 $\Omega$.}. 
 Con una corrente di lavoro totale richiesta di $\mathrm{I^{ROC}_{in}\sim2.0}\A$ per ROC, equamente divisa tra parte analogica e parte digitale, la corrente totale da fornire all'intero modulo \`e $\mathrm{I_{in}^{modulo}\sim8.0}\A$ corrispondente a $\mathrm{V_{modulo}=1.4} \V$.
 
-Rispetto a questo valore nominale la corrente circolante nella catena deve essere incrementata per avere un opportuno margine per gestire picchi di carico da parte del ROC a valle del regolatore. Come si vedr\`a pi\`u avanti, per esempio in Fig.~\ref{fig:LoadTransient}, per avere stabilit\`a della regolazione \`e ragionevole avere un $\sim20-25\%$ di corrente in pi\`u rispetto al valore nominale.
+Rispetto a questo valore nominale la corrente circolante nella catena deve essere incrementata per avere un opportuno margine di gestione dei picchi di carico da parte del ROC a valle del regolatore. Come si vedr\`a pi\`u avanti, per esempio in Fig.~\ref{LoadTransient}, per avere stabilit\`a della regolazione \`e ragionevole avere un $\sim20-25\%$ di corrente in pi\`u rispetto al valore nominale.
 % Per avere un po' di margine incrementiamo la corrente di un 20$\%$, la scelta di dare un margine del 20$\%$, piuttosto che del 40$\%$ è una scelta giustificata qualitativamente dall'ampiezza dei picchi di tensione generati dallo SLDO in concomitanza di un transiente, in figura \ref{LoadTransient} è riportato il valore di picco dell'undershoot/overshoot in funzione del margine di corrente dato su 1 A di alimentazione.
 % \begin{figure}
 % \centering
@@ -230,7 +232,7 @@ Conseguentemente $\mathrm{I^{ROC}_{in}=2.4}\A$, $\mathrm{I_{in}^{modulo}=9.6}$ A
 %Con una corrente di $\mathrm{I_{in}=2.0}$ A per chip\footnote{Che vale a dire 1 A per ciascuno dei due SLDO presenti nel chip.} ($\mathrm{I=8.0}$ A per modulo) si avrà un $\mathrm{V_{modulo}=1.4} \V$, per avere un po' di margine incrementiamo la corrente di un 20$\%$, la corrente che arriva nei moduli sarà I = 9.6 A. 
 %In questa situazione $\mathrm{V_{modulo}=1.52}$ V e dunque la caduta di tensione su tutta la catena formata da 8 moduli sarà pari a $12.16 \V$. Questa non è la caduta di tensione totale, va tenuto conto anche della resistenza dovuta ai cavi, in questo esempio assumiamo valga 2 $\Omega$. 
 %Tenendo conto anche della resistenza dovuta ai cavi, che assumiamo valga $2 \Ohm$,
-La tensione fornita generatore remoto sar\`a $\sim 14-15\V$ perch\`e si dovr\`a tener conto anche della dissipazione sui cavi che si stima compresa tra il $15$ e il $20\%$, comunque ben inferiore ai valori tipici di uno schema di alimentazione parallelo.
+La tensione fornita dal generatore remoto sar\`a $\sim 14-15\V$ perch\`e si dovr\`a tener conto anche della dissipazione sui cavi che si stima compresa tra il $15$ e il $20\%$, comunque ben inferiore ai valori tipici di uno schema di alimentazione parallelo.
 %Il generatore sarà infine $\mathrm{V \sim I_{in}^{modulo} \cdot 2 \Ohm +12 \V \sim 31 \V}$.
  
 % Dai conti fatti risulta che circa il $60 \%$ della potenza è dissipata sui cavi\footnote{
@@ -260,7 +262,7 @@ Una accurata valutazione dei malfunzionamenti della catena seriale non \`e ancor
 %Vediamo a questo punto cosa accade nel caso in cui un chip in uno dei moduli sia fuori uso\footnote{Dal momento che nel chip ci sono due SLDO, in realtà lo scenario più probabile è che solo uno dei due sia danneggiato.}.
 Ciascuno dei tre ROC dello stesso modulo rimanenti dovrà quindi farsi carico della corrente che non attraversa pi\`u il modulo danneggiato per una corrente totale per ROC pari a $\mathrm{I_{in}^{modulo}/3 \sim 3.2 A}$, valore corrispondente a un terzo di corrente in più rispetto ai $2.4\A$ nominali.
 %Dato che l'alimentazione è in corrente, ciascuno dei tre chip rimanenti dovrà assorbire un terzo di corrente in più, dunque la corrente per ciascun chip sarà $\mathrm{I = 9.6A / 3 = 3.2 A}$. 
-Di conseguenza cambier\`a anche la caduta di tensione sul modulo in question che sarà 
+Di conseguenza cambier\`a anche la caduta di tensione sul modulo in questione che sarà 
 \begin{equation*}
   \mathrm{V_{modulo} = 3.2\A \cdot 0.3 \Omega + 0.8\V = 1.8 \V},
 \end{equation*}
@@ -268,7 +270,7 @@ e la potenza dissipata
 \begin{equation*}
   \mathrm{W_{modulo} = 3 \cdot W_{chip} = 3 \cdot I \cdot V_{modulo} = I_{modulo} \cdot V_{modulo} = 16.9W},
 \end{equation*}
-con un incremento di $\sim2.5\W$ per il singolo modulo, corrispondente a circa il $17\%$. Sul totale della catena, questa maggior richiesta di potenza \`e dell'ordine del \% e quindi marginale. Un ulteriore malfunzionamento porterebbe la caduta di tensione sul modulo a $\mathrm{V_{modulo} = 4.8\A \cdot 0.3 \Omega + 0.8\V = 2.2 \V}$, quindi oltre la soglia di tolleranza in tensione della tecnologio CMOS a $65\nm$ con la conseguenza di avere l'imminente rottura anche degli ulteriori due ROC. La situazione \`e in generale assai pi\`u critica per i moduli 1x2 dato che, in caso di malfunzionamenti, il ROC rimanente si troverebbe a gestire il doppio della corrente nominale.
+con un incremento di $\sim2.5\W$ per il singolo modulo, corrispondente a circa il $17\%$. Sul totale della catena, questa maggior richiesta di potenza \`e dell'ordine del \% e quindi marginale. Un ulteriore malfunzionamento porterebbe la caduta di tensione sul modulo a $\mathrm{V_{modulo} = 4.8\A \cdot 0.3 \Omega + 0.8\V = 2.2 \V}$, quindi oltre la soglia di tolleranza in tensione della tecnologia CMOS a $65\nm$ con la conseguenza di avere l'imminente rottura anche degli ulteriori due ROC. La situazione \`e in generale assai pi\`u critica per i moduli 1x2 dato che, in caso di malfunzionamenti, il ROC rimanente si troverebbe a gestire il doppio della corrente nominale.
 
 Si spera per\`o che risulti chiaro da questi esempi che la scelta del punto di lavoro (e quindi di  $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$) \`e di importanza fondamentale non solo per le condizioni operative standard, ma anche per la gestione dei malfunzionamenti che spostano localmente il punto di lavoro dei regolatori adiacenti. Non \`e detto per\`o che il meccanismo di rottura pi\`u frequente sia quello in cui il ROC e i suoi regolatori non sono pi\`u attraversati da corrente; \`e ipotizzabile che gli scenari pi\`u frequenti di rottura coinvolgano il solo ROC vero e proprio e che quindi gli ShuntLDO ad esso relativi continuino a funzionare. In questo caso l'inconveniente \`e che tutta la potenza viene dissipata sui mosfet M4 dei regolatori. Per questo motivo nell'implementazione reale dello ShuntLDO sul ROC RD53A e versioni successive, la parte di potenza (essenzialmente il ramo costituito da M1 e M4) \`e ottenuta da un certo numero di repliche connesse in parallelo e distribuite sulla superficie del ROC per evitare un potenziale `hot spot' sia in condizioni standard di funzionamento che in caso di malfunzionamenti.
 
@@ -314,7 +316,7 @@ Si spera per\`o che risulti chiaro da questi esempi che la scelta del punto di l
 Riportiamo in questo paragrafo alcune misure effettuate sul prototipo di ShuntLDO da $0.5\A$ che hanno permesso di prendere confidenza con i concetti dell'alimentazione seriale e con l'utilizzo dello ShuntLDO.
 %A differenza della versione a $2\A$, in questa non è possibile inserire un valore di offset regolabile al $\mathrm{V_{out}}$.
 
-Questo prototipo nasce come un singolo ASIC realizzato per la verifica e la validazione del solo ShuntLDO. Per il test il chip viene montanto e microsaldato su una scheda di test progettata appositamente e molto versatile. In Fig.~\ref{PCB05A} sono visibili la struttura e una foto del chip stesso, che contiene tre repliche del circuito ShuntLDO, e il disegno del circuito stampato della scheda di test.
+Questo prototipo nasce come un singolo ASIC realizzato per la verifica e la validazione del solo ShuntLDO. Per il test il chip viene montato e microsaldato su una scheda di test progettata appositamente e molto versatile. In Fig.~\ref{PCB05A} sono visibili la struttura e una foto del chip stesso, che contiene tre repliche del circuito ShuntLDO, e il disegno del circuito stampato della scheda di test.
 \begin{figure}
 \centering
 \includegraphics[width=0.32\textwidth]{Immagini/chipSLDO05A.png}
@@ -354,8 +356,8 @@ Dato che la parte a sinistra del grafico corrisponde alla situazione in cui il r
 
 %La successiva misura di test che è stata eseguita con questo prototipo di shunt, prima del passaggio alla versione da 2A, è un serie di due SLDO entrambi con un carico resistivo di $\mathrm{4 \Omega}$. In questo caso i due elementi hanno $\mathrm{V_{ref}}$ diversi $\mathrm{V_{ref1}=0.497}$ V e $\mathrm{V_{ref2}=0.553 V}$. 
 %Ciò non rappresenta un problema in quanto il comportamento "esterno " non ne è influenzato.
-Nella configurazione finale nel ROC per l'esperimento, la tensione $\mathrm{V_{ref}}$ viene generata tramite un regolatore di tensione {\em bandgap}\footnote{Una tensione di riferimento `bandgap' \`e ottenuta tramite una circuiteria che fornisce un voltaggio stabile indipendente dalla temperatura e dalle variazioni della tensione di alimentazione in un ampio margine operativo.} alimentato dalla stessa tensione $\mathrm{V_{in}}$ dello ShuntLDO. 
-Per scopi diagnostici, tramite la scheda di test, \`e possibile definire la tensione di riferimento $\mathrm{V_{ref}}$ sia tramite un circuito bandgap integrato sulla scheda che si appoggia a $\mathrm{V_{in}}$, sia in maniera indipendente dalle altre alimentazione dello ShuntLDO fornendo VCC con una sorgente esterna. 
+Nella configurazione finale, nel ROC per l'esperimento la tensione $\mathrm{V_{ref}}$ viene generata tramite un regolatore di tensione {\em bandgap}\footnote{Una tensione di riferimento `bandgap' \`e ottenuta tramite una circuiteria che fornisce un voltaggio stabile indipendente dalla temperatura e dalle variazioni della tensione di alimentazione in un ampio margine operativo.} alimentato dalla stessa tensione $\mathrm{V_{in}}$ dello ShuntLDO. 
+Per scopi diagnostici, tramite la scheda di test, \`e possibile definire la tensione di riferimento $\mathrm{V_{ref}}$ sia tramite un circuito bandgap integrato sulla scheda che si appoggia a $\mathrm{V_{in}}$, sia in maniera indipendente dalle altre alimentazioni dello ShuntLDO fornendo VCC con una sorgente esterna. 
 %Sulla scheda di test è presente un bandgap la cui alimentazione può essere separata da quella dello ShuntLDO. Il compito di questo bandgap è quello di generare la tensione di %riferimento $\mathrm{V_{ref}}$, il cui valore può essere regolato con un potenziometro presente sulla scheda di test.
 In figura~\ref{SLDO5Serie} possiamo vedere il confronto fra il diverso comportamento di due ShuntLDO in serie nel caso in cui VCC, la tensione che alimenta il bandgap, sia fornita esternamente e quello in cui VCC sia cortocircuitata con l'ingresso di $\mathrm{I_{in}}$, trovandosi, dunque, a tensione $\mathrm{V_{in}}$.
 In questo confronto va tenuto conto che il bandgap presente sulla scheda di test ha un regime di lavoro compreso tra $2\V$ e $18\V$. 
@@ -374,14 +376,14 @@ Dai grafici si può notare che, se la tensione di ingresso è inferiore ad $1 \V
 %magari fare tabellino anche quie
 \subsection{Comportamento dinamico}
 
-\begin{figure}[!hbt]
-\centering
+%\begin{figure}[!hbt]
+%\centering
 %\includegraphics[scale=.5]{Immagini/SLDO5singlepulse}
-\caption{Schema elettrico della circuiteria della scheda di test per lo ShuntLDO a $0.5\A$ dedicata all'emulazione di variazioni rapide del carico grazie ad un mosfet di potenza pilotato da un impulso di Gate esterno.}
-\label{SLDO5mosfet}
-\end{figure}
+%\caption{Schema elettrico della circuiteria della scheda di test per lo ShuntLDO a $0.5\A$ dedicata all'emulazione di variazioni rapide del carico grazie ad un mosfet di potenza pilotato da un impulso di gate esterno.}
+%\label{SLDO5mosfet}
+%\end{figure}
 %Prima di passare alla versione da 2A è stata provata una situazione con carico dinamico, per poi riproporla in modo più approfondito ed esaustivo nelle sezioni successive utilizzando però il prototipo da 2A.
-Nella scheda di test è presente un mosfet in parallelo all'uscita $\mathrm{V_{out}}$. Il mosfet pu\`o essere pilotato applicando una tensione sul gate. La corrente assorbita dal mosfet si ricava misurando la caduta su una piccola resistenza in serie. Questa circuiteria, il cui schematico \`e visibile in Fig.~\ref{SLDO5mosfet}, pu\`o essre utilizzata per emulare variazioni rapide sul carico. 
+Nella scheda di test è presente un mosfet in parallelo all'uscita $\mathrm{V_{out}}$. Il mosfet pu\`o essere pilotato applicando una tensione sul gate. La corrente assorbita dal mosfet si ricava misurando la caduta su una piccola resistenza in serie. Questa circuiteria, il cui schematico \`e visibile in Fig.~\ref{PCB05A}, pu\`o essere utilizzata per emulare variazioni rapide sul carico. 
 
 \begin{figure}[!hbt]
 \centering
