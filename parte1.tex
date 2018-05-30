@@ -10,7 +10,7 @@
 %Questi, infatti, non resisterebbero ai più alti livelli di radiazione della fase ad alta luminosità, nè sarebbero in grado di operare efficacemente in presenza del campo magnetico previsto.
 %Il nuovo sistema di alimentazione prevede una distribuzione seriale e sarà gestito, all'interno del chip, da circuiti dedicati prodotti in tecnologia CMOS a 65 nm.
 
-In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di carichi, nel nostro caso i moduli, posti in successione. A differenza del sistema di alimentazione parallelo, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale la corrente totale è la stessa per tutti i moduli ed è la tensione di lavoro a cambiare. Dato che i moduli, e quindi i carichi, sono tutti nominalmente uguali, la differenza di potenziale su ciascun elemento della catena è la stessa, ma il riferimento di potenziale cambia localmente.
+In un sistema di alimentazione seriale~\cite{SLDO} il generatore fornisce tensione e corrente ad una catena di carichi, nel nostro caso i moduli, posti in successione. A differenza del sistema di alimentazione parallelo, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale la corrente totale è la stessa per tutti i moduli ed è la tensione di lavoro a cambiare. Dato che i moduli, e quindi i carichi, sono tutti nominalmente uguali, la differenza di potenziale su ciascun elemento della catena è la stessa, ma il riferimento di potenziale cambia localmente.
 Inoltre, visto che la corrente viene ``riutilizzata'' in ciascun modulo, il generatore deve fornire correnti minori, rispetto a quelle di un sistema di alimentazione parallelo.
 Per questo motivo le dissipazioni nei cavi sono ridotte ed è quindi possibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
 %Questo significa che in ogni elemento scorre la medesima corrente, ma l'intervallo di tensione in cui viene a trovarsi è differente per ciascuno di essi. Fino ad ora il metodo di alimentazione utilizzato era quelo parallelo, tutti i moduli si trovano ad un potenziale comune ma su rami separati, questo implica che nel cavo principale scorre una corrente pari alla somma di quella che passa in tutti i rami e dunque sarà necessario l'utilizzo di un cavo con sezione notevolmente maggiore a quello necessario in una alimentazione seriale.
@@ -377,7 +377,7 @@ Dai grafici si può notare che, se la tensione di ingresso è inferiore ad $1 \V
 \begin{figure}[!hbt]
 \centering
 %\includegraphics[scale=.5]{Immagini/SLDO5singlepulse}
-\caption{Schema elettrico della circuiteria della scheda di test per lo ShuntLDO a $0.5\A$ dedicata all'emulazione di variazioni rapide del carico grazie ad un mosfet di potenza pilotato da un impulso di gate esterno.}
+\caption{Schema elettrico della circuiteria della scheda di test per lo ShuntLDO a $0.5\A$ dedicata all'emulazione di variazioni rapide del carico grazie ad un mosfet di potenza pilotato da un impulso di Gate esterno.}
 \label{SLDO5mosfet}
 \end{figure}
 %Prima di passare alla versione da 2A è stata provata una situazione con carico dinamico, per poi riproporla in modo più approfondito ed esaustivo nelle sezioni successive utilizzando però il prototipo da 2A.
