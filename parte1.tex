@@ -10,7 +10,7 @@
 %Il nuovo sistema di alimentazione prevede una distribuzione seriale e sarà gestito, all'interno del chip, da circuiti dedicati prodotti in tecnologia CMOS a 65 nm.
 
 In un sistema di alimentazione seriale il generatore fornisce tensione e corrente ad una catena di carichi, nel nostro caso i moduli, posti in successione. A differenza del sistema di alimentazione parallelo, in cui tutti i moduli si trovano allo stesso potenziale di riferimento e in cui la corrente totale erogata è la somma di quella che scorre nei singoli rami, nel sistema seriale la corrente totale è la stessa per tutti i moduli ed è la tensione di lavoro a cambiare. Dato che i moduli, e quindi i carichi, sono tutti nominalmente uguali, la differenza di potenziale su ciascun elemento della catena è la stessa, ma il riferimento di potenziale cambia localmente.
-Dato che la corrente viene ``riutilizzata'' in ciascun modulo, il generatore deve fornire correnti minori, rispetto a quelle di un sistema di alimentazione parallelo.
+Inoltre, visto che la corrente viene ``riutilizzata'' in ciascun modulo, il generatore deve fornire correnti minori, rispetto a quelle di un sistema di alimentazione parallelo.
 Per questo motivo le dissipazioni nei cavi sono ridotte ed è quindi possibile utilizzare cavi più sottili, riducendo il materiale presente all'interno del tracciatore.
 %Questo significa che in ogni elemento scorre la medesima corrente, ma l'intervallo di tensione in cui viene a trovarsi è differente per ciascuno di essi. Fino ad ora il metodo di alimentazione utilizzato era quelo parallelo, tutti i moduli si trovano ad un potenziale comune ma su rami separati, questo implica che nel cavo principale scorre una corrente pari alla somma di quella che passa in tutti i rami e dunque sarà necessario l'utilizzo di un cavo con sezione notevolmente maggiore a quello necessario in una alimentazione seriale.
 %Ciò dipende dal fatto che nel caso di alimentazione seriale la corrente sia riutilizzata n-volte riducendo così le perdite di potenza nei cavi, rispetto ad una alimentazione in parallelo, questo consente l'impiego di cavi più sottili riducendo così il materiale all'interno del tracciatore. 
@@ -26,12 +26,12 @@ Infatti è possibile calcolare il rapporto tra la potenza assorbita da n element
 \begin{equation}
 \mathrm{\frac{W_{parallelo}}{W_{serie}} = \frac{1+ \dfrac{nRI}{V}}{1+\dfrac{RI}{Vn}}},
 \end{equation}
-dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singolo elemento e V è la caduta di tensione su ciascun elemtno. 
+dove R è la resistenza dei cavi, I è la corrente di alimentazione per il singolo elemento e V è la caduta di tensione su ciascun elemento. 
 
 \section{Lo ShuntLDO per l'alimentazione seriale}
 \label{sec:SLDOzener}
 
-Nella progettazione del sistema con alimentazione seriale occorre tener conto che il consumo di ciascun ROC, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui il ROC si trova e dalle operazioni che sta eseguendo. 
+Nella progettazione del sistema con alimentazione seriale occorre tener conto che il consumo di ciascun ROC, anche se gli elementi della catena sono tutti identici, dipende dallo stato in cui si trova e dalle operazioni che sta eseguendo. 
 Il ROC, infatti, è un carico dinamico e l'alimentazione deve essere in grado di erogare abbastanza corrente per far fronte ai picchi di assorbimento dei singoli elementi della catena.
 Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori remoti, detti anche di \textit{back-end}, non sarebbero in grado di compensarle in modo rapido: questi saranno posizionati lontano dall'esperimento e i cavi, lunghi anche fino a $\sim 60-80\m$, introducono un ulteriore carico induttivo non trascurabile.
 
@@ -47,11 +47,11 @@ Per flessibilit\`a e versatilit\`a \`e auspicabile che questa elettronica addizi
 Un possibile schema di principio di un tale circuito \`e visibile in~Fig.~\ref{zener} in cui si sfrutta un diodo Zener contropolarizzato per ottenere la stabilizzazione in tensione al carico `load'. Il funzionamento è molto semplice, la corrente in ingresso induce una caduta di tensione sulla resistenza R che, pur tuttavia, non deve impedire di portare il diodo Zener in contropolarizzazione oltre la tensione di soglia. A questo punto sarà lo stesso diodo a mantenere la tensione ai capi del carico costante assorbendo tutta la corrente non necessaria al carico, agendo da shunt. 
 Questo schema però presenta problemi operativi nel momento in cui si mettano più regolatori in parallelo come pu\`o essere necessario fare in applicazioni pratiche come, per esempio, nel caso di un ROC dove servono due tensioni generalmente diverse per la parte digitael e la parte analogica ciascuna fornita da un regolatore diverso o nel caso di un modulo dove pi\`u ROC sono alimentati in parallelo condividendo la stessa corrente in ingresso. Il diodo Zener che, per inevitabili tolleranze di fabbricazione, si trovi all'accensione ad entrare in conduzione prima degli altri assorbir\`a tutta la corrente disponibile con effetti imprevedibili e potenzialmente distruttivi. 
 
-Per ovviare a queste criticità è stato sviluppato un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando \`e minima la differenza tra la tensione in ingresso e quella in uscita a valle della regolazione; in particolare$\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 V}$.} accoppiato ad un circuito di shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, denominato {\em ShuntLDO}, con caratteristiche elettriche tali da superare le problematiche a cui si \`e sopra accennato.
+Per ovviare a queste criticità è stato sviluppato un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando \`e minima la differenza tra la tensione in ingresso e quella in uscita a valle della regolazione; in particolare$\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 \V}$.} accoppiato ad un circuito di shunt capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, denominato {\em ShuntLDO}, con caratteristiche elettriche tali da superare le problematiche a cui si \`e sopra accennato.
 
 Il regolatore, che va sotto il nome ShuntLDO, \`e stato inizialmente sviluppato dalla collaborazione Atlas per un suo utilizzo nell'ambito del progetto {\em Insertable B-Layer} (IBL)~\cite{IBL}. Infatti la famiglia di ROC disegnati per IBL, FE-I3~\cite{ROCFEI3} e FE-I4~\cite{ROCFEI4}, implementano entrambi circuiti ShuntLDO dimensionati per correnti totali di $\sim 0.5\A$. Pur tuttavia IBL non implementa uno schema di alimentazione seriale perch\'e ad esso fu preferito uno schema di alimentazione pi\`u tradizionale.
 
-Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a $65\nm$ dalla collaborazione RD53 per la sfida di HL-LHC: inizialmente in una versione a $\sim 0.5\A$, necessaria per valutare il dispositivo in $65\nm$, per poi arrivare alle attuali versioni dimensionate per corrente massime di $\sim 2\A$.
+Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a 65~nm dalla collaborazione RD53 per la sfida di HL-LHC: inizialmente in una versione a $\sim 0.5\A$, necessaria per valutare il dispositivo in $65\nm$, per poi arrivare alle attuali versioni dimensionate per corrente massime di $\sim 2\A$.
 
 %Il punto chiave per una alimentazione seriale è che la corrente, che viene fatta scorrere nella catena, sia maggiore o uguale a quella necessaria per alimentare l'elemento con il consumo più alto. 
 %Anche nel caso in cui tutti gli elementi della catena siano identici non è vero che avranno pari consumi, gli stessi dipendono dallo stato in cui si trova il chip e le operazioni che esegue. 
@@ -94,7 +94,7 @@ La Fig.~\ref{SLDOprinciple} mostra graficamente il funzionamento dello ShuntLDO 
 \label{SLDOprinciple}
 \end{figure}
 
-\subsection{Lo ShuntLDO da $0.5\A$ in 65nm}
+\subsection{Lo ShuntLDO da 0.5 A in 65nm}
 
  
 \begin{figure}[!htbp]
@@ -349,7 +349,7 @@ Dato che la parte a sinistra del grafico corrisponde alla situazione in cui il r
 \end{array}
 \]
 
-\subsection{Misure di due ShuntLDO in serie con carico da $\mathrm{4 \Omega}$}
+\subsection{Misure di due ShuntLDO in serie con carico da 4 $\mathrm{\Omega}$}
 
 %La successiva misura di test che è stata eseguita con questo prototipo di shunt, prima del passaggio alla versione da 2A, è un serie di due SLDO entrambi con un carico resistivo di $\mathrm{4 \Omega}$. In questo caso i due elementi hanno $\mathrm{V_{ref}}$ diversi $\mathrm{V_{ref1}=0.497}$ V e $\mathrm{V_{ref2}=0.553 V}$. 
 %Ciò non rappresenta un problema in quanto il comportamento "esterno " non ne è influenzato.
@@ -392,6 +392,7 @@ La prima misura di interesse è la sensibilità di $\mathrm{V_{out}}$ alle varia
 In Fig.~\ref{SLDO5singlepulse} è riportato l'andamento dell'entit\`a delle fluttuazioni in basso di $\mathrm{V_{out}}$ ({\em undershoot}) in funzione della corrente assorbita dal mosfet.
 Le misure sono state effettuate con una alimentazione in corrente $\mathrm{I_{in} = 0.5 A}$, $\mathrm{V_{ref} \sim 0.5 V}$ e carico resistivo su $\mathrm{V_{out}}$ di $4\Ohm$. 
 Conoscere il valore della corrente in ingresso è importante poiché, nel momento in cui il carico dinamico e statico assorbono una corrente maggiore di quella totale in ingresso, il sistema smette di funzionare in maniera corretta.
+
 Gli effetti visibili, nelle situazioni in cui $\mathrm{I_{mosfet} + I_{load} > I_{in}}$ dove $\mathrm{I_{load}}$ è la corrente che scorre nel carico resistivo, non sono direttamente legati alle prestazioni dello ShuntLDO. Al contrario si può vedere dal grafico in Fig.~\ref{SLDO5singlepulse} come gli undershoot siano inferiori a $10\mV$ fintantoché $\mathrm{I_{mosfet}}$ rimane al di sotto di $250\mA$, valore oltre il quale $\mathrm{I_{mosfet} + I_{load} > I_{in}}$. In questo caso $\mathrm{I_{load} = \nicefrac{V_{out}}{R} = 250\mA}$. Queste variazioni di  $\mathrm{V_{out}}$ sono perfettamente compatibili con i requisiti.
 
 %Lo stesso tipo di test può essere eseguito mettendo due ShuntLDO in serie e verificando, al variare del carico di uno, che l'altro elemento della catena seriale ne sia influenzato o %meno.
