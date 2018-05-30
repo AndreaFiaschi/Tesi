@@ -94,7 +94,7 @@ La Fig.~\ref{SLDOprinciple} mostra graficamente il funzionamento dello ShuntLDO 
 \label{SLDOprinciple}
 \end{figure}
 
-\subsection{Lo ShuntLDO da 0.5 A in 65nm}
+\subsection{Lo ShuntLDO da $0.5\A$ in 65nm}
 
  
 \begin{figure}[!htbp]
@@ -136,6 +136,7 @@ Per una corretta funzione di regolazione lo ShuntLDO da $0.5\A$ necessita di una
 % Analogamente resistenze minori avranno l'effetto contrario: tensioni minori con correnti maggiori.
 
 \subsection{Lo ShuntLDO da $2\A$ in 65nm}
+\label{SLDO2A}
 
 La successiva versione del prototipo di ShuntLDO a 65nm, progettata per correnti nominali di $2\A$, implementa un'ulteriore parametro di configurazione della caratteristica IV per una maggiore flessibilit\`a di utilizzo e configurazione. In particolare \`e stata aggiunta una parte circuitale che permette di calibrare la tensione di offset che definisce la corrente di riferimento nella resistenza R3, che, nella versione precedente, era semplicemente pari a $\mathrm{V_{thM6}}$. Nella Fig.~\ref{SLDO2A}, che mostra lo schema elettrico dello ShuntLDO da $2\A$, \`e visibile il complesso aggiunto per questo scopo costituito dal mosfet M7 controllato dall'amplificatore A4.
 \begin{figure}
@@ -166,7 +167,7 @@ Il comportamento resistivo permette l'utilizzo di più ShuntLDO in parallelo fra
 
 %Inoltre, utilizzando resistenze esterne, è possibile scegliere il valore di $\mathrm{R_{eff}}$ e, conseguentemente, la quantità di corrente che scorre in ciascun elemento posto in %parallelo.
 
-Lo ShuntLDO pu\`o essere implementato direttamente sul ROC stesso e questo ne rappresenta uno degli innegabili vantaggi sia in termini di miniaturizzazione, sia in termini di prossimit\`a al carico reale della regolazione PoL. Come menzionato, gi\`a i ROC per Atlas IBL (FE-I3 e FE-I4) ospitavano due ShuntLDO, uno per la tensione analogica e uno per la tensione digitale. La collaborazione RD53 ha recentemente realizzato il ROC RD53A\cite{RD53A}, il primo prototipo del ROC per HL-LHC, destinato ad essere utilizzato per ampi studi di R\&D. Anche RD53A implementa due ShuntLDO destinati all'alimentazione analogica e all'alimentazione digitale. In condizioni normali questi ShuntLDO lavoreranno in parallelo condividendo la corrente in ingresso. La scelta dei rispettivi valori di $\mathrm{R_{eff}}$ definisce la suddivisione di corrente nei due domini. A differenza dei ROC della passata generazione, in cui il consumo di corrente della parte digitale era marginale rispetto alla parte analogica, in RD53A la componente analogica e quella digitale avranno consumi confrontabili. Per questo motivo i due ShuntLDO sono configurati in modo analogo.
+Lo ShuntLDO pu\`o essere implementato direttamente sul ROC stesso e questo ne rappresenta uno degli innegabili vantaggi sia in termini di miniaturizzazione, sia in termini di prossimit\`a al carico reale della regolazione PoL. Come menzionato, gi\`a i ROC per Atlas IBL (FE-I3 e FE-I4) ospitavano due ShuntLDO, uno per la tensione analogica e uno per la tensione digitale. La collaborazione RD53 ha recentemente realizzato il ROC RD53A\cite{RD53A}, il primo prototipo del ROC per HL-LHC, destinato ad essere utilizzato per ampi studi di R\&D. Anche RD53A, che sar\`a descritto nel capitolo~\ref{cap:RD53A}, implementa due ShuntLDO destinati all'alimentazione analogica e all'alimentazione digitale. In condizioni normali questi ShuntLDO lavoreranno in parallelo condividendo la corrente in ingresso. La scelta dei rispettivi valori di $\mathrm{R_{eff}}$ definisce la suddivisione di corrente nei due domini. A differenza dei ROC della passata generazione, in cui il consumo di corrente della parte digitale era marginale rispetto alla parte analogica, in RD53A la componente analogica e quella digitale avranno consumi confrontabili. Per questo motivo i due ShuntLDO sono configurati in modo analogo.
 
 La figura~\ref{VVC} mostra l'andamento della tensione $\mathrm{V_{in}}$ in funzione della corrente totale $\mathrm{I_{in}}$ fornita al ROC assumendo la caratteristica ideale corrente-tensione sopra descritta. Sono, inoltre, evidenziati i valori operativi massimi e la tensione minima di lavoro.
 \begin{figure}[!htbp]
@@ -511,7 +512,7 @@ All'attento osservatore non sfuggir\`a che le due curve di Fig.~\ref{VioutSense}
 %\end{center}
 
 Il valore della resistenza equivalente è molto piccolo e, come detto, dipende in prima approssimazione dal numero di microsaldature.
-Fintantoché lo ShuntLDO è utilizzato come circuito a se stante su una scheda di test di test, dato che non ci sono problemi di spazio, è possibile utilizzare un gran numero di connessioni per ridurre al minimo differenze tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$, in modo da rendere trascurabile il fenomeno. 
+Fintantoché lo ShuntLDO è utilizzato come circuito a se stante su una scheda di test, dato che non ci sono problemi di spazio, è possibile utilizzare un gran numero di connessioni per ridurre al minimo differenze tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$, in modo da rendere trascurabile il fenomeno. 
 Pi\`u in generale, questa istruttiva misura suggerisce che grande cura dovr\`a essere posta nel disegno finale dei moduli dell'IT e in particolare nella ridondanza delle connessioni dal momento che si tratter\`a di dispositivi a corrente relativamente alta in cui gli eventuali effetti spuri vanno attentamente valutati e, se possibile, minimizzati se non completamente eliminati.
 
 \subsection{La regolazione di  $\mathrm{V_{offset}}$}
