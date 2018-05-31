@@ -613,7 +613,7 @@ Inoltre, lo scopo delle misure è di vedere gli effetti del passaggio da un cert
 In queste misure l'attenzione sarà focalizzata sulle variazioni in ampiezza di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$ e sul tempo di recupero di queste, in funzione di $\mathrm{I_{mosfet}}$ e con $\mathrm{R_{load}}$ fissata.
 
 %L'introduzione del carico $\mathrm{R_{load}}$ in parallelo alla resistenza connessa a $\mathrm{V_{out}}$ è possibile andando a modificare la configurazione della scheda di test.
-Fin dalle prime misure con l'oscilloscopio è possibile notare che l'utilizzo del mosfet come carico dinamico non è esente da fenomeni di alterazione dei segnali, ciò rende difficile una loro corretta interpretazione. 
+Fin dalle prime misure con l'oscilloscopio è possibile notare che l'utilizzo del mosfet come carico dinamico non è esente da fenomeni di alterazione dei segnali, rendendo difficile una loro corretta interpretazione. 
 \begin{figure}
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -636,11 +636,11 @@ Fin dalle prime misure con l'oscilloscopio è possibile notare che l'utilizzo de
 \caption{Schermata catturata dall'oscilloscopio: in giallo è rappresentata la tensione in ingresso, in arancione quella in uscita e in verde e blu la tensione sui i terminali di R5, la cui differenza è riportata in  azzurro. Nella sottofigura~\ref{TransientTest:sfig3}, a lato della schermata dell'oscilloscopio, è riportato lo schematico della parte di circuito con mosfet e resistenza.}
 \label{TransientTest}
 \end{figure}
-Prendendo come riferimento la Fig.~\ref{TransientTest}, si può notare un'asimmetria nelle variazioni di $\mathrm{V_{out}}$, in arancione in alto a destra.%, mentre in $\mathrm{V_{in}}$, in giallo in alto a sinistra, la risposta è simmetrica.
-Allo stesso modo nella sottofigura~\ref{TransientTest:sfig3} in azzurro, è riportata la differenza tra le tensioni misurate ai capi di R5, riportate in basso con colore blu e verde e in cui si vede un'asimmetria in risposta al fronte di salita e discesa dell'impulso applicato al Gate del mosfet. 
+Prendendo come riferimento la Fig.~\ref{TransientTest}, infatti, si può notare un'asimmetria nelle variazioni di $\mathrm{V_{out}}$, riportato in arancione nel grafico in alto a destra. %, mentre in $\mathrm{V_{in}}$, in giallo in alto a sinistra, la risposta è simmetrica.
+Allo stesso modo nella sottofigura~\ref{TransientTest:sfig3} in azzurro, è riportata la differenza tra le tensioni misurate ai capi di R5 (in blu e verde nel grafico in basso) e in cui si vede un'asimmetria in risposta al fronte di salita e discesa dell'impulso applicato al Gate del mosfet. 
 Inoltre, sono visibili delle oscillazioni in corrispondenza dell'istante in cui il mosfet si spegne, sia sulle tensioni riferite a R5 sia sul $\mathrm{V_{out}}$.
 %Questo comportamento si riflette su $\mathrm{V_{out}}$ ed è quindi all'origine dell'asimmetria.
-Prima di procedere con misure dinamiche nelle varie combinazioni $\mathrm{I_{mosfet}}$--$\mathrm{R_{load}}$ si è cercato di capire l'origine delle asimmetria, in particolare se fosse collegata alla risposta del mosfet all'impulso.
+Prima di procedere con misure dinamiche nelle varie combinazioni $\mathrm{I_{mosfet}}$--$\mathrm{R_{load}}$ si è cercato di capire l'origine delle asimmetria, in particolare chiedendosi se dipende dalla risposta del mosfet all'impulso sul Gate.
 L'impulso utilizzato in questa prima fase ha:
 \begin{itemize}
   \item frequenza di $50\Hz$;
