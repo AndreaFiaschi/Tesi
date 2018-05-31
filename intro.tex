@@ -1,0 +1,12 @@
+%\frontmatter
+\chapter{Introduzione}
+%con lo scopo di indagare nuova fisica progetto HL-LHC
+In vista della fase-2 di LHC il tracciatore di CMS dovrà essere completamente sostituito causa danneggiamento da radiazione e peggioramento delle prestazioni se fosse utilizzato nelle nuove condizioni operative di HL-LHC
+La presenza di materiale inerte riduce le prestazioni del rivelatore, per questo motivo già tra fase-0 e fase-1 si è passati ad un sistema di alimentazine \textit{Point of Load}, con l'utilizzo di convertitori DCDC. Questi convertitori non sono però idonei alla fase di HL-LHc, sia perché  a causa dell'alta radiazione dovrebbero essere posti almeno a distanze di 20--25 cm dall'asse dei fasci, sia per le dimensioni, i covertitori DCDC richiedono induttanze avvolte su nuclei ferromagnetici, scarsamente miniaturizzabili. 
+L'unico approccio che è stato valutato compatibile on il nuovo tracciatore interno di fase-2 è uno schema di alimentazione seriale. 
+Questa rappresenta una novità ed una sfida senza precedenti, in quanto è la prima volta che verrebbe utilizzato su larga scala in un rivelatore per la fisica di alte energie, che opera in condizioni limite. 
+Per gestire l'alimentazione seriale localmente sui singoli ROC (\textit{Read Out Chip}) è stato sviluppato un circuito denominato ShuntLDO, che consente una regolazione fine delle tensioni e assicura un consumo di corrente costante, indipendente dal consumo del ROC.
+
+Nel presente lavoro di tesi ho studiato il circuito di ShuntLDO seguendone gli sviluppi, partendo da un primo prototipo in tecnologia CMOS a $65 \nm$ capace di gestire correnti da $0.5\A$, fino ad arrivare allo studio dello ShuntLDO da $2\A$  posto all'interno del prototipo del nuovo ROC, RD53A. 
+I punti di interesse sono la verifica di affidabilità del principio di funzionamento con cui è progettato lo ShuntLDO, descritto nel capitolo~\ref{AlimentazioneSeriale}, e la messa in luce delle criticità che si possono avere, specialmente in fasi delicate quali ad esempio l'accensione.
+

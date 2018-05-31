@@ -131,7 +131,7 @@ In comune ai tre FE, invece, abbiamo la rete di polarizzazione per il sensore ed
 \caption{Regolatore LDO con Shunt (Shunt-LDO).}
 \label{SLDO_RD53A}
 \end{figure}
-In RD53A l'alimentazione è gestita da due ShuntLDO, uno per la parte analogica ed uno per quella digitale, in cui la parte di potenza \`e distribuita nella periferia come descritto nella Sezione~\ref{Organizzazionechip}. Rispetto al circuito ShuntLDO prototipo a $2\A$ descritto nella Sezione~\ref{SLDO2A} presentato in precedenza, la tensione di offset $\mathrm{V_{ofs}}$ è generata con una circuiteria migliorata. Lo schema del circuito di ShuntLDO è riportato in Fig.~\ref{SLDO_RD53A}, mentre i pi\`u importanti parametri di funzionamento sono riportati in Tabella~\ref{tab:sldord53a}:
+In RD53A l'alimentazione è gestita da due ShuntLDO, uno per la parte analogica ed uno per quella digitale, in cui la parte di potenza \`e distribuita nella periferia come descritto nella Sezione~\ref{Organizzazionechip}. Rispetto al circuito ShuntLDO prototipo a $2\A$ descritto nella Sezione~\ref{ShuntLDO2A} presentato in precedenza, la tensione di offset $\mathrm{V_{ofs}}$ è generata con una circuiteria migliorata. Lo schema del circuito di ShuntLDO è riportato in Fig.~\ref{SLDO_RD53A}, mentre i pi\`u importanti parametri di funzionamento sono riportati in Tabella~\ref{tab:sldord53a}:
 
 %\begin{center}
 \begin{table}
@@ -230,7 +230,7 @@ Inoltre è possibile mantenere separate, a livello di alimentazione, la parte di
 \end{figure}
 
 \section{Misure Statiche con RD53A}
-\label{45}
+\label{MisureStaticheRD53A}
 Utilizzando il chip in configurazione ShuntLDO, raffreddato in modo passivo con un radiatore a contatto termico con il retro della SCC, si è proceduto alla caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip rispettivamente per la parte analogica ed uno per quella digitale.
 
 Questa studio è stato effettuato con diverse configurazioni risultanti dalla combinazione di tre aspetti operativi:
@@ -248,7 +248,7 @@ In tabella~\ref{tab:legenda} è riportata la descrizione delle abbreviazioni uti
 \begin{table}
 \begin{center}
 %\noindent\setlength\tabcolsep{4pt}%
-\begin{tabular}{c|l}
+\begin{tabular}{|c|l|} \hline
 %\begin{tabularx}{\linewidth}{c|r}
 %\multicolumn{2}{|c|}{Abbreviazione} & \multicolumn{1}{c|}{\multirow{2}{*}{Descrizione}}\\ 
  Abbreviazione & Descrizione\\ \hline
@@ -263,7 +263,7 @@ $\mathrm{V_{ref \_ m \_ A}}$  & $\mathrm{V_{refA}}$ \\ \hline \hline
 VIND & Tensione $\mathrm{V_{IND}}$ all'ingresso del regolatore  \\ \hline
 VDDD & Tensione $\mathrm{V_{outD}}$ all'uscita del regolatore \\ \hline
 $\mathrm{V_{iofs \_ m \_ D}}$ & $\mathrm{V_{+A5D}}$ \\ \hline   
-$\mathrm{V_{ref \_ m \_ D}}$  & $\mathrm{V_{refD}}$ \\ 
+$\mathrm{V_{ref \_ m \_ D}}$  & $\mathrm{V_{refD}}$ \\ \hline
 \end{tabular}
 \end{center}
 \caption{Descrizione delle abbreviazioni utilizzate per le legende dei grafici.}
@@ -552,7 +552,7 @@ Infine, vi è una relazione tra offset e pendenza, su cui sono tutt'ora in corso
 
 
 \subsection{Variazioni di carico}
-\label{451}
+\label{VariazioniCarico}
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/LoadVDDD}
@@ -604,7 +604,7 @@ Questi risultati sono stati ottenuti andando ad abilitare e disabilitare il cloc
 \begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{Immagini/LoadTransientDominik}
-\caption{Il grafico riporta il valore di picco della variazione della tensione VDDD  in funzione del margine di corrente dato su 1 A di alimentazione nel caso in cui  i consumi di parte analogica e digitale sono entrambi $\sim$0.5 A, la fluttuazione è ottenuta abilitando e disabilitando il segnale di clock per una parte dei canali di lettura. 100$\%$ significa che la corrente fornita al chip è 1 A+1 A.}
+\caption{Il grafico riporta il valore di picco della variazione della tensione VDDD  in funzione del margine di corrente dato su 1 A di alimentazione nel caso in cui  i consumi di parte analogica e digitale sono entrambi $\sim$0.5 A, la fluttuazione è ottenuta abilitando e disabilitando il segnale di clock per una parte dei canali di lettura. 100$\%$ significa che la corrente fornita al chip è $1 \A+1 \A$.}
 \label{LoadTransient}
 \end{figure}
 
@@ -706,15 +706,14 @@ Andremo poi a vedere se, data la catena seriale di due chip, le attività di que
 \end{figure}
 
 Studiamo ora i vantaggi effettivi dell'utilizzo di un circuito di alimentazione che implementi uno Shunt oltre al regolatore.
-La misura effettuata consiste nel monitorare le tensioni di alimentazione, VDDD e VDDA, mentre attraverso il sistema di acquisizione si richiede al chip di eseguire il test scan$\_$threshold
-\footnote{
+La misura effettuata consiste nel monitorare le tensioni di alimentazione, VDDD e VDDA, mentre attraverso il sistema di acquisizione si richiede al chip di eseguire il test scan$\_$threshold~\footnote{
   Per cercare di massimizzare gli effetti è stato aumentato il numero di pixel in cui viene iniettato contemporaneamente un segnale molto grande.
 }.
 In questo modo è stato possibile verificare gli effetti causati dalle variazioni di carico proprie dell'attività del chip.
 Dal confronto tra i risultati ottenuti in configurazione con o senza shunt è emersa chiaramente l'importanza di questo elemento, non solo per evitare che un malfunzionamento del chip renda inutilizzabile tutta la catena, ma anche per rendere stabili le tensioni generate dal regolatore. 
-In figura \ref{alllin1} sono riportate le tensioni VDDD e VDDA utilizzando il chip senza Shunt (alimentato in tensione).
+In Fig.~\ref{alllin1} sono riportate le tensioni VDDD e VDDA utilizzando il chip senza Shunt (alimentato in tensione).
 Durante il dialogo con il sistema di acquisizione si sono verificate variazioni notevoli nelle tensioni.
-Con le stessse condizioni, ma utilizzando lo shunt, gli sbalzi di tensione, come si può vedere in figura \ref{alllin2}, spariscono poiché le variazioni di carico sono gestite localmente.
+Con le stessse condizioni, ma utilizzando lo shunt, gli sbalzi di tensione, come si può vedere in Fig.~\ref{alllin2}, spariscono poiché le variazioni di carico sono gestite localmente.
 In modalità LDO, invece, l'alimentazione è in tensione ed è il generatore esterno ad adattare la corrente erogata ai consumi del chip.
 
 %\begin{figure}
@@ -745,7 +744,7 @@ Lo scan delle soglie, descritto all'inizio del paragrafo, permette, attraverso i
 Ci si aspetta, quindi, una distribuzione delle soglie intorno ad un valore centrale.
 Inoltre, a causa del rumore, la risposta del circuito di lettura in funzione della carica raccolta non sarà una theta: il rumore, che si somma al segnale, può far scattare il discriminatore anche a segnali più piccoli della soglia.
 Se su ciascun canale iniettiamo un segnale sempre più grande, ripetendo il processo più volte e riportando il numero delle volte in cui il discriminatore scatta in funzione del segnale iniettato, si ottengono le così dette Scurves che, senza rumore, sarebbero a gradino. 
-Mettendo insieme le Scurve di ogni canale, si ottiene un grafico come quello riportato in figura \ref{Scurves}, dove in z si ha il numero di pixel che, a un dato Vcal (in x), si sono accesi un certo numero di volte (in y).
+Mettendo insieme le Scurve di ogni canale, si ottiene un grafico come quello riportato in figura \ref{Scurves}, dove in z si ha il numero di pixel che, a un dato VCAL (in x), si sono accesi un certo numero di volte (in y).
 Dal fit di ogni singola Scurve è possibile ottenere il valore di soglia e di rumore di ogni canale.
 Infatti la Scurve è descritta dalla funzione:
 \begin{equation}
@@ -771,11 +770,11 @@ Come detto in precedenza l'utilizzo dello ShuntLDO dovrebbe evitare il propagars
 \caption{Fotografia del setup, i due chip posti sulla Single Chip Card sono al centro e ognuno di essi è collegato a una fpga che gestisce la comunicazione tra RD53A e il computer.}
 \label{chipserial}
 \end{figure}
-Al fine di verificare se c'è una correlazione tra la ditribuzione del rumore e l'utilizzo del chip all'interno di una catena seriale, si sono messi a confronto i risultati ottenuti da test eseguiti con il chip singolo con quelli ottenuti poi mettendone due in serie o in parallelo, usando il setup mostrato in figura \ref{chipserial}.
+Al fine di verificare se c'è una correlazione tra la distribuzione del rumore e l'utilizzo del chip all'interno di una catena seriale, si sono messi a confronto i risultati ottenuti da test eseguiti con il chip singolo con quelli ottenuti poi mettendone due in serie o in parallelo, usando il setup mostrato in figura \ref{chipserial}.
 Tutte e tre le misure sono state eseguite utilizzando la configurazione di ShuntLDO. 
 
 Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto, al momento della presa dati, era l'unico con una versione avanzata e stabile del software e con i vari parametri ben definiti.
-I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, ossia per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
+I risultati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, ossia per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
 
 \begin{figure}[h]
 \centering

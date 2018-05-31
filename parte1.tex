@@ -139,7 +139,7 @@ Per una corretta funzione di regolazione, lo ShuntLDO da $0.5\A$ necessita di un
 % Analogamente resistenze minori avranno l'effetto contrario: tensioni minori con correnti maggiori.
 
 \subsection{Lo ShuntLDO da $2\A$ in 65nm}
-\label{SLDO2A}
+\label{ShuntLDO2A}
 
 La successiva versione del prototipo di ShuntLDO a 65nm, progettata per correnti nominali di $2\A$, implementa un ulteriore parametro di configurazione della caratteristica IV per una maggiore flessibilit\`a di utilizzo e configurazione. In particolare \`e stata aggiunta una parte circuitale che permette di calibrare la tensione di offset che definisce la corrente di riferimento nella resistenza R3, pari semplicemente a $\mathrm{V_{thM6}}$, nella versione precedente. Nella Fig.~\ref{SLDO2A}, che mostra lo schema elettrico dello ShuntLDO da $2\A$, \`e visibile il complesso aggiunto per questo scopo costituito dal mosfet M7 controllato dall'amplificatore A4.
 \begin{figure}[!htbp]
@@ -597,7 +597,7 @@ Come si può vedere il valore effettivo è sempre leggermente minore di quello i
 Fino ad ora abbiamo visto la caratterizzazione con carico statico dello ShuntLDO a $2 \A$.
 \`E fondamentale studiare il comportamento dello ShuntLDO in risposta ad una variazione dinamica del carico, focalizzando l'attenzione sulla velocità dello shunt nel riequilibrare il consumo in corrente. 
 %Oltre alla caratterizzazione statica un punto fondamentale è studiare il comportamento dello ShuntLDO in risposta ad una variazione dinamica del carico, andando a focalizzare l'attenzione sulla velocità dello shunt nel riequilibrare il consumo in corrente. 
-La risposta dinamica dipende da molti fattori quali: il punto di lavoro a cui si trova lo ShuntLDO, il tempo in cui avviene la variazione di carico e l'entità di tale variazione. 
+La risposta dinamica dipende da molti fattori tra cui: il punto di lavoro a cui si trova lo ShuntLDO, il tempo in cui avviene la variazione di carico e l'entità di tale variazione. 
 Il circuito è alimentato tramite un generatore di corrente a $1.5 \A$ e la tensione di riferimento per $\mathrm{V_{out}}$ è posta pari a $\mathrm{Vref=0.5 \A}$.%, ci aspettiamo una tensione all'uscita di $1 \V$.
 Al fine di introdurre un carico dinamico, in parallelo al carico statico, è presente sulla scheda di test un mosfet in serie ad una resistenza, R5, di $0.1 \Omega$.
 La corrente assorbita dal mosfet, indicata con $\mathrm{I_{mosfet}}$, può essere calcolata misurando la caduta di tensione su R5 ed è regolabile attraverso la tensione applicata al gate, in questo caso collegato ad un generatore di impulsi esterno.
@@ -644,9 +644,9 @@ Inoltre, sono visibili delle oscillazioni in corrispondenza dell'istante in cui 
 Prima di procedere con misure dinamiche nelle varie combinazioni $\mathrm{I_{mosfet}}$--$\mathrm{R_{load}}$ si è cercato di capire l'origine delle asimmetria, in particolare se fosse collegata alla risposta del mosfet all'impulso.
 L'impulso utilizzato in questa prima fase ha:
 \begin{itemize}
-  \item frequenza di 50Hz;
+  \item frequenza di $50\Hz$;
   \item durata di 3 $\mu$s;
-  \item fronte di salita di 40 ns.
+  \item fronte di salita di $40 \ns$.
 \end{itemize}
 %In questa prima fase l'impulso utilizzato ha le seguenti caratteristiche: frequenza 50 Hz, durata 3 $\mu$s, durata del fronte di salita 40 ns.
 
