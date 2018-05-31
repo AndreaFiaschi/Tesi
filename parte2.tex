@@ -717,15 +717,12 @@ In modalità LDO, invece, l'alimentazione è in tensione ed è il generatore est
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{Immagini/Scurves}
-\caption{Risultato del test \textbf{scan$\_$threshold}. Sulle x vi è il valore, in unità arbitrarie, dell'ampiezza del segnale iniettato nel canale di lettura, sulle y il numero di volte che si è avuto risposta e n z il numero di canali.}
-\label{Scurves}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=0.75\textwidth]{Immagini/Threshold}
-\caption{Distribuzione della soglia ottenuta dalle S-curves.}
+\includegraphics[width=0.48\textwidth]{Immagini/Scurves}
+\hfill
+\includegraphics[width=0.48\textwidth]{Immagini/Threshold}
+\caption{Risultato del test \textbf{scan$\_$threshold}. Nella figura di sinistra sulle x vi è il valore, in unità arbitrarie, dell'ampiezza del segnale iniettato nel canale di lettura e sulle y il numero di volte che si è avuto risposta, la scala di colore corrisponde al numero di canali . Nella figura di destra è riportata la distribuzione della soglia ottenuta dalle S-curves}
 \label{Threshold}
+\label{Scurves}
 \end{figure}
 
 %Prima di procedere con la presentazione dei risultati è necessario dare almento un'idea guida di che operazione vengono eseguite durante lo scan delle soglie al fine di comprendere meglio il significato delle varie distribuzioni.
@@ -768,29 +765,30 @@ I risultati sono riportati in funzione di VCAL, parametro dello scan, la cui con
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{Immagini/NoiseSingle}
-\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato singolarmente.}
+\includegraphics[width=0.48\textwidth]{Immagini/NoiseSingle}
+%\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato singolarmente.}
+\hfill
+\includegraphics[width=0.48\textwidth]{Immagini/NoiseSerial}
+\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato singolarmente (sinistra) e su un chip alimentato in serie ad un secondo (destra).}
+\includegraphics[width=0.48\textwidth]{Immagini/NoiseParallel}
+\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in parallelo ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
+\label{noiseparallel}
 \label{noisesingle}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=0.75\textwidth]{Immagini/NoiseSerial}
-\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in serie ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
 \label{noiseserial}
 \end{figure}
 
-Trascurando i risultati relativi alla distribuzione delle soglie, che sono indipendenti dalla distribuzione del rumore, riportiamo in figura le distribuzioni ottenute per il rumore nei tre casi:
+Trascurando i risultati relativi alla distribuzione delle soglie, che sono indipendenti dalla distribuzione del rumore, riportiamo in figura le distribuzioni ottenute per il rumore nei tre casi Fig.~\ref{noisesingle}:
 \begin{itemize}
-\item Chip singolo, figura \ref{noisesingle}.
-\item Serie di due chip, figura \ref{noiseserial}.
-\item Parallelo di due chip, figura \ref{noiseparallel}.
+\item Chip singolo.
+\item Serie di due chip.
+\item Parallelo di due chip.
 \end{itemize}
 Come si può vedere, nonostante sul secondo chip fossero eseguiti test, in modo da simulare un'attività, le distribuzioni del rumore dei setup in serie e in parallelo non peggiorano rispetto al caso con con chip singolo.
 Questo dimostra che, effettivamente, esternamente i chip non sono visibili e, viceversa, il chip non vede le variazioni present presentii sulla linea.
 
-\begin{figure}
-\centering
-\includegraphics[width=0.75\textwidth]{Immagini/NoiseParallel}
-\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in parallelo ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
-\label{noiseparallel}
-\end{figure}
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.75\textwidth]{Immagini/NoiseParallel}
+%\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in parallelo ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
+%\label{noiseparallel}
+%\end{figure}
