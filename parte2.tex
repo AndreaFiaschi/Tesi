@@ -229,9 +229,12 @@ Inoltre è possibile mantenere separate, a livello di alimentazione, la parte di
 \label{SLDOmodes}
 \end{figure}
 
-\section{Misure Statiche con RD53A}
+\section{Caratterizzazione degli ShuntLDO su RD53A}
 \label{45}
-Utilizzando il chip in configurazione ShuntLDO, raffreddato in modo passivo con un radiatore a contatto termico con il retro della SCC, si è proceduto alla caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip rispettivamente per la parte analogica ed uno per quella digitale.
+
+\subsection{Misure statiche}
+
+Utilizzando il chip in configurazione ShuntLDO, raffreddato in modo passivo con un radiatore a contatto termico con il retro della SCC, si è proceduto alla caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip rispettivamente per la parte analogica e per quella digitale.
 
 Questa studio è stato effettuato con diverse configurazioni risultanti dalla combinazione di tre aspetti operativi:
 %Nel far questo sono state scelte diverse configurazioni, le scelte principali possono essere riassunte in tre punti:
@@ -539,14 +542,13 @@ In questo caso l'andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/LoadVDDD}
-\caption{Andamento della tensione di alimentazione della parte analogica VDDA e digitale VDDD in funzione della corrente assorbita in più dal carico applicato allo ShuntLDO digitale.}
-\label{LoadVDDD}
 \includegraphics[width=\textwidth]{Immagini/LoadVIND}
-\caption{Andamento della tensione di ingresso del chip in funzione della corrente assorbita in più dal carico applicato allo ShuntLDO digitale.}
+\caption{Andamento di $\VDDA$ e $\VDDD$ (grafici in alto) e della tensione di ingresso $\Vin$ (grafico in basso) in funzione della maggiore corrente $\Iload$ assorbita dal carico su $\VDDD$.}
+\label{LoadVDDD}
 \label{LoadVIND}
 \end{figure}
 
-Per lo ShuntLDO il carico è rappresentato dal chip, che fino a che si trova nella configurazione di default, ha consumi di corrente tipici pari a:
+Per gli ShuntLDO il carico è rappresentato dal nucleo del ROC che, fino a che si trova nella configurazione di default, ha consumi di corrente tipici pari a:
 \begin{center}
 \begin{tabular}{cc}
 \hline
@@ -554,72 +556,72 @@ Regione Analogica & Regione Digitale \\ \hline
 $\sim$0.400 A & $\sim$ 0.050 A\\ \hline     
 \end{tabular}
 \end{center}
-Le misure riportate di seguito sono ottenute al variare del carico che applicato al VDDD/VDDA, ponendo in parallelo al chip un alimentatore Keithley utilizzato come sink di corrente. 
-Come configurazione del chip si è utilizzato lo ShuntLDO con i due circuiti di alimentazione in parallelo. 
-La corrente in ingresso è stata fissata a 2 A, corrispondenti ad 1 A per ciascun ShuntLDO. 
-Dati i diversi consumi tra parte analogica e digitale, l'intervallo di variazione del carico è stato scelto diversamente per le due: tra 0 A e 1 Aper la parte digitale, tra 0 A e 0.69 A per l'analogica. 
-Queste variazioni di carico non sono dinamiche, ma vanno considerate come statiche, infatti le tensioni di ingresso e di uscita vengono misurate, ad ogni incremento del valore del carico, su tempi scala lunghi rispetto a quelli di risposta del circuito di ShuntLDO. 
-Gli andamenti riportati di seguito vanno, quindi, interpretati come una deriva del valore della tensione prodotta dal regolatore in funzione dell'entità del carico. 
-In figura \ref{LoadVDDD} sono mostrati gli andamenti ottenuti con il carico applicato alla parte digitale.
-Come si può vedere, la tensione di alimentazione della regione digitale diminuisce gradualmente, arrivando ad una variazione di $\sim$18 mV per un carico addizionale di 1 A.
-La parte analogica, invece, non risente di queste variazioni e rimane costante. %pendenza 18 mOhm(ogni 100 mA 1.8 mV
-L'andamento della tensione in ingresso, figura \ref{LoadVIND}, ha invece una caduta di $\sim$24 mV che però si concentra nella parte finale partendo per valori di carico di circa 0.940 A.
-Questo comportamento è plausibile se si considera che, da sola, la parte digitale consuma 50 mA e, dunque, la somma delle correnti assorbite tra chip e carico supera  quella a disposizione di 1 A. 
+in quanto la parte digitale rimane dormiente se non viene fornito alcun clock esterno.
+
+Le misure riportate di seguito sono ottenute variando la corrente di carico su $\VDDA$ e $\VDDD$ di una quantit\`a $\Iload$, ponendo sui nodi $\VDDA$ e $\VDDD$ un source-meter Keithley 2410~\cite{2410} utilizzato come pozzo di corrente. L'alimentazione del ROC \`e stata configurata con i due ShuntLDO in parallelo con una $\Iin$ totale in ingresso pari a $2\A$, corrispondenti ad $\sim 1\A$ per ciascun ShuntLDO. Dati i diversi consumi di partenza tra la parte analogica e digitale, si sono scelti due diversi intervalli di variazione per $\Iload$: tra $0\A$ e $1\A$ per la parte digitale e tra $0\A$ e $0.7\A$ per la parte analogica. Ad ogni incremento del valore del carico le tensioni di ingresso e di uscita vengono misurate in condizioni stazionarie ovvero su tempi scala lunghi rispetto a quelli di risposta del circuito di ShuntLDO ignorando quindi i transienti veloci.
+Gli andamenti riportati di seguito vanno quindi interpretati come una deriva del valore della tensione prodotta dal regolatore in funzione dell'entità del carico. 
+
+In Fig.~\ref{LoadVDDD} sono mostrati gli andamenti ottenuti con la variazione di carico applicata alla parte digitale. Come si può vedere, $\VDDD$ diminuisce gradualmente, arrivando ad una variazione di $\sim 18\mV$ per un carico addizionale di $1\A$.  $\VDDA$, invece, rimane costante. %pendenza 18 mOhm(ogni 100 mA 1.8 mV
+L'andamento della tensione in ingresso ha invece una pi\`u repentina caduta di $\sim 24\mV$ nella parte finale, per $\Iload \gtrsim 0.94\A$. Questo comportamento è plausibile se si considera che, aggiungendo i $\sim 50\mA$ effettivamente consumati dal nucleo digitale del ROC, si arriva ad un consumo totale prossimo a $1\A$ che \`e la corrente disponibile allo ShuntLDO digitale.
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/LoadVDDA}
-\caption{Andamento della tensione di alimentazione della parte analogica VDDA e digitale VDDD in funzione della corrente assorbita in più dal carico applicato allo ShuntLDO analogico.}
-\label{LoadVDDA}
 \includegraphics[width=\textwidth]{Immagini/LoadVINA}
-\caption{Andamento della tensione di ingresso del chip in funzione della corrente assorbita in più dal carico applicato allo ShuntLDO analogico.}
+\caption{Andamento di $\VDDA$ e $\VDDD$ (grafici in alto) e della tensione di ingresso $\Vin$ (grafico in basso) in funzione della maggiore corrente $\Iload$ assorbita dal carico su $\VDDA$.}
+\label{LoadVDDA}
 \label{LoadVINA}
 \end{figure}
-Un discorso analogo si può fare per la parte analogica, tenendo presente che i consumi minimi per il chip sono $\sim$400 mA.
-L'andamento della tensione prodotta dal regolatore è riportata in figura \ref{LoadVDDA}, mentre, per quanto riguarda quella in ingresso il grafico di riferimento è quello di figura \ref{LoadVINA}. 
-Per la tensione di uscita la caduta è di $\sim$15 mV per un carico di 0.690 A, %21mOhm
-per quella in ingresso si ha, invece, una diminuzione di $\sim$26 mV in corrispondenza di un carico di 0.690 A, anche in questo caso il consumo totale di corrente supera 1 A. 
-La diminuzione di tensione per $\mathrm{V_{in}}$ inizia con un carico di $\sim$0.610 A.
+Con l'aiuto della Fig.~\ref{LoadVDDA}, un discorso analogo si può fare per la parte analogica, tenendo presente che, in questo caso, il valore di consumo di partenza \`e $\sim 400\mA$.
+$\VDDA$ scende gradualmente fino a raggiungere $\sim -15\mV$ per un carico addizionale di $\sim 0.70\A$. $\Vin$, invece, diminuisce di $\sim 26\mV$ in corrispondenza del massimo carico aggiuntivo (per $\Iload \gtrsim 0.6\A$) e, anche in questo caso, il consumo totale di corrente supera $1\A$. 
 
+%\subsection{}
 
-Un'altra misura di interesse è quella relativa alle fluttuazioni della tensione generata dallo ShuntLDO per variazioni repentine del carico, in funzione del margine di corrente fornito Fig.~\ref{LoadTransient}. 
-Questi risultati sono stati ottenuti andando ad abilitare e disabilitare il clock su parte dei canali di lettura, questo causa una variazione della corrente assorbita dalla sola parte digitale, che quindi è soggetta a fluttuazioni di tensione più o meno importanti.
-
+Le misure fino ad ora riportate relative allo studio dei circuiti di ShuntLDO in RD53A sono da considerarsi stazionarie, in quanto ottenute su tempi scala lunghi in confronto ai tempi di risposta dello ShuntLDO. In questa sezione accenneremo, invece, al comportamento dello ShuntLDO sui transienti.
+ 
+\begin{figure}
+\centering
+\includegraphics[width=0.65\textwidth]{Immagini/HeadRoom}
+\caption{Illustrazione del metodo di misura delle fluttuazioni di $\VDDD$ per variazioni repentine del carico. In alto sono visibili, in funzione del tempo, le correnti analogiche e digitali. Quest'ultima, modificando la frazione di canali del ROC sui quali il clock \`e abilitato, cambia velocemente tra $300\mA$ e $500\mA$. In basso i grafici riportano il corrispondente andamento di $\VDDD$ misurato all'oscilloscopio confrontato con il profilo simulato.}
+\label{LoadTransientScope}
+\end{figure}
+Una misura di estremo interesse è quella relativa alle fluttuazioni della tensione regolata dallo ShuntLDO per variazioni repentine del carico, Il principio della misura \`e visibile in~Fig.~\ref{LoadTransientScope}. La variazione controllata tra $300\mA$ a $500\mA$ della corrente assorbita dalla sola parte digitale si ottiene modificando la frazione di canali di lettura sui quali il clock \`e abilitato.  Il consumo della parte analogica \`e costante e calibrato su $\sim 0.5\A$ grazie ad una appropriata scelta dei parametri di funzionamento degli stadi di front end. All'oscilloscopio \`e possibile valutare, in corrispondenza dei transienti, la fluttuazione di tensione a cui \`e soggetta $\VDDD$. Queste fluttuazioni sono completamente compensate nel giro di qualche $\us$ e risultano in buon accordo con la simulazione circuitale, anch'essa riportata in~Fig.~\ref{LoadTransientScope}. 
 \begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{Immagini/LoadTransientDominik}
-\caption{Il grafico riporta il valore di picco della variazione della tensione VDDD  in funzione del margine di corrente dato su 1 A di alimentazione nel caso in cui  i consumi di parte analogica e digitale sono entrambi $\sim$0.5 A, la fluttuazione è ottenuta abilitando e disabilitando il segnale di clock per una parte dei canali di lettura. 100$\%$ significa che la corrente fornita al chip è 1 A+1 A.}
+\caption{Valori di picco della variazione della tensione $\VDDD$ in funzione del margine percentuale di corrente rispetto a $1\A$ nel caso in cui il carico su $\VDDD$ sia modificato in modo repentino tra $300\mA$ a $500\mA$. Il consumo della parte analogica \`e costante e calibrato su $\sim 0.5\A$. 
+}
 \label{LoadTransient}
 \end{figure}
+Il valore di picco della fluttuazione di $\VDDD$ in funzione del margine di corrente fornito rispetto al totale della corrente richiesta, visibile in~Fig.~\ref{LoadTransient}, suggerisce che, per avere un corretto funzionamento della parte di alimentazione del ROC rispetto alle fluttuazioni del carico, un margine di sicurezza di circa il $20-25
+\%$ deve essere previsto sulla corrente di pilotaggio dello ShuntLDO rispetto al consumo di corrente massimo atteso dal nucleo del ROC. 
 
-\subsection{Fast ramp-up}
+Una fase in cui le variazioni di corrente sono ovviamente massime \`e quella dell'accensione. Si è quindi proceduto a simulare una accensione veloce dell'alimentazione degli ShuntLDO  di RD53A in configurazione parallelo modificando $\Iin$ da $0\A$ a $2.4\A$ in $25\ms$ con un rampa lineare. Anche in questo caso i due ShuntLDO sono alimentati in parallelo, suddividendosi, quindi, la corrente erogata dal generatore. Come è possibile vedere dai profili temporali di $\VDDA$ e $\VDDD$, in Fig.~\ref{rd-powup-dir6} e Fig.~\ref{rd-powup-dir7} rispettivamente, acquisiti con un oscilloscopio con banda passante adeguata e confrontati con $\Iin$ e $\Vin$, non compaiono oscillazioni o altri comportamenti anomali.
+La parte digitale e analogica non si attivano nello stesso momento, in particolare $\VDDD$ raggiunge pi\`u tardi la regione di regolazione rispetto a $\VDDA$ in accordo con quanto gi\`a osservato nelle misure stazionarie discusse precedentemente.
 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/rd-powup-dir6}
-\caption{In giallo è riportata la corrente che in 25 ns passa da 0 A a 2.4 A, in fucsia la tensione in ingresso e in blu la tensione con cui è alimentata la parte digitale del chip VDDA.}
+\caption{Profilo temporale di $\Iin$ (in giallo), $\Vin$ (rosa) e $\VDDA$ (blu). $\Iin$ varia da $0\A$ a $2.4\A$ in $25\ms$ con un rampa lineare.}
 \label{rd-powup-dir6}
 \end{figure}
 
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/rd-powup-dir7}
-\caption{In giallo è riportata la corrente che in 25 ns passa da 0 A a 2.4 A, in fucsia la tensione in ingresso e in blu la tensione con cui è alimentata la parte analogica del chip VDDD.}
+\caption{Profilo temporale di $\Iin$ (in giallo), $\Vin$ (rosa) e $\VDDD$ (blu). $\Iin$ varia da $0\A$ a $2.4\A$ in $25\ms$ con un rampa lineare.}
 \label{rd-powup-dir7}
 \end{figure}
 
-Le misure riportate fino ad ora, sullo studio dei circuiti di ShuntLDO in RD53A, sono da considerarsi statiche, in quanto sono ottenute su tempi scala lunghi in confronto a quello di risposta dello ShuntLDO. 
 %Fino ad ora gli scan sono stati eseguiti lentamente, in confronto al tempo di risposta del circuito di alimentazione, infatti tra un valore di corrente ed il successivo vi è quasi un secondo.
-Inoltre, nel momento in cui il chip viene collegato ad un sistema di acquisizione dati, il consumo di regione, analogica e digitale, si modifica e, in base alle operazioni richieste, si hanno consumi variabili, che ci aspettiamo essee gestiti dal circuito di ShuntLDO. 
-Una fase particolarmente delicata, da questo punto di vista, è quella di accensione, poiché le variazioni di corrente sono i maggiori. 
-Si è proceduto, quindi, ad eseguire scansioni in corrente passando da 0 A a 2.4 A in 25 ns con un incremento lineare. 
-Anche in questo caso i due ShuntLDO sono alimentati in parallelo, suddividendosi, quindi, la corrente erogata dal generatore. 
-Come è possibile vedere dagli screenshoot dell'oscilloscopio, figure \ref{rd-powup-dir6} e \ref{rd-powup-dir7}, non sono presenti oscillazioni durante la fase di accensione.
-La parte digitale e analogica non si attivano nello stesso momento, in particolare VDDD si accende dopo, in accordo con le misure precedenti.
+Occorre osservare che si \`e scelta una situazione limite per lo studio del comportamento degli ShuntLDO. Nel rivelatore finale la sequenza di accensione dell'elettronica preveder\`a una rampa di salita della corrente molto pi\`u lenta con tempi caratteristici di qualche decimo di secondo.  
 
-% RIPARTIRE DA QUI
+%
+% RIPARTIRE DA QUI -------------------------------
+%
+
 \section{Sviluppi}
 
-Questi studi sull'alimentazione del chip si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due.
+Questi studi sull'alimentazione del ROC si collocano in un più ampio progetto di sviluppo del nuovo tracciatore di fase due.
 In contemporanea a vengono sviluppi i sistemi di acquisizione dati in grado di dialogare con il chip e si stanno effettuando test sui tre \textit{front end} per studiarne la risposta prima e dopo processi di irraggiamento. 
 Lo sviluppo del circuito di alimentazione ha importanti legami con lo sviluppo del resto del chip.
 Ad esempio, la scelta di alimentare il chip separando la parte analogica da quella digitale deriva dalla necessità di proteggere la prima, più sensibile, dal rumore della seconda.
