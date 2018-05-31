@@ -276,7 +276,7 @@ $\mathrm{V_{ref \_ m \_ D}}$  & $\mathrm{V_{refD}}$ \\ \hline
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUI2}
-\caption{Grafici corrente-tensione ottenuti tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $0\A$ a $1.5\A$.}%allungare descrivendo anche l'undershoot
+\caption{Grafici tensione-corrente ottenuti tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $0\A$ a $1.5\A$.}%allungare descrivendo anche l'undershoot
 \label{IUI}
 \end{figure}
 Le prime misure sono state eseguite utilizzando, come riferimento per $\mathrm{V_{out}}$ e $\mathrm{V_{iofs}}$, le tensioni generate internamente al chip.
@@ -287,7 +287,7 @@ La fluttuazione verso il basso ben visibile sulle tensioni della parte analogica
 \begin{center}
 \begin{tabular}{ccc}
 \hline
-$\Delta \mathrm{V_{INA}}$ & $\Delta \mathrm{V_{refA}}$ &$\Delta \mathrm{V_{DDA}}$  \\ \hline
+$\Delta \mathrm{V_{INA}}$ & $\Delta \mathrm{V_{refA}}$ &$\Delta \mathrm{V_{outA}}$  \\ \hline
 $\sim$0.150 V & $\sim$ 0.030 V& $\sim$0.060 V\\ \hline     
 \end{tabular}.
 \end{center}
@@ -298,7 +298,9 @@ Questo comportamento è potenzialmente dannoso perch\'e pu\`o alterare la corret
 
 Inoltre, sempre dalla Fig.~\ref{IUI}, si può notare che VDDD sale parzialmente quando $\mathrm{I_{in}}$ raggiunge $\sim0.56\A$, non riuscendo però ad andare a regime, poiché la tensione $\mathrm{V_{IND}}$ non è ancora sufficientemente abbastanza elevata da consentire una corretta regolazione. Questo, a sua volta, è dovuto al ritardo con cui $\mathrm{V_{+A5D}}$ raggiunge il valore corretto, solo per $\mathrm{I_{in}\sim 1.1\V}$. Infatti, come introdotto in precedenza, la tensione  $\mathrm{V_{+A5D}}$ è ottenuta dalla caduta di tensione sulla resistenza $\mathrm{R_{iofs}}$, nel nostro caso di $\sim 250\kOhm$, indotta dalla corrente $\mathrm{I_{ofs} \sim 2 \uA}$. Se, per vari motivi, il circuito che genera questa corrente ha un ritardo nell'accensione, questo si ripercuote nell'accensione del ROC nel suo complesso.  
 
-Questa discussione illustra come le problematiche di {\em power on} siano cruciali e crescano di complessit\`a quando il circuito base (lo ShuntLDO nel nostro caso) viene vestito con tutta la circuiteria addizionale. Il ROC finale per l'IT dovr\`a essere progettato per essere completamente affidabile rispetto al {\em power on} che, tradizionalmente, \`e un aspetto delicato dell'elettronica digitale. Questo \`e vero in particolare in presenza del danneggiamento da radiazione che altera le caratteristiche circuitali per cui, potenzialmente, certe problematiche possono non essere presenti nel ROC non irraggiato e comparire dopo che lo stesso ha integrato una certa fluenza. La validazione del ROC non pu\`o prescidere da una estesa campagna di test dopo irraggiamento.
+Questa discussione illustra come le problematiche di {\em power-on} siano cruciali e crescano di complessit\`a quando il circuito base (lo ShuntLDO nel nostro caso) viene vestito con tutta la circuiteria addizionale. Il ROC finale per l'IT dovr\`a essere progettato per essere completamente affidabile rispetto al {\em power on} che, tradizionalmente, \`e un aspetto delicato dell'elettronica digitale. Questo \`e vero in particolare in presenza del danneggiamento da radiazione che altera le caratteristiche circuitali per cui, potenzialmente, certe problematiche possono non essere presenti nel ROC non irraggiato e comparire dopo che lo stesso ha integrato una certa fluenza. La validazione del ROC non pu\`o prescidere da una estesa campagna di test dopo irraggiamento.
+
+Le cause del diverso comportamento di $\mathrm{V_{+A5A}}$ e $\mathrm{V_{+A5D}}$ rispetto ai valori di corrente $\mathrm{I_{in}}$ che sono necessari perch\`e queste due tensioni raggiungano il livello nominale non sono comprese al momento. Da disegno i due ShuntLDO e i relativi circuiti addizionali per la parte analogica e la parte digitale sono gemelli e quindi questa differenza \`e inaspettata e probabilmente dovuta a effetti spuri di power-on. Infatti questa asimmetria scompare effettuando la misura una rampa di corrente inversa come illustrato nella prossima sezione.
 
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
@@ -334,7 +336,7 @@ Questa discussione illustra come le problematiche di {\em power on} siano crucia
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/IDI2}
-\caption{Grafici corrente-tensione ottenuti tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $1.5\A$ a $0\A$.}
+\caption{Grafici tensione-corrente ottenuti tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $1.5\A$ a $0\A$.}
 \label{IDI}
 \end{figure}
 
@@ -363,12 +365,12 @@ Partendo da valori di corrente elevati, inoltre, e quindi da tensioni in ingress
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUEVref2}
-\caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 0 A a 1.5 A, utilizzando un riferimento esterno per $\mathrm{V_{ref}}=0.550 \V$.}
+\caption{Grafici tensione-corrente ottenuto tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $0\A$ a $1.5\A$, utilizzando un riferimento esterno $\mathrm{V_{ref}}=0.550 \V$ sia per la parte analogica che digitale.}
 \label{IUEVref}
 \end{figure}
-Il grafico riportato in figura \ref{IUEVref} è ottenuto fornendo esternamente  $\mathrm{V_{ref}}=0.550 \V$,  sia per la parte analogica che per quella digitale.
-Il comportamento della parte digitale è analogo a quello ottenuto nel primo grafico di figura \ref{IUI}, mentre, per la parte analogica, non si ha l'undershoot osservato in precedenza per $\mathrm{V_{INA}}$ e, dunque, nemmeno per $\mathrm{V_{DDA}}$.
-Quest'ultima tensione, però, risente ancora del comportamento della parte digitale: fintantoché $\mathrm{V_{iofs\_ m \_ D}}$ non arriva al valore corretto $\mathrm{V_{DDA}}$ non si stabilizza.
+Continuando a tenere i due circuiti di alimentazione separati è interessante studiare, per confronto, il comportamento nel caso in cui le tensioni di riferimento non siano generate dal ROC stesso.
+I grafici riportati in Fig.~\ref{IUEVref} sono ottenuti fornendo esternamente $\mathrm{V_{ref}}=0.550\V$,  sia per la parte analogica che per quella digitale.
+Il comportamento della parte digitale è analogo a quello ottenuto di cui in Fig.~\ref{IUI}, mentre, per la parte analogica, non si hanno le fluttuazione osservate n\'e su $\mathrm{V_{INA}}$ n\'e $\mathrm{V_{outA}}$. $\mathrm{V_{outA}}$, però, risente ancora del comportamento della parte digitale: fino a che $\mathrm{V_{ofsD}}$ non arriva al valore nominale per tramite di $\mathrm{V_{+A5D}}$, $\mathrm{V_{outA}}$ non si stabilizza.
 
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
@@ -387,19 +389,16 @@ Quest'ultima tensione, però, risente ancora del comportamento della parte digit
 % ---------------------- Sono arrivato qui
 %
 
-\subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, $\mathrm{V_{iofs}}$ esterna} 
+\subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, $\mathrm{V_{+A5}}$ esterna} 
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUEViofs2}
-\caption{Grafico corrente-tensione ottenuto tenendo i due regolatori separati e variando la corrente da 0 A a 1.5 A, utilizzando un riferimento esterno per $\mathrm{V_{iofset}}=0.400 \V$.}
+\caption{Grafici tensione-corrente ottenuto tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $0\A$ a $1.5\A$, utilizzando un riferimento esterno $\mathrm{V_{+A5}}=0.400\V$ sia per la parte analogica che digitale.}
 \label{IUEViofs}
 \end{figure}
-Continuando a tenere i due circuiti di alimentazione separati è interessante studiare il comportamento ottenuto fornendo esternamente le varie tensioni di riferimento.
- Le stesse misure sono state ripetute fornendo esternamente il solo $\mathrm{V_{iofset}}=0.400 \V$, utilizzando per $\mathrm{V_{ref}}$ quello interno e tenendo le alimentazioni dei due ShuntLDO indipendenti. 
-In questo caso gli andamenti ottenuti sono decisamente migliori come si vede in figura \ref{IUEViofs}. 
-Infatti, il $\mathrm{V_{iofset}}$ esterno permette di evitare i problemi riscontrati in precedenza, quali il differente valore di attivazione di $\mathrm{I_{in}}$ tra parte analogica e digitale, poiché l'offset è al valore di riferimento giusto sin dall'inizio.
-%\begin{center}
+ Le stesse misure sono state ripetute fornendo esternamente il solo $\mathrm{V_{+A5}}=0.400 \V$ e utilizzando $\mathrm{V_{ref}}$ interno sia per la parte analogica che digitale e tenendo le alimentazioni dei due ShuntLDO indipendenti. In questo caso gli andamenti ottenuti sono decisamente migliori, come si vede in Fig.~\ref{IUEViofs}. 
+Infatti, i $\mathrm{V_{+A5}}$ esterni permettono di evitare le problematiche precedentemente riscontrate quali i differenti valori di corrente $\mathrm{I_{in}}$, tra parte analogica e digitale, oltre i quali si entra in regime di regolazione. Questo grazie al fatto che il valore di $\mathrm{V_{ofs}}$, grazie al pilotaggio esterno, \`e fissato al valore nominale. %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
 %\hline
 % & \multicolumn{2}{c|}{Digitale} & \multicolumn{2}{c|}{Analogica} \\ \hline
@@ -437,13 +436,13 @@ Infatti, il $\mathrm{V_{iofset}}$ esterno permette di evitare i problemi riscont
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Immagini/PUI}
-\caption{Grafico corrente-tensione ottenuto con i due regolatori in parallelo e variando la corrente da 0 A a 3.0 A, sull'asse x è riportata la corrente totale che poi si suddivide tra i due regolatori.}
+\caption{Grafici tensione-corrente ottenuti con i due regolatori in parallelo e variando la corrente totale, riportata sull'asse delle ascisse, da $0\A$ a $3\A$.}
 \label{PUI}
 \end{figure}
-Come detto in precedenza, in RD53A, è stata lasciata la possibilità di tenere separate le alimentazioni dei due ShuntLDO, mentre nella versione finale i due ShuntLDO si troveranno in parallelo. 
-In questa configurazione gli andamenti delle tensioni in ingresso (VINA e VIND) e di quelle in uscita (VDDD e VDDA) risultano migliori, nonostante gli offset di parte analogica e digitale si attivino in momenti diversi, come si può vedere in figura \ref{PUI}.
-Questo miglioramento nel comportamento può essere attribuito all'utilizzo dell'alimentazione in parallelo dei due ShuntLDO, poiché la corrente a disposizione si può suddividere in modo non uguale, come effettivamente accade. 
-Lo sbilanciamento nella ripartizioni delle correnti ha inizio quando si 'attiva' $\mathrm{V_{iofs}}$ analogico e termina quando anche $\mathrm{V_{iofs}}$  digitale sale, come esplicitamente mostrato in figura \ref{CurrentSharing}.
+Come detto in precedenza, in RD53A è stata lasciata la possibilità di tenere separate le alimentazioni dei due ShuntLDO, mentre nella versione finale i due ShuntLDO si troveranno in parallelo. 
+In questa configurazione gli andamenti delle tensioni in ingresso ($\mathrm{V_{INA}}$ e $\mathrm{V_{IND}}$) e di quelle in uscita ($\mathrm{V_{outA}}$ e $\mathrm{V_{outD}}$) risultano migliori, nonostante che $\mathrm{V_{ofsA}}$ e $\mathrm{V_{ofsD}}$ raggiungano il valore nominale per differenti valori di $\mathrm{I_{inA}}$ e $\mathrm{I_{inD}}$ , rispettivamente, come si può vedere in Fig.~\ref{PUI}.
+Questo miglioramento nel comportamento può essere attribuito all'utilizzo dell'alimentazione in parallelo dei due ShuntLDO, poiché la corrente totale a disposizione si può suddividere in modo ottimale tra i due ambiti, come effettivamente accade. Questo sbilanciamento nella ripartizione delle correnti si verifica nell'intervallo di correnti in cui $\mathrm{V_{+A5A}}$ \`e gi\`a al valore nominale mentre $\mathrm{V_{+A5D}}$ non lo \`e ancora, come risulta evidente se confrontiamo la Fig.~\ref{CurrentSharing} con gli andamenti di $\mathrm{V_{+A5A}}$ e $\mathrm{V_{+A5D}}$ nella~Fig.~\ref{PUI}.
+
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
 %\hline
@@ -459,42 +458,36 @@ Lo sbilanciamento nella ripartizioni delle correnti ha inizio quando si 'attiva'
 \begin{figure}
 \centering
 \includegraphics[scale=.4]{Immagini/CurrentSharing}
-\caption{Misura della suddivisione della corrente tra i due regolatori posti in parallelo, sulle x è riportata la corrente totale fornita al parallelo.}%meeting del 16 aprile
+\caption{Misura della suddivisione della corrente tra i due regolatori posti in parallelo; in ascissa è riportata la corrente totale fornita al parallelo.}%meeting del 16 aprile
 \label{CurrentSharing}
 \end{figure}
-Il comportamento descritto è stato osservato anche in altri test e riportato in letteratura\cite{SLDO}. 
-Lo sbilanciamento delle correnti avviene quando la tensione di uscita di uno dei due regolatori raggiunge la tensione di riferimento, mentre l'altro è ancora al di sotto del livello di riferimento. 
-Nel momento in cui i due regolatori raggiungono un regime stabile, completando la fase di accensione, la distribuzione delle correnti torna ad essere bilanciata. 
-Questo comportamento è noto e compreso: il meccanismo che lo innesca risiede nell'offset dell'amplificatore A2, utilizzato nel \textit{current mirror}. 
-L'offset, infatti, implica un differente $\mathrm{V_{DS}}$ tra i transistor M1 e M2 influenzando il rapporto k nella regione lineare.
-Dunque, fintantoché in uno dei due regolatori la tensione di uscita è minore di quella di riferimento, si ha uno sbilaciamento delle correnti. 
-Quando viene raggiunto il livello di riferimento, M1 e M2 saturano e l'effetto dell'offset svanisce.
-
-Questo problema, che si verifica durante l'accensione, può essere mitigato utilizzando particolari architetture con basso offset per l'amplificatore A2.
+Il comportamento descritto è simile a quanto riportato in letteratura~\cite{SLDO} nel caso in cui, per\`o, i due ShuntLDO siano configurati per fornire due tensioni $\mathrm{V_{outA}}$ e $\mathrm{V_{outB}}$ diverse. In particolare si osserva uno sbilanciamento di corrente quando solo uno degli ShuntLDO \`e in regime di regolazione. Sbilanciamento che scompare quando la fase di accensione \`e completata per entrambi.
+ 
+%, la distribuzione delle correnti torna ad essere bilanciata. 
+%Questo comportamento è noto e compreso: il meccanismo che lo innesca risiede nell'offset dell'amplificatore A2, utilizzato nel \textit{current mirror}. 
+%L'offset, infatti, implica un differente $\mathrm{V_{DS}}$ tra i transistor M1 e M2 influenzando il rapporto k nella regione lineare.
+%Dunque, fintantoché in uno dei due regolatori la tensione di uscita è minore di quella di riferimento, si ha uno sbilaciamento delle correnti. 
+%Quando viene raggiunto il livello di riferimento, M1 e M2 saturano e l'effetto dell'offset svanisce.
+%Questo problema, che si verifica durante l'accensione, può essere mitigato utilizzando particolari architetture con basso offset per l'amplificatore A2.
 
 \subsubsection{Confronti fra le varie configurazioni}
 
-Da ciascuna delle configurazioni, descritte nei paragrafi precedenti, sono stati ricavati, per la regione in cui il regolatore è attivo, offset e pendenza della curva caratteristica.
-Idealmente ci aspettiamo che la pendenza sia confrontabile con R3 e l'offset con il doppio di $\mathrm{V_{iofs}}$.
-A questo proposito ricordiamo che, per quanto riguarda i valori di default: 
+Da ciascuna delle configurazioni discusse nei paragrafi precedenti sono stati ricavati, per la regione di regolazione, i parametri fondamentali $\mathrm{V_{ofs}}$ e $\mathrm{R_{eff}}$ della curva caratteristica $\mathrm{V_{IN}}$ vs. $\mathrm{I_{IN}}$. Idealmente ci aspettiamo che la pendenza sia confrontabile con $\sim\nicefrac{\mathrm{R3}}/1000$ e $\mathrm{V_{ofs}}$ con il doppio di $2\times \mathrm{V_{+A5}}$. A questo proposito ricordiamo che i valori nominali sono 
 \begin{center}
 \begin{tabular}{lc}
 \hline
-$\mathrm{R3}$ & 600 $\Omega$ \\%misurata con il multimetro è 620
-$\mathrm{V_{iofs}}$ & 0.500 V\\ 
+$\mathrm{R3}$ & $600\kOhm$ \\%misurata con il multimetro è 620
+$\mathrm{V_{+A5}}$ & $0.5\V$\\
 \hline
 \end{tabular}
 \end{center}
 
-In tabella \ref{table:results} sono riportati i valori di offset e pendenza dell'andamento caratteristico delle tensioni in ingresso per ciascuna configurazione.
-Riguardo la configurazione è specificato se i due regolatori sono alimentati in parallelo o indipendentemente, se la corrente è stata fatta variare in modo crescente o decrescente e se le tensioni di riferimento per offset e per VDDD e VDDA sono prese internamente o fornite esternamente.
-
+In tabella~\ref{table:results} sono riportati i risultati di questa analisi. Riguardo alla descrizione della configurazione è specificato se i due regolatori sono alimentati in parallelo o indipendentemente, se la corrente è stata fatta variare in modo crescente o decrescente e se le tensioni di riferimento $\mathrm{V_{+A5}}$, $\mathrm{V_{refA}}$ e $\mathrm{V_{refB}}$ sono generate internamente o esternamente al ROC.
 \begin{center}
 \begin{table}
-\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
-\hline
-Regolatore & Alim. & Rampa & \multicolumn{2}{c|}{Vref [V]} & \multicolumn{2}{c|}{Voffset [V]} & Slope [$\Omega$] & Offset [V]\\ \hline
- 
+\begin{tabular}{l|c|c|c|c|c|c|c|c}
+Regolatore & Alim. & Rampa & \multicolumn{2}{c|}{$\mathrm{V_{ref}}$} & \multicolumn{2}{c|}{$\mathrm{V_{+A5}}$} & $\mathrm{R_{eff}}$& $\mathrm{V_{ofs}}$ \\
+Regolatore & Alim. & Rampa & \multicolumn{2}{c|}{[V]}               & \multicolumn{2}{c|}{[V]}                & [$\Omega$]       & [V]               \\ \hline
 Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Cres.} & Int. & - & Int. & - & 0.72 & 0.90 \\
 Digitale  &  &  & Int. & - & Int. & - & 0.75  & 0.84 \\ \hline
 
@@ -508,49 +501,39 @@ Analogico & \multirow{2}{*}{Indip.} & \multirow{2}{*}{Cres.} & Int. & - & Ext. &
 Digitale  &  &  & Int. & - & Ext. & 0.400 & 0.79  & 0.68 \\ \hline
 
 Analogico & \multirow{2}{*}{Paral.} & \multirow{2}{*}{Cres.} & Int. & - & Int. & - & 0.74 & 0.87 \\
-Digitale  &  &  & Int. & - & Int. & - & 0.74  & 0.86 \\ \hline
+Digitale  &  &  & Int. & - & Int. & - & 0.74  & 0.86 \\
 \end{tabular}
-\caption{Valore di offset e pendenza della curva caratteristica dei i due ShuntLDO a seconda della configurazione.}
+\caption{Valori di $\mathrm{V_{ofs}}$ e $\mathrm{R_{eff}}$ ricavati da un fit alla caratteristica $\mathrm{V_{IN}}$ vs. $\mathrm{I_{IN}}$ nella regione di regolazione dei i due ShuntLDO a seconda della configurazione.}
 \label{table:results}
 \end{table}
 \end{center}
 
-I risultati mostrati sono stati ottenuti mediando le varie misure effettuate con la stessa configurazione.
-Queste risultano stabili all'interno di ciascun gruppo (variazioni inferiori ai 3 mV, tipicamente di 1 mV), mentre i valori medi, sia di R3 che di $\mathrm{V_{iofs}}$, variano fra una configurazione e l'altra.
+I risultati sono stati ottenuti mediando pi\`u caratteristiche tensione-corrente effettuate nella stessa configurazione. I valori di tensione misurati per una data $\mathrm{V_{IN}}$ sono molto stabili all'interno di ciascun gruppo (variazioni assolute inferiori a $3\mV$, tipicamente di $\sim 1\mV$), mentre i valori estratti di $\mathrm{R_{eff}}$ e di $\mathrm{V_{ofs}}$ variano fra una configurazione e l'altra.
 %La prima cosa che si può notare è che i valori variano da una configurazione all'altra, mentre mantenendo per una stessa configurazione rimangono pressochè uguali, infatti i risultati sono stati ottenuti mediando su più misure.
-Gli errori statistici relativi al fit lineare, da cui si ottengono Offset e Pendenza, sono trascurabili in confronto alle fluttuazioni date sia dall'utilizzo di una diversa configurazione, sia dalle possibili variazioni di temperatura nel tempo. 
+Gli errori statistici associati alla stima di $\mathrm{R_{eff}}$ e di $\mathrm{V_{ofs}}$ sono trascurabili rispetto alle fluttuazioni di questi parametri nelle diverse configurazioni e rispetto ad altri possibili contributi sistematici alle incertezze coem, ad esempio, le variazioni di temperatura. 
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/R3Karagounis}
-\caption{Andamento di offset e pendenza al variare della resistenza esterna utilizzata per definire la relazione tra $\mathrm{V_{in}}$ e $\mathrm{I_{in}}$.}%meeting del 13 aprile R^2 https://en.m.wikipedia.org/wiki/Coefficient_of_determination
+\caption{Andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare della resistenza esterna $\mathrm{R_{ext}}$ utilizzata per definire la corrente nel ramo di controllo dello ShuntLDO.}%meeting del 13 aprile R^2 https://en.m.wikipedia.org/wiki/Coefficient_of_determination
 \label{R3Karagounis}
 \end{figure}
+Dal confronto con i valori attesi risulta evidente che la pendenza della caretteristica tensione-corrente nella regione di regolazione degli ShuntLDO misurati è sistematicamente maggiore mentre l'offset è sistematicamente minore. 
+Questo comportamento è stato osservato in tutti gli esemplari di RD53A utilizzati per lo sudio degli ShuntLDO. \`E stata eseguita, in particolare, una misura dedicata a queste discrepanze studiando l'andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare della resistenza $\mathrm{R3}$, ottenuto grazie ad un resistore esterno $\mathrm{R_{ext}}$ regolabile e riportato in Fig.~\ref{R3Karagounis}. La relazione che ne risulta, $\mathrm{R_{eff}} = 0.001\cdot \mathrm{R_{ext}} + 0.1963\Ohm$, si discosta da quella di progetto $\mathrm{R_{eff} = \nicefrac{R_{ext}}{k} = \nicefrac{R3}{k}}$ (con $k=1000$) per la presenza del termine costante pari a circa $0.2\Ohm$ dovuto a qualche contributo spurio che probabilmente varia da esemplare a esemplare. Questa misura conferma i risultati precedentemente ottenuti e giustifica la sistematica osservazione di una $\mathrm{R_{eff}}$ pi\`u grande di quella aspettata. 
 
-Dal confronto con i valori aspettati, inoltre, risulta evidente che la pendenza della retta caretteristica dello ShuntLDO è sistematicamente maggiore e, viceversa, l'offset è sistematicamente minore. 
-Questo comportamento è stato osservato anche in altri test eseguiti su chip da altri membri all'interno della collaborazione.
-In particolare sono stati eseguiti test specifici al fine di comprenderne le cause. 
-In figura \ref{R3Karagounis} è riportato l'andamento della pendenza e dell'offset al variare della resistenza R3
-\footnote{
-  \`E stata utilizzata una resistenza esterna regolabile.
-}.
-Per interpretare correttamente il grafico ricordiamo che, data la presenza nel circuito di un current-mirror con rapporto k = 1000, la pendenza della retta relativa a VIN nel grafico corrente-tensione sarà $\mathrm{\dfrac{R3}{k}}$. 
-Dal fit lineare risulta che la relazione tra la resistenza esterna e la pendenza è $0.001x + 0.1963$, quindi k è effettivamente 1000, ma vi è una qualche resistenza spuria, in serie, del valore di circa 0.2 $\Omega$, che può variare da chip a chip. 
-Questo test conferma il risultato ottenuto e giustifica la pendenza maggiore di quella aspettata. 
-Per quanto riguarda l'offset e la sua sottostima, il fenomeno è di più difficile interpretazione.
-In parte è dovuto alla differenza tra terra del chip e terra dello shunt?!.
+Per quanto riguarda l'osservazione di valori di $\mathrm{V_{ofs}}$ inferiori a quanto atteso il fenomeno è di più difficile interpretazione.
+%In parte è dovuto alla differenza tra terra del chip e terra dello shunt?!.
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/OffsetKaragounis}
-\caption{Andamento di offset e pendenza al variare della tensione di offset.}%meeting del 13 aprile
+\caption{Andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare della tensione $\mathrm{V_{+A5}}$ fornita esternamente.}%meeting del 13 aprile
 \label{OffsetKaragounis}
 \end{figure}
-Anche in questo caso sono stati compiuti test specifici riportati in figura \ref{OffsetKaragounis}. 
-A differenza di quanto osservato con R3, l'offset non solo ha un andamento lineare con termine noto non nullo, ma possiede anche un fattore moltiplicativo maggiore di quello aspettato, i.e. 2. 
-Infine, vi è una relazione tra offset e pendenza, su cui sono tutt'ora in corso studi per comprenderne le cause ed eliminarle.
+In questo caso l'andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare della tensione $\mathrm{V_{+A5}}$ fornita esternamente visibile in Fig.~\ref{OffsetKaragounis}, mostra che $\mathrm{V_{ofs} = 2.215\cdot V_{+A5}- 0.169\V}$. Il fattore moltiplicativo \`e maggiore di circa il 10\% rispetto a quello di progetto nominalmente pari a 2. Inoltre \`e presente un termine costante non nullo. Infine, entrambe le misure delle Figure~\ref{R3Karagounis} e ~\ref{OffsetKaragounis} suggeriscono l'esistenza di una correlazione tra $\mathrm{V_{ofs}}$ e $\mathrm{R_{eff}}$. L'origine di questi comportamenti anomali rispetto al progetto del ROC non \`e nota al momento ma studi approfonditi e simulazioni sono in corso per per comprenderne le cause ed eliminarle.
 
-
-
+%
+% ------------------------------------
+%
 \subsection{Variazioni di carico}
 \label{VariazioniCarico}
 \begin{figure}
