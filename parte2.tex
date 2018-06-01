@@ -138,23 +138,24 @@ In RD53A l'alimentazione è gestita da due ShuntLDO, uno per la parte analogica 
 \begin{table}
 \begin{small}
 \noindent\setlength\tabcolsep{4pt}%
-\begin{tabularx}{\linewidth}{|c|c|c|c|c|l|}
+\begin{tabularx}{\linewidth}{c|c|c|c|c|X}
 %\begin{tabular}{|c|c|c|c|c|l|}
-\hline
+%\hline
 \textbf{Pin} & \textbf{Tipologia} & \textbf{Min} & \textbf{Tipico} & \textbf{Max} & \textbf{Descrizione} \\ \hline
-$\mathrm{V_{IN}}$ & Alimentazione & 1.4 V & & 2.0 V & Input di alimentazione esterna (in tensione)\\ \hline
- & Power & 0 A & 0.5 A & 2.0 A & Input di alimentazione esterna (in corrente)\\ \hline     
-$\mathrm{V_{SHUNT}}$ & Alimentazione & 1.4 V & & 2.0 V & Tensione di alimentazione per il circuito di shunt\\ \hline
+$\Vin$ & Tensione & 1.4 V & & 2.0 V & Alimentazione esterna (in tensione)\\ \hline
+ & Corrente & 0 A & 0.5 A & 2.0 A & Alimentazione esterna (in corrente)\\    
+$\mathrm{V_{SHUNT}}$ & Tensione & 1.4 V & & 2.0 V & Alimentazione per il circuito di shunt; a $\mathrm{\Vin}$ per operare con lo shunt, sconnesso in caso di alimentazione diretta\\ \hline
 GND & Ground &  & &  & Riferimento locale e uscita della corrente di shunt\\ \hline
-VDD & Alimentazione & 1.0 V & 1.2 V & 1.32 V & Tensione di uscita del regolatore\\ \hline
-$\mathrm{V_{REF}}$ & Analogico & 500 mV & 600 mV & 660 mV & Tensione di riferimento (VDD=2$\mathrm{V_{REF}}$)\\ \hline
-$\mathrm{R_{INT}}$ & Analogico &  & $\mathrm{V_{IN}}$ &  & Abilita la resistenza interna R\\ \hline
-$\mathrm{R_{EXT}}$ & Analogico & 300 $\Omega$ &  &  & Resistenza esterna collegata a $\mathrm{V_{IN}}$\\ \hline
-$\mathrm{I_{OFS}}$ & Analogico &  & 200 k$\Omega$ &  & Resistenza esterna connessa a GND\\ \hline
-$\mathrm{COMP_{ENB}}$ & Digitale &  & GND &  & Segnale per abilitare il circuito di compensazione\\ \hline
+VDD & Tensione & 1.0 V & 1.2 V & 1.32 V & Tensione di uscita $\VDD$ del regolatore\\ \hline
+$\mathrm{V_{ref}}$ & Analogico & 500 mV & 600 mV & 660 mV & Tensione di riferimento (VDD=2$\mathrm{V_{ref}}$)\\ \hline
+$\mathrm{R_{INT}}$ & Analogico &  & $\mathrm{\Vin}$ &  & Connesso $\mathrm{\Vin}$ abilita la resistenza interna\\ \hline
+$\mathrm{R_{EXT}}$ & Analogico & $300\Ohm$ &  &  & Terminale per una resistenza esterna da connettere a $\mathrm{\Vin}$\\ \hline
+$\mathrm{I_{OFS}}$ & Analogico &  & $200\kOhm$ &  & Terminale per una resistenza esterna da connettere a GND per configurare $\mathrm{V_{ofs}}$ esternamente\\ \hline
+$\mathrm{COMP_{ENB}}$ & Digitale &  & GND &  & A GND abilita il circuito di compensazione per capacit\`a di uscita a bassa resistenza serie equivalente ({\em ESR})\\
+%\hline
 \end{tabularx}
 \end{small}
-\caption{I pi\`u importanti parametri di funzionamento dello ShuntLDO di RD53A.}
+\caption{I terminali di configurazione e regolazione dello ShuntLDO di RD53A.}
 \label{tab:sldord53a}
 \end{table}
 %\end{center}
@@ -231,7 +232,7 @@ Inoltre è possibile mantenere separate, a livello di alimentazione, la parte di
 \end{figure}
 
 \section{Caratterizzazione degli ShuntLDO su RD53A}
-\label{45}
+\label{MisureStaticheRD53A}
 
 \subsection{Misure statiche}
 
@@ -539,7 +540,8 @@ In questo caso l'andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare
 % ------------------------------------
 %
 \subsection{Variazioni di carico}
-\label{451}
+\label{VariazioniCarico}
+
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/LoadVDDD}
@@ -770,7 +772,7 @@ Come detto in precedenza l'utilizzo degli ShuntLDO dovrebbe evitare il propagars
 \caption{Fotografia del setup, i due chip posti sulla Single Chip Card sono al centro e ognuno di essi è collegato a una FPGA che gestisce la comunicazione tra RD53A e il computer.}
 \label{chipserial}
 \end{figure}
-Al fine di verificare eventuali correlazioni tra l'entit\`a del rumore e l'utilizzo dell'alimentazione seriale, si sono messi a confronto i risultati di test eseguiti con un singolo ROC alimentato sulla catena con i risultati dei medesimi test su una coppia di ROC operati in in configurazione di alimentazione seriale o parallela. Si \`e usato il banco di misura visibile in Fig.~\ref{chipserial}. Tutte le misure sono state eseguite utilizzando la configurazione di ShuntLDO. 
+Al fine di verificare eventuali correlazioni tra l'entit\`a del rumore e l'utilizzo dell'alimentazione seriale, si sono messi a confronto i risultati di test eseguiti con un singolo ROC alimentato sulla catena con i risultati dei medesimi test su una coppia di ROC operati in in configurazione di alimentazione seriale o parallela. Si \`e usato il banco di misura visibile in Fig.~\ref{chipserial}. Tutte le misure sono state eseguite utilizzando con lo ShuntLDO utilizzato per l'alimentazione.
 
 %
 % --------------------------------- QUI
@@ -778,29 +780,34 @@ Al fine di verificare eventuali correlazioni tra l'entit\`a del rumore e l'utili
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.75\textwidth]{Immagini/NoiseSingle}
-\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato singolarmente.}
+\includegraphics[width=0.32\textwidth]{Immagini/NoiseSingle}
+\hfill
+\includegraphics[width=0.32\textwidth]{Immagini/NoiseSerial}
+\hfill
+\includegraphics[width=0.32\textwidth]{Immagini/NoiseParallel}
+\caption{Distribuzioni di rumore di un ROC ottenute attraverso il test di \textbf{scan$\_$threshold} in varie configurazioni: un singolo ROC alimentato con ShuntLDO; ROC alimentato in una serie di due con scansioni effettuate su entrambi in contemporanea; ROC alimentato in parallelo a un secondo. Nelle ultime due configurazioni le scansioni sono effettuate su entrambi in contemporanea. Il rumore medio estratto dal fit alle distribuzioni risulta pari a 99e$^-$, 95e$^-$ e 94e$^-$ per le tre configurazioni, rispettivamente.}
 \label{noisesingle}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=0.75\textwidth]{Immagini/NoiseSerial}
-\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in serie ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
 \label{noiseserial}
-\end{figure}
-
-Trascurando i risultati relativi alla distribuzione delle soglie, che sono indipendenti dalla distribuzione del rumore, riportiamo in figura le distribuzioni ottenute per il rumore nei tre casi:
-\begin{itemize}
-\item Chip singolo, figura \ref{noisesingle}.
-\item Serie di due chip, figura \ref{noiseserial}.
-\item Parallelo di due chip, figura \ref{noiseparallel}.
-\end{itemize}
-Come si può vedere, nonostante sul secondo chip fossero eseguiti test, in modo da simulare un'attività, le distribuzioni del rumore dei setup in serie e in parallelo non peggiorano rispetto al caso con con chip singolo.
-Questo dimostra che, effettivamente, esternamente i chip non sono visibili e, viceversa, il chip non vede le variazioni present presentii sulla linea.
-
-\begin{figure}
-\centering
-\includegraphics[width=0.75\textwidth]{Immagini/NoiseParallel}
-\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in parallelo ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
 \label{noiseparallel}
 \end{figure}
+
+Le distribuzioni di rumore ottenute nei tre casi sono mostrate in~Fig.~\ref{noisesingle}. Il rumore medio misurato, stimato con un fit gaussiano alle distribuzioni, risulta pari a 99e$^-$, 95e$^-$ e 94e$^-$ per le tre configurazioni, rispettivamente. Come si può vedere le distribuzioni del rumore delle configurazioni con due ROC in serie e in parallelo non peggiorano rispetto al caso con il ROC singolo, nonostante che, su queste ultime, tutti i ROC del sistema in prova fossero soggetti ad iniezione di carica e attività digitale. Questo primo risultato, al momento limitato e molto preliminare, sembrerebbe indicare che lo ShuntLDO compia un efficace filtraggio delle linee di alimentazione (sia internamente che esternamente) rispetto alle sollecitazioni indotte dal nucleo del ROC da questo alimentato.
+
+Questo \`e compatibile con la verifica, a pi\`u basso livello, delle fluttuazioni di $\VDDD$ e $\VDDA$ mentre, tramite il sistema di acquisizione, si richiede al chip di eseguire il test scan$\_$threshold. Per cercare di massimizzare le potenziali interferenze, un segnale di calibrazione relativamente grande \`e iniettato su molti pi\`u canali del normale. In questo modo è possibile verificare gli effetti causati dalle variazioni di carico proprie dell'attività del chip. L'andamento temporale osservato all'oscilloscopio \`e mostrato in~Fig.~\ref{alllin2}.
+\begin{figure}
+\centering
+
+\includegraphics[width=0.9\textwidth]{Immagini/alllin2}
+\caption{Variazione di $\VDDD$ (verde, 50 mV/div) e $\VDDA$ (blu, 20 mV/div) in corrispondenza dell'attivit\`a di calibrazione testimoniata dalle tracce digitali (giallo e rosa). La base dei tempi del grafico \`e $\mathrm{20\us/div}$.}
+\label{alllin2}
+
+\end{figure}
+Le fluttuazioni osservabili sono limitate a qualche mV in ampiezza e dunque assolutamente compatibili con i requisiti.
+
+Tutte le misure effettuate nell'ambito di questo lavoro di tesi, pur rappresentando solo una porzione preliminare dei risultati che verranno raccolti in tutta la campagna di validazione del disegno dell'IT nel suo complesso, indicano che l'alimentazione seriale e lo ShuntLDO siano assolutamente conformi ai requisiti richiesti. Gli studi che verranno effettuati nei prossimi mesi, non ultimi quelli relativi alla caratterizzazione del ROC e dello ShuntLDO dopo irraggiamento e pi\`u ampi test di sistema, daranno il via libera definitivo all'approccio dell'alimentazione seriale basata su ShuntLDO per l'IT di CMS a HL-LHC. 
+
+% Dal confronto tra i risultati ottenuti in configurazione con o senza shunt è emersa chiaramente l'importanza di questo elemento, non solo per evitare che un malfunzionamento del chip renda inutilizzabile tutta la catena, ma anche per rendere stabili le tensioni generate dal regolatore. 
+% In Fig.~\ref{alllin1}, infatti, sono riportate le tensioni $\VDDD$ e $\VDDA$ utilizzando il chip senza Shunt, quindi alimentato in tensione con il solo LDO attivo.
+% Durante il dialogo con il sistema di acquisizione si sono verificate variazioni notevoli nelle tensioni.
+% Con le stessse condizioni, ma utilizzando lo shunt, gli sbalzi di tensione, come si può vedere in figura \ref{alllin2}, spariscono poiché le variazioni di carico sono gestite localmente.
+
