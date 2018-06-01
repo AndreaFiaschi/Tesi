@@ -664,12 +664,12 @@ L'impulso utilizzato in questa prima fase ha:
 \label{RiseTime}
 \end{figure}
 
-Per esaminare il comportamento del mosfet in risposta all'impulso mandato sul Gate, si è proceduto ad isolare questa parte del circuito dal resto della scheda di test, connettendo al Drain una resistenza in serie ad una batteria stilo, al posto della connessione con il $\mathrm{V_{out}}$ dello ShuntLDO.
-La batteria ricopre il ruolo di $\mathrm{V_{out}}$, mentre la resistenza è necessaria alla misura delle correnti che scorrono nel mosfet ed ha un valore di 2.7 $\Omega$. 
+Per esaminare il comportamento del mosfet in risposta all'impulso mandato sul Gate, si è realizzato un allestimento di test specifico, mostrato nella parte a destra della Fig.~\ref{MosfetBehaviour}: il Drain del mosfet è stato disconnesso dal resto del circuito del chip e connesso ad una batteria stilo esterna, che ricopre il ruolo di $\mathrm{V_{out}}$, con in serie una resistenza di 2.7 $\Omega$, utilizzata per misurare le correnti che sorrono nel mosfet.
+%Per esaminare il comportamento del mosfet in risposta all'impulso mandato sul Gate, si è proceduto ad isolare questa parte del circuito dal resto della scheda di test, connettendo al Drain una resistenza in serie ad una batteria stilo, al posto della connessione con il $\mathrm{V_{out}}$ dello ShuntLDO.
+%La batteria ricopre il ruolo di $\mathrm{V_{out}}$, mentre la resistenza è necessaria alla misura delle correnti che scorrono nel mosfet ed ha un valore di 2.7 $\Omega$. 
 
-
-Come si vede dalla Fig.~\ref{MosfetBehaviour}, le oscillazioni in corrispondenza dello spegnimento del mosfet sono presenti anche una volta che questo è stato isolato.
-Questo comportamento è segno del fatto che queste oscillazioni sono generate dal mosfet stesso nel momento in cui il canale, che collega Drain e Source, si interrompe.
+La Fig.~\ref{MosfetBehaviour} a sinistra, mostra la caduta di tensione ai capi della resistenza in serie alla batteria: le oscillazioni già osservate con il chip connesso e presenti in corrispondenza dello spegnimento del mosfet, sono evidenti anche con questo allestimento.
+Esse sono, dunque, generate dal mosfet stesso nel momento in cui il canale, che collega Drain e Source, si interrompe e non dipendono da $\mathrm{V_{out}}$.
 Inoltre, il fronte di salita è circa $100 \ns$, più lungo di quello dell'impulso, indice del fatto che il mosfet ha una risposta più lenta. %e non $40 \ns$ come ci aspetteremmo da un mosfet ideale con risposta istantanea.
 Esaminando la documentazione del mosfet~\cite{MOSFET} presente sulla scheda di test 
 %footnote{ZXMN20B28KTC http://www.mouser.com/ds/2/115/ZXMN20B28K-94822.pdf
