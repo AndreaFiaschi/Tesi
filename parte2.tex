@@ -231,7 +231,7 @@ Inoltre è possibile mantenere separate, a livello di alimentazione, la parte di
 \end{figure}
 
 \section{Caratterizzazione degli ShuntLDO su RD53A}
-\label{45}
+\label{MisureStaticheRD53A}
 
 \subsection{Misure statiche}
 
@@ -539,7 +539,7 @@ In questo caso l'andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare
 % ------------------------------------
 %
 \subsection{Variazioni di carico}
-\label{451}
+\label{VariazioniCarico}
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/LoadVDDD}
@@ -673,6 +673,24 @@ dove q \`e il segnale di calibrazione, $\mu$ la soglia e $\sigma$ il rumore espr
 \end{equation}
 I valori di $\mu$ e $\sigma$ sono ricavati con il metodo descritto in~\cite{ERF}.
 
+La sovrapposizione delle S-curve di ogni canale produce un grafico come quello riportato in Fig.~\ref{Scurves} dove l'asse $z$ (espressa in colore) rappresenta il numero di canali che, per un valore $\mathrm{\Delta VCAL}$ (che \`e una quantit\`a proporzionale al segnale di calibrazione tale per cui ad una unit\`a di $\mathrm{VCAL}$ corrisponde una carica di 10e$^-$), si sono accesi una certa frazione percentuale di volte ({\em occupancy}).
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{Immagini/Scurves}
+\caption{Risultato del test \textbf{scan$\_$threshold}: l'asse $z$ (espressa in colore) rappresenta il numero di canali che, per un valore $\mathrm{\Delta Vcal}$ (proporzionale al segnale di calibrazione), si sono accesi una certa frazione percentuale di volte ({\em occupancy}).}
+\label{Scurves}
+\end{figure}
+La distribuzione delle soglie, con sovrapposto il fit di una gaussiana, e la mappa del rumore dei canali ricavate dalle S-curve sono visibile in Fig.~\ref{Threshold}. Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto, al momento, questo \`e l'unico supportato da una versione sufficientemente avanzata e stabile del software.
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{Immagini/Threshold}
+\hfill
+\includegraphics[width=0.55\textwidth]{Immagini/NoiseMap}
+\caption{Distribuzione delle soglie ottenute dalle S-curves (sinistra) e mappa del livello di rumore pixel per pixel per il FE lineare (destra).}
+\label{Threshold}
+\label{NoiseMap}
+\end{figure}
+
 \item[meta$\_$tune$\_$threshold$\_$simple] La scansione fine delle soglie \`e una procedura che permette di equalizzare le soglie della matrice di pixel calibrando, canale per canale, il DAC a 4 bit concepito per questo scopo. Questo introduce una regolazione fine della soglia rispetto alla soglia globale di tutto il ROC.
 \end{description}
 
@@ -725,23 +743,12 @@ Grazie alle procedure sopra descritte, anche in assenza di un sensore connesso a
 
 %\subsubsection{BDAQ}
 
-\begin{figure}
-\centering
-\includegraphics[width=0.48\textwidth]{Immagini/Scurves}
-\hfill
-\includegraphics[width=0.48\textwidth]{Immagini/Threshold}
-\caption{Risultato del test \textbf{scan$\_$threshold}. Nella figura di sinistra sulle x vi è il valore, in unità arbitrarie, dell'ampiezza del segnale iniettato nel canale di lettura e sulle y il numero di volte che si è avuto risposta, la scala di colore corrisponde al numero di canali . Nella figura di destra è riportata la distribuzione della soglia ottenuta dalle S-curves}
-\label{Threshold}
-\label{Scurves}
-\end{figure}
-
 % %Prima di procedere con la presentazione dei risultati è necessario dare almento un'idea guida di che operazione vengono eseguite durante lo scan delle soglie al fine di comprendere meglio il significato delle varie distribuzioni.
 % Lo scan delle soglie, descritto all'inizio del paragrafo, permette, attraverso i parametri di configurazione, di decidere una soglia globale, uguale per tutti i canali di lettura, che nella pratica, però, varierà leggermente tra un canale e l'altro. 
 % %Attraverso i parametri di configurazione è possibile decidere una soglia globale uguale per tutti i canali di lettura, nella pratica però la soglia varierà leggermente tra un canale e l'altro. 
 % Ci si aspetta, quindi, una distribuzione delle soglie intorno ad un valore centrale.
 % Inoltre, a causa del rumore, la risposta del circuito di lettura in funzione della carica raccolta non sarà una theta: il rumore, che si somma al segnale, può far scattare il discriminatore anche a segnali più piccoli della soglia.
 % Se su ciascun canale iniettiamo un segnale sempre più grande, ripetendo il processo più volte e riportando il numero delle volte in cui il discriminatore scatta in funzione del segnale iniettato, si ottengono le così dette Scurves che, senza rumore, sarebbero a gradino. 
-% Mettendo insieme le Scurve di ogni canale, si ottiene un grafico come quello riportato in figura \ref{Scurves}, dove in z si ha il numero di pixel che, a un dato Vcal (in x), si sono accesi un certo numero di volte (in y).
 % Dal fit di ogni singola Scurve è possibile ottenere il valore di soglia e di rumore di ogni canale.
 % Infatti la Scurve è descritta dalla funzione:
 % \begin{equation}
@@ -750,47 +757,40 @@ Grazie alle procedure sopra descritte, anche in assenza di un sensore connesso a
 % dove A è l'ampiezza della $\erf$, $\mu$ la soglia e $\sigma$ il rumore.
 % I valori di $\mu$ e $\sigma$ sono ricavati con il metodo descritto in \cite{ERF}.
 
-La figura \ref{Threshold} riporta la distribuzione delle soglie dei canali con sovrapposto il fit di una gaussiana.
 
 %Dal fit della singola Scurves si ricava un valore di soglia e rumore, mettendo insieme i risultati per tutti i canali si ottengolo le distribuzioni delle stesse, in figura\ref{Threshold} è riportata la distribuzione delle soglie. 
-\begin{figure}
-\centering
-\includegraphics[width=0.9\textwidth]{Immagini/NoiseMap}
-\caption{Mappa del livello di rumore pixel per pixel del FE lineare.}
-\label{NoiseMap}
-\end{figure}
-Il test restituisce, oltre alle distribuzioni, anche le mappe di soglie e rumore utili per verificare l'omogeneità della risposta e la presenza di zone più rumorose o a rumore nullo, sintomatiche di problemi.
-La figura \ref{NoiseMap} riporta la mappa del rumore ottenuta per il \textit{front end} lineare. 
+%Il test restituisce, oltre alle distribuzioni, anche le mappe di soglie e rumore utili per verificare l'omogeneità della risposta e la presenza di zone più rumorose o a rumore nullo, sintomatiche di problemi.
 %La soglia è il livello minimo a cui l'elettronica risponde, se non ci fosse rumore le S-curves sarebbero gradini, nella realtà a causa del rumore che si somma al segnale questi gradini ideali diventano curve, meno assomiglia ad un gradino maggiore è il rumore.
-Come detto in precedenza l'utilizzo dello ShuntLDO dovrebbe evitare il propagarsi del rumore tra parte analogica e digitale ed evitare che disturbi della linea vengano visti dal carico. 
+
+
+Come detto in precedenza l'utilizzo degli ShuntLDO dovrebbe evitare il propagarsi del rumore dalla parte digitale a quella analogica ed evitare che disturbi della linea vengano visti dal carico. 
 \begin{figure}
 \centering
 \includegraphics[width=0.75\textwidth]{Immagini/chipserial}
-\caption{Fotografia del setup, i due chip posti sulla Single Chip Card sono al centro e ognuno di essi è collegato a una fpga che gestisce la comunicazione tra RD53A e il computer.}
+\caption{Fotografia del setup, i due chip posti sulla Single Chip Card sono al centro e ognuno di essi è collegato a una FPGA che gestisce la comunicazione tra RD53A e il computer.}
 \label{chipserial}
 \end{figure}
-Al fine di verificare se c'è una correlazione tra la ditribuzione del rumore e l'utilizzo del chip all'interno di una catena seriale, si sono messi a confronto i risultati ottenuti da test eseguiti con il chip singolo con quelli ottenuti poi mettendone due in serie o in parallelo, usando il setup mostrato in figura \ref{chipserial}.
-Tutte e tre le misure sono state eseguite utilizzando la configurazione di ShuntLDO. 
+Al fine di verificare eventuali correlazioni tra l'entit\`a del rumore e l'utilizzo dell'alimentazione seriale, si sono messi a confronto i risultati di test eseguiti con un singolo ROC alimentato sulla catena con i risultati dei medesimi test su una coppia di ROC operati in in configurazione di alimentazione seriale o parallela. Si \`e usato il banco di misura visibile in Fig.~\ref{chipserial}. Tutte le misure sono state eseguite utilizzando la configurazione di ShuntLDO. 
 
-Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto, al momento della presa dati, era l'unico supportato da una versione sufficientemente avanzata e stabile del software e con i vari parametri ben definiti.
-I risulati sono riportati in funzione di VCAL, parametro dello scan, la cui conversione in elettroni è 1:10, ossia per una u.a. corrispondono 10 $\mathrm{e^{-}}$.
+%
+% --------------------------------- QUI
+%
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.48\textwidth]{Immagini/NoiseSingle}
-%\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato singolarmente.}
 \hfill
 \includegraphics[width=0.48\textwidth]{Immagini/NoiseSerial}
 \caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato singolarmente (sinistra) e su un chip alimentato in serie ad un secondo (destra).}
 \includegraphics[width=0.48\textwidth]{Immagini/NoiseParallel}
-\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in parallelo ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
-\label{noiseparallel}
+\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in parallelo ad un secondo.}
 \label{noisesingle}
 \label{noiseserial}
+\label{noiseparallel}
 \end{figure}
 
-
 Trascurando i risultati relativi alla distribuzione delle soglie, che sono indipendenti dalla distribuzione del rumore, riportiamo in figura le distribuzioni ottenute per il rumore nei tre casi Fig.~\ref{noisesingle}:
+
 \begin{itemize}
 \item Chip singolo.
 \item Serie di due chip.
@@ -799,9 +799,8 @@ Trascurando i risultati relativi alla distribuzione delle soglie, che sono indip
 Come si può vedere, nonostante sul secondo chip fossero eseguiti test, in modo da simulare un'attività, le distribuzioni del rumore dei setup in serie e in parallelo non peggiorano rispetto al caso con con chip singolo.
 Questo dimostra che, effettivamente, esternamente i chip non sono visibili e, viceversa, il chip non vede le variazioni present presentii sulla linea.
 
-%\begin{figure}
-%\centering
-%\includegraphics[width=0.75\textwidth]{Immagini/NoiseParallel}
-%\caption{Distribuzione di rumore ottenuta attraverso il test di \textbf{scan$\_$threshold} su un chip alimentato in parallelo ad un secondo, anche sul secondo chip sono stati eseguite scansioni in contemporanea.}
-%\label{noiseparallel}
-%\end{figure}
+\begin{figure}
+\centering
+
+
+\end{figure}
