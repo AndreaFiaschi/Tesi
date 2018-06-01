@@ -1,13 +1,19 @@
 \subsection{Comportamento dinamico}
 
-Fino ad ora abbiamo studiato la caratterizzazione dello ShuntLDO a $2\A$ con carichi statici in condizioni stazionarie. \`E per\`o fondamentale studiare il comportamento dello ShuntLDO in risposta ad una variazione dinamica del carico, focalizzando l'attenzione sulla velocità dello shunt nel riequilibrare il consumo in corrente. 
+Fino ad ora abbiamo caratterizzato lo ShuntLDO a $2 \A$ con carico statico.
+\`E per\`o fondamentale studiare il comportamento dello ShuntLDO in risposta ad una variazione dinamica del carico, focalizzando l'attenzione sulla velocità dello shunt nel riequilibrare il consumo in corrente. 
+%Fino ad ora abbiamo studiato la caratterizzazione dello ShuntLDO a $2\A$ con carichi statici in condizioni stazionarie.
 %Oltre alla caratterizzazione statica un punto fondamentale è studiare il comportamento dello ShuntLDO in risposta ad una variazione dinamica del carico, andando a focalizzare l'attenzione sulla velocità dello shunt nel riequilibrare il consumo in corrente. 
-La risposta dinamica dipende da molti fattori quali: il punto di lavoro dello ShuntLDO, i tempi caratteristici della variazione di carico e l'entità di tale variazione. 
+%La risposta dinamica dipende da molti fattori quali: il punto di lavoro dello ShuntLDO, i tempi caratteristici della variazione di carico e l'entità di tale variazione. 
+La risposta dinamica dipende da molti fattori tra cui: il punto di lavoro a cui si trova lo ShuntLDO, il tempo in cui avviene la variazione di carico e l'entità di tale variazione.
 
-Il circuito è alimentato tramite un generatore di corrente a $1.5 \A$ e la tensione di riferimento per $\mathrm{V_{out}}$ è posta pari a $\mathrm{V_{ref}=0.5 \A}$.%, ci aspettiamo una tensione all'uscita di $1 \V$.
-Al fine di introdurre un carico dinamico, in parallelo al carico statico, è presente sulla scheda di test un mosfet in serie ad una resistenza, R5, di $0.1 \Omega$.
-La corrente assorbita dal mosfet, indicata con $\mathrm{I_{mosfet}}$, può essere calcolata misurando la caduta di tensione su R5 ed è regolabile attraverso la tensione applicata al gate, in questo caso collegato ad un generatore di impulsi esterno.
-A seconda dell'ampiezza del segnale inviato al Gate del mosfet si avrà una maggiore o minore corrente che scorre tra Drain e Source. 
+Per effettuare i test si è alimentato il circuito tramite un generatore di corrente a $1.5 \A$, ponendo la tensione di riferimento $\mathrm{V_{ref}=0.5 \A}$. %, ci aspettiamo una tensione all'uscita di $1 \V$.
+Sulla scheda di test, per dare la possibilità di introdurre un carico dinamico, è presente un mosfet in serie ad una resistenza, R5, di $0.1 \Omega$, che è posto in parallelo al carico statico, $\mathrm{R_{load}}$, tramite l'impiego di un opportuno {\em jumper}.
+La corrente assorbita dal mosfet, indicata con $\mathrm{I_{mosfet}}$, può essere calcolata, misurando la caduta di tensione su R5, e regolata, pilotando la tensione applicata al gate, ad esempio utilizzando, come nel caso dei test effettuati, un generatore di impulsi esterno.
+%Il circuito è alimentato tramite un generatore di corrente a $1.5 \A$ e la tensione di riferimento per $\mathrm{V_{out}}$ è posta pari a $\mathrm{V_{ref}=0.5 \A}$.%, ci aspettiamo una tensione all'uscita di $1 \V$.
+%Al fine di introdurre un carico dinamico, in parallelo al carico statico, è presente sulla scheda di test un mosfet in serie ad una resistenza, R5, di $0.1 \Omega$.
+%La corrente assorbita dal mosfet, indicata con $\mathrm{I_{mosfet}}$, può essere calcolata misurando la caduta di tensione su R5 ed è regolabile attraverso la tensione applicata al gate, in questo caso collegato ad un generatore di impulsi esterno.
+%A seconda dell'ampiezza del segnale inviato al Gate del mosfet si avrà una maggiore o minore corrente che scorre tra Drain e Source. 
 Il setup di queste misure è rappresentato schematicamente in Fig.~\ref{Setupscheme}.
 %: sulla sinistra in verde, la scheda di test; in grigio sono riportati gli alimentatori; sulla destra l'oscilloscopio con cui sono misurate la tensione in ingresso $\mathrm{V_{in}}$
 %\footnote{
@@ -15,18 +21,21 @@ Il setup di queste misure è rappresentato schematicamente in Fig.~\ref{Setupsch
 %}, rappresentata in giallo, la tensione in uscita $\mathrm{V_{out}}$, in arancione, e le tensioni agli estremi della resistenza R5 in azzurro; infine, sulla sinistra della scheda di test, collegato al gate del mosfet, è presente un generatore di impulsi. 
 La durata dell'impulso da mandare al Gate del mosfet è stata scelta tale da mantenere fronte di salita e discesa indipendenti, in modo da osservare separatamente gli effetti dovuti all'uno e all'altro.
 %Infatti, in una situazione in cui il carico del regolatore è il chip le variazioni sarebbero di minor durata rispetto alla lunghezza dell'impulso utilizzato in queste misure.
-Ad ogni modo lo scopo di queste misure è quello di vedere gli effetti al passaggio da un certo consumo di corrente ad uno maggiore e viceversa ed un impulso di breve durata sovrapporrebbe questi due effetti, non permettendo di valutarli correttamente, in quanto i contributi sono opposti e, su tempi brevi, si cancellerebbero a vicenda.
-In queste misure l'attenzione sarà focalizzata su variazioni di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$ in ampiezza e sul tempo di recupero al variare di $\mathrm{I_{mosfet}}$ per una data $\mathrm{R_{load}}$.
+Inoltre, lo scopo delle misure è di vedere gli effetti del passaggio da un certo consumo di corrente ad uno maggiore (e viceversa) e l'utilizzo di un impulso di breve durata sovrapporrebbe i due effetti, non permettendo di valutarli correttamente, poiché, essendo opposti, su tempi brevi si cancellerebbero a vicenda.
+%Ad ogni modo lo scopo di queste misure è quello di vedere gli effetti al passaggio da un certo consumo di corrente ad uno maggiore e viceversa ed un impulso di breve durata sovrapporrebbe questi due effetti, non permettendo di valutarli correttamente, in quanto i contributi sono opposti e, su tempi brevi, si cancellerebbero a vicenda.
+In queste misure l'attenzione sarà focalizzata sulle variazioni in ampiezza di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$ e sul tempo di recupero di queste, in funzione di $\mathrm{I_{mosfet}}$ e con $\mathrm{R_{load}}$ fissata.
+%In queste misure l'attenzione sarà focalizzata su variazioni di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$ in ampiezza e sul tempo di recupero al variare di $\mathrm{I_{mosfet}}$ per una data $\mathrm{R_{load}}$.
 \begin{figure}[!htb]
 \centering
 \includegraphics[scale=.3]{Immagini/SetupScheme}
-\caption{Schema del setup per lo studio del comportamento dinamico dello ShuntLDO. In grigio sono riportati gli alimentatori e in verde è rappresentata la scheda di test su cui in azzurro sono evidenziati mosfet e carico resistivo, collegato al Gate del mosfet, sulla sinistra, vi è l'impulsatore. Infine, sulla destra è rappresentato l'oscilloscopio attraverso cui sono monitorate le tensioni di ingresso $\mathrm{V_{in}}$, di uscita $\mathrm{V_{out}}$ e quelle ai capi di R5.}
+\caption{Schema del setup per lo studio del comportamento dinamico dello ShuntLDO. In grigio sono riportati gli alimentatori e in verde è rappresentata la scheda di test su cui, in azzurro, sono evidenziati mosfet e carico resistivo. Collegato al Gate del mosfet, sulla sinistra, vi è l'impulsatore. Sulla destra è rappresentato l'oscilloscopio attraverso cui sono monitorate le tensioni di ingresso $\mathrm{V_{in}}$, di uscita $\mathrm{V_{out}}$ e quelle ai capi di R5.}
+%\caption{Schema del setup per lo studio del comportamento dinamico dello ShuntLDO. In grigio sono riportati gli alimentatori e in verde è rappresentata la scheda di test su cui in azzurro sono evidenziati mosfet e carico resistivo, collegato al Gate del mosfet, sulla sinistra, vi è l'impulsatore. Infine, sulla destra è rappresentato l'oscilloscopio attraverso cui sono monitorate le tensioni di ingresso $\mathrm{V_{in}}$, di uscita $\mathrm{V_{out}}$ e quelle ai capi di R5.}
 \label{Setupscheme}
 \end{figure}
 
-
-L'introduzione del carico $\mathrm{R_{load}}$ in parallelo alla resistenza connessa a $\mathrm{V_{out}}$ è possibile andando a modificare la configurazione della scheda di test.
-Dalle prime misure con l'oscilloscopio è possibile vedere che che l'utilizzo del mosfet come carico dinamico non è esente da fenomeni di alterazione dei segnali, ciò rende difficile una loro corretta interpretazione. 
+%L'introduzione del carico $\mathrm{R_{load}}$ in parallelo alla resistenza connessa a $\mathrm{V_{out}}$ è possibile andando a modificare la configurazione della scheda di test.
+Fin dalle prime misure con l'oscilloscopio è possibile notare che l'utilizzo del mosfet come carico dinamico non è esente da fenomeni di alterazione dei segnali, rendendo difficile una loro corretta interpretazione.
+%Dalle prime misure con l'oscilloscopio è possibile vedere che che l'utilizzo del mosfet come carico dinamico non è esente da fenomeni di alterazione dei segnali, ciò rende difficile una loro corretta interpretazione. 
 \begin{figure}
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -49,17 +58,19 @@ Dalle prime misure con l'oscilloscopio è possibile vedere che che l'utilizzo de
 \caption{Schermata catturata dall'oscilloscopio: in giallo è rappresentata la tensione in ingresso, in arancione quella in uscita e in verde e blu la tensione sui i terminali di R5, la cui differenza è riportata in  azzurro. Nella sottofigura~\ref{TransientTest:sfig3}, a lato della schermata dell'oscilloscopio, è riportato lo schematico della parte di circuito con mosfet e resistenza.}
 \label{TransientTest}
 \end{figure}
-
-Prendendo come riferimento la figura \ref{TransientTest}, si può notare un'asimmetria nelle variazioni di $\mathrm{V_{out}}$, in arancione in alto a destra.%, mentre in $\mathrm{V_{in}}$, in giallo in alto a sinistra, la risposta è simmetrica.
-Allo stesso modo nella sottofigura~\ref{TransientTest:sfig3} in azzurro, è riportata la differenza tra le tensioni misurate ai capi di R5, riportate in basso con colore blu e verde e in cui si vede un'asimmetria in risposta al fronte di salita e discesa dell'impulso applicato al Gate del mosfet. 
+Prendendo come riferimento la Fig.~\ref{TransientTest}, infatti, si può notare un'asimmetria nelle variazioni di $\mathrm{V_{out}}$, riportato in arancione nel grafico in alto a destra. %, mentre in $\mathrm{V_{in}}$, in giallo in alto a sinistra, la risposta è simmetrica.
+%Prendendo come riferimento la figura \ref{TransientTest}, si può notare un'asimmetria nelle variazioni di $\mathrm{V_{out}}$, in arancione in alto a destra.%, mentre in $\mathrm{V_{in}}$, in giallo in alto a sinistra, la risposta è simmetrica.
+Allo stesso modo nella sottofigura~\ref{TransientTest:sfig3} in azzurro, è riportata la differenza tra le tensioni misurate ai capi di R5 (in blu e verde nel grafico in basso) e in cui si vede un'asimmetria in risposta al fronte di salita e discesa dell'impulso applicato al Gate del mosfet.
+%Allo stesso modo nella sottofigura~\ref{TransientTest:sfig3} in azzurro, è riportata la differenza tra le tensioni misurate ai capi di R5, riportate in basso con colore blu e verde e in cui si vede un'asimmetria in risposta al fronte di salita e discesa dell'impulso applicato al Gate del mosfet. 
 Inoltre, sono visibili delle oscillazioni in corrispondenza dell'istante in cui il mosfet si spegne, sia sulle tensioni riferite a R5 sia sul $\mathrm{V_{out}}$.
 %Questo comportamento si riflette su $\mathrm{V_{out}}$ ed è quindi all'origine dell'asimmetria.
-Prima di procedere con misure dinamiche nelle varie combinazioni $\mathrm{I_{mosfet}}$--$\mathrm{R_{load}}$ si è cercato di capire l'origine delle asimmetria, in particolare se fosse collegata alla risposta del mosfet all'impulso.
+Prima di procedere con misure dinamiche nelle varie combinazioni $\mathrm{I_{mosfet}}$--$\mathrm{R_{load}}$ si è cercato di capire l'origine delle asimmetria, in particolare chiedendosi se dipende dalla risposta del mosfet all'impulso sul Gate.
+%Prima di procedere con misure dinamiche nelle varie combinazioni $\mathrm{I_{mosfet}}$--$\mathrm{R_{load}}$ si è cercato di capire l'origine delle asimmetria, in particolare se fosse collegata alla risposta del mosfet all'impulso.
 L'impulso utilizzato in questa prima fase ha:
 \begin{itemize}
-  \item frequenza di 50Hz;
+  \item frequenza di $50\Hz$;
   \item durata di 3 $\mu$s;
-  \item fronte di salita di 40 ns.
+  \item fronte di salita di $40 \ns$.
 \end{itemize}
 %In questa prima fase l'impulso utilizzato ha le seguenti caratteristiche: frequenza 50 Hz, durata 3 $\mu$s, durata del fronte di salita 40 ns.
 
@@ -89,7 +100,7 @@ Esaminando la documentazione del mosfet~\cite{MOSFET} presente sulla scheda di t
 %footnote{ZXMN20B28KTC http://www.mouser.com/ds/2/115/ZXMN20B28K-94822.pdf
 si può verificare che effettivamente il tempo di ``accensione'' è superiore a $40 \ns$ (\textit{Turn-on rise time} $76.9 \ns$) e, inoltre, sono presenti capacità in ingresso equivalenti a $358\pF$.
 La risposta dello ShuntLDO è quindi mascherata per segnali più veloci della risposta del mosfet, per questo motivo le misure successive sono state effettuate utilizzando un tempo di salita del segnale del generatore di impulsi di $200 \ns$.
-La figura \ref{RiseTime} mostra il miglioramento fra la configurazione con tempo di salita del generatore di $40 \ns$ e quella con $200 \ns$.
+La Fig.~\ref{RiseTime} mostra il miglioramento fra la configurazione con tempo di salita del generatore di $40 \ns$ e quella con $200 \ns$.
 In questo modo si verifica la risposta dello ShuntLDO cad una variazione di carico più lenta, ma meno affetta dal mosfet.
 %In figura \ref{RiseTime} è visibile come la situazione precedente, in cui l'impulso ha un tempo di salita di 40 ns, migliora visibilmente passando a 200 ns, in questo modo quello che viene simulato all'uscita dello ShuntLDO è un variazione di carico più lenta ma il cui comportamento è affetto in modo minore dalle caratteristiche del mosfet. 
 
@@ -107,8 +118,8 @@ Per ciascun valore di $\mathrm{R_{load}}$, dunque, è stata fatta variare la cor
 % Con corrente totale si intende la somma di quella assorbita dal mosfet e dalla resistenza di carico.
 Le misure eseguite prendono in considerazione anche situazioni in cui la variazione del consumo in corrente eccede l'intervallo fisico di operatività del chip. Misure in cui la variazione del carico è il doppio del valore statico hanno interesse nell'ottica di quello che può succedere al momento dell'accensione del ROC. %, le cui variazioni di consumo in regime di lavoro, di norma, non superano i 500 mA.(controllare) 
 Come detto in precedenza, gli impulsi utilizzati presentano una durata che consente di differenziare tra gli effetti dovuti al fronte di salita e quelli prodotti dal fronte di discesa. 
-Facendo riferimento alla figura \ref{VoutUnd}, si possono vedere, in valore assoluto,gli undershoot della tensione di uscita a cui è applicato il carico in funzione della corrente che scorre nel mosfet (sinistra) e della corrente totale (destra), dove questa è la somma di quella assorbita dal carico e quella del mosfet. 
-%I primi risultati riportano gli undershoot della tensione di uscita a cui è applicato il carico, riferendosi ai grafici in figura \ref{VoutUnd} sono riportati i valori assoluti di tali variazioni in funzione della corrente che scorre nel mosfet (sinistra) e della corrente totale (destra), la corrente totale è somma di quella assorbita dal carico e dal mosfet. 
+Facendo riferimento alla Fig.~\ref{VoutUnd}, si possono vedere, in valore assoluto,gli undershoot della tensione di uscita a cui è applicato il carico in funzione della corrente che scorre nel mosfet (sinistra) e della corrente totale (destra), dove questa è la somma di quella assorbita dal carico e quella del mosfet. 
+%I primi risultati riportano gli undershoot della tensione di uscita a cui è applicato il carico, riferendosi ai grafici in Fig.~\ref{VoutUnd} sono riportati i valori assoluti di tali variazioni in funzione della corrente che scorre nel mosfet (sinistra) e della corrente totale (destra), la corrente totale è somma di quella assorbita dal carico e dal mosfet. 
 \begin{figure}
 \centering
 \includegraphics[width=0.9\linewidth]{Immagini/VoutUnd}
@@ -125,11 +136,11 @@ In blu sono riportate le misure ottenute con un carico resistivo di $1 \Ohm$, in
 Come si può vedere dal grafico di destra, le tre curve seguono lo stesso andamento, dato che vi è una relazione fra la variazione di $\mathrm{V_{out}}$ e $\mathrm{I_{mosfet}}$, indipendente dal valore della resistenza.
 Inoltre, limitandosi ad un intervallo di variazioni di corrente verosimili per il ROC, si osservano variazioni relativamente piccole di $\mathrm{V_{out}}$.
 Ad esempio, con $\mathrm{I_{mosfet}= 0.4 \A}$, $\mathrm{\Delta V_{out} \simeq 20\mV}$.
-Lo stesso comportamento è visibile nei grafici di figura \ref{VoutOver}, dove è riportata l'entità delle variazioni di $\mathrm{V_{out}}$ a seguito dello spegnimento del mosfet, cioè l'effetto che si ha sul fronte di discesa dell'impulso. 
+Lo stesso comportamento è visibile nei grafici di Fig.~\ref{VoutOver}, dove è riportata l'entità delle variazioni di $\mathrm{V_{out}}$ a seguito dello spegnimento del mosfet, cioè l'effetto che si ha sul fronte di discesa dell'impulso. 
 %Nell'esaminare questi andamenti va ricordato che la corrente in ingresso al circuito è 1.5 A, quindi punti per i quali si ha una $\mathrm{I_{tot}}$ vicina o superiore a questo valore sono ottenuti in una situazione in cui lo ShuntLDO è impossibilitato a compiere il suo lavoro. 
 %Ricordiamo che la corrente che passa in $R_3$ è un millesimo di quella che scorre nel ramo in cui si hanno carico e shunt.
 
-Come per il $\mathrm{V_{out}}$ è stato misurato l'undershoot e l'overshoot della tensione in ingresso $\mathrm{V_{in}}$. I grafici degli undershoot sono riportati in figura \ref{VinUnd}, quelli riguardanti gli overshoot in figura \ref{VinOver}. 
+Come per il $\mathrm{V_{out}}$ è stato misurato l'undershoot e l'overshoot della tensione in ingresso $\mathrm{V_{in}}$. I grafici degli undershoot sono riportati in Fig.~\ref{VinUnd}, quelli riguardanti gli overshoot in Fig.~\ref{VinOver}. 
 
 \begin{figure}
 \centering
@@ -180,7 +191,7 @@ Si nota che le scale di tempo di recupero sono differenti, i.e. alcuni $\mu$s pe
 
 Dato che eventuali oscillazioni della tensione in ingresso causerebbero oscillazioni di tensione in tutta la catena di moduli, è importante che queste non si ripercuotano sul $\mathrm{V_{out}}$. 
 Per verificare questo aspetto si è misurato con l'oscilloscopio la tensione di uscita di uno ShuntLDO messo in serie ad un secondo a cui è applicato un carico variabile, tramite l'utilizzo del mosfet, come già visto nelle misure precedenti.
-In figura \ref{SLDOserie} sono affiancati uno schema del setup (sinistra) e la foto dei due ShuntLDO in serie (destra). 
+In Fig.~\ref{SLDOserie} sono affiancati uno schema del setup (sinistra) e la foto dei due ShuntLDO in serie (destra). 
 Il serie di due ShuntLDO, entrambi con un carico statico di $4 \Ohm$, è alimentato con una corrente in ingresso di $1.5 \A$ e sul secondo ShuntLDO è collegato l'impulsatore che regola l'assorbimento di corrente  da parte del mosfet. 
 Acquisendo con l'oscilloscopio la tensione di $\mathrm{V_{out}}$ di entrambi e il $\mathrm{V_{in}}$ del primo ShuntLDO della catena (quello con il solo carico statico) è stato possibile verificare come le fluttuazioni di tensione non influenzino la generazione della tensione di $\mathrm{V_{out}}$.
 \begin{figure}[h!]
