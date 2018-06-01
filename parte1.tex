@@ -39,7 +39,7 @@ Inoltre, le variazioni dei consumi sono molto veloci e gli alimentatori remoti, 
 Per queste ragioni un aspetto chiave dell'implementazione di uno schema di alimentazione seriale \`e che le fluttuazioni del carico, il ROC nel nostro caso, non siano visibili esternamente ma siano gestite localmente facendo s\`i che il carico effettivo visto dalla catena sia costante. Questo pu\`o essere ottenuto implementando, in un appropriato circuito di {\em shunt}, un cammino alternativo per la corrente in quel momento non utilizzata dal ROC, tale che $\mathrm{I}_\mathrm{TOT}\sim\mathrm{I}_\mathrm{ROC}+\mathrm{I}_\mathrm{shunt}\sim\mathrm{cost}$. Inoltre \`e necessario che, in prossimit\`a del ROC, venga effettuata l'opportuna regolazione PoL, che converte l'alimentazione in corrente fornita alla catena, e quindi a ciascuno dei suoi elementi, in una alimentazione in tensione stabile, fruibile dal ROC.
 \begin{figure}
 \centering
-\includegraphics[width=0.3\textwidth]{Immagini/zener2}
+\includegraphics[width=0.5\textwidth]{Immagini/zener2}
 \caption{Schema di principio di un circuito regolatore con shunt che utilizza un diodo Zener.}
 \label{zener}
 \end{figure}
@@ -91,7 +91,7 @@ La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno var
 La Fig.~\ref{SLDOprinciple} mostra graficamente il funzionamento dello ShuntLDO in cui la corrente totale circolante nella catena seriale si divide, in funzione del tempo, in quella indirizzata nello shunt e in quella richiesta dal carico, nelle sue componenti analogica e digitale; \`e esemplificata anche la situazione da evitare, ovvero la richiesta, per tempi prolungati, di una corrente maggiore rispetto a quella disponibile nella catena.
 \begin{figure}[!htbp]
 \centering
-\includegraphics[scale=.7]{Immagini/ShuntRegulatorPrinciple}
+\includegraphics[width=0.75\textwidth]{Immagini/ShuntRegulatorPrinciple}
 \caption{Andamento qualitativo della corrente assorbita da un ROC in funzione del tempo. Mentre la componente analogica \`e sostanzialmente costante, la componente digitale subisce variazioni, anche repentine. Sono da evitare le situazioni in cui il carico richieda, per lunghi periodi di tempo, una corrente in eccesso rispetto a quella circolante nella catena, rappresentata in giallo, mentre picchi veloci possono essere gestiti con opportuno filtraggio.}
 \label{SLDOprinciple}
 \end{figure}
@@ -101,7 +101,7 @@ La Fig.~\ref{SLDOprinciple} mostra graficamente il funzionamento dello ShuntLDO 
  
 \begin{figure}[!htbp]
 \centering
-\includegraphics[scale=.3]{Immagini/SLDO5A}
+\includegraphics[width=0.95\textwidth]{Immagini/SLDO5A}
 \caption{Circuito semplificato dello ShuntLDO 0.5 A.}
 \label{SLDO5A}
 \end{figure}
@@ -172,14 +172,14 @@ Il comportamento resistivo permette l'utilizzo di più ShuntLDO in parallelo fra
 
 Lo ShuntLDO pu\`o essere implementato direttamente sul ROC stesso e questo ne rappresenta uno degli innegabili vantaggi sia in termini di miniaturizzazione, sia in termini di prossimit\`a al carico reale della regolazione PoL. Come menzionato, gi\`a i ROC per Atlas IBL (FE-I3 e FE-I4) ospitavano due ShuntLDO~\cite{SerialPowering}, uno per la tensione analogica e uno per la tensione digitale. La collaborazione RD53 ha recentemente realizzato il ROC RD53A\cite{RD53A}, il primo prototipo del ROC per HL-LHC, destinato ad essere utilizzato per ampi studi di R\&D. Anche RD53A, che sar\`a descritto nel capitolo~\ref{cap:RD53A}, implementa due ShuntLDO destinati all'alimentazione analogica e all'alimentazione digitale. In condizioni normali questi ShuntLDO lavoreranno in parallelo condividendo la corrente in ingresso. La scelta dei rispettivi valori di $\mathrm{R_{eff}}$ definisce la suddivisione di corrente nei due domini. A differenza dei ROC della passata generazione, in cui il consumo di corrente della parte digitale era marginale rispetto alla parte analogica, in RD53A la componente analogica e quella digitale avranno consumi confrontabili. Per questo motivo i due ShuntLDO sono configurati in modo analogo.
 
-La figura~\ref{VVC} mostra l'andamento della tensione $\mathrm{V_{in}}$ in funzione della corrente totale $\mathrm{I_{in}}$ fornita al ROC assumendo la caratteristica ideale corrente-tensione sopra descritta. Sono, inoltre, evidenziati i valori operativi massimi e la tensione minima di lavoro.
+La Fig.~\ref{VVC} mostra l'andamento della tensione $\mathrm{V_{in}}$ in funzione della corrente totale $\mathrm{I_{in}}$ fornita al ROC assumendo la caratteristica ideale corrente-tensione sopra descritta. Sono, inoltre, evidenziati i valori operativi massimi e la tensione minima di lavoro.
 \begin{figure}[!htbp]
 \centering
-\includegraphics[scale=.3]{Immagini/VoltageVsCurrent}
+\includegraphics[width=0.75\textwidth]{Immagini/VoltageVsCurrent}
 \caption{Andamento della tensione in funzione della corrente per il ROC. Le zone tratteggiate sono oltre i valori operativi massimi (4.0 A per la corrente e 2.0 V per la tensione), la linea orizzontale a 1.4 V è la tensione minima di lavoro, la pendenza è la resistenza efficace. Combinazioni differenti di resistenza e offset consentono di spostare il punto di lavoro.}
 \label{VVC}
 \end{figure}
-In particolare vengono illustrati i criteri di scelta per i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$: da un lato \`e necessario avere una corrispondenza fra la massima corrente erogabile ($4.0\A$ per il parallelo dato che il singolo ShuntLDO tollera una corrente massima di $\sim2\A$) e la massima tensione ($2.0\V$), dall'altra si dovrà far s\`i che la corrente corrispondente alla tensione minima di lavoro ($1.4\V$) sia sufficiente per il funzionamento del ROC tenendo anche conto di un certo margine necessario per sopperire a eventuali fluttuazioni nei consumi. Nella figura sono visibili due possibili combinazioni $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ rappresentate come due diverse caratteristiche IV.
+In particolare vengono illustrati i criteri di scelta per i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$: da un lato \`e necessario avere una corrispondenza fra la massima corrente erogabile ($4.0\A$ per il parallelo dato che il singolo ShuntLDO tollera una corrente massima di $\sim2\A$) e la massima tensione ($2.0\V$), dall'altra si dovrà far s\`i che la corrente corrispondente alla tensione minima di lavoro ($1.4\V$) sia sufficiente per il funzionamento del ROC tenendo anche conto di un certo margine necessario per sopperire a eventuali fluttuazioni nei consumi. Sempre in Fig.~\ref{VVC}  sono visibili due possibili combinazioni $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ rappresentate come due diverse caratteristiche IV.
 
 % Una volta scelti i valori di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$, il consumo in potenza è completamente definito da:
 % %La scelta di $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ definisce il consumo in potenza:
@@ -204,7 +204,7 @@ In particolare vengono illustrati i criteri di scelta per i valori di $\mathrm{R
 
 \begin{figure}
 \centering
-\includegraphics[scale=.3]{Immagini/MultiChipModules}
+\includegraphics[width=0.75\textwidth]{Immagini/MultiChipModules}
 \caption{Schema di una catena seriale con due moduli da quattro ROC. Il ramo con $\mathrm{R_{eff}}$ e $\mathrm{V_{offset}}$ in colore rosso rappresentano un ROC malfunzionante, non pi\`u attraversato da corrente, come discusso nel testo.}
 \label{MCM}
 \end{figure}
@@ -337,7 +337,7 @@ Come primo studio abbiamo caratterizzato lo ShuntLDO utilizzando una alimentazio
 
 \begin{figure}
 \centering
-\includegraphics[scale=.5]{Immagini/provaSLDO5}
+\includegraphics[width=0.75\textwidth]{Immagini/provaSLDO5}
 \caption{$\mathrm{V_{in}}$ (blu), $\mathrm{V_{out}}$ (rosso) e $\mathrm{2\times V_{ref}}$ (giallo) in funzione della corrente di ingresso.}
 \label{provaSLDO5}
 \end{figure}
@@ -363,7 +363,7 @@ Dato che la parte a sinistra del grafico corrisponde alla situazione in cui il r
 Nella configurazione finale, nel ROC per l'esperimento la tensione $\mathrm{V_{ref}}$ viene generata tramite un regolatore di tensione {\em bandgap}\footnote{Una tensione di riferimento `bandgap' \`e ottenuta tramite una circuiteria che fornisce un voltaggio stabile indipendente dalla temperatura e dalle variazioni della tensione di alimentazione in un ampio margine operativo.} alimentato dalla stessa tensione $\mathrm{V_{in}}$ dello ShuntLDO. 
 Per scopi diagnostici, tramite la scheda di test, \`e possibile definire la tensione di riferimento $\mathrm{V_{ref}}$ sia tramite un circuito bandgap integrato sulla scheda che si appoggia a $\mathrm{V_{in}}$, sia in maniera indipendente dalle altre alimentazioni dello ShuntLDO fornendo VCC con una sorgente esterna. 
 %Sulla scheda di test è presente un bandgap la cui alimentazione può essere separata da quella dello ShuntLDO. Il compito di questo bandgap è quello di generare la tensione di %riferimento $\mathrm{V_{ref}}$, il cui valore può essere regolato con un potenziometro presente sulla scheda di test.
-In figura~\ref{SLDO5Serie} possiamo vedere il confronto fra il diverso comportamento di due ShuntLDO in serie nel caso in cui VCC, la tensione che alimenta il bandgap, sia fornita esternamente e quello in cui VCC sia cortocircuitata con l'ingresso di $\mathrm{I_{in}}$, trovandosi, dunque, a tensione $\mathrm{V_{in}}$.
+In Fig.~\ref{SLDO5Serie} possiamo vedere il confronto fra il diverso comportamento di due ShuntLDO in serie nel caso in cui VCC, la tensione che alimenta il bandgap, sia fornita esternamente e quello in cui VCC sia cortocircuitata con l'ingresso di $\mathrm{I_{in}}$, trovandosi, dunque, a tensione $\mathrm{V_{in}}$.
 In questo confronto va tenuto conto che il bandgap presente sulla scheda di test ha un regime di lavoro compreso tra $2\V$ e $18\V$. 
 \begin{figure}
 \centering
@@ -391,7 +391,7 @@ Nella scheda di test è presente un mosfet in parallelo all'uscita $\mathrm{V_{o
 
 \begin{figure}[!hbt]
 \centering
-\includegraphics[scale=.5]{Immagini/SLDO5singlepulse}
+\includegraphics[width=0.75\textwidth]{Immagini/SLDO5singlepulse}
 \caption{Entità degli undershoot in tensione in funzione della corrente assorbita dal mosfet.}
 \label{SLDO5singlepulse}
 \end{figure}
@@ -436,7 +436,7 @@ I valori misurati di $\mathrm{V_{out}}$, $\mathrm{V_{ref}}$ e $\mathrm{V_{in}}$ 
 
 \begin{figure}
 \centering
-\includegraphics[scale=.5]{Immagini/SLDO2Astaticbis}
+\includegraphics[width=0.9\textwidth]{Immagini/SLDO2Astaticbis}
 \caption{Grafico corrente-tensione che riporta gli andamenti di $\mathrm{V_{in}}$, in blu, $\mathrm{V_{ref}\cdot 2}$, in arancione e $\mathrm{V_{out}}$ in rosso.}
 \label{SLDO2Astatic}
 \end{figure}
@@ -474,7 +474,7 @@ Infine è interessante notare una leggera flessione del $\mathrm{V_{out}}$ all'a
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=.3]{Immagini/Ground}
+\includegraphics[width=0.75\textwidth]{Immagini/Ground}
 \caption{Porzione dello schema elettrico equivalente del prototipo ShuntLDO e della relativa scheda di test in cui \`e resa esplicita la presenza della resistenza spuria denominata $\mathrm{R_{gnd}}$, associata alle microsaldature, tra $\mathrm{GND_{PCB}}$ e $\mathrm{GND_{REG}}$.}
 \label{Ground}
 \end{figure}
@@ -539,7 +539,7 @@ Dal momento che $\mathrm{V_{in}}$ dello ShuntLDO deve trovarsi, per funzionare a
 Si può verificare questo fenomeno misurando la tensione di uscita del regolatore $\mathrm{V_{out}}$, per diversi valori di $\mathrm{V_{offset}}$, al variare di $\mathrm{I_{in}}$, come mostrato in Fig.~\ref{VoutVsVoffset}.
 \begin{figure}
 \centering
-\includegraphics[scale=.4]{Immagini/VoutVsVoffset}
+\includegraphics[width=0.9\textwidth]{Immagini/VoutVsVoffset}
 \caption{Andamento di $\mathrm{V_{out}}$ al variare della corrente in ingresso per differenti valori di $\mathrm{V_{offset}}$.}
 \label{VoutVsVoffset}
 \end{figure}
@@ -547,7 +547,7 @@ Si può verificare questo fenomeno misurando la tensione di uscita del regolator
 Dalla misura di $\mathrm{V_{in}}$ al variare della corrente in ingresso mostrata in Fig.~\ref{VinVsVoffset} è possibile ricavare, con un fit lineare nella regione di regolazione del circuito, l'intercetta con l'asse verticale, corrispondente all'offset effettivo dello ShuntLDO. 
 \begin{figure}
 \centering
-\includegraphics[scale=.4]{Immagini/VinVsVoffset}
+\includegraphics[width=0.9\textwidth]{Immagini/VinVsVoffset}
 \caption{Andamento di $\mathrm{V_{in}}$ al variare della corrente in ingresso per differenti valori di $\mathrm{V_{offset}}$.}
 \label{VinVsVoffset}
 \end{figure}
@@ -579,7 +579,7 @@ Offset effettivo & $0.35\V$ & $0.54\V$ & $0.76\V$\\
 %\]
 
 Come si può vedere il valore effettivo è sempre leggermente minore di quello impostato. Questo fenomeno è stato osservato anche nelle misure eseguite sullo ShuntLDO presente all'interno del ROC RD53A e che descriveremo più avanti e non sono ancora chiare le cause. Altra anomalia osservabile nel grafico \`e la differente pendenza delle varie curve che, per\`o, dovrebbe rimanere invariata. I dati mostrano altres\`i una correlazione tra pendenza e offset le cui cause sono anch'esse ignote al momento. %magari mettere referenza a Fig.~\ref{OffsetKaragounis}
-\FloatBarrier
+%\FloatBarrier
 
 %
 % -------------------------------------------------------------------------------------------------------
