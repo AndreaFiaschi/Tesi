@@ -433,16 +433,16 @@ Come abbiamo già detto, un'importante differenza fra la prima versione, con car
 La caratterizzazione con carico statico è stata ottenuta usando un carico resistivo da $1\Ohm$ su $\mathrm{V_{out}}$, per avere una corrente sul carico pi\`u elevata, con $\mathrm{V_{ref}} = 0.5 \V$ ottenuto tramite il bandgap alimentato esternamente.
 I valori misurati di $\mathrm{V_{out}}$, $\mathrm{V_{ref}}$ e $\mathrm{V_{in}}$ al variare della corrente di alimentazione in ingresso sono mostrati in~Fig.~\ref{SLDO2Astatic}.
 %La parte di caratterizzazione statica è di nuovo eseguita andando a variare la corrente di alimentazione in ingresso e al contempo misurando $\mathrm{V_{out}}$, $\mathrm{V_{ref}}$ e $\mathrm{V_{in}}$, figura \ref{SLDO2Astatic}.
-
 \begin{figure}
 \centering
 \includegraphics[scale=.5]{Immagini/SLDO2Astaticbis}
 \caption{Grafico corrente-tensione che riporta gli andamenti di $\mathrm{V_{in}}$, in blu, $\mathrm{V_{ref}\cdot 2}$, in arancione e $\mathrm{V_{out}}$ in rosso.}
 \label{SLDO2Astatic}
 \end{figure}
-
-Guardando gli andamenti si può notare come, al momento in cui il circuito si attiva, $\mathrm{V_{out}}$ cerca di raggiungere il valore di $1 \V$ (stabilito attraverso $\mathrm{V_{ref}}$), ma nel far questo è limitato da $\mathrm{V_{in}}$ di cui ne segue l'andamento tra $0.5 \A$ e $0.75 \A$ restando ad una distanza di $\sim 100 \mV$. 
-Questo è dovuto alle caratteristiche del regolatore LDO, il quale al massimo può generare tensioni di uscita tali che $\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 \V}$. 
+Dagli andamenti si può notare che, al momento in cui il circuito si attiva, $\mathrm{V_{out}}$ cerca di raggiungere il valore di $\mathrm{2\times V_{ref}}$, ma nel far questo è limitato da $\mathrm{V_{in}}$, di cui segue l'andamento tra $0.5 \A$ e $0.75 \A$, restando ad una distanza di $\sim 100 \mV$.
+Questo comportamento è legato alle caratteristiche del regolatore LDO, il quale al massimo può generare tensioni di uscita tali che $\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 \V}$.
+%Guardando gli andamenti si può notare come, al momento in cui il circuito si attiva, $\mathrm{V_{out}}$ cerca di raggiungere il valore di $1 \V$ (stabilito attraverso $\mathrm{V_{ref}}$), ma nel far questo è limitato da $\mathrm{V_{in}}$ di cui ne segue l'andamento tra $0.5 \A$ e $0.75 \A$ restando ad una distanza di $\sim 100 \mV$. 
+%Questo è dovuto alle caratteristiche del regolatore LDO, il quale al massimo può generare tensioni di uscita tali che $\mathrm{V_{dropout}=V_{in}-V_{out}\sim 0.1-0.2 \V}$. 
 Considerando gli andamenti asintotici delle tensioni nella zona con $\mathrm{I_{in}}>1\A$ si ottengono i seguenti valori:
 %Si può notare che $\mathrm{V_{ref}}$ non è costante nella parte con bassa $\mathrm{I_{in}}$: questo comportamento è dovuto al fatto che, nella fase in cui lo ShuntLDO \`e al di fuori della regione di regolazione, nel ramo di $\mathrm{V_{ref}}$ scorre un po' di corrente che causa una maggiore caduta di tensione del potenziometro e, quindi, una minore tensione all'ingresso di A4 (vd. Fig.~\ref{SLDO2A}).
 %Infatti, dato che $\mathrm{V_{ref}}$ si trova all'ingresso del comparatore A1, in una situazione di equilibrio viene confrontata con una tensione molto simile.
@@ -466,8 +466,10 @@ $\mathrm{V_{ref}}$ & $\mathrm{V_{out}}$ & $\mathrm{R_{eff}}$ & $\mathrm{V_{offse
 \hline
 \end{tabular}
 \end{center}
-\FloatBarrier
-Infine è interessante notare una leggera flessione del $\mathrm{V_{out}}$ all'aumentare  della corrente in ingresso, questo ha stimolato una riflessione su possibili effetti dovuti a differenze sul riferimento di massa tra regolatore e scheda di test.
+%Infine è interessante notare una leggera flessione del $\mathrm{V_{out}}$ all'aumentare  della corrente in ingresso, questo ha stimolato una riflessione su possibili effetti dovuti a differenze sul riferimento di massa tra regolatore e scheda di test.
+
+Infine è interessante notare una leggera flessione del $\mathrm{V_{out}}$ all'aumentare della corrente in ingresso.
+Questa osservazione ha stimolato la ricerca di effetti spuri dovuti all'allestimento di test, come ad esempio la differenze tra il ground del regolatore e quello della scheda di test, che saranno descritti qui di seguito.
 
 \subsection{Effetti spuri dell'allestimento di test}
 \label{EffettiSpuri}
@@ -480,13 +482,17 @@ Infine è interessante notare una leggera flessione del $\mathrm{V_{out}}$ all'a
 \end{figure}
 %Prima di procedere oltre è interessante fare alcune riflessioni.% per porre attenzione su un aspetto che influenza le misure. 
 A causa delle maggiori correnti in gioco nel prototipo di ShuntLDO da $2\A$ \`e necessario valutare ed, eventualmente, tenere conto degli effetti dovuti a resistenze spurie presenti nella scheda di test. Per la caratterizzazione del prototipo dello ShuntLDO, infatti, si registrano tensioni misurate su terminali appositamente approntati sulla scheda di test. 
-Questi terminali sono connessi a loro volta ai terminali del chip tramite microsaldature che introducono resistenze in serie le quali causano cadute di tensione non necessariamente trascurabili nel caso in cui le microsaldature siano attraversate da correnti elevate. L'entità di queste cadute di tensione dipende dalla resistenza delle microsaldature, dal numero delle stesse\footnote{Le microsaldature si presentano come tante resistenze in parallelo, la resistenza equivalente dipende sia dal valore di resistenza del singolo elemento sia dal numero di elementi in parallelo.} e dalla corrente, e quindi, nel caso di una caratterizzazione con carico statico, si presenta come una differenza di potenziale costante mentre, nel caso di carico dinamico, varia con la corrente. 
-Per esempio, come visibile nella Fig.~\ref{PCB2A}, \`e utile introdurre una differenziazione tra il nodo di riferimento locale $\mathrm{GND_{PCB}}$ sulla scheda e il nodo di riferimento locale sul regolatore $\mathrm{GND_{REG}}$. Si pu\`o osservare come la frazione della corrente in ingresso scorre attraverso il transistor di shunt (M4), confluisce nella nodo di riferimento del regolatore $\mathrm{GND_{REG}}$ e da qui attraverso le microsaldature nel nodo di riferimento della scheda di test ($\mathrm{GND_{PCB}}$). 
+Questi terminali sono connessi a loro volta ai terminali del chip tramite microsaldature (vedi Fig.~\ref{PCB2A} centrale) che introducono resistenze in serie, causa di cadute di tensione non trascurabili se attraversate da correnti elevate.
+L'entità di queste cadute di tensione dipende dalla resistenza delle microsaldature, dal numero delle stesse\footnote{Le microsaldature si presentano come tante resistenze in parallelo, la resistenza equivalente dipende sia dal valore di resistenza del singolo elemento sia dal numero di elementi in parallelo.} e dalla corrente, e quindi, nel caso di una caratterizzazione con carico statico, si presenta come una differenza di potenziale costante mentre varia con la corrente nel caso di carico dinamico.
+\`E utile introdurre una differenziazione tra il nodo di riferimento locale $\mathrm{GND_{PCB}}$ sulla scheda e il nodo di riferimento locale sul regolatore $\mathrm{GND_{REG}}$. Si pu\`o osservare come la frazione della corrente in ingresso scorre attraverso il transistor di shunt (M4), confluisce nella nodo di riferimento del regolatore $\mathrm{GND_{REG}}$ e da qui attraverso le microsaldature nel nodo di riferimento della scheda di test ($\mathrm{GND_{PCB}}$). 
+%Questi terminali sono connessi a loro volta ai terminali del chip tramite microsaldature che introducono resistenze in serie le quali causano cadute di tensione non necessariamente trascurabili nel caso in cui le microsaldature siano attraversate da correnti elevate. L'entità di queste cadute di tensione dipende dalla resistenza delle microsaldature, dal numero delle stesse\footnote{Le microsaldature si presentano come tante resistenze in parallelo, la resistenza equivalente dipende sia dal valore di resistenza del singolo elemento sia dal numero di elementi in parallelo.} e dalla corrente, e quindi, nel caso di una caratterizzazione con carico statico, si presenta come una differenza di potenziale costante mentre, nel caso di carico dinamico, varia con la corrente. 
+%Per esempio, come visibile nella Fig.~\ref{PCB2A}, \`e utile introdurre una differenziazione tra il nodo di riferimento locale $\mathrm{GND_{PCB}}$ sulla scheda e il nodo di riferimento locale sul regolatore $\mathrm{GND_{REG}}$. Si pu\`o osservare come la frazione della corrente in ingresso scorre attraverso il transistor di shunt (M4), confluisce nella nodo di riferimento del regolatore $\mathrm{GND_{REG}}$ e da qui attraverso le microsaldature nel nodo di riferimento della scheda di test ($\mathrm{GND_{PCB}}$). 
 La resistenza di questa linea, rappresentata in Fig.~\ref{Ground} col resistore $\mathrm{R_{gnd}}$, causa una differenza di potenziale tra $\mathrm{GND_{REG}}$ e $\mathrm{GND_{PCB}}$. Di conseguenza la tensione del nodo di regolazione sul chip $\mathrm{V_{out{\_}REG}}$ sar\`a sempre leggermente inferiore a $\mathrm{2\times V_{ref {\_} PCB}}$, dove $\mathrm{V_{ref {\_} PCB}}$ \`e il valore di riferimento fornito esternamente. In particolare, il valore di tensione $\mathrm{V_{out{\_}REG}}$ prodotto dallo ShuntLDO sarà:
 \begin{equation}
   \mathrm{V_{out{\_}REG} = 2 \cdot V_{ref{\_}REG} = 2 \cdot ( V_{ref {\_} PCB} - I_{shunt} \cdot R_{gnd} )}.
 \end{equation}
-Questo effetto è visibile in~Fig.~\ref{SLDO2Astatic} dove, all'aumentare della corrente $\mathrm{I_{in}}$, si ha una lieve flessione della tensione in uscita $\mathrm{V_{out{\_}PCB}}$ rispetto a $2 \times V_{ref{\_}PCB}$ dovuta al fenomeno sopra descritto salvo effetti all'ordine superiore. Facendo un fit lineare di $\mathrm{V_{out{\_}PCB}}$ nella zona di regolazione si ottiene una pendenza equivalente a una resistenza serie di $0.015\Ohm$ risultante non esclusivamente dalle microsaldature, ma anche al contributo aggiuntivo dovuto alla resistenza delle piste e dei connettori.
+Questo effetto è visibile in Fig.~\ref{SLDO2Astatic} dove, all'aumentare della corrente $\mathrm{I_{in}}$, si ha una lieve flessione della tensione in uscita $\mathrm{V_{out{\_}PCB}}$ rispetto a $\mathrm{2 \times V_{ref{\_}PCB}}$ dovuta al fenomeno sopra descritto salvo effetti all'ordine superiore. Facendo un fit lineare di $\mathrm{V_{out{\_}PCB}}$ nella zona di regolazione si ottiene una pendenza equivalente a una resistenza serie di $0.015\Ohm$ risultante non esclusivamente dalle microsaldature, ma anche al contributo aggiuntivo dovuto alla resistenza delle piste e dei connettori.
+%Questo effetto è visibile in~Fig.~\ref{SLDO2Astatic} dove, all'aumentare della corrente $\mathrm{I_{in}}$, si ha una lieve flessione della tensione in uscita $\mathrm{V_{out{\_}PCB}}$ rispetto a $2 \times V_{ref{\_}PCB}$ dovuta al fenomeno sopra descritto salvo effetti all'ordine superiore. Facendo un fit lineare di $\mathrm{V_{out{\_}PCB}}$ nella zona di regolazione si ottiene una pendenza equivalente a una resistenza serie di $0.015\Ohm$ risultante non esclusivamente dalle microsaldature, ma anche al contributo aggiuntivo dovuto alla resistenza delle piste e dei connettori.
 
 %%microsaldature in serie a 1 Ohm trascurabili
 
@@ -535,7 +541,8 @@ Pi\`u in generale, questa istruttiva misura suggerisce che grande cura dovr\`a e
 \label{Voffset}
 
 Torniamo adesso a considerare la possibilità, nella versione da 2 A, di regolare esternamente il $\mathrm{V_{offset}}$. 
-Dal momento che $\mathrm{V_{in}}$ dello ShuntLDO deve trovarsi, per funzionare al meglio, $200-300\mV$ al di sopra di $\mathrm{V_{out}=2\times V_{ref}}$, una tensione di offset alta consente di raggiungere la zona di regolazione prima a parit\`a di $\mathrm{I_{in}}$ contenendo cos\`i i consumi totali sempre che la corrente circolante sia sufficiente per le esigenze del carico da alimentare.
+Dal momento che $\mathrm{V_{in}}$ dello ShuntLDO deve trovarsi, per funzionare al meglio, $200-300\mV$ al di sopra di $\mathrm{V_{out}=2\times V_{ref}}$, una tensione di offset alta consente di raggiungere la zona di regolazione prima, a parit\`a di $\mathrm{I_{in}}$, contenendo cos\`i i consumi totali, sempre che la corrente circolante sia sufficiente per le esigenze del carico da alimentare.
+%Dal momento che $\mathrm{V_{in}}$ dello ShuntLDO deve trovarsi, per funzionare al meglio, $200-300\mV$ al di sopra di $\mathrm{V_{out}=2\times V_{ref}}$, una tensione di offset alta consente di raggiungere la zona di regolazione prima a parit\`a di $\mathrm{I_{in}}$ contenendo cos\`i i consumi totali sempre che la corrente circolante sia sufficiente per le esigenze del carico da alimentare.
 Si può verificare questo fenomeno misurando la tensione di uscita del regolatore $\mathrm{V_{out}}$, per diversi valori di $\mathrm{V_{offset}}$, al variare di $\mathrm{I_{in}}$, come mostrato in Fig.~\ref{VoutVsVoffset}.
 \begin{figure}
 \centering
@@ -544,7 +551,8 @@ Si può verificare questo fenomeno misurando la tensione di uscita del regolator
 \label{VoutVsVoffset}
 \end{figure}
 
-Dalla misura di $\mathrm{V_{in}}$ al variare della corrente in ingresso mostrata in Fig.~\ref{VinVsVoffset} è possibile ricavare, con un fit lineare nella regione di regolazione del circuito, l'intercetta con l'asse verticale, corrispondente all'offset effettivo dello ShuntLDO. 
+Dalla misura di $\mathrm{V_{in}}$ al variare della corrente in ingresso, mostrata in Fig.~\ref{VinVsVoffset}, è possibile ricavare, con un fit lineare nella regione di regolazione del circuito, l'intercetta con l'asse verticale, corrispondente all'offset effettivo dello ShuntLDO. 
+%Dalla misura di $\mathrm{V_{in}}$ al variare della corrente in ingresso mostrata in Fig.~\ref{VinVsVoffset} è possibile ricavare, con un fit lineare nella regione di regolazione del circuito, l'intercetta con l'asse verticale, corrispondente all'offset effettivo dello ShuntLDO. 
 \begin{figure}
 \centering
 \includegraphics[scale=.4]{Immagini/VinVsVoffset}
@@ -578,7 +586,8 @@ Offset effettivo & $0.35\V$ & $0.54\V$ & $0.76\V$\\
 %\end{array}
 %\]
 
-Come si può vedere il valore effettivo è sempre leggermente minore di quello impostato. Questo fenomeno è stato osservato anche nelle misure eseguite sullo ShuntLDO presente all'interno del ROC RD53A e che descriveremo più avanti e non sono ancora chiare le cause. Altra anomalia osservabile nel grafico \`e la differente pendenza delle varie curve che, per\`o, dovrebbe rimanere invariata. I dati mostrano altres\`i una correlazione tra pendenza e offset le cui cause sono anch'esse ignote al momento. %magari mettere referenza a Fig.~\ref{OffsetKaragounis}
+%Come si può vedere il valore effettivo è sempre leggermente minore di quello impostato. Questo fenomeno è stato osservato anche nelle misure eseguite sullo ShuntLDO presente all'interno del ROC RD53A e che descriveremo più avanti e non sono ancora chiare le cause. Altra anomalia osservabile nel grafico \`e la differente pendenza delle varie curve che, per\`o, dovrebbe rimanere invariata. I dati mostrano altres\`i una correlazione tra pendenza e offset le cui cause sono anch'esse ignote al momento. %magari mettere referenza a Fig.~\ref{OffsetKaragounis}
+Come si può vedere il valore effettivo è sempre leggermente minore di quello impostato. Questo fenomeno è stato osservato anche nelle misure eseguite sullo ShuntLDO presente all'interno del ROC RD53A e che descriveremo più avanti, ma non ne sono ancora chiare le cause. Altra anomalia osservabile nel grafico \`e la differente pendenza delle varie curve che dovrebbe rimanere invariata dato che il valore di $\mathrm{R_{eff}}$ è lo stesso per tutte le misure. I dati mostrano altres\`i una correlazione tra pendenza e offset le cui cause sono anch'esse ignote al momento. %magari mettere referenza a Fig.~\ref{OffsetKaragounis}
 \FloatBarrier
 
 %
