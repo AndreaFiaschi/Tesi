@@ -3,7 +3,7 @@
 
 Lo sviluppo di un sistema di alimentazione seriale e, in particolare, del circuito di alimentazione ShuntLDO, che gestisce localmente le tensioni su chip, è parte integrante del ROC che viene sviluppato nell'ambito della collaborazione RD53~\cite{RD53} e, in particolare, del primo ROC prototipo messo a punto dalla collaborazione, RD53A~\cite{RD53A}, che \`e diventato disponibile per la comunit\`a scientifica alla fine del 2017.
 
-Questo prototipo costituisce una pietra miliare molto importante per il progetto dei rivelatori a pixel per HL-LHC \`e sar\`a utilizzato non solo per validare le scelte strettamente relative al ROC stesso (resistenza alla radiazione e prestazioni rispetto ai requisiti di HL-LHC) ma anche per finalizzare lo sviluppo dei sensori e del resto dell'apparato.
+Questo prototipo costituisce una pietra miliare molto importante per il progetto dei rivelatori a pixel per HL-LHC \`e sar\`a utilizzato non solo per validare le scelte strettamente relative al ROC stesso (resistenza alla radiazione e prestazioni rispetto ai requisiti di HL-LHC), ma anche per finalizzare lo sviluppo dei sensori e del resto dell'apparato.
 %, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
 
 \section{Organizzazione del chip, alimentazione e Front End}
@@ -17,7 +17,7 @@ Questo prototipo costituisce una pietra miliare molto importante per il progetto
 \label{RD53ALayout}
 \end{figure}
 Facendo riferimento alla Fig.~\ref{RD53ALayout}, l'area del chip che sarà saldata col sensore tramite bump bonding, detta anche {\em pixel matrix}, è posta nella parte alta ed è organizzata in una matrice di $192\times400$ pixel di area $50\um \times 50 \um$ per un'area totale di $20\mm \times 9.6\mm$.
-Al di sopra di questa è presente una fila di piazzole a scopo diagnostico che saranno eliminata nella versione finale.
+Al di sopra di questa è presente una fila di piazzole a scopo diagnostico che sarà eliminata nella versione finale.
 
 \begin{figure}
 \centering
@@ -26,7 +26,7 @@ Al di sopra di questa è presente una fila di piazzole a scopo diagnostico che s
 \label{AnalogIsland}
 \end{figure} 
 La matrice di pixel è organizzata in \textit{cores} di 8$\times$8 pixel, all'interno di ciascuno dei quali i 64 circuiti di preamplificzione (front end) sono disposti in regioni di 4, chiamati {\em isole analogiche}, come mostrato in Fig.~\ref{AnalogIsland}. 
-Dato la miniaturizzazione necessaria, l'area del ROC deve essere completamente sfruttata e, infatti, le isole analogiche sono circondate da un `mare' di circuiteria digitale. 
+Dato la miniaturizzazione necessaria, l'area del ROC deve essere completamente sfruttata e, per questo, le isole analogiche sono circondate da un `mare' di circuiteria digitale. 
 
 
 \begin{figure}
@@ -35,10 +35,10 @@ Dato la miniaturizzazione necessaria, l'area del ROC deve essere completamente s
 \caption{Il piano funzionale di RD53A in cui, nella parte bassa, sono visibili, in particolare, le piazzole di potenza dello ShuntLDO.}
 \label{RD53AFunct}
 \end{figure}
-Come rappresentato nel piano funzionale in Fig.~\ref{RD53AFunct}, al di sotto delle pixel matrix \`e collocata la regione detta `periferia' che, oltre alle piazzole di microsaldatura per la connessione del ROC, ospita tutti gli altri blocchi funzionali del ROC: l'{\em Analog Chip Bottom} (ACB) ospita i blocchi analogici (DAC, ADC, sensori di temeperatura...); il {\em Digital Chip Bottom} (DCB) raggruppa i blocchi digitali per la gestione dell'Input/Output e della congigurazione. Tenendo conto della periferia la dimensione totale del chip \`e $20\mm \times 11.8\mm$.
+Come rappresentato nel piano funzionale in Fig.~\ref{RD53AFunct}, al di sotto delle pixel matrix \`e collocata la regione detta `periferia' che, oltre alle piazzole di microsaldatura per la connessione del ROC, ospita tutti gli altri blocchi funzionali: l'{\em Analog Chip Bottom} (ACB) ospita i blocchi analogici (DAC, ADC, sensori di temperatura...); il {\em Digital Chip Bottom} (DCB) raggruppa i blocchi digitali per la gestione dell'Input/Output e della configurazione. Tenendo conto della periferia la dimensione totale del chip \`e $20\mm \times 11.8\mm$.
 
-L'alimentazione di RD53A \`e dimensionata su un numero di pixel doppio rispetto a quelli effettivamente presenti, comparabile per\`o con quello che sar\`a il ROC finale di superficie circa doppia. RD53A sar\`a normalemnte alimentato tramite un'unica linea di alimentazione seriale che serve lo ShuntLDO che fornisce VDDD (la tensione di alimentazione della parte digitale) e lo ShuntLDO che fornisce VDDA (la tensione di alimentazione della parte analogica). Essendo un prototipo \`e anche possibile alimentare direttamente le linee VDDD e VDDA scavalcando la regolazione.
-Come accennato in precedenza, la parte dello ShuntLDO in cui potrebbe venire dissipata molta potenza (il mosfet di shunt M4), \`e distribuita in quattro `piazzole di potenza' per ciascun regolatore ospitate nella periferia (come visibile in~Fig.~\ref{RD53AFunct}). Solo una di queste contiene la comune parte comune di controllo dello ShuntLDO. Questo accorgimento permette di distribuire la dissipazione di calore dovuta allo shunt per una maggiore affidabilit\`a. Ciascuna piazzola \`e stata dimensionata in base al previsto consumo totale del chip finale, ovvero per una corrente massima di $500\mA$ per un totale, per tutto il ROC, tenendo conto sia della parte digitale che analogica, di $4.0\A$.
+L'alimentazione di RD53A \`e dimensionata su un numero di pixel doppio rispetto a quelli effettivamente presenti, comparabile per\`o con quello che sar\`a il ROC finale di superficie circa doppia. RD53A sar\`a normalmente alimentato tramite un'unica linea di alimentazione seriale che servirà lo ShuntLDO che fornisce VDDD (la tensione di alimentazione della parte digitale) e lo ShuntLDO che fornisce VDDA (la tensione di alimentazione della parte analogica). Essendo un prototipo \`e anche possibile alimentare direttamente le linee VDDD e VDDA scavalcando la regolazione.
+Come accennato in precedenza, la parte dello ShuntLDO in cui viene dissipata molta potenza (il mosfet di shunt M4), \`e distribuita in quattro `piazzole di potenza' per ciascun regolatore, ospitate nella periferia (come visibile in~Fig.~\ref{RD53AFunct}). Solo una di queste contiene la parte comune di controllo dello ShuntLDO. Questo accorgimento permette di distribuire la dissipazione di calore dovuta allo shunt conferendo una maggiore affidabilità. Ciascuna piazzola \`e stata dimensionata in base al previsto consumo totale del chip finale, ovvero per una corrente massima di $500\mA$ per un totale di $4.0\A$ per l'intero ROC, tenendo conto sia della parte digitale che analogica.
 
 %\section{Front End}
 
@@ -48,7 +48,7 @@ La pixel matrix \`e suddivisa equamente tra i FE Sincrono, Lineare e Differenzia
 %Questi tre circuiti sono stati progettati da tre differenti gruppi e tra di loro ci sono importanti differenze.
 
 Il FE Sincrono sfrutta un sistema di \textit{auto-zeroing} della linea di base, campionandola periodicamente, invece di aggiustare la soglia pixel per pixel. 
-Il FE Lineare, invece, utilizza un amplificatore lineare all'ingresso del comparatore, che confronta il segnale con la soglia impostata. 
+Il FE Lineare utilizza un amplificatore lineare all'ingresso del comparatore, che confronta il segnale con la soglia impostata. 
 Il FE Differenziale ha uno stadio di guadagno differenziale all'ingresso del discriminatore. % e sbilanciando i due canali implementa la soglia.
 
 In comune ai tre FE, invece, abbiamo la rete di polarizzazione per il sensore ed il circuito per iniettare segnali di calibrazione. Indipendentemente dall'implementazione ciascun canale di lettura \`e caratterizzato da una certa soglia, normalmente espressa in carica equivalente, oltre la quale il segnale di particella viene digitalizzato e letto. La soglia deve essere accuratamente calibrata: se \`e troppo alta si possono avere inefficienze; se troppo bassa una fluttuazione di rumore pu\`o essere confusa con un segnale di particella.
@@ -129,10 +129,10 @@ In comune ai tre FE, invece, abbiamo la rete di polarizzazione per il sensore ed
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/SLDO_RD53A}
-\caption{Regolatore LDO con Shunt (Shunt-LDO).}
+\caption{Regolatore LDO con Shunt (ShuntLDO) nella versione implementata in RD53A.}
 \label{SLDO_RD53A}
 \end{figure}
-In RD53A l'alimentazione è gestita da due ShuntLDO, uno per la parte analogica ed uno per quella digitale, in cui la parte di potenza \`e distribuita nella periferia come descritto nella Sezione~\ref{Organizzazionechip}. Rispetto al circuito ShuntLDO prototipo a $2\A$ descritto nella Sezione~\ref{ShuntLDO2A} presentato in precedenza, la tensione di offset $\mathrm{V_{ofs}}$ è generata con una circuiteria migliorata. Lo schema del circuito di ShuntLDO è riportato in Fig.~\ref{SLDO_RD53A}, mentre i pi\`u importanti parametri di funzionamento sono riportati in Tabella~\ref{tab:sldord53a}:
+In RD53A l'alimentazione è gestita da due ShuntLDO, uno per la parte analogica ed uno per quella digitale, in cui la parte di potenza \`e distribuita nella periferia come descritto in precedenza. Rispetto al circuito ShuntLDO prototipo a $2\A$ descritto nella Sezione~\ref{ShuntLDO2A}, la tensione di offset $\mathrm{V_{ofs}}$ è generata con una circuiteria migliorata. Lo schema del circuito di ShuntLDO è riportato in Fig.~\ref{SLDO_RD53A}, mentre i pi\`u importanti parametri di funzionamento sono riportati in Tabella~\ref{tab:sldord53a}:
 
 %\begin{center}
 \begin{table}
@@ -142,8 +142,8 @@ In RD53A l'alimentazione è gestita da due ShuntLDO, uno per la parte analogica 
 %\begin{tabular}{|c|c|c|c|c|l|}
 %\hline
 \textbf{Pin} & \textbf{Tipologia} & \textbf{Min} & \textbf{Tipico} & \textbf{Max} & \textbf{Descrizione} \\ \hline
-$\Vin$ & Tensione & 1.4 V & & 2.0 V & Alimentazione esterna (in tensione)\\ \hline
- & Corrente & 0 A & 0.5 A & 2.0 A & Alimentazione esterna (in corrente)\\    
+$\Vin$ & Tensione & 1.4 V & & 2.0 V & Alimentazione esterna (in tensione)\\
+ & Corrente & 0 A & 0.5 A & 2.0 A & Alimentazione esterna (in corrente)\\ \hline 
 $\mathrm{V_{SHUNT}}$ & Tensione & 1.4 V & & 2.0 V & Alimentazione per il circuito di shunt; a $\mathrm{\Vin}$ per operare con lo shunt, sconnesso in caso di alimentazione diretta\\ \hline
 GND & Ground &  & &  & Riferimento locale e uscita della corrente di shunt\\ \hline
 VDD & Tensione & 1.0 V & 1.2 V & 1.32 V & Tensione di uscita $\VDD$ del regolatore\\ \hline
@@ -196,7 +196,7 @@ Un esempio è quello di figura \ref{bandgap_trimming}, in cui sono riportati, pe
 
 \section{La Single Chip Card, scheda di test per RD53A}
 
-Analogamente a quanto visto per gli ShuntLDO, che vengono collaudati usando una scheda di test, anche per il chip RD53A è necessaria una scheda di test detta \textit{Single Chip Card} (SCC) nella versione che ospita un solo ROC visibile in~Fig.~\ref{fig:RD53onSCC}.
+Analogamente a quanto visto per gli ShuntLDO, che vengono collaudati usando una scheda di test, anche per il chip RD53A è necessaria una scheda di test detta \textit{Single Chip Card} (SCC) nella versione che ospita un solo ROC, visibile in~Fig.~\ref{fig:RD53onSCC}.
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.4\textwidth]{Immagini/RD53onSCC.jpg}
@@ -204,29 +204,29 @@ Analogamente a quanto visto per gli ShuntLDO, che vengono collaudati usando una 
 \label{fig:RD53onSCC}
 \end{figure}
  Il chip è fissato al centro di questa scheda e, attraverso microsaldature, è connesso ai vari elementi della scheda (terminali di monitoraggio, connettori di alimentazione, connettori con standard DisplayPort per la trasmissione/ricezione di dati, ponticelli/jumper di configurazione, ecc...). 
-Il chip viene montato in un apposito spazio ai cui bordi arrivano le varie piste da connettere e sotto il quale un generoso strato metallico connesso tramite molti `via' al lato opposto della scheda assicura lo scambio termico consentendo, se necessario, l'applicazione di un sistema refrigerante o di un dissipatore sulla parte posteriore della SCC. 
-Nel momento in cui l'alimentazione del chip viene fornita dai due ShuntLDO, infatti, la corrente non utilizzata viene dissipata sui due shunt che si scaldano rendendo quindi raccomandabile un minimo di raffreddamento per scongiurare la rottura del chip.
+Il chip viene montato in un apposito spazio ai cui bordi arrivano le varie piste da connettere e sotto il quale un generoso strato metallico collegato tramite molti `via' al lato opposto della scheda assicura lo scambio termico consentendo, se necessario, l'applicazione di un sistema refrigerante o di un dissipatore sulla parte posteriore della SCC. 
+Nel momento in cui l'alimentazione del chip viene fornita dai due ShuntLDO, infatti, la corrente non utilizzata viene dissipata sui due shunt che si scaldano rendendo quindi raccomandabile un minimo di raffreddamento per scongiurare il danneggiamento del chip.
 %La presenza di un raffreddamento è necessaria nel momento in cui l'alimentazione è data utilizzando i due ShuntLDO, infatti, la corrente non necessaria al chip viene dissipata sui due shunt che diventano punti molto caldi. 
 %Al fine di evitare danneggiamenti del chip, e dell'eventuale sensore collegato, questo va raffreddato utilizzando dissipatori di calore. 
 
 Dal momento che RD53A è un prototipo, si è lasciata la possibilità di configurare l'alimentazione esternamente, scegliendo tra tre diverse configurazioni.
-Inoltre è possibile mantenere separate, a livello di alimentazione, la parte digitale e quella analogica quando, nel chip finale, si prevede che gli ShuntLDO della parte digitale e analogica saranno in parallelo. Le possibili configurazioni di alimentazione sono sotto elencate e in Fig.~\ref{SLDOmodes} sono riportati gli schemi di configurazione della SCC ad esse relativi.
+Inoltre, è possibile mantenere separate, a livello di alimentazione, la parte digitale e quella analogica, che nel chip finale si prevede essere in parallelo. Le possibili configurazioni di alimentazione sono sotto elencate e in Fig.~\ref{SLDOmodes} sono riportati gli schemi di configurazione della SCC ad esse relativi.
 
 \begin{description}
 \item[Alimentazione con ShuntLDO] In questo caso il generatore utilizzato sarà in corrente. Per operare in configurazione ShuntLDO è necessario l'utilizzo di un sistema di raffreddamento per il chip che, in normali condizioni di lavoro, può essere un semplice dissipatore passivo. Nella misura delle varie tensioni, però, l'effetto di deriva termica non è trascurabile e, quindi, per le future misure, \`e in fase di preparazione un sistema di raffreddamento attivo che permetta di controllare le temperature.
 
-\item[Alimentazione senza Shunt, con solo LDO] Questa configurazione necessita di una alimentazione in tensione e sarà il generatore esterno a dover fornire più o meno corrente in relazione ai consumi del chip. L'utilizzo del solo regolatore permette di avere un consumo ottimizzato in termini di potenza e, dunque, il chip pu\`o essere operato senza il bisogno di un sistema di raffreddamento.
+\item[Alimentazione senza Shunt, con solo LDO] Questa configurazione necessita di una alimentazione in tensione e sarà il generatore esterno a dover fornire più o meno corrente in relazione ai consumi del chip. L'utilizzo del solo regolatore permette di avere un consumo ottimizzato in termini di potenza e, dunque, il chip pu\`o essere utilizzato senza il bisogno di un sistema di raffreddamento.
 
 \item[Alimentazione diretta] Lo ShuntLDO viene completamente escluso ed il chip è alimentato direttamente da un generatore di tensione esterno. L'alimentazione diretta deve essere utilizzata con particolare attenzione per evitare danneggiamenti del ROC. La presenza del regolatore LDO, infatti, anche privo di shunt, assicura che sbalzi di tensione all'ingresso dell'alimentazione non siano trasmessi al chip. Il regolatore, inoltre, tollera tensioni fino a 2 V, mentre il chip già sopra $\sim 1.3\V$ rischia di danneggiarsi. L'esclusione di questa sicurezza con la scelta di utilizzare un'alimentazione diretta è, perciò, sconsigliata. 
 \end{description}
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.25\textwidth]{Immagini/SLDOmode}
+\includegraphics[width=0.30\textwidth]{Immagini/SLDOmode}
 \hfill
-\includegraphics[width=0.25\textwidth]{Immagini/LDOmodeDefault}
+\includegraphics[width=0.30\textwidth]{Immagini/LDOmodeDefault}
 \hfill
-\includegraphics[width=0.25\textwidth]{Immagini/DirectPowering}
+\includegraphics[width=0.30\textwidth]{Immagini/DirectPowering}
 \caption{Disposizione dei jumper per le varie configurazioni di alimentazione dell'RD53A. Sinistra: ShuntLDO. Centro: LDO senza la parte di shunt. Destra: alimentazione diretta. In tutti e tre i casi la stessa configurazione \`e usata per la parte analogica e la parte digitale.}
 \label{SLDOmodes}
 \end{figure}
@@ -488,8 +488,9 @@ $\mathrm{V_{+A5}}$ & $0.5\V$\\
 \end{center}
 
 In tabella~\ref{table:results} sono riportati i risultati di questa analisi. Riguardo alla descrizione della configurazione è specificato se i due regolatori sono alimentati in parallelo o indipendentemente, se la corrente è stata fatta variare in modo crescente o decrescente e se le tensioni di riferimento $\mathrm{V_{+A5}}$, $\mathrm{V_{refA}}$ e $\mathrm{V_{refB}}$ sono generate internamente o esternamente al ROC.
-\begin{center}
+
 \begin{table}
+\begin{center}
 \begin{tabular}{l|c|c|c|c|c|c|c|c}
 Regolatore & Alim. & Rampa & \multicolumn{2}{c|}{$\mathrm{V_{ref}}$} & \multicolumn{2}{c|}{$\mathrm{V_{+A5}}$} & $\mathrm{R_{eff}}$& $\mathrm{V_{ofs}}$ \\
 Regolatore & Alim. & Rampa & \multicolumn{2}{c|}{[V]}               & \multicolumn{2}{c|}{[V]}                & [$\Omega$]       & [V]               \\ \hline
@@ -510,8 +511,9 @@ Digitale  &  &  & Int. & - & Int. & - & 0.74  & 0.86 \\
 \end{tabular}
 \caption{Valori di $\mathrm{V_{ofs}}$ e $\mathrm{R_{eff}}$ ricavati da un fit alla caratteristica $\mathrm{V_{IN}}$ vs. $\mathrm{I_{IN}}$ nella regione di regolazione dei i due ShuntLDO a seconda della configurazione.}
 \label{table:results}
-\end{table}
 \end{center}
+\end{table}
+
 
 I risultati sono stati ottenuti mediando pi\`u caratteristiche tensione-corrente effettuate nella stessa configurazione. I valori di tensione misurati per una data $\mathrm{V_{IN}}$ sono molto stabili all'interno di ciascun gruppo (variazioni assolute inferiori a $3\mV$, tipicamente di $\sim 1\mV$), mentre i valori estratti di $\mathrm{R_{eff}}$ e di $\mathrm{V_{ofs}}$ variano fra una configurazione e l'altra.
 %La prima cosa che si può notare è che i valori variano da una configurazione all'altra, mentre mantenendo per una stessa configurazione rimangono pressochè uguali, infatti i risultati sono stati ottenuti mediando su più misure.
@@ -687,7 +689,7 @@ La distribuzione delle soglie, con sovrapposto il fit di una gaussiana, e la map
 \centering
 \includegraphics[width=0.4\textwidth]{Immagini/Threshold}
 \hfill
-\includegraphics[width=0.55\textwidth]{Immagini/NoiseMap}
+\includegraphics[width=0.58\textwidth]{Immagini/NoiseMap}
 \caption{Distribuzione delle soglie ottenute dalle S-curves (sinistra) e mappa del livello di rumore pixel per pixel per il FE lineare (destra).}
 \label{Threshold}
 \label{NoiseMap}
@@ -764,14 +766,13 @@ Grazie alle procedure sopra descritte, anche in assenza di un sensore connesso a
 %Il test restituisce, oltre alle distribuzioni, anche le mappe di soglie e rumore utili per verificare l'omogeneità della risposta e la presenza di zone più rumorose o a rumore nullo, sintomatiche di problemi.
 %La soglia è il livello minimo a cui l'elettronica risponde, se non ci fosse rumore le S-curves sarebbero gradini, nella realtà a causa del rumore che si somma al segnale questi gradini ideali diventano curve, meno assomiglia ad un gradino maggiore è il rumore.
 
-
-Come detto in precedenza l'utilizzo degli ShuntLDO dovrebbe evitare il propagarsi del rumore dalla parte digitale a quella analogica ed evitare che disturbi della linea vengano visti dal carico. 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Immagini/chipserial}
+\includegraphics[width=0.70\textwidth]{Immagini/chipserial}
 \caption{Fotografia del setup, i due chip posti sulla Single Chip Card sono al centro e ognuno di essi è collegato a una FPGA che gestisce la comunicazione tra RD53A e il computer.}
 \label{chipserial}
 \end{figure}
+Come detto in precedenza l'utilizzo degli ShuntLDO dovrebbe evitare il propagarsi del rumore dalla parte digitale a quella analogica ed evitare che disturbi della linea vengano visti dal carico. 
 Al fine di verificare eventuali correlazioni tra l'entit\`a del rumore e l'utilizzo dell'alimentazione seriale, si sono messi a confronto i risultati di test eseguiti con un singolo ROC alimentato sulla catena con i risultati dei medesimi test su una coppia di ROC operati in in configurazione di alimentazione seriale o parallela. Si \`e usato il banco di misura visibile in Fig.~\ref{chipserial}. Tutte le misure sono state eseguite utilizzando con lo ShuntLDO utilizzato per l'alimentazione.
 
 %
@@ -780,11 +781,11 @@ Al fine di verificare eventuali correlazioni tra l'entit\`a del rumore e l'utili
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=0.32\textwidth]{Immagini/NoiseSingle}
+\includegraphics[width=0.49\textwidth]{Immagini/NoiseSingle}
 \hfill
-\includegraphics[width=0.32\textwidth]{Immagini/NoiseSerial}
-\hfill
-\includegraphics[width=0.32\textwidth]{Immagini/NoiseParallel}
+\includegraphics[width=0.49\textwidth]{Immagini/NoiseSerial}
+
+\includegraphics[width=0.50\textwidth]{Immagini/NoiseParallel}
 \caption{Distribuzioni di rumore di un ROC ottenute attraverso il test di \textbf{scan$\_$threshold} in varie configurazioni: un singolo ROC alimentato con ShuntLDO; ROC alimentato in una serie di due con scansioni effettuate su entrambi in contemporanea; ROC alimentato in parallelo a un secondo. Nelle ultime due configurazioni le scansioni sono effettuate su entrambi in contemporanea. Il rumore medio estratto dal fit alle distribuzioni risulta pari a 99e$^-$, 95e$^-$ e 94e$^-$ per le tre configurazioni, rispettivamente.}
 \label{noisesingle}
 \label{noiseserial}
