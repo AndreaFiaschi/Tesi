@@ -646,13 +646,14 @@ Occorre osservare che si \`e scelta una situazione limite per lo studio del comp
 
 \section{Prove con il sistema di acquisizione dati di RD53A}
 
-Oltre alla caratterizzazione dello ShuntLDO come elemento circuitale a se stante \`e ovviamente molto importante valutare l'interazione del sistema di alimentazione con le prestazioni del ROC. \`E di fondamentale importanza verificare, infatti, che le linee di alimentazione non introducano rumore indesiderato negli ambiti in cui il ROC tratta segnali di piccola entit\`a e quindi, in particolare, negli stadi di front end (dove il segnale di particella viene amplificato) e, in presenza del sensore, nella maglia in cui il segnale di particella stesso viene generato. Per una ragione analoga la parte digitale e la parte analogica del ROC sono mantenute il pi\`u possibile isolate e sono anche alimentate separatamente. La parte analogica infatti, ben più sensibile, deve essere protetta dal potenziale rumore indotto dall'attivit\`a della parte digitale. Questo sforzo sarebbe vanificato se fosse l'alimentazione stessa a introdurre rumore.
+Oltre alla caratterizzazione dello ShuntLDO come elemento circuitale a se stante \`e ovviamente molto importante valutare l'interazione del sistema di alimentazione con le prestazioni del ROC. \`E di fondamentale importanza verificare che le linee di alimentazione non introducano rumore indesiderato negli ambiti in cui il ROC tratta segnali di piccola entit\`a e quindi, in particolare, negli stadi di front end (dove il segnale di particella viene amplificato) e, in presenza del sensore, nella maglia in cui il segnale di particella stesso viene generato. 
+Per una ragione analoga la parte digitale e la parte analogica del ROC sono mantenute il pi\`u possibile isolate e sono anche alimentate separatamente. La parte analogica infatti, ben più sensibile, deve essere protetta dal potenziale rumore indotto dall'attivit\`a della parte digitale. Questo sforzo sarebbe vanificato se fosse l'alimentazione stessa a introdurre rumore.
 
-Questo tipo di verifica richiede l'uso di un sistema completo di acquisizione dati per RD53A, in grado di configurare e pilotare il ROC, effettuare le principali procedure di calibrazione e, in ultima analisi, misurare il rumore canale per canale. Questa sezione discute alcuni test preliminari effettuati con un sistema di DAQ. Questi test saranno largamente estesi nel prossimo futuro per una approfondita caratterizzazione.
+Questo tipo di verifica richiede l'uso di un sistema completo di acquisizione dati per RD53A in grado di configurare e pilotare il ROC, effettuare le principali procedure di calibrazione e, in ultima analisi, misurare il rumore canale per canale. Questa sezione discute alcuni test preliminari effettuati con un sistema di DAQ. Questi test saranno largamente estesi nel prossimo futuro per una approfondita caratterizzazione.
 
 Due sono i sistemi di acquisizione dati per RD53A attualmente in sviluppo: Yarr~\cite{YARR} (\textit{Yet Another Rapid Readout}), sviluppato dal Lawrence Berkeley National Laboratory, e BDAQ~\cite{BDAQ}, sviluppato dall'Università di Bonn. Entrambi si basano su FPGA XILINX~\cite{xilinx} per comunicare con il chip. 
 %Attraverso questi sistemi di acquisizione, sul cui sviluppo e le particolari caratteristiche non ci soffermeremo, non essendo questo il principale obbiettivo di questo lavoro di tesi, è possibile al momento vari test. 
-Gli studi effettuati nell'ambito di questo lavoro di tesi si basano sul sistema di acquisizione BDAQ che, pur essendo tutt'ora in fase di sviluppo, supporta, tra gli altri, le seguenti procedure di base:
+Gli studi effettuati nell'ambito di questo lavoro di tesi si basano sul sistema di acquisizione BDAQ che, pur essendo tutt'ora in fase di sviluppo, supporta, tra le altre, le seguenti procedure di base:
 \begin{description}
 
 \item[scan$\_$digital] La scansione digitale consiste nella `iniezione' nei canali abilitati, a valle degli stadi di front end e di conversione analogico-digitale, di un segnale digitale per verificare la funzionalità della parte digitale del ROC. L'operazione \`e ripetuta un certo numero di volte e si misura l'efficienza con cui ciascun canale registra il segnale iniettato. Per un canale funzionante correttamente questa efficienza \`e 1.%This basic scan injects a digital pulse into enabled pixels to test the digital part of the chip.
@@ -666,8 +667,9 @@ Gli studi effettuati nell'ambito di questo lavoro di tesi si basano sul sistema 
 
 \item[scan$\_$analog] La scansione analogica \`e simile alla precedente ma dedicata alla parte analogica: un impulso che emula il segnale di particella corrispondente ad una quantit\`a di carica raccolta configurabile viene iniettato nei canali abilitati all'ingresso dello stadio di amplificazione in modo da verificare il funzionamento di tutta la catena di lettura ma, in particolare, dei front end analogici. Anche in questa scansione l'operazione \`e ripetuta un certo numero di volte e si misura l'efficienza con cui ciascun canale registra il segnale iniettato. Per un canale funzionante correttamente, se il segnale iniettato \`e sufficientemente maggiore della soglia, questa efficienza \`e 1. Un esempio di scansione analogica (limitato alla sola regione del ROC servita dal front end lineare) è mostrato in Fig.~\ref{ScanAnalogLinear}. %This basic scan injects a specified charge into enabled pixels to test the analog front-end. 
 
-\item[scan$\_$threshold] La scansione di soglia \`e dedicata alla misura della soglia effettiva e del rumore di ciascun canale abilitato. Queste quantit\`a si derivano misurando l'efficienza del canale in funzione della carica del segnale di calibrazione. Per segnali di calibrazione vicini al valore di soglia, il superamento o meno di questa dipende dal rumore che, per ciascuna iniezione, si somma al segnale di calibrazione. La curva di efficienza in funzione della carica del segnale di calibrazione, quindi, invece di essere una funzione a gradino, assume il caratteristico profilo a `S' ({\em S-curve}) dal cui fit \`e possibile ottenere il valore di soglia e di rumore del canale.
-Infatti a S-curve è descritta dalla funzione:
+\item[scan$\_$threshold] La scansione di soglia \`e dedicata alla misura della soglia effettiva e del rumore di ciascun canale abilitato. Queste quantità si derivano misurando l'efficienza del canale in funzione della carica del segnale di calibrazione. Per segnali di calibrazione vicini al valore di soglia, il superamento o meno di questa dipende dal rumore che, per ciascuna iniezione, si somma al segnale di calibrazione. 
+Per questo motivo la curva di efficienza in funzione della carica del segnale di calibrazione, invece di essere una funzione a gradino, assume il caratteristico profilo a `S' ({\em S-curve}) dal cui fit \`e possibile ottenere il valore di soglia e di rumore del canale.
+Infatti la S-curve è descritta dalla funzione:
 \begin{equation}
   \mathrm{S_{curve} = \frac{1}{2} \left( 1 + \erf \left( \frac{q-\mu}{\sqrt{2}\sigma} \right) \right)},
 \end{equation}
@@ -677,14 +679,14 @@ dove q \`e il segnale di calibrazione, $\mu$ la soglia e $\sigma$ il rumore espr
 \end{equation}
 I valori di $\mu$ e $\sigma$ sono ricavati con il metodo descritto in~\cite{ERF}.
 
-La sovrapposizione delle S-curve di ogni canale produce un grafico come quello riportato in Fig.~\ref{Scurves} dove l'asse $z$ (espressa in colore) rappresenta il numero di canali che, per un valore $\mathrm{\Delta VCAL}$ (che \`e una quantit\`a proporzionale al segnale di calibrazione tale per cui ad una unit\`a di $\mathrm{VCAL}$ corrisponde una carica di 10e$^-$), si sono accesi una certa frazione percentuale di volte ({\em occupancy}).
+La sovrapposizione delle S-curve di ogni canale produce un grafico come quello riportato in Fig.~\ref{Scurves} dove l'asse $z$ (espressa in colore) rappresenta il numero di canali che si sono accesi una certa frazione percentuale di volte ({\em occupancy}), per un dato valore di $\mathrm{\Delta VCAL}$ (che \`e una quantit\`a proporzionale al segnale di calibrazione tale per cui ad una unit\`a di $\mathrm{VCAL}$ corrisponde una carica di 10e$^-$).
 \begin{figure}
 \centering
 \includegraphics[width=0.9\textwidth]{Immagini/Scurves}
 \caption{Risultato del test \textbf{scan$\_$threshold}: l'asse $z$ (espressa in colore) rappresenta il numero di canali che, per un valore $\mathrm{\Delta Vcal}$ (proporzionale al segnale di calibrazione), si sono accesi una certa frazione percentuale di volte ({\em occupancy}).}
 \label{Scurves}
 \end{figure}
-La distribuzione delle soglie, con sovrapposto il fit di una gaussiana, e la mappa del rumore dei canali ricavate dalle S-curve sono visibile in Fig.~\ref{Threshold}. Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto, al momento, questo \`e l'unico supportato da una versione sufficientemente avanzata e stabile del software.
+La distribuzione delle soglie, con sovrapposto il fit di una gaussiana, e la mappa del rumore dei canali ricavate dalle S-curve sono visibile in Fig.~\ref{Threshold}. Le misure riportate fanno riferimento solo al \textit{front end} lineare, in quanto, al momento del test, questo era l'unico supportato da una versione sufficientemente avanzata e stabile del software.
 \begin{figure}
 \centering
 \includegraphics[width=0.4\textwidth]{Immagini/Threshold}
@@ -773,7 +775,7 @@ Grazie alle procedure sopra descritte, anche in assenza di un sensore connesso a
 \label{chipserial}
 \end{figure}
 Come detto in precedenza l'utilizzo degli ShuntLDO dovrebbe evitare il propagarsi del rumore dalla parte digitale a quella analogica ed evitare che disturbi della linea vengano visti dal carico. 
-Al fine di verificare eventuali correlazioni tra l'entit\`a del rumore e l'utilizzo dell'alimentazione seriale, si sono messi a confronto i risultati di test eseguiti con un singolo ROC alimentato sulla catena con i risultati dei medesimi test su una coppia di ROC operati in in configurazione di alimentazione seriale o parallela. Si \`e usato il banco di misura visibile in Fig.~\ref{chipserial}. Tutte le misure sono state eseguite utilizzando con lo ShuntLDO utilizzato per l'alimentazione.
+Al fine di verificare eventuali correlazioni tra l'entit\`a del rumore e l'utilizzo dell'alimentazione seriale, si sono messi a confronto i risultati di test eseguiti prima, alimentando un singolo ROC sulla catena, e poi i risultati dei medesimi test su una coppia di ROC operati in in configurazione di alimentazione seriale o parallela. Si \`e usato il banco di misura visibile in Fig.~\ref{chipserial}. Tutte le misure sono state eseguite alimentando il ROC in configurazione  ShuntLDO.
 
 %
 % --------------------------------- QUI
