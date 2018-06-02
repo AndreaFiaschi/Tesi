@@ -83,7 +83,7 @@ In assenza della parte di shunt ci sarebbe, quindi, un aumento di $\mathrm{I_{re
 La corrente che scorre in M1 è dunque tenuta costante anche quando si hanno variazioni dinamiche del carico.
 \begin{figure}[!htbp]
 \centering
-\includegraphics[width=0.75\textwidth]{Immagini/SLDObase}
+\includegraphics[width=0.85\textwidth]{Immagini/SLDObase}
 \caption{Schema di principio dello ShuntLDO.}
 \label{SLDOprova}
 \end{figure}
@@ -170,7 +170,7 @@ Il comportamento resistivo permette l'utilizzo di più ShuntLDO in parallelo fra
 
 %Inoltre, utilizzando resistenze esterne, è possibile scegliere il valore di $\mathrm{R_{eff}}$ e, conseguentemente, la quantità di corrente che scorre in ciascun elemento posto in %parallelo.
 
-Lo ShuntLDO pu\`o essere implementato direttamente sul ROC stesso e questo ne rappresenta uno degli innegabili vantaggi sia in termini di miniaturizzazione, sia in termini di prossimit\`a al carico reale della regolazione PoL. Come menzionato, gi\`a i ROC per Atlas IBL (FE-I3 e FE-I4) ospitavano due ShuntLDO~\cite{SerialPowering}, uno per la tensione analogica e uno per la tensione digitale. La collaborazione RD53 ha recentemente realizzato il ROC RD53A\cite{RD53A}, il primo prototipo del ROC per HL-LHC, destinato ad essere utilizzato per ampi studi di R\&D. Anche RD53A, che sar\`a descritto nel capitolo~\ref{cap:RD53A}, implementa due ShuntLDO destinati all'alimentazione analogica e all'alimentazione digitale. In condizioni normali questi ShuntLDO lavoreranno in parallelo condividendo la corrente in ingresso. La scelta dei rispettivi valori di $\mathrm{R_{eff}}$ definisce la suddivisione di corrente nei due domini. A differenza dei ROC della passata generazione, in cui il consumo di corrente della parte digitale era marginale rispetto alla parte analogica, in RD53A la componente analogica e quella digitale avranno consumi confrontabili. Per questo motivo i due ShuntLDO sono configurati in modo analogo.
+Lo ShuntLDO pu\`o essere implementato direttamente sul ROC stesso e questo ne rappresenta uno degli innegabili vantaggi sia in termini di miniaturizzazione, sia in termini di prossimit\`a al carico reale della regolazione PoL. Come menzionato, gi\`a i ROC per Atlas IBL (FE-I3 e FE-I4) ospitavano due ShuntLDO~\cite{SerialPowering,TesiGonnella}, uno per la tensione analogica e uno per la tensione digitale. La collaborazione RD53 ha recentemente realizzato il ROC RD53A\cite{RD53A}, il primo prototipo del ROC per HL-LHC, destinato ad essere utilizzato per ampi studi di R\&D. Anche RD53A, che sar\`a descritto nel capitolo~\ref{cap:RD53A}, implementa due ShuntLDO destinati all'alimentazione analogica e all'alimentazione digitale. In condizioni normali questi ShuntLDO lavoreranno in parallelo condividendo la corrente in ingresso. La scelta dei rispettivi valori di $\mathrm{R_{eff}}$ definisce la suddivisione di corrente nei due domini. A differenza dei ROC della passata generazione, in cui il consumo di corrente della parte digitale era marginale rispetto alla parte analogica, in RD53A la componente analogica e quella digitale avranno consumi confrontabili. Per questo motivo i due ShuntLDO sono configurati in modo analogo.
 
 La Fig.~\ref{VVC} mostra l'andamento della tensione $\mathrm{V_{in}}$ in funzione della corrente totale $\mathrm{I_{in}}$ fornita al ROC assumendo la caratteristica ideale corrente-tensione sopra descritta. Sono, inoltre, evidenziati i valori operativi massimi e la tensione minima di lavoro.
 \begin{figure}[!htbp]

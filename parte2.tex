@@ -16,22 +16,22 @@ Questo prototipo costituisce una pietra miliare molto importante per il progetto
 \caption{La geometria reale di RD53A: il chip è largo $20\mm \times 11.8\mm$ con una pixel matrix di $400\times 192$ pixel corrispondenti ad una area attiva di $20\mm \times 9.6\mm$.}
 \label{RD53ALayout}
 \end{figure}
-Facendo riferimento alla Fig.~\ref{RD53ALayout}, l'area del chip che sarà saldata col sensore tramite bump bonding, detta anche {\em pixel matrix}, è posta nella parte alta ed è organizzata in una matrice di $192\times400$ pixel di area $50\um \times 50 \um$ per un'area totale di $20\mm \times 9.6\mm$.
-Al di sopra di questa è presente una fila di piazzole a scopo diagnostico che sarà eliminata nella versione finale.
-
 \begin{figure}
 \centering
 \includegraphics[scale=.5]{Immagini/AnalogIsland}
 \caption{Disegno ricavato dalle maschere di RD53A dove sono visibili le `isole analogiche' dei \textit{front end} della `pixel matrix' circondate dal `mare' della circuiteria digitale.}
 \label{AnalogIsland}
 \end{figure} 
+Facendo riferimento alla Fig.~\ref{RD53ALayout}, l'area del chip che sarà saldata col sensore tramite bump bonding, detta anche {\em pixel matrix}, è posta nella parte alta ed è organizzata in una matrice di $192\times400$ pixel di area $50\um \times 50 \um$ per un'area totale di $20\mm \times 9.6\mm$.
+Al di sopra di questa è presente una fila di piazzole a scopo diagnostico che sarà eliminata nella versione finale.
+
 La matrice di pixel è organizzata in \textit{cores} di 8$\times$8 pixel, all'interno di ciascuno dei quali i 64 circuiti di preamplificzione (front end) sono disposti in regioni di 4, chiamati {\em isole analogiche}, come mostrato in Fig.~\ref{AnalogIsland}. 
 Dato la miniaturizzazione necessaria, l'area del ROC deve essere completamente sfruttata e, per questo, le isole analogiche sono circondate da un `mare' di circuiteria digitale. 
 
 
 \begin{figure}
 \centering
-\includegraphics[scale=.4]{Immagini/RD53Apianofunzionale}
+\includegraphics[width=0.8\textwidth]{Immagini/RD53Apianofunzionale}
 \caption{Il piano funzionale di RD53A in cui, nella parte bassa, sono visibili, in particolare, le piazzole di potenza dello ShuntLDO.}
 \label{RD53AFunct}
 \end{figure}
@@ -301,7 +301,7 @@ Questo fenomeno è stato osservato nonostante la configurazione sia tale da aver
 %Si ha scorrimento di corrente attraverso connessioni tra le due regioni che causano cadute di tensioni nella parte analogica, questo comportamento è pericoloso e va evitato. 
 Questo comportamento è potenzialmente dannoso perch\'e pu\`o alterare la corretta sequenza di accensione con il rischio di fenomeni di oscillazione o che il ROC finisca in uno stato anomalo senza possibilit\`a di recupero.
 
-Inoltre, sempre dalla Fig.~\ref{IUI}, si può notare che VDDD sale parzialmente quando $\mathrm{I_{in}}$ raggiunge $\sim0.56\A$, non riuscendo però ad andare a regime, poiché la tensione $\mathrm{V_{IND}}$ non è ancora sufficientemente abbastanza elevata da consentire una corretta regolazione. Questo, a sua volta, è dovuto al ritardo con cui $\mathrm{V_{+A5D}}$ raggiunge il valore corretto, solo per $\mathrm{I_{in}\sim 1.1\V}$. Infatti, come introdotto in precedenza, la tensione  $\mathrm{V_{+A5D}}$ è ottenuta dalla caduta di tensione sulla resistenza $\mathrm{R_{iofs}}$, nel nostro caso di $\sim 250\kOhm$, indotta dalla corrente $\mathrm{I_{ofs} \sim 2 \uA}$. Se, per vari motivi, il circuito che genera questa corrente ha un ritardo nell'accensione, questo si ripercuote nell'accensione del ROC nel suo complesso.  
+Inoltre, sempre dalla Fig.~\ref{IUI}, si può notare che $\mathrm{V_{outD}}$ sale parzialmente quando $\mathrm{I_{in}}$ raggiunge $\sim0.56\A$, non riuscendo però ad andare a regime, poiché la tensione $\mathrm{V_{IND}}$ non è ancora sufficientemente abbastanza elevata da consentire una corretta regolazione. Questo, a sua volta, è dovuto al ritardo con cui $\mathrm{V_{+A5D}}$ raggiunge il valore corretto, solo per $\mathrm{I_{in}\sim 1.1\V}$. Infatti, come introdotto in precedenza, la tensione  $\mathrm{V_{+A5D}}$ è ottenuta dalla caduta di tensione sulla resistenza $\mathrm{R_{iofs}}$, nel nostro caso di $\sim 250\kOhm$, indotta dalla corrente $\mathrm{I_{ofs} \sim 2 \uA}$. Se, per vari motivi, il circuito che genera questa corrente ha un ritardo nell'accensione, questo si ripercuote nell'accensione del ROC nel suo complesso.  
 
 Questa discussione illustra come le problematiche di {\em power-on} siano cruciali e crescano di complessit\`a quando il circuito base (lo ShuntLDO nel nostro caso) viene vestito con tutta la circuiteria addizionale. Il ROC finale per l'IT dovr\`a essere progettato per essere completamente affidabile rispetto al {\em power on} che, tradizionalmente, \`e un aspetto delicato dell'elettronica digitale. Questo \`e vero in particolare in presenza del danneggiamento da radiazione che altera le caratteristiche circuitali per cui, potenzialmente, certe problematiche possono non essere presenti nel ROC non irraggiato e comparire dopo che lo stesso ha integrato una certa fluenza. La validazione del ROC non pu\`o prescidere da una estesa campagna di test dopo irraggiamento.
 
@@ -589,16 +589,16 @@ Le misure fino ad ora riportate relative allo studio dei circuiti di ShuntLDO in
 \caption{Illustrazione del metodo di misura delle fluttuazioni di $\VDDD$ per variazioni repentine del carico. In alto sono visibili, in funzione del tempo, le correnti analogiche e digitali. Quest'ultima, modificando la frazione di canali del ROC sui quali il clock \`e abilitato, cambia velocemente tra $300\mA$ e $500\mA$. In basso i grafici riportano il corrispondente andamento di $\VDDD$ misurato all'oscilloscopio confrontato con il profilo simulato.}
 \label{LoadTransientScope}
 \end{figure}
-Una misura di estremo interesse è quella relativa alle fluttuazioni della tensione regolata dallo ShuntLDO per variazioni repentine del carico, Il principio della misura \`e visibile in~Fig.~\ref{LoadTransientScope}. La variazione controllata tra $300\mA$ a $500\mA$ della corrente assorbita dalla sola parte digitale si ottiene modificando la frazione di canali di lettura sui quali il clock \`e abilitato.  Il consumo della parte analogica \`e costante e calibrato su $\sim 0.5\A$ grazie ad una appropriata scelta dei parametri di funzionamento degli stadi di front end. All'oscilloscopio \`e possibile valutare, in corrispondenza dei transienti, la fluttuazione di tensione a cui \`e soggetta $\VDDD$. Queste fluttuazioni sono completamente compensate nel giro di qualche $\us$ e risultano in buon accordo con la simulazione circuitale, anch'essa riportata in~Fig.~\ref{LoadTransientScope}. 
-\begin{figure}
+\begin{figure}[hb]
 \centering
 \includegraphics[width=0.65\textwidth]{Immagini/LoadTransientDominik}
 \caption{Valori di picco della variazione della tensione $\VDDD$ in funzione del margine percentuale di corrente rispetto a $1\A$ nel caso in cui il carico su $\VDDD$ sia modificato in modo repentino tra $300\mA$ a $500\mA$. Il consumo della parte analogica \`e costante e calibrato su $\sim 0.5\A$. 
 }
 \label{LoadTransient}
 \end{figure}
-Il valore di picco della fluttuazione di $\VDDD$ in funzione del margine di corrente fornito rispetto al totale della corrente richiesta, visibile in~Fig.~\ref{LoadTransient}, suggerisce che, per avere un corretto funzionamento della parte di alimentazione del ROC rispetto alle fluttuazioni del carico, un margine di sicurezza di circa il $20-25
-\%$ deve essere previsto sulla corrente di pilotaggio dello ShuntLDO rispetto al consumo di corrente massimo atteso dal nucleo del ROC. 
+Una misura di estremo interesse è quella relativa alle fluttuazioni della tensione regolata dallo ShuntLDO per variazioni repentine del carico, Il principio della misura \`e visibile in~Fig.~\ref{LoadTransientScope}. La variazione controllata tra $300\mA$ a $500\mA$ della corrente assorbita dalla sola parte digitale si ottiene modificando la frazione di canali di lettura sui quali il clock \`e abilitato.  Il consumo della parte analogica \`e costante e calibrato su $\sim 0.5\A$ grazie ad una appropriata scelta dei parametri di funzionamento degli stadi di front end. All'oscilloscopio \`e possibile valutare, in corrispondenza dei transienti, la fluttuazione di tensione a cui \`e soggetta $\VDDD$. Queste fluttuazioni sono completamente compensate nel giro di qualche $\us$ e risultano in buon accordo con la simulazione circuitale, anch'essa riportata in~Fig.~\ref{LoadTransientScope}. 
+Il valore di picco della fluttuazione di $\VDDD$ in funzione del margine di corrente fornito rispetto al totale della corrente richiesta, visibile in~Fig.~\ref{LoadTransient}, suggerisce che, per avere un corretto funzionamento della parte di alimentazione del ROC rispetto alle fluttuazioni del carico,  deve essere previsto un margine di sicurezza di circa il $20-25
+\%$ sulla corrente di pilotaggio dello ShuntLDO rispetto al consumo di corrente massimo atteso. 
 
 Una fase in cui le variazioni di corrente sono ovviamente massime \`e quella dell'accensione. Si è quindi proceduto a simulare una accensione veloce dell'alimentazione degli ShuntLDO  di RD53A in configurazione parallelo modificando $\Iin$ da $0\A$ a $2.4\A$ in $25\ms$ con un rampa lineare. Anche in questo caso i due ShuntLDO sono alimentati in parallelo, suddividendosi, quindi, la corrente erogata dal generatore. Come è possibile vedere dai profili temporali di $\VDDA$ e $\VDDD$, in Fig.~\ref{rd-powup-dir6} e Fig.~\ref{rd-powup-dir7} rispettivamente, acquisiti con un oscilloscopio con banda passante adeguata e confrontati con $\Iin$ e $\Vin$, non compaiono oscillazioni o altri comportamenti anomali.
 La parte digitale e analogica non si attivano nello stesso momento, in particolare $\VDDD$ raggiunge pi\`u tardi la regione di regolazione rispetto a $\VDDA$ in accordo con quanto gi\`a osservato nelle misure stazionarie discusse precedentemente.
