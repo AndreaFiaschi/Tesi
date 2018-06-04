@@ -1,7 +1,7 @@
 \chapter{Il ROC prototipo RD53A}
 \label{cap:RD53A}
 
-Lo sviluppo di un sistema di alimentazione seriale e del circuito di alimentazione ShuntLDO che gestisce localmente, è parte integrante del ROC che viene sviluppato nell'ambito della collaborazione RD53~\cite{RD53} e, in particolare, del primo prototipo messo a punto dalla collaborazione, RD53A~\cite{RD53A}, che \`e diventato disponibile per la comunit\`a scientifica alla fine del 2017.
+Lo sviluppo di un sistema di alimentazione seriale e del circuito di alimentazione ShuntLDO che gestisce localmente le tensioni, è parte integrante del ROC che viene sviluppato nell'ambito della collaborazione RD53~\cite{RD53} e, in particolare, del primo prototipo messo a punto dalla collaborazione, RD53A~\cite{RD53A}, che \`e diventato disponibile per la comunità scientifica alla fine del 2017.
 
 Questo prototipo costituisce una pietra miliare molto importante per il progetto dei rivelatori a pixel per HL-LHC \`e sar\`a utilizzato non solo per validare le scelte strettamente relative al ROC stesso (resistenza alla radiazione e prestazioni rispetto ai requisiti di HL-LHC), ma anche per finalizzare lo sviluppo dei sensori e del resto dell'apparato.
 %, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
@@ -204,20 +204,20 @@ Analogamente a quanto visto per gli ShuntLDO, che vengono collaudati usando una 
 \label{fig:RD53onSCC}
 \end{figure}
 Il ROC è fissato al centro di questa scheda e, attraverso microsaldature, è connesso ai vari elementi della scheda (terminali di monitoraggio, connettori di alimentazione, connettori con standard DisplayPort per la trasmissione/ricezione di dati, ponticelli/jumper di configurazione, ecc...). 
-Ai bordi dell'apposito spazio in cui viene montato il ROC arrivano le varie piste da connettere e sotto il quale un generoso strato metallico collegato tramite molti `via' al lato opposto della scheda assicura lo scambio termico consentendo, se necessario, l'applicazione di un sistema refrigerante o di un dissipatore sulla parte posteriore della SCC. 
-Infatti, nel momento in cui l'alimentazione del chip viene fornita dai due ShuntLDO, la corrente non utilizzata viene dissipata sui due shunt che si scaldano rendendo raccomandabile un minimo di raffreddamento per scongiurare il danneggiamento del chip.
+Ai bordi dell'apposito spazio in cui viene montato il ROC arrivano le varie piste da connettere, sotto vi è un generoso strato metallico collegato tramite molti `via' al lato opposto della scheda assicura lo scambio termico consentendo, se necessario, l'applicazione di un sistema refrigerante o di un dissipatore sulla parte posteriore della SCC. 
+Infatti, nel momento in cui l'alimentazione del ROC viene fornita dai due ShuntLDO, la corrente non utilizzata viene dissipata sui due shunt che si scaldano rendendo raccomandabile un minimo di raffreddamento per scongiurare danneggiamenti.
 %La presenza di un raffreddamento è necessaria nel momento in cui l'alimentazione è data utilizzando i due ShuntLDO, infatti, la corrente non necessaria al chip viene dissipata sui due shunt che diventano punti molto caldi. 
 %Al fine di evitare danneggiamenti del chip, e dell'eventuale sensore collegato, questo va raffreddato utilizzando dissipatori di calore. 
 
 Dal momento che RD53A è un prototipo, si è lasciata la possibilità di configurare l'alimentazione esternamente, scegliendo tra tre diverse configurazioni.
-Inoltre, è possibile mantenere separate, a livello di alimentazione, la parte digitale e quella analogica, che nel chip finale si prevede essere in parallelo. Le possibili configurazioni di alimentazione sono sotto elencate e in Fig.~\ref{SLDOmodes} sono riportati gli schemi di configurazione della SCC ad esse relativi.
+Inoltre, è possibile mantenere separate, a livello di alimentazione, la parte digitale e quella analogica, che nella versione finale di RD53A si prevede essere in parallelo. Le possibili configurazioni di alimentazione sono sotto elencate e in Fig.~\ref{SLDOmodes} sono riportati gli schemi di configurazione della SCC ad esse relativi.
 
 \begin{description}
-\item[Alimentazione con ShuntLDO] In questo caso il generatore utilizzato sarà in corrente. Per operare in configurazione ShuntLDO è necessario l'utilizzo di un sistema di raffreddamento per il chip che, in normali condizioni di lavoro, può essere un semplice dissipatore passivo. Nella misura delle varie tensioni, però, l'effetto di deriva termica non è trascurabile e, quindi, per le future misure \`e in fase di preparazione un sistema di raffreddamento attivo che permetta di controllare le temperature.
+\item[Alimentazione con ShuntLDO] In questo caso il generatore utilizzato sarà in corrente. Per operare in configurazione ShuntLDO è necessario l'utilizzo di un sistema di raffreddamento per il ROC che, in normali condizioni di lavoro, può essere un semplice dissipatore passivo. Nella misura delle varie tensioni, però, l'effetto di deriva termica non è trascurabile e, quindi, per le future misure \`e in fase di preparazione un sistema di raffreddamento attivo che permetta di controllare le temperature.
 
-\item[Alimentazione senza Shunt, con solo LDO] Questa configurazione necessita di un'alimentazione in tensione e sarà il generatore esterno a dover fornire più o meno corrente in relazione ai consumi del chip. L'utilizzo del solo regolatore permette di avere un consumo ottimizzato in termini di potenza e, dunque, il chip pu\`o essere utilizzato senza il bisogno di un sistema di raffreddamento.
+\item[Alimentazione senza Shunt, con solo LDO] Questa configurazione necessita di un'alimentazione in tensione e sarà il generatore esterno a dover fornire più o meno corrente in relazione ai consumi del ROC. L'utilizzo del solo regolatore permette di avere un consumo ottimizzato in termini di potenza e, dunque, il ROC pu\`o essere utilizzato senza il bisogno di un sistema di raffreddamento.
 
-\item[Alimentazione diretta] Lo ShuntLDO viene completamente escluso ed il chip è alimentato direttamente da un generatore di tensione esterno. L'alimentazione diretta deve essere utilizzata con particolare attenzione per evitare danneggiamenti del ROC. La presenza del regolatore LDO anche se privo di shunt, assicura che sbalzi di tensione all'ingresso dell'alimentazione non siano trasmessi al chip. Il regolatore, inoltre, tollera tensioni fino a $2 \V$, mentre il chip già sopra $\sim 1.35\V$ rischia di danneggiarsi. L'esclusione di questa sicurezza con la scelta di utilizzare un'alimentazione diretta è, perciò, sconsigliata. 
+\item[Alimentazione diretta] Lo ShuntLDO viene completamente escluso e il ROC è alimentato direttamente da un generatore di tensione esterno. L'alimentazione diretta deve essere utilizzata con particolare attenzione per evitare danneggiamenti del ROC. La presenza del regolatore LDO anche se privo di shunt, assicura che sbalzi di tensione all'ingresso dell'alimentazione non siano trasmessi al chip. Il regolatore, inoltre, tollera tensioni fino a $2 \V$, mentre RD53A già sopra $\sim 1.35\V$ rischia di danneggiarsi. L'esclusione di questa sicurezza con la scelta di utilizzare un'alimentazione diretta è, perciò, sconsigliata. 
 \end{description}
 
 \begin{figure}[h]
@@ -227,18 +227,18 @@ Inoltre, è possibile mantenere separate, a livello di alimentazione, la parte d
 \includegraphics[width=0.30\textwidth]{Immagini/LDOmodeDefault}
 \hfill
 \includegraphics[width=0.30\textwidth]{Immagini/DirectPowering}
-\caption{Disposizione dei jumper per le varie configurazioni di alimentazione di RD53A. Sinistra: ShuntLDO. Centro: LDO senza la parte di shunt. Destra: alimentazione diretta. In tutti e tre i casi la stessa configurazione \`e usata per la parte analogica e la parte digitale.}
+\caption{Disposizione dei jumper per le varie configurazioni di alimentazione di RD53A. Sinistra: ShuntLDO. Centro: LDO senza la parte di shunt. Destra: alimentazione diretta. In tutti e tre i casi la stessa configurazione è usata per la parte analogica e la parte digitale.}
 \label{SLDOmodes}
 \end{figure}
 
 \section{Caratterizzazione degli ShuntLDO su RD53A}
 \label{MisureStaticheRD53A}
 
-La caratterizzazione degli ShuntLDO di cui \`e dotato il ROC prototipo RD53A \`e stata effettuate inizialmente presso il CERN di Ginevra, nell'ambito delle attivit\`a congiunte tra la collaborazione RD53 e la collaborazione CMS, e poi presso l'INFN, Sezione di Firenze.
+La caratterizzazione degli ShuntLDO di cui è dotato il ROC prototipo RD53A è stata effettuate inizialmente presso il CERN di Ginevra, nell'ambito delle attività congiunte tra la collaborazione RD53 e la collaborazione CMS, e poi presso l'INFN, Sezione di Firenze.
 
 \subsection{Misure statiche}
 
-Utilizzando la SCC in configurazione ShuntLDO, raffreddando il ROC in modo passivo con un radiatore a contatto termico con il retro della scheda di test, si è proceduto alla caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti nel chip, uno per la parte analogica e l'altro per quella digitale. 
+Utilizzando la SCC in configurazione ShuntLDO, raffreddando il ROC in modo passivo con un radiatore a contatto termico con il retro della scheda di test, si è proceduto alla caratterizzazione statica del comportamento dei due circuiti di alimentazione presenti in RD53A, uno per la parte analogica e l'altro per quella digitale. 
 
 Questo studio è stato effettuato con diverse configurazioni risultanti dalla combinazione di tre aspetti operativi:
 %Nel far questo sono state scelte diverse configurazioni, le scelte principali possono essere riassunte in tre punti:
@@ -286,7 +286,7 @@ $\mathrm{V_{ref \_ m \_ D}}$  & $\mathrm{V_{refD}}$ \\
 \caption{Grafici tensione-corrente ottenuti tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $0\A$ a $1.5\A$.}%allungare descrivendo anche l'undershoot
 \label{IUI}
 \end{figure}
-Le prime misure sono state eseguite utilizzando, come riferimento per $\mathrm{V_{out}}$ e $\mathrm{V_{iofs}}$, le tensioni generate internamente al chip.
+Le prime misure sono state eseguite utilizzando, come riferimento per $\mathrm{V_{out}}$ e $\mathrm{V_{iofs}}$, le tensioni generate internamente al ROC.
 La corrente fornita ai due ShuntLDO, alimentati indipendentemente, è stata variata, contemporaneamente, da $0\A$ a $1.5\A$ a passi di $10\mA$.
 L'andamento ottenuto è riportato in Fig.~\ref{IUI}.
 
@@ -298,17 +298,17 @@ $\Delta \mathrm{V_{INA}}$ & $\Delta \mathrm{V_{refA}}$ &$\Delta \mathrm{V_{outA}
 $\sim$0.150 V & $\sim$ 0.030 V& $\sim$0.060 V\\ \hline     
 \end{tabular}
 \end{center}
-Questo fenomeno è stato osservato nonostante la configurazione sia tale da avere i due ShuntLDO alimentati separatamente, segno che, all'interno del chip, sono presenti fenomeni di `dialogo' fra i due ambiti: un po' di corrente scorre attraverso le connessioni tra le due regioni, causando la caduta di tensione osservate nella parte analogica.
+Questo fenomeno è stato osservato nonostante la configurazione sia tale da avere i due ShuntLDO alimentati separatamente, segno che, all'interno del ROC, sono presenti fenomeni di `dialogo' fra i due ambiti: un po' di corrente scorre attraverso le connessioni tra le due regioni, causando la caduta di tensione osservate nella parte analogica.
 %Questo avviene nonostante le alimentazioni dei due ShuntLDO siano separate, in quanto all'interno del chip ci sono zone di 'dialogo' tra regione analogica e digitale. 
 %Si ha scorrimento di corrente attraverso connessioni tra le due regioni che causano cadute di tensioni nella parte analogica, questo comportamento è pericoloso e va evitato. 
-Questo comportamento è potenzialmente dannoso perch\'e pu\`o alterare la corretta sequenza di accensione con il rischio di fenomeni di oscillazione o che il ROC finisca in uno stato anomalo senza possibilit\`a di recupero.
+Questo comportamento è potenzialmente dannoso perché può alterare la corretta sequenza di accensione con il rischio di fenomeni di oscillazione o che il ROC finisca in uno stato anomalo senza possibilità di recupero.
 
 Inoltre, sempre dalla Fig.~\ref{IUI}, si può notare che $\mathrm{V_{outD}}$ sale parzialmente quando $\mathrm{I_{in}}$ raggiunge $\sim0.56\A$, non riuscendo però ad andare a regime, poiché la tensione $\mathrm{V_{IND}}$ non è ancora sufficientemente elevata da consentire una corretta regolazione. Questo, a sua volta, è dovuto al ritardo con cui $\mathrm{V_{+A5D}}$ raggiunge il valore corretto, solo per $\mathrm{I_{in}\sim 1.1\A}$. Infatti, come introdotto in precedenza, la tensione  $\mathrm{V_{+A5D}}$ è ottenuta dalla caduta di tensione sulla resistenza $\mathrm{R_{iofs}}$, nel nostro caso di $\simeq 250\kOhm$, indotta dalla corrente $\mathrm{I_{ofs} \simeq 2 \uA}$. Se, per vari motivi, il circuito che genera questa corrente ha un ritardo nell'accensione, questo si ripercuote nell'accensione del ROC nel suo complesso.  
 
 Questa discussione illustra come le problematiche di {\em power-on} siano cruciali e crescano di complessit\`a quando il circuito base (lo ShuntLDO nel nostro caso) viene vestito con tutta la circuiteria addizionale. Il ROC finale per l'IT dovr\`a essere progettato per essere completamente affidabile rispetto al {\em power on}. % che, tradizionalmente, \`e un aspetto delicato dell'elettronica digitale. 
-Questo \`e vero in particolare in presenza del danneggiamento da radiazione che altera le caratteristiche circuitali per cui, potenzialmente, certe problematiche possono non essere presenti nel ROC non irraggiato e comparire dopo che lo stesso ha integrato una certa fluenza. La validazione del ROC non pu\`o prescindere da una estesa campagna di test dopo irraggiamento.
+Questo \`e vero in particolare in presenza del danneggiamento da radiazione che altera le caratteristiche circuitali per cui, potenzialmente, certe problematiche possono non essere presenti nel ROC non irraggiato e comparire dopo che lo stesso ha integrato una certa fluenza. La validazione di RD53A non pu\`o prescindere da una estesa campagna di test dopo irraggiamento.
 
-Le cause del diverso comportamento di $\mathrm{V_{+A5A}}$ e $\mathrm{V_{+A5D}}$ rispetto ai valori di corrente $\mathrm{I_{in}}$ che sono necessari perché queste due tensioni raggiungano il livello nominale sono ancora oggetto di studio. Da progetto i due ShuntLDO e i relativi circuiti addizionali per la parte analogica e la parte digitale sono gemelli e, quindi, questa differenza \`e inaspettata e probabilmente dovuta a effetti spuri di power-on. Infatti questa asimmetria scompare effettuando la misura con una rampa di corrente inversa, come illustrato nella prossima sezione.
+Le cause del diverso comportamento di $\mathrm{V_{+A5A}}$ e $\mathrm{V_{+A5D}}$ rispetto ai valori di corrente $\mathrm{I_{in}}$, che sono necessari perché queste due tensioni raggiungano il livello nominale, sono ancora oggetto di studio. Da progetto i due ShuntLDO e i relativi circuiti addizionali per la parte analogica e la parte digitale sono gemelli e, quindi, questa differenza \`e inaspettata e probabilmente dovuta a effetti spuri di power-on. Infatti questa asimmetria scompare effettuando la misura con una rampa di corrente inversa, come illustrato nella prossima sezione.
 
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
@@ -378,7 +378,7 @@ Partendo da valori di corrente elevati e, dunque, da tensioni in ingresso ben al
 \end{figure}
 Continuando a tenere i due circuiti di alimentazione separati è interessante studiare, per confronto, il comportamento nel caso in cui le tensioni di riferimento non siano generate dal ROC stesso.
 I grafici riportati in Fig.~\ref{IUEVref} sono ottenuti fornendo esternamente $\mathrm{V_{ref}}=0.550\V$,  sia per la parte analogica che per quella digitale.
-Il comportamento della parte digitale è analogo a quello ottenuto di cui in Fig.~\ref{IUI}, mentre, per la parte analogica, non si hanno le fluttuazione osservate n\'e su $\mathrm{V_{INA}}$ n\'e $\mathrm{V_{outA}}$. La tensione $\mathrm{V_{outA}}$, però, risente ancora del comportamento della parte digitale: fino a che $\mathrm{V_{ofsD}}$ non arriva al valore nominale per tramite di $\mathrm{V_{+A5D}}$, $\mathrm{V_{outA}}$ non si stabilizza.
+Il comportamento della parte digitale è analogo a quello ottenuto di cui in Fig.~\ref{IUI}, mentre, per la parte analogica, non si hanno le fluttuazione osservate né su $\mathrm{V_{INA}}$ n\'e $\mathrm{V_{outA}}$. La tensione $\mathrm{V_{outA}}$, però, risente ancora del comportamento della parte digitale: fino a che $\mathrm{V_{ofsD}}$ non arriva al valore nominale per tramite di $\mathrm{V_{+A5D}}$, $\mathrm{V_{outA}}$ non si stabilizza.
 
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
@@ -406,7 +406,7 @@ Il comportamento della parte digitale è analogo a quello ottenuto di cui in Fig
 \label{IUEViofs}
 \end{figure}
  Le stesse misure sono state ripetute fornendo esternamente il solo $\mathrm{V_{+A5}}=0.400 \V$ ed utilizzando $\mathrm{V_{ref}}$ interno sia per la parte analogica che digitale e tenendo le alimentazioni dei due ShuntLDO indipendenti. In questo caso gli andamenti ottenuti sono decisamente migliori, come si vede in Fig.~\ref{IUEViofs}. 
-Infatti, i $\mathrm{V_{+A5}}$ esterni permettono di evitare le problematiche precedentemente riscontrate quali i differenti valori di corrente $\mathrm{I_{in}}$, tra parte analogica e digitale, oltre i quali si entra in regime di regolazione. Questo è dovuto al fatto che il valore di $\mathrm{V_{ofs}}$, grazie al pilotaggio esterno, \`e fissato al valore nominale. %\begin{center}
+Infatti, i $\mathrm{V_{+A5}}$ esterni permettono di evitare le problematiche precedentemente riscontrate quali i differenti valori di corrente $\mathrm{I_{in}}$, tra parte analogica e digitale, oltre i quali si entra in regime di regolazione. Questo è dovuto al fatto che il valore di $\mathrm{V_{ofs}}$, grazie al pilotaggio esterno, \`e fissato ad un dato valore. %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
 %\hline
 % & \multicolumn{2}{c|}{Digitale} & \multicolumn{2}{c|}{Analogica} \\ \hline
@@ -449,7 +449,7 @@ Infatti, i $\mathrm{V_{+A5}}$ esterni permettono di evitare le problematiche pre
 
 Come detto in precedenza, in RD53A è stata lasciata la possibilità di tenere separate le alimentazioni dei due ShuntLDO, mentre nella versione finale i due ShuntLDO si troveranno in parallelo. 
 In questa configurazione gli andamenti delle tensioni in ingresso ($\mathrm{V_{INA}}$ e $\mathrm{V_{IND}}$) e di quelle in uscita ($\mathrm{V_{outA}}$ e $\mathrm{V_{outD}}$) risultano migliori, nonostante che $\mathrm{V_{ofsA}}$ e $\mathrm{V_{ofsD}}$ raggiungano il valore nominale per differenti valori di $\mathrm{I_{inA}}$ e $\mathrm{I_{inD}}$, come si può vedere in Fig.~\ref{PUI}.
-Questo miglioramento nel comportamento può essere attribuito all'utilizzo dell'alimentazione in parallelo dei due ShuntLDO, poiché la corrente totale a disposizione si può suddividere in modo ottimale tra i due ambiti, come effettivamente accade. Questo sbilanciamento nella ripartizione delle correnti si verifica nell'intervallo di correnti in cui $\mathrm{V_{+A5A}}$ \`e gi\`a al valore nominale mentre $\mathrm{V_{+A5D}}$ non lo \`e ancora, come risulta evidente se confrontiamo la Fig.~\ref{CurrentSharing} con gli andamenti di $\mathrm{V_{+A5A}}$ e $\mathrm{V_{+A5D}}$ nella~Fig.~\ref{PUI}.
+Questo miglioramento nel comportamento può essere attribuito all'utilizzo dell'alimentazione in parallelo dei due ShuntLDO, poiché la corrente totale a disposizione si può suddividere in modo ottimale tra i due ambiti, come effettivamente accade. Questo sbilanciamento nella ripartizione delle correnti si verifica nell'intervallo di correnti in cui $\mathrm{V_{+A5A}}$ è già al valore nominale mentre $\mathrm{V_{+A5D}}$ non lo \`e ancora, come risulta evidente se confrontiamo la Fig.~\ref{CurrentSharing} con gli andamenti di $\mathrm{V_{+A5A}}$ e $\mathrm{V_{+A5D}}$ nella~Fig.~\ref{PUI}.
 
 %\begin{center}
 %\begin{tabular}{|l|c|c|c|c|}
@@ -529,7 +529,7 @@ Gli errori statistici associati alla stima di $\mathrm{R_{eff}}$ e di $\mathrm{V
 \label{R3Karagounis}
 \end{figure}
 Dal confronto con i valori attesi risulta evidente che la pendenza della caratteristica tensione-corrente nella regione di regolazione degli ShuntLDO è sistematicamente maggiore, mentre l'offset è sistematicamente minore. 
-Questo comportamento è stato osservato in tutti gli esemplari di RD53A utilizzati per lo sudio degli ShuntLDO. \`E stata eseguita, in particolare, una misura dedicata a queste discrepanze studiando l'andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare della resistenza $\mathrm{R3}$, ottenuto grazie ad un resistore esterno $\mathrm{R_{ext}}$ regolabile, e riportato in Fig.~\ref{R3Karagounis}. 
+Questo comportamento è stato osservato in tutti gli esemplari di RD53A utilizzati per lo studio degli ShuntLDO. \`E stata eseguita, in particolare, una misura dedicata a queste discrepanze studiando l'andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare della resistenza $\mathrm{R3}$, ottenuto grazie ad un resistore esterno $\mathrm{R_{ext}}$ regolabile, e riportato in Fig.~\ref{R3Karagounis}. 
 La relazione che ne risulta, $\mathrm{R_{eff}} = 0.001\cdot \mathrm{R_{ext}} + 0.1963\Ohm$, si discosta da quella di progetto $\mathrm{R_{eff} = \nicefrac{R_{ext}}{k} = \nicefrac{R3}{k}}$ (con $k=1000$) per la presenza del termine costante pari a circa $0.2\Ohm$ dovuto a qualche contributo spurio che probabilmente varia da esemplare a esemplare. Questa misura conferma i risultati precedentemente ottenuti e giustifica la sistematica osservazione di una $\mathrm{R_{eff}}$ pi\`u grande di quella aspettata. 
 
 Per quanto riguarda l'osservazione di valori di $\mathrm{V_{ofs}}$ inferiori a quanto atteso il fenomeno è di più difficile interpretazione.
@@ -585,7 +585,7 @@ La tensione $\VDDA$ scende gradualmente fino a raggiungere $\sim -15\mV$ per un 
 
 %\subsection{}
 
-Le misure fino ad ora riportate relative allo studio dei circuiti di ShuntLDO in RD53A sono da considerarsi stazionarie, in quanto ottenute su tempi scala lunghi in confronto ai tempi di risposta dello ShuntLDO. Nel prosieguo, invece, al comportamento dello ShuntLDO sui transienti.
+Le misure fino ad ora riportate relative allo studio dei circuiti di ShuntLDO in RD53A sono da considerarsi stazionarie, in quanto ottenute su tempi scala lunghi in confronto ai tempi di risposta dello ShuntLDO. Nel prosieguo, invece, si esamina il comportamento dello ShuntLDO sui transienti.
  
 \begin{figure}
 \centering
@@ -656,7 +656,7 @@ Per una ragione analoga la parte digitale e la parte analogica del ROC sono mant
 
 Questo tipo di verifica richiede l'uso di un sistema completo di acquisizione dati per RD53A in grado di configurare e pilotare il ROC, effettuare le principali procedure di calibrazione e, in ultima analisi, misurare il rumore canale per canale. Questa sezione discute alcuni test preliminari effettuati con un sistema di DAQ, che saranno largamente estesi nel prossimo futuro per una più approfondita caratterizzazione.
 
-Due sono i sistemi di acquisizione dati per RD53A attualmente in sviluppo: Yarr~\cite{YARR} (\textit{Yet Another Rapid Readout}), sviluppato dal Lawrence Berkeley National Laboratory, e BDAQ~\cite{BDAQ}, sviluppato dall'Università di Bonn. Entrambi si basano su FPGA XILINX~\cite{xilinx} per comunicare con il chip. 
+Due sono i sistemi di acquisizione dati per RD53A attualmente in sviluppo: Yarr~\cite{YARR} (\textit{Yet Another Rapid Readout}), sviluppato dal Lawrence Berkeley National Laboratory, e BDAQ~\cite{BDAQ}, sviluppato dall'Università di Bonn. Entrambi si basano su FPGA XILINX~\cite{xilinx} per comunicare con il ROC. 
 %Attraverso questi sistemi di acquisizione, sul cui sviluppo e le particolari caratteristiche non ci soffermeremo, non essendo questo il principale obbiettivo di questo lavoro di tesi, è possibile al momento vari test. 
 Gli studi effettuati nell'ambito di questo lavoro di tesi si basano sul sistema di acquisizione BDAQ che, pur essendo tutt'ora in fase di sviluppo, supporta, tra le altre, le seguenti procedure di base:
 \begin{description}
