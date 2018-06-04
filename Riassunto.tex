@@ -40,21 +40,21 @@ Il cuore dello schema di alimentazione seriale \`e lo ShuntLDO, uno speciale cir
 
 In questo lavoro di tesi, svolto tra l'INFN, Sezione di Firenze, e il CERN, Ginevra, Svizzera, ho caratterizzato i prototipi di ShuntLDO realizzati in tecnologia CMOS a $65\nm$, con dimensionamento da $0.5\A$ e $2\A$, e lo ShuntLDO presente sul primo prototipo ROC (il \textit{Readout Chip} dell'elettronica di prossimit\`a), RD53A, sviluppato per HL-LHC dalla collaborazione RD53. 
 
-Lo ShuntLDO garantisce che l'elemento nella catena si presenti alla catena seriale come un carico costante essenzialmente resistivo, pi\`u un livello di tensione in serie, indipendentemente dal consumo istantaneo. Gli eventuali picchi di corrente del ROC sono gestiti localmente.
+Lo ShuntLDO garantisce che il singolo elemento nella catena seriale si presenti come un carico costante essenzialmente resistivo, pi\`u un offset di tensione in serie, indipendentemente dal consumo istantaneo. Gli eventuali picchi di corrente del ROC sono gestiti localmente.
 % meno di un a caratterizzato da un offset $\mathrm{V_{offset}}$ ed una resistenza caratteristica R.
-Grazie a queste peculiarit\`a gli ShuntLDO possono essere posti in parallelo senza controindicazioni, aspetto chiave per un rivelatore di grande scala e complessit\`a in cui i moduli pixel verranno posti in serie ma, su questi, i singoli ROC sono alimentati in parallelo.
+Grazie a queste peculiarit\`a gli ShuntLDO possono essere posti in parallelo senza controindicazioni, aspetto chiave per un rivelatore di grande scala e complessit\`a in cui i moduli pixel verranno posti in serie ma, su ognuno di questi vi saranno più ROC alimentati in parallelo.
  
 %Pi\`u ShuntLDO possono eQueste caratteristiche permettono la massima flessibilit\`a permette di mettere più elementi in parallelo.
 %a distribuzione di corrente tra i vari elementi dipenderà dal parallelo delle varie R caratteristiche.
 
-Ho studiato il comportamento di questi dispositivi nelle varie versioni sia in condizioni stazionarie con carichi statici, sia con carichi dinamici per verificare l'effettiva capacità dello ShuntLDO di isolare il ROC rispetto alla linea di alimentazione e viceversa. 
+Nel lavoro di tesi ho studiato il comportamento di questi dispositivi nelle varie versioni sia in condizioni stazionarie con carichi statici, sia con carichi dinamici per verificare l'effettiva capacità dello ShuntLDO di isolare il ROC rispetto alla linea di alimentazione e viceversa. 
 
-In questo lavoro di tesi sono stato in grado di confermare l'affidabilità del principio di funzionamento alla base del progetto dello ShuntLDO, dimostrandone la capacità di isolare il ROC da influenze esterne anche in situazioni limite e evidenziando gli aspetti che possono risultare critici nel sistema finale quali, ad esempio, l'interazione tra lo ShuntLDO e la circuiteria ancillare necessaria per il suo funzionamento specialmente nella fase di accensione.
+Grazie ai risultati ottenuti sono stato in grado di confermare l'affidabilità del principio di funzionamento alla base del progetto dello ShuntLDO, dimostrandone la capacità di isolare il ROC da influenze esterne anche in situazioni limite e evidenziando gli aspetti che possono risultare critici nel sistema finale quali, ad esempio, l'interazione tra lo ShuntLDO e la circuiteria ancillare necessaria per il suo funzionamento specialmente nella fase di accensione.
 
 I risultati che ho ottenuto non evidenziano criticit\`a di questa innovativa tecnologia e permettono di proseguire lo sviluppo per giungere al progetto finale.
 
-
 \end{document}
+
 
 cruciali per avere un bilanciamento delle correnti durante l'accensione e 
 presenti sulla linea di alimentazione. 
