@@ -165,14 +165,14 @@ La serie dei due ShuntLDO, entrambi con un carico stazionario di $4 \Ohm$, è al
 Misurando all'oscilloscopio l'andamento temporale delle tensioni regolate $\mathrm{V_{out}}$ di entrambi e $\mathrm{V_{in}}$ di ShuntLDO1 è stato possibile verificare come le fluttuazioni di tensione indotte dal carico variabile di ShuntLDO2 non influenzino la regolazione della tensione $\mathrm{V_{out}}$ di ShuntLDO1.
 \begin{figure}[h!]
 \centering
-\includegraphics[scale=.30]{Immagini/SLDOserie}
+\includegraphics[width=0.85\textwidth]{Immagini/SLDOserie}
 \caption{Allestimento di test di due ShuntLDO in serie: a sinistra uno schema semplificato dell'allestimento; a destra la foto.}
 \label{SLDOserie}
 \end{figure}
 In particolare si \`e scelta una situazione limite, di massima sollecitazione, con $\mathrm{I_{mosfet}} = 1.2 \A$ corrispondenti ad una $\mathrm{I_{tot}}$ di circa $1.45 \A$ molto vicina a $\Iin = 1.5 \A$. In Fig.~\ref{ScreenSerie} si vede che la regolazione di $\mathrm{V_{out}}$ su ShuntLDO1 non subisce ripercussioni, a differenza della tensione regolata $\mathrm{V_{out}}$ di ShuntLDO2 che risente della consistente variazione di carico in modo massiccio.
-\begin{figure}[h!]
+\begin{figure}[!h]
 \centering
-\includegraphics[scale=.32]{Immagini/ScreenSerie}
+\includegraphics[width=0.85\textwidth]{Immagini/ScreenSerie}
 \caption{Andamento temporale di alcune tensioni rilevanti nella serie di due ShuntLDO in corrispondenza dell'impulso di corrente $\mathrm{I_{mosfet}} = 1.2 \A$ (in questo caso sono mostrati sia i fronti di salita che di discesa) applicato a ShuntLDO2: $\mathrm{V_{in}}$ di ShuntLDO1 (giallo); $\mathrm{V_{out}}$ di ShuntLDO1 (blu); $\mathrm{V_{out}}$ dello ShuntLDO2 (verde).}
 \label{ScreenSerie}
 \end{figure}

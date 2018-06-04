@@ -12,20 +12,20 @@ Questo prototipo costituisce una pietra miliare molto importante per il progetto
 
 \begin{figure}
 \centering
-\includegraphics[scale=.4]{Immagini/RD53ALayout}
+\includegraphics[width=0.75\textwidth]{Immagini/RD53ALayout}
 \caption{La geometria reale di RD53A: il chip è largo $20\mm \times 11.8\mm$ con una pixel matrix di $400\times 192$ pixel corrispondenti ad un'area attiva di $20\mm \times 9.6\mm$.}
 \label{RD53ALayout}
 \end{figure}
 \begin{figure}
 \centering
-\includegraphics[scale=.5]{Immagini/AnalogIsland}
+\includegraphics[width=0.75\textwidth]{Immagini/AnalogIsland}
 \caption{Disegno ricavato dalle maschere di RD53A dove sono visibili le `isole analogiche' dei \textit{front end} della `pixel matrix' circondate dal `mare' della circuiteria digitale.}
 \label{AnalogIsland}
 \end{figure} 
 Facendo riferimento alla Fig.~\ref{RD53ALayout}, l'area del chip che sarà saldata col sensore tramite bump bonding, detta anche {\em pixel matrix}, è posta nella parte alta ed è organizzata in una matrice di $192\times400$ pixel di area $50\um \times 50 \um$ per un'area totale di $20\mm \times 9.6\mm$.
 Al di sopra di questa è presente una fila di piazzole a scopo diagnostico che sarà eliminata nella versione finale.
 
-La matrice di pixel è organizzata in \textit{cores} di 8$\times$8 pixel, all'interno di ciascuno i 64 circuiti di preamplificzione (front end (FE)) sono disposti in regioni di 4, chiamati {\em isole analogiche}, come mostrato in Fig.~\ref{AnalogIsland}. 
+La matrice di pixel è organizzata in \textit{cores} di 8$\times$8 pixel, all'interno di ciascuno i 64 circuiti di preamplificazione (front end) sono disposti in regioni di 4, chiamati {\em isole analogiche}, come mostrato in Fig.~\ref{AnalogIsland}. 
 Dato la miniaturizzazione necessaria, l'area del ROC deve essere completamente sfruttata e, per questo, le isole analogiche sono circondate da un `mare' di circuiteria digitale. 
 
 
@@ -59,7 +59,7 @@ In comune ai tre FE, invece, abbiamo la rete di polarizzazione per il sensore ed
 \begin{figure}
 \centering
 \includegraphics[scale=.3]{Immagini/FrontEnd}
-\caption{Disposizione dei tre differenti \textit{front end} rispetto alla matrice di pixel.}
+\caption{Disposizione dei tre differenti front end rispetto alla matrice di pixel.}
 \label{FrontEnd}
 \end{figure}
 
@@ -189,7 +189,7 @@ La tensione di riferimento del bandgap è configurabile a passi di circa $1\mV$ 
 Un esempio è quello i Fig.~\ref{bandgap_trimming}, in cui sono riportati, per differenti chip, gli andamenti misurati di $\mathrm{V_{ref}}$ al variare del valore impostato sul registro di configurazione. Per valori troppo piccoli di $\mathrm{V_{ref}}$ (che definiscono VDDA e VDDD) il ROC smette di funzionare e per questo motivo la parte sinistra del grafico non \`e popolata.
 \begin{figure}
 \centering
-\includegraphics[scale=.5]{Immagini/bandgap_trimming}
+\includegraphics[width=0.85\textwidth]{Immagini/bandgap_trimming}
 \caption{Andamento della tensione $\mathrm{V_{ref}}$ generata internamente, per due diversi chip (per un totale di quattro bandgap), al variare del parametro di configurazione; il valore di default è 16. In due casi \`e riportata la retta di fit.}
 \label{bandgap_trimming}
 \end{figure}
@@ -199,7 +199,7 @@ Un esempio è quello i Fig.~\ref{bandgap_trimming}, in cui sono riportati, per d
 Analogamente a quanto visto per gli ShuntLDO, che vengono collaudati usando una scheda di test, anche per il chip RD53A è necessaria una scheda di test detta \textit{Single Chip Card} (SCC) nella versione che ospita un solo ROC, visibile in~Fig.~\ref{fig:RD53onSCC}.
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.4\textwidth]{Immagini/RD53onSCC.jpg}
+\includegraphics[width=0.5\textwidth]{Immagini/RD53onSCC.jpg}
 \caption{Il prototipo di RD53A del gruppo di CMS di Firenze montato sulla sua SCC.}
 \label{fig:RD53onSCC}
 \end{figure}
@@ -255,7 +255,7 @@ In tabella~\ref{tab:legenda} è riportata la descrizione delle abbreviazioni uti
 \begin{table}
 \begin{center}
 %\noindent\setlength\tabcolsep{4pt}%
-\begin{tabular}{c|l}
+\begin{tabular}{l|l}
 %\begin{tabularx}{\linewidth}{c|r}
 %\multicolumn{2}{|c|}{Abbreviazione} & \multicolumn{1}{c|}{\multirow{2}{*}{Descrizione}}\\ 
  Abbreviazione & Descrizione\\ \hline
@@ -439,14 +439,14 @@ Infatti, i $\mathrm{V_{+A5}}$ esterni permettono di evitare le problematiche pre
 %\end{tabular}
 %\end{center}  
 
-\subsubsection{Alimentazione in parallelo, rampa di corrente crescente, tensioni di riferimento interne} 
-
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{Immagini/PUI}
 \caption{Grafici tensione-corrente ottenuti con i due regolatori in parallelo e variando la corrente totale, riportata sull'asse delle ascisse, da $0\A$ a $3\A$.}
 \label{PUI}
 \end{figure}
+\subsubsection{Alimentazione in parallelo, rampa di corrente crescente, tensioni di riferimento interne} 
+
 Come detto in precedenza, in RD53A è stata lasciata la possibilità di tenere separate le alimentazioni dei due ShuntLDO, mentre nella versione finale i due ShuntLDO si troveranno in parallelo. 
 In questa configurazione gli andamenti delle tensioni in ingresso ($\mathrm{V_{INA}}$ e $\mathrm{V_{IND}}$) e di quelle in uscita ($\mathrm{V_{outA}}$ e $\mathrm{V_{outD}}$) risultano migliori, nonostante che $\mathrm{V_{ofsA}}$ e $\mathrm{V_{ofsD}}$ raggiungano il valore nominale per differenti valori di $\mathrm{I_{inA}}$ e $\mathrm{I_{inD}}$, come si può vedere in Fig.~\ref{PUI}.
 Questo miglioramento nel comportamento può essere attribuito all'utilizzo dell'alimentazione in parallelo dei due ShuntLDO, poiché la corrente totale a disposizione si può suddividere in modo ottimale tra i due ambiti, come effettivamente accade. Questo sbilanciamento nella ripartizione delle correnti si verifica nell'intervallo di correnti in cui $\mathrm{V_{+A5A}}$ \`e gi\`a al valore nominale mentre $\mathrm{V_{+A5D}}$ non lo \`e ancora, come risulta evidente se confrontiamo la Fig.~\ref{CurrentSharing} con gli andamenti di $\mathrm{V_{+A5A}}$ e $\mathrm{V_{+A5D}}$ nella~Fig.~\ref{PUI}.
@@ -469,7 +469,7 @@ Questo miglioramento nel comportamento può essere attribuito all'utilizzo dell'
 \caption{Misura della suddivisione della corrente tra i due regolatori posti in parallelo; in ascissa è riportata la corrente totale fornita al parallelo.}%meeting del 16 aprile
 \label{CurrentSharing}
 \end{figure}
-Il comportamento descritto è simile a quanto riportato in letteratura~\cite{SLDO} nel caso in cui i due ShuntLDO siano configurati per fornire due tensioni $\mathrm{V_{outA}}$ e $\mathrm{V_{outB}}$ diverse. In particolare, si osserva uno sbilanciamento di corrente quando solo uno degli ShuntLDO \`e in regime di regolazione. Sbilanciamento che scompare quando la fase di accensione \`e completata per entrambi.
+Il comportamento descritto è simile a quanto riportato in letteratura nel caso in cui i due ShuntLDO siano configurati per fornire due tensioni $\mathrm{V_{outA}}$ e $\mathrm{V_{outB}}$ diverse~\cite{SLDO}. In particolare, si osserva uno sbilanciamento di corrente quando solo uno degli ShuntLDO \`e in regime di regolazione. Sbilanciamento che scompare quando la fase di accensione \`e completata per entrambi.
  
 %, la distribuzione delle correnti torna ad essere bilanciata. 
 %Questo comportamento è noto e compreso: il meccanismo che lo innesca risiede nell'offset dell'amplificatore A2, utilizzato nel \textit{current mirror}. 
@@ -593,9 +593,9 @@ Le misure fino ad ora riportate relative allo studio dei circuiti di ShuntLDO in
 \caption{Illustrazione del metodo di misura delle fluttuazioni di $\VDDD$ per variazioni repentine del carico. In alto sono visibili, in funzione del tempo, le correnti analogiche e digitali. Quest'ultima, modificando la frazione di canali del ROC sui quali il clock \`e abilitato, cambia velocemente tra $300\mA$ e $500\mA$. In basso i grafici riportano il corrispondente andamento di $\VDDD$ misurato all'oscilloscopio confrontato con il profilo simulato.}
 \label{LoadTransientScope}
 \end{figure}
-\begin{figure}[hb]
+\begin{figure}[!b]
 \centering
-\includegraphics[width=0.65\textwidth]{Immagini/LoadTransientDominik}
+\includegraphics[width=0.50\textwidth]{Immagini/LoadTransientDominik}
 \caption{Valori di picco della variazione della tensione $\VDDD$ in funzione del margine percentuale di corrente rispetto a $1\A$ nel caso in cui il carico su $\VDDD$ sia modificato in modo repentino tra $300\mA$ a $500\mA$. Il consumo della parte analogica \`e costante e calibrato su $\sim 0.5\A$. 
 }
 \label{LoadTransient}
@@ -666,7 +666,7 @@ Gli studi effettuati nell'ambito di questo lavoro di tesi si basano sul sistema 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{Immagini/ScanAnalogLinear}
-\caption{Risultato del test \textbf{scan$\_$analog} sulla \textit{front end} lineare, tutti i canali di lettura hanno risposto il 100$\%$ delle volte.}
+\caption{Risultato del test \textbf{scan$\_$analog} sulla front end lineare, tutti i canali di lettura hanno risposto il 100$\%$ delle volte.}
 \label{ScanAnalogLinear}
 \end{figure}
 
@@ -696,13 +696,13 @@ La distribuzione delle soglie, con sovrapposto il fit di una gaussiana, e la map
 \centering
 \includegraphics[width=0.4\textwidth]{Immagini/Threshold}
 \hfill
-\includegraphics[width=0.58\textwidth]{Immagini/NoiseMap}
+\includegraphics[width=0.59\textwidth]{Immagini/NoiseMap}
 \caption{Distribuzione delle soglie ottenute dalle S-curves (sinistra) e mappa del livello di rumore pixel per pixel per il FE lineare (destra).}
 \label{Threshold}
 \label{NoiseMap}
 \end{figure}
 
-\item[meta$\_$tune$\_$threshold$\_$simple] La scansione fine delle soglie \`e una procedura che permette di equalizzare le soglie della matrice di pixel calibrando, canale per canale, il DAC a 4 bit concepito per questo scopo. Questo introduce una regolazione fine della soglia rispetto alla soglia globale di tutto il ROC.
+%\item[meta$\_$tune$\_$threshold$\_$simple] La scansione fine delle soglie \`e una procedura che permette di equalizzare le soglie della matrice di pixel calibrando, canale per canale, il DAC a 4 bit concepito per questo scopo. Questo introduce una regolazione fine della soglia rispetto alla soglia globale di tutto il ROC.
 \end{description}
 
 Grazie alle procedure sopra descritte, anche in assenza di un sensore connesso al chip, \`e possibile verificare separatamente le funzionalità della parte analogica e digitale del ROC; analizzare la risposta dei tre front end ad un segnale di calibrazione; ricavare le distribuzioni delle soglie e del rumore e ottimizzare localmente le soglie.
@@ -786,7 +786,7 @@ Al fine di verificare eventuali correlazioni tra l'entità del rumore e l'utiliz
 % --------------------------------- QUI
 %
 
-\begin{figure}[h]
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.49\textwidth]{Immagini/NoiseSingle}
 \hfill
