@@ -6,13 +6,13 @@ Lo sviluppo di un sistema di alimentazione seriale e del circuito di alimentazio
 Questo prototipo costituisce una pietra miliare molto importante per il progetto dei rivelatori a pixel per HL-LHC \`e sar\`a utilizzato non solo per validare le scelte strettamente relative al ROC stesso (resistenza alla radiazione e prestazioni rispetto ai requisiti di HL-LHC), ma anche per finalizzare lo sviluppo dei sensori e del resto dell'apparato.
 %, e quindi la tolleranza al danneggiamento da radiazioni, soglie di lavoro basse e stabili nel tempo, capacità di gestire un alto flusso di particelle incidenti e l'utilizzo di trigger veloci.
 
-\section{Organizzazione di RD53A, alimentazione e Front End}
+\section[Organizzazione di RD53A, alimentazione e Front End]{Organizzazione di RD53A, alimentazione e\\ Front End}
 \label{Organizzazionechip}
 
 
 \begin{figure}
 \centering
-\includegraphics[width=0.75\textwidth]{Immagini/RD53ALayout}
+\includegraphics[width=0.8\textwidth]{Immagini/RD53ALayout}
 \caption{La geometria reale di RD53A: il ROC è largo $20\mm \times 11.8\mm$ con una pixel matrix di $400\times 192$ pixel corrispondenti ad un'area attiva di $20\mm \times 9.6\mm$.}
 \label{RD53ALayout}
 \end{figure}
@@ -51,7 +51,7 @@ Il FE Sincrono sfrutta un sistema di \textit{auto-zeroing} della linea di base, 
 Il FE Lineare utilizza un amplificatore lineare all'ingresso del comparatore, che confronta il segnale con la soglia impostata. 
 Il FE Differenziale ha uno stadio di guadagno differenziale all'ingresso del discriminatore. % e sbilanciando i due canali implementa la soglia.
 
-In comune ai tre FE, invece, abbiamo la rete di polarizzazione per il sensore ed il circuito per iniettare segnali di calibrazione. Indipendentemente dall'implementazione ciascun canale di lettura \`e caratterizzato da una certa soglia, normalmente espressa in carica equivalente, oltre la quale il segnale di particella viene digitalizzato e letto. La soglia deve essere accuratamente calibrata: se \`e troppo alta si possono avere inefficienze; se troppo bassa una fluttuazione di rumore pu\`o essere confusa con un segnale di particella.
+In comune ai tre FE, invece, abbiamo la rete di polarizzazione per il sensore ed il circuito per iniettare segnali di calibrazione. Indipendentemente dall'implementazio\-ne ciascun canale di lettura \`e caratterizzato da una certa soglia, normalmente espressa in carica equivalente, oltre la quale il segnale di particella viene digitalizzato e letto. La soglia deve essere accuratamente calibrata: se \`e troppo alta si possono avere inefficienze; se troppo bassa una fluttuazione di rumore pu\`o essere confusa con un segnale di particella.
 
 %Questi ultimi due permettono un miglior confronto fra le prestazioni dei FE.
 %Inoltre, i tre FE condividono l'area del sensore e, dato che la matrice è larga 400 pixel ed è suddivisa in core da 8 $\times$ 8 pixel, non è possibile avere una egual area per i tre, ma due avranno 17 core per riga ed uno solo 16.
@@ -189,7 +189,7 @@ La tensione di riferimento del bandgap è configurabile a passi di circa $1\mV$ 
 Un esempio è quello di Fig.~\ref{bandgap_trimming}, in cui sono riportati, per differenti ROC, gli andamenti misurati di $\mathrm{V_{ref}}$ al variare del valore impostato sul registro di configurazione. Per valori troppo piccoli di $\mathrm{V_{ref}}$ (che definiscono VDDA e VDDD) il ROC smette di funzionare e per questo motivo la parte sinistra del grafico non \`e popolata.
 \begin{figure}
 \centering
-\includegraphics[width=0.85\textwidth]{Immagini/bandgap_trimming}
+\includegraphics[width=0.9\textwidth]{Immagini/bandgap_trimming}
 \caption{Andamento della tensione $\mathrm{V_{ref}}$ generata internamente, per due diversi ROC (per un totale di quattro bandgap), al variare del parametro di configurazione; il valore di default è 16. In due casi \`e riportata la retta di fit.}
 \label{bandgap_trimming}
 \end{figure}
@@ -220,7 +220,7 @@ Inoltre, è possibile mantenere separate, a livello di alimentazione, la parte d
 \item[Alimentazione diretta] Lo ShuntLDO viene completamente escluso e il ROC è alimentato direttamente da un generatore di tensione esterno. L'alimentazione diretta deve essere utilizzata con particolare attenzione per evitare danneggiamenti del ROC. La presenza del regolatore LDO anche se privo di shunt, assicura che sbalzi di tensione all'ingresso dell'alimentazione non siano trasmessi al chip. Il regolatore, inoltre, tollera tensioni fino a $2 \V$, mentre RD53A già sopra $\sim 1.35\V$ rischia di danneggiarsi. L'esclusione di questa sicurezza con la scelta di utilizzare un'alimentazione diretta è, perciò, sconsigliata. 
 \end{description}
 
-\begin{figure}[h]
+\begin{figure}[t]
 \centering
 \includegraphics[width=0.30\textwidth]{Immagini/SLDOmode}
 \hfill
@@ -243,6 +243,7 @@ Utilizzando la SCC in configurazione ShuntLDO, raffreddando il ROC in modo passi
 Questo studio è stato effettuato con diverse configurazioni risultanti dalla combinazione di tre aspetti operativi:
 %Nel far questo sono state scelte diverse configurazioni, le scelte principali possono essere riassunte in tre punti:
 \begin{itemize}
+\setlength\itemsep{0.5em}
   \item alimentazione dei due regolatori con ShuntLDO: indipendenti o in parallelo fra loro;
   \item rampa di corrente crescente o decrescente;
   \item tensioni di riferimento $\mathrm{V_{ref}}$ e $\mathrm{V_{+A5}}$: generate internamente o fornite dall'esterno.
@@ -252,7 +253,7 @@ Questo studio è stato effettuato con diverse configurazioni risultanti dalla co
 \end{itemize}
 
 In tabella~\ref{tab:legenda} è riportata la descrizione delle abbreviazioni utilizzate per le legende dei grafici.
-\begin{table}
+\begin{table}[t]
 \begin{center}
 %\noindent\setlength\tabcolsep{4pt}%
 \begin{tabular}{l|l}
@@ -280,7 +281,7 @@ $\mathrm{V_{ref \_ m \_ D}}$  & $\mathrm{V_{refD}}$ \\
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, tensioni di riferimento interne}
 \label{sec:iui}
 
-\begin{figure}
+\begin{figure}[b!]
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUI2}
 \caption{Grafici tensione-corrente ottenuti tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $0\A$ a $1.5\A$.}%allungare descrivendo anche l'undershoot
@@ -338,15 +339,14 @@ Le cause del diverso comportamento di $\mathrm{V_{+A5A}}$ e $\mathrm{V_{+A5D}}$ 
 %$\mathrm{V_{ofs}}$ & 0.845 V & 0.900 V\\ \hline
 %\end{tabular}
 %\end{center}
-
-\subsubsection{Alimentazioni indipendenti, rampa di corrente decrescente, tensioni di riferimento interne}
-
-\begin{figure}
+\begin{figure}[!hb]
 \centering
 \includegraphics[width=\textwidth]{Immagini/IDI2}
 \caption{Grafici tensione-corrente ottenuti tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $1.5\A$ a $0\A$.}
 \label{IDI}
 \end{figure}
+
+\subsubsection{Alimentazioni indipendenti, rampa di corrente decrescente, tensioni di riferimento interne}
 
 Per verificare che i comportamenti anomali descritti nella sezione precedente siano effettivamente legati alla sequenza interna di accensione, si sono ripetute le misure effettuando la scansione in corrente in senso inverso partendo da $\mathrm{I_{in}}=1.5\A$ per poi scendere fino a $0\A$. Dagli andamenti mostrati in Fig.~\ref{IDI}, si può notare come siano scomparse le fluttuazioni presenti nella precedente scansione, in accordo con l'ipotesi che queste siano dovute alla parziale attivazione del ROC. % che risulta compiuta solo per valori pi\`u elevati di $\mathrm{I_{in}}$. 
 
@@ -370,7 +370,7 @@ Partendo da valori di corrente elevati e, dunque, da tensioni in ingresso ben al
 
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, $\mathrm{V_{ref}}$ esterna} 
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUEVref2}
 \caption{Grafici tensione-corrente ottenuto tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $0\A$ a $1.5\A$, utilizzando un riferimento esterno $\mathrm{V_{ref}}=0.550 \V$ sia per la parte analogica che digitale.}
@@ -399,7 +399,7 @@ Il comportamento della parte digitale è analogo a quello ottenuto di cui in Fig
 
 \subsubsection{Alimentazioni indipendenti, rampa di corrente crescente, $\mathrm{V_{+A5}}$ esterna} 
 
-\begin{figure}
+\begin{figure}[t]
 \centering
 \includegraphics[width=\textwidth]{Immagini/IUEViofs2}
 \caption{Grafici tensione-corrente ottenuto tenendo i due regolatori separati e variando le rispettive correnti $\mathrm{I_{in}}$ da $0\A$ a $1.5\A$, utilizzando un riferimento esterno $\mathrm{V_{+A5}}=0.400\V$ sia per la parte analogica che digitale.}
@@ -439,7 +439,7 @@ Infatti, i $\mathrm{V_{+A5}}$ esterni permettono di evitare le problematiche pre
 %\end{tabular}
 %\end{center}  
 
-\begin{figure}[h]
+\begin{figure}[b]
 \centering
 \includegraphics[width=\textwidth]{Immagini/PUI}
 \caption{Grafici tensione-corrente ottenuti con i due regolatori in parallelo e variando la corrente totale, riportata sull'asse delle ascisse, da $0\A$ a $3\A$.}
@@ -585,7 +585,7 @@ La tensione $\VDDA$ scende gradualmente fino a raggiungere una caduta di $\sim 1
 
 %\subsection{}
 
-Come già evidenziato le misure fino ad ora riportate sono da considerarsi stazionarie, in quanto ottenute su tempi scala lunghi in confronto ai tempi di risposta dello ShuntLDO. Di seguito, invece, sono riportati test sul comportamento dello ShuntLDO in corrispondenza di transienti.
+Come già evidenziato le misure fino ad ora riportate sono da considerarsi staziona\-rie, in quanto ottenute su tempi scala lunghi in confronto ai tempi di risposta dello ShuntLDO. Di seguito, invece, sono riportati test sul comportamento dello ShuntLDO in corrispondenza di transienti.
 \begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{Immagini/HeadRoom}
@@ -604,7 +604,7 @@ All'oscilloscopio \`e possibile valutare, in corrispondenza dei transienti, la f
 Il valore di picco della fluttuazione di $\VDDD$ in funzione del margine di corrente fornito rispetto al massimo della corrente richiesta $1\A$, visibile in~Fig.~\ref{LoadTransient}, suggerisce che, per avere un corretto funzionamento della parte di alimentazione del ROC rispetto alle fluttuazioni del carico,  deve essere previsto un margine di sicurezza di circa il $20-25
 \%$ sulla corrente di pilotaggio dello ShuntLDO rispetto al consumo di corrente massimo atteso. 
 
-Una fase in cui le variazioni di corrente sono ovviamente massime \`e quella dell'accensione. Si è quindi proceduto a simulare una accensione veloce dell'alimentazione degli ShuntLDO  di RD53A in configurazione parallelo modificando $\Iin$ da $0\A$ a $2.4\A$ in $25\ms$ con un rampa lineare. Anche in questo caso i due ShuntLDO sono alimentati in parallelo, suddividendosi, quindi, la corrente erogata dal generatore. Come è possibile vedere dai profili temporali di $\VDDA$ e $\VDDD$, in Fig.~\ref{rd-powup-dir6} e Fig.~\ref{rd-powup-dir7} rispettivamente, acquisiti con un oscilloscopio e confrontati con $\Iin$ e $\Vin$, non compaiono oscillazioni o altri comportamenti anomali.
+Una fase in cui le variazioni di corrente sono ovviamente massime \`e quella dell'accensione. Si è quindi proceduto a simulare un'accensione veloce dell'alimenta\-zione degli ShuntLDO  di RD53A in configurazione parallelo modificando $\Iin$ da $0\A$ a $2.4\A$ in $25\ms$ con un rampa lineare. Anche in questo caso i due ShuntLDO sono alimentati in parallelo, suddividendosi, quindi, la corrente erogata dal generatore. Come è possibile vedere dai profili temporali di $\VDDA$ e $\VDDD$, in Fig.~\ref{rd-powup-dir6} e Fig.~\ref{rd-powup-dir7} rispettivamente, acquisiti con un oscilloscopio e confrontati con $\Iin$ e $\Vin$, non compaiono oscillazioni o altri comportamenti anomali.
 La parte digitale e analogica non si attivano nello stesso momento, in particolare $\VDDD$ raggiunge pi\`u tardi la regione di regolazione rispetto a $\VDDA$, in accordo con quanto già osservato nelle misure stazionarie discusse precedentemente.
 
 \begin{figure}
