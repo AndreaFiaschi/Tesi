@@ -5,9 +5,9 @@ La caratterizzazione dello ShuntLDO a $2 \A$ fin qui discussa \`e limitata al ca
 La risposta dinamica dipende da molti fattori tra cui il punto di lavoro scelto per lo ShuntLDO, le scale dei tempi in cui avviene la variazione di carico e l'entità di tale variazione.
 
 Per effettuare queste prove, si è alimentato il circuito tramite un generatore di corrente a $1.5\A$, ponendo la tensione di riferimento a $\mathrm{V_{ref}=0.5 \V}$ per avere una tensione regolata nominale $\VDD=1\V$. %, ci aspettiamo una tensione all'uscita di $1 \V$.
-Sulla scheda di test, per emulare un carico dinamico, è presente un mosfet posto in parallelo al carico statico, $\mathrm{R_{load}}$, come visibile nelle Figure~\ref{Setupscheme} e~\ref{TransientTest}, pilotato tramite un opportuno segnale sul gate che definisce la durata e l'entit\`a dell'impulso di corrente addizionale, $\mathrm{I_{mosfet}}$, che si somma a quella stazionaria che scorre in $\mathrm{R_{load}= 1 \Ohm}$. Il resistore R5, di $0.1 \Ohm$, posto in serie al \textit{drain} del mosfet \`e utilizzato per misurare $\mathrm{I_{mosfet}}$.
+Sulla scheda di test, per emulare un carico dinamico, è presente un mosfet posto in parallelo al carico statico, $\mathrm{R_{load}}$, come visibile nelle Figure~\ref{Setupscheme} e~\ref{TransientTest}, pilotato tramite un opportuno segnale sul gate che definisce la durata e l'entit\`a dell'impulso di corrente addizionale, $\mathrm{I_{mosfet}}$, che si somma a quella stazionaria che scorre in $\mathrm{R_{load}= 1 \Ohm}$. Il resistore R5, di $0.1 \Ohm$, posto in serie al \textit{drain} \`e utilizzato per misurare $\mathrm{I_{mosfet}}$.
 
-Tramite un generatore di segnali connesso al gate del mosfet, si \`e generata una $\mathrm{I_{mosfet}}$ con il profilo temporale di un'onda quadra. L'impulso di carico aggiuntivo ha durata (diversi $\us$) e frequenza (decine di Hz) tali che i transienti consecutivi sono sempre sufficientemente lontani da permettere allo ShuntLDO di raggiungere, ogni volta, lo stato stazionario. In altre parole si sono studiati indipendentemente gli effetti indotti dal fronte di salita e di discesa del carico aggiuntivo, con particolare attenzione alle variazioni in ampiezza di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$, in corrispondenza del transiente di $\mathrm{I_{mosfet}}$, e ai tempi di recupero, in funzione di $\mathrm{I_{mosfet}}$ e con $\mathrm{R_{load}}$ fissata.
+Tramite un generatore di segnali connesso al gate del mosfet, si \`e prodotto una $\mathrm{I_{mosfet}}$ con il profilo temporale di un'onda quadra. L'impulso di carico aggiuntivo ha durata (diversi $\us$) e frequenza (decine di Hz) tali che i transienti consecutivi sono sempre sufficientemente lontani da permettere allo ShuntLDO di raggiungere, ogni volta, lo stato stazionario. In altre parole si sono studiati indipendentemente gli effetti indotti dal fronte di salita e di discesa del carico aggiuntivo, con particolare attenzione alle variazioni in ampiezza di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$, in corrispondenza del transiente di $\mathrm{I_{mosfet}}$, e ai tempi di recupero, in funzione di $\mathrm{I_{mosfet}}$ e con $\mathrm{R_{load}}$ fissata.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=.99\linewidth]{Immagini/SetupScheme}
@@ -15,7 +15,7 @@ Tramite un generatore di segnali connesso al gate del mosfet, si \`e generata un
 \label{Setupscheme}
 \end{figure}
 
-Fin dalle prime misure con l'oscilloscopio si è notato per\`o che l'utilizzo del mosfet come carico dinamico induce contaminazioni sui profili temporali, dovute probabilmente al mosfet stesso pi\`u che al circuito in esame, rendendo difficile l'interpretazione dei risultati.
+Fin dalle prime misure con l'oscilloscopio si è notato per\`o che l'utilizzo del mosfet come carico dinamico induce contaminazioni sui profili temporali, dovute al mosfet stesso pi\`u che al circuito in esame, rendendo difficile l'interpretazione dei risultati.
 \begin{figure}
 \begin{subfigure}{.5\textwidth}
   \centering
@@ -70,7 +70,7 @@ Inoltre, il fronte di salita della corrente (ovvero della differenza di potenzia
 \begin{figure}
 \centering
 \includegraphics[width=\linewidth]{Immagini/RiseTime}
-\caption{Andamento di $\mathrm{V_{out}}$ e delle tensioni ai capi di R5 per impulsi di corrente addizionale con diverso tempo di commutazione: $40\ns$ (a sinistra in alto), $200\ns$ (in basso a destra). Tutte le osservabili migliorano nel comportamento con impulsi pi\`u lenti.}
+\caption{Andamento di $\mathrm{V_{out}}$ e delle tensioni ai capi di R5 per impulsi di corrente addizionale con diverso tempo di commutazione: $40\ns$ (in alto a sinistra), $200\ns$ (in basso a destra). Tutte le osservabili migliorano nel comportamento con impulsi pi\`u lenti.}
 \label{RiseTime}
 \end{figure}
 
@@ -83,13 +83,13 @@ La Fig.~\ref{RiseTime} mostra il miglioramento fra la configurazione con i tempi
 \subsubsection{Caratterizzazione con variazioni di carico veloci di un singolo ShuntLDO}
 
 Di seguito sono riportate le misure di caratterizzazione della tensione di ingresso, $\mathrm{V_{in}}$, e di uscita, $\mathrm{V_{out}}$, per tre differenti valori di $\mathrm{R_{load}}$ e al variare dell'entit\`a dell'impulso di $\mathrm{I_{mosfet}}$.
-I valori di $\mathrm{R_{load}}$ scelti sono di $1\Ohm$, $2.1\Ohm$ e $4\Ohm$ e, dato che $\mathrm{V_{out}=1\V}$, corrispondono rispettivamente a $1\A$, $0.475\A$ e $0.250\A$ in termini di correnti statiche $\mathrm{I_{load}}$,.
+I valori di $\mathrm{R_{load}}$ scelti sono di $1\Ohm$, $2.1\Ohm$ e $4\Ohm$ e, dato che $\mathrm{V_{out}=1\V}$, corrispondono rispettivamente a $1\A$, $0.475\A$ e $0.250\A$ in termini di correnti statiche $\mathrm{I_{load}}$.
 %Oltre alla misura delle variazioni in ampiezza di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$ sono stati misurati anche i tempi di  recupero delle stesse.
 
-Lo ShuntLDO è alimentato in corrente con $\Iin = 1.5\A$. Nel momento in cui $\mathrm{I_{load}+I_{mosfet}}$ raggiunge valori vicini o addirittura superiori  a $\Iin$, si ha un crollo di $\Vin$ e di $\mathrm{V_{out}}$ poiché si sta chiedendo allo ShuntLDO di fornire una corrente superiore a quella a sua disposizione.
+Lo ShuntLDO è alimentato in corrente con $\Iin = 1.5\A$. Nel momento in cui $\mathrm{I_{load}+I_{mosfet}}$ raggiunge valori vicini o addirittura superiori  a $\Iin$, si ha un crollo di $\Vin$ e  $\mathrm{V_{out}}$, questo perché si sta chiedendo allo ShuntLDO di fornire una corrente superiore a quella a sua disposizione.
 Per ciascun valore di $\mathrm{R_{load}}$, dunque, è stata fatta variare la corrente assorbita dal mosfet $\mathrm{I_{mosfet}}$ fino ad arrivare a valori critici misurando le variazioni di $\mathrm{V_{out}}$ e $\mathrm{V_{in}}$. 
 
-Le misure eseguite prendono evidentemente in considerazione anche situazioni in cui la variazione di corrente su $\VDD$ supera di molto il $20-25\%$ che corrisponde alla stima delle  variazione massime di carico che devono essere gestite dallo ShuntLDO durante la normale attivit\`a del ROC~\cite{saramarconi}. Le misure in cui la variazione del carico è il doppio del valore statico possono per\`o aver luogo al momento dell'accensione del ROC. %, le cui variazioni di consumo in regime di lavoro, di norma, non superano i 500 mA.(controllare) 
+Le misure eseguite prendono evidentemente in considerazione anche situazioni in cui la variazione di corrente su $\VDD$ supera di molto il $20-25\%$ che corrisponde alla stima delle  variazione massime di carico che devono essere gestite dallo ShuntLDO durante la normale attivit\`a del ROC~\cite{saramarconi}. Le misure in cui la variazione del carico è il doppio del valore statico possono per\`o aver luogo al momento dell'accensione del ROC.
 
 Come detto in precedenza, gli impulsi utilizzati presentano una durata che consente di differenziare tra gli effetti dovuti al fronte di salita e quelli prodotti dal fronte di discesa. 
 %Facendo riferimento alla Fig.~\ref{VoutUnd}, si possono vedere, in valore assoluto,
@@ -101,7 +101,7 @@ L'entit\`a della riduzione di $\VDD$ \`e visibile in~Fig.~\ref{VoutUnd} per i tr
 \caption{Riduzione di $\mathrm{V_{out}}$ in corrispondenza del fronte di salita di $\mathrm{I_{mosfet}}$ in funzione di $\mathrm{I_{tot} = I_{load}+I_{mosfet}}$ (a sinistra) e di $\mathrm{I_{mosfet}}$ (a destra) per tre valori del carico statico: $1\Ohm$-$1\A$ (blu), $2.1\Ohm$-$0.475\A$ (rosso) e $4\Ohm$-$0.250\A$ (verde).}
 \label{VoutUnd}
 \end{figure}
-Il grafico a destra mostra una caratteristica importante del circuito di ShuntLDO, ossia che la variazione di $\mathrm{V_{out}}$ dovuta a variazioni del carico, in questo caso l'improvvisa ``richiesta'' di corrente da parte del mosfet pilotato dall'impulsatore, dipende solo da quest'ultima e non anche dall'entit\`a del carico statico a cui si va ad aggiungere. Infatti le tre curve riportate sono essenzialmente sovrapposte tenendo conto delle incertezze sulla misura.
+Il grafico a destra mostra una caratteristica importante del circuito di ShuntLDO, ossia che la variazione di $\mathrm{V_{out}}$ dovuta a fluttuazioni del carico, in questo caso l'improvvisa ``richiesta'' di corrente da parte del mosfet pilotato dall'impulsatore, dipende solo da quest'ultima e non anche dall'entit\`a del carico statico a cui si va ad aggiungere. Infatti le tre curve riportate sono essenzialmente sovrapposte tenendo conto delle incertezze sulla misura.
 Si osserva inoltre che, nell'ambito di variazioni di corrente realistiche per il normale funzionamento del ROC, le variazioni di $\mathrm{V_{out}}$ sono relativamente piccole e assolutamente entro le specifiche richieste. Ad esempio, con $\mathrm{I_{mosfet}= 0.4\A}$, $\mathrm{\Delta V_{out} \simeq 20\mV}$.
 
 \begin{figure}
@@ -131,7 +131,7 @@ Uno studio analogo \`e stato effettuato per valutare come le variazioni di caric
 \end{figure}
 In entrambi i casi la variazione della tensione in ingresso dipende sia dalla variazione di corrente $\mathrm{I_{mosfet}}$ che dalla corrente stazionaria $\mathrm{I_{load}}$. 
 Si è osservato inoltre che, per valori elevati di $\mathrm{I_{mosfet}}$, la tensione in ingresso inizia ad oscillare, con periodi di qualche $\mu$s.
-Questo comportamento è dovuto al generatore di corrente utilizzato per questi test che non \`e altro che un alimentatore standard da banco in cui la corrente costante è ottenuta utilizzando la limitazione in corrente di cui \`e dotato. Nel momento in cui si ha una variazione di carico molto veloce, che provoca un abbassamento di $\mathrm{V_{out}}$, si ha una piccola ripercussione anche su $\mathrm{V_{in}}$ dello stesso segno a cui il generatore, per mantenere $\mathrm{I_{in}}$ costante, reagsice abbassando la tensione ai suoi terminali di uscita ma con tempi più lunghi rispetto a quelli con cui lo ShuntLDO riesce a riequilibrare $\mathrm{V_{out}}$.
+Questo comportamento è dovuto al generatore di corrente utilizzato per questi test che non \`e altro che un alimentatore standard da banco in cui la corrente costante è ottenuta utilizzando la limitazione in corrente di cui \`e dotato. Nel momento in cui si ha una variazione di carico molto veloce, che provoca un abbassamento di $\mathrm{V_{out}}$, si ha una piccola ripercussione anche su $\mathrm{V_{in}}$ dello stesso segno a cui il generatore, per mantenere $\mathrm{I_{in}}$ costante, reagisce abbassando la tensione ai suoi terminali di uscita ma con tempi più lunghi rispetto a quelli con cui lo ShuntLDO riesce a riequilibrare $\mathrm{V_{out}}$.
 Il comportamento oscillatorio di $\mathrm{V_{in}}$, che compare quando $\mathrm{I_{tot}}$ è intorno al valore massimo, $\mathrm{I_{in}}$, ha permesso di constatare comunque come le fluttuazioni della tensione in ingresso non influiscano sulla tensione $\mathrm{V_{out}}$ regolata dallo ShuntLDO.
 
 Pi\`u in generale, come si vede, ad esempio, in Fig.~\ref{DipVoutVin}, i tempi di recupero di $\mathrm{V_{in}}$ e $\mathrm{V_{out}}$ in seguito alla variazione di carico differiscono notevolmente: il primo è dell'ordine dei $\us$, e si \`e trovato che questo valore dipende dall'entit\`a di $\mathrm{I_{mosfet}}$; il secondo, più veloce, ha durata di circa $300\ns$ indipendentemente dal valore di $\mathrm{I_{mosfet}}$. Il comportamento di $\mathrm{V_{in}}$, a monte del circuito di ShuntLDO, è imputabile alla velocità con cui il generatore esterno reagisce alle sollecitazioni come sopra discusso. Il comportamento di $\mathrm{V_{out}}$, invece, dimostra la velocità di recupero dello ShuntLDO stesso, caratteristica fondamentale del suo funzionamento che è confortato dalle misure.
@@ -144,7 +144,7 @@ Pi\`u in generale, come si vede, ad esempio, in Fig.~\ref{DipVoutVin}, i tempi d
 \end{figure}
 
 
-%Questo può essere visto utilizzando l'oscilloscopio: in Fig.~\ref{DipVoutVin} è mostrata una schermata dell'oscilloscopio in cui è riportato, in giallo, l'andamento di $\mathrm{V_{in}}$ in funzione del tempo, e, in arancione, la tensione di $\mathrm{V_{out}}$.
+%Questo può essere visto utilizzando l'oscilloscopio: in Fig.\ref{DipVoutVin} è mostrata una schermata dell'oscilloscopio in cui è riportato, in giallo, l'andamento di $\mathrm{V_{in}}$ in funzione del tempo, e, in arancione, la tensione di $\mathrm{V_{out}}$.
 %Si nota che le scale di tempo di recupero sono differenti, i.e. alcuni $\mu$s per $\mathrm{V_{in}}$ e circa $300 \ns$ per $\mathrm{V_{out}}$.
 
 %\begin{figure}
@@ -156,7 +156,7 @@ Pi\`u in generale, come si vede, ad esempio, in Fig.~\ref{DipVoutVin}, i tempi d
 
 \subsubsection{Caratterizzazione con variazioni di carico veloci nella serie di due ShuntLDO}
 
-Eventuali fluttuazioni o oscillazioni di $\Vin$ ai capi di uno ShuntLDO si ripercuotono giocoforza su tutta la catena, alimentata in corrente, di cui lo ShuntLDO fa parte. L'importante, per\`o, \`e che queste non influenzino le tensioni regolate $\mathrm{V_{out}}$.
+Eventuali fluttuazioni o oscillazioni di $\Vin$ ai capi di uno ShuntLDO si ripercuotono inevitabilmente su tutta la catena, alimentata in corrente, di cui lo ShuntLDO fa parte. L'importante, per\`o, \`e che queste non influenzino le tensioni regolate $\mathrm{V_{out}}$.
 Per verificare questo aspetto si è misurata con l'oscilloscopio la tensione regolata $\mathrm{V_{out}}$ di uno ShuntLDO messo in serie ad un secondo sollecitato con una variazione veloce di carico tramite il mosfet pilotato esternamente come già descritto nelle misure precedenti.
 In Fig.~\ref{SLDOserie} sono affiancati uno schema dell'allestimento di test (a sinistra) e la foto dei due ShuntLDO in serie (a destra) ospitati sulle relative schede di test. 
 
