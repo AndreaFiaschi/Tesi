@@ -34,7 +34,7 @@
 
 \vskip 0.5cm
 
- L'alimentazione seriale \`e una tecnologia di frontiera, mai utilizzata prima d'ora in un esperimento di fisica delle alte energie, ma in fase di sviluppo per l'Inner Tracker, il rivelatore a pixel del nuovo Tracciatore di CMS per HL-LHC. A causa delle scelte progettuali dettate dall'elevatissima luminosit\`a istantanea ($\mathrm{5-7.5\cdot 10^{34}cm^{-2}s^{-1}}$) e dalla radiazione (fino a $\mathrm{2.3\cdot10^{16} n_{1\MeV\, eq}/cm^2}$, $1.2\Grad$), il funzionamento dei due miliardi di canali dell'Inner Tracker richiede $50-60\kW$ di potenza che, alimentando i moduli in catene di una decina elementi, possono essere trasportati riducendo drasticamente il materiale passivo associato ai cavi. Questo \`e un aspetto cruciale per il successo del nuovo rivelatore dedicato all'ambizioso programma di HL-LHC, focalizzato sulle misure di precisione nel settore di Higgs e sulle ricerche di nuova fisica oltre il Modello Standard.
+ L'alimentazione seriale \`e una tecnologia di frontiera, mai utilizzata prima d'ora in un esperimento di fisica delle alte energie, ma in fase di sviluppo per l'Inner Tracker, il rivelatore a pixel del nuovo Tracciatore di CMS per HL-LHC. A causa delle scelte progettuali dettate dall'elevatissima luminosit\`a istantanea ($\mathrm{5-7.5\cdot 10^{34}cm^{-2}s^{-1}}$) e dalla radiazione (fino a $\mathrm{2.3\cdot10^{16} n_{1\MeV\, eq}/cm^2}$, $1.2\Grad$), il funzionamento dei due miliardi di canali dell'Inner Tracker richiede $50-60\kW$ di potenza che, alimentando i moduli in catene di una decina di elementi, possono essere trasportati riducendo drasticamente il materiale passivo associato ai cavi. Questo \`e un aspetto cruciale per il successo del nuovo rivelatore dedicato all'ambizioso programma di HL-LHC, focalizzato sulle misure di precisione nel settore di Higgs e sulle ricerche di nuova fisica oltre il Modello Standard.
 
 Il cuore dello schema di alimentazione seriale \`e lo ShuntLDO, uno speciale circuito con un regolatore \textit{Low Drop Out} accoppiato ad uno shunt. 
 
@@ -42,7 +42,7 @@ In questo lavoro di tesi, svolto tra l'INFN, Sezione di Firenze, e il CERN, Gine
 
 Lo ShuntLDO garantisce che il singolo elemento nella catena seriale si presenti come un carico costante essenzialmente resistivo, pi\`u un offset di tensione in serie, indipendentemente dal consumo istantaneo. Gli eventuali picchi di corrente del ROC sono gestiti localmente.
 % meno di un a caratterizzato da un offset $\mathrm{V_{offset}}$ ed una resistenza caratteristica R.
-Grazie a queste peculiarit\`a gli ShuntLDO possono essere posti in parallelo senza controindicazioni, aspetto chiave per un rivelatore di grande scala e complessit\`a in cui i moduli pixel verranno posti in serie ma, su ognuno di questi vi saranno più ROC alimentati in parallelo.
+Grazie a queste peculiarit\`a gli ShuntLDO possono essere posti in parallelo senza controindicazioni, aspetto chiave per un rivelatore di grande scala e complessit\`a in cui i moduli pixel verranno posti in serie ma, su ognuno di questi, vi saranno più ROC alimentati in parallelo.
  
 %Pi\`u ShuntLDO possono eQueste caratteristiche permettono la massima flessibilit\`a permette di mettere più elementi in parallelo.
 %a distribuzione di corrente tra i vari elementi dipenderà dal parallelo delle varie R caratteristiche.
