@@ -567,7 +567,7 @@ $\sim$0.400 A & $\sim$ 0.050 A\\ \hline
 \end{center}
 questo poiché la parte digitale rimane inattiva se non viene fornito alcun clock esterno.
 
-Le misure riportate di seguito sono ottenute variando la corrente di carico su $\VDDA$ e $\VDDD$ di una quantit\`a $\Iload$, ponendo sui nodi $\VDDA$ e $\VDDD$ un source-meter Keithley 2410~\cite{2410} utilizzato come pozzo di corrente. L'alimentazione del ROC \`e stata configurata con i due ShuntLDO in parallelo con una $\Iin$ totale pari a $2\A$, corrispondenti ad $1\A$ per ciascun ShuntLDO. Dati i diversi consumi di partenza tra la parte analogica e digitale, si sono scelti due diversi intervalli di variazione per $\Iload$: tra $0\A$ e $1\A$ per la parte digitale e tra $0\A$ e $0.7\A$ per la parte analogica. Ad ogni incremento del valore del carico sono state misuratele tensioni di ingresso e di uscita  in condizioni stazionarie ovvero su tempi scala lunghi rispetto a quelli di risposta del circuito di ShuntLDO ignorando, quindi, i transienti veloci.
+Le misure riportate di seguito sono ottenute variando la corrente di carico su $\VDDA$ e $\VDDD$ di una quantit\`a $\Iload$, ponendo sui nodi $\VDDA$ e $\VDDD$ un source-meter Keithley 2410~\cite{2410} utilizzato come pozzo di corrente. L'alimentazione del ROC \`e stata configurata con i due ShuntLDO in parallelo con una $\Iin$ totale pari a $2\A$, corrispondenti ad $1\A$ per ciascun ShuntLDO. Dati i diversi consumi di partenza tra la parte analogica e digitale, si sono scelti due diversi intervalli di variazione per $\Iload$: tra $0\A$ e $1\A$ per la parte digitale e tra $0\A$ e $0.7\A$ per la parte analogica. Ad ogni incremento del valore del carico sono state misurate le tensioni di ingresso e di uscita  in condizioni stazionarie ovvero su tempi di scala lunghi rispetto a quelli di risposta del circuito di ShuntLDO ignorando, quindi, i transienti veloci.
 Gli andamenti riportati di seguito vanno perciò interpretati come una deriva del valore della tensione prodotta dal regolatore in funzione dell'entità del carico. 
 
 In Fig.~\ref{LoadVDDD} sono mostrati gli andamenti ottenuti con la variazione di carico applicata alla parte digitale. Come si può vedere, $\VDDD$ diminuisce gradualmente, arrivando ad una variazione di $\sim 18\mV$ per un carico addizionale di $1\A$, mentre $\VDDA$ rimane costante. %pendenza 18 mOhm(ogni 100 mA 1.8 mV
@@ -581,12 +581,11 @@ L'andamento della tensione in ingresso ha invece una pi\`u repentina caduta di $
 \label{LoadVINA}
 \end{figure}
 Con l'aiuto della Fig.~\ref{LoadVDDA}, un discorso analogo si può fare per la parte analogica, tenendo presente che, in questo caso, il valore di consumo di partenza \`e $\simeq 400\mA$.
-La tensione $\VDDA$ scende gradualmente fino a raggiungere $\sim -15\mV$ per un carico addizionale di $\sim 0.70\A$. $\Vin$, invece, diminuisce di $\sim 26\mV$ in corrispondenza del massimo carico aggiuntivo (per $\Iload \gtrsim 0.6\A$) e, anche in questo caso, il consumo totale di corrente supera $1\A$. 
+La tensione $\VDDA$ scende gradualmente fino a raggiungere una caduta di $\sim 15\mV$ per un carico addizionale di $\sim 0.70\A$. $\Vin$, invece, diminuisce di $\sim 26\mV$ in corrispondenza del massimo carico aggiuntivo (per $\Iload \gtrsim 0.6\A$) e, anche in questo caso, il consumo totale di corrente supera $1\A$. 
 
 %\subsection{}
 
 Come già evidenziato le misure fino ad ora riportate sono da considerarsi stazionarie, in quanto ottenute su tempi scala lunghi in confronto ai tempi di risposta dello ShuntLDO. Di seguito, invece, sono riportati test sul comportamento dello ShuntLDO in corrispondenza di transienti.
- 
 \begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{Immagini/HeadRoom}
@@ -600,7 +599,7 @@ Come già evidenziato le misure fino ad ora riportate sono da considerarsi stazi
 }
 \label{LoadTransient}
 \end{figure}
-Una misura di estremo interesse è quella relativa alle fluttuazioni della tensione regolata dallo ShuntLDO per variazioni repentine del carico, Il principio della misura \`e visibile in~Fig.~\ref{LoadTransientScope}. La variazione controllata tra $300\mA$ a $500\mA$ della corrente assorbita dalla sola parte digitale si ottiene modificando la frazione di canali di lettura sui quali il clock \`e abilitato.  Il consumo della parte analogica \`e costante e calibrato su $\sim 0.5\A$ grazie ad un'appropriata scelta dei parametri di funzionamento degli stadi di front end. 
+Una misura di estremo interesse è quella relativa alle fluttuazioni della tensione regolata dallo ShuntLDO per variazioni repentine del carico. Il principio della misura \`e visibile in~Fig.~\ref{LoadTransientScope}. La variazione controllata tra $300\mA$ a $500\mA$ della corrente assorbita dalla sola parte digitale si ottiene modificando la frazione di canali di lettura sui quali il clock \`e abilitato.  Il consumo della parte analogica \`e costante e calibrato su $\sim 0.5\A$ grazie ad un'appropriata scelta dei parametri di funzionamento degli stadi di front end. 
 All'oscilloscopio \`e possibile valutare, in corrispondenza dei transienti, la fluttuazione di tensione a cui \`e soggetta $\VDDD$. Queste fluttuazioni sono completamente compensate nel giro di qualche $\us$ e risultano in buon accordo con la simulazione circuitale, anch'essa riportata in~Fig.~\ref{LoadTransientScope}. 
 Il valore di picco della fluttuazione di $\VDDD$ in funzione del margine di corrente fornito rispetto al massimo della corrente richiesta $1\A$, visibile in~Fig.~\ref{LoadTransient}, suggerisce che, per avere un corretto funzionamento della parte di alimentazione del ROC rispetto alle fluttuazioni del carico,  deve essere previsto un margine di sicurezza di circa il $20-25
 \%$ sulla corrente di pilotaggio dello ShuntLDO rispetto al consumo di corrente massimo atteso. 
@@ -812,7 +811,7 @@ Questo \`e compatibile con la verifica, a pi\`u basso livello, delle fluttuazion
 \end{figure}
 Le fluttuazioni osservabili sono limitate a qualche $\mV$ in ampiezza e, dunque, assolutamente compatibili con i requisiti.
 
-Tutte le misure effettuate nell'ambito di questo lavoro di tesi, pur rappresentando solo una porzione preliminare dei risultati che verranno raccolti in tutta la campagna di validazione del disegno dell'IT nel suo complesso, indicano che l'alimentazione seriale e lo ShuntLDO siano assolutamente conformi ai requisiti richiesti. Gli studi che verranno effettuati nei prossimi mesi, non ultimi quelli relativi alla caratterizzazione del ROC e dello ShuntLDO dopo irraggiamento e pi\`u ampi test di sistema, daranno il via libera definitivo all'approccio dell'alimentazione seriale basata su ShuntLDO per l'IT di CMS a HL-LHC. 
+Tutte le misure effettuate nell'ambito di questo lavoro di tesi, pur rappresentando solo una porzione preliminare dei risultati che verranno raccolti in tutta la campagna di validazione del disegno dell'IT nel suo complesso, indicano che l'alimentazione seriale e lo ShuntLDO sono assolutamente conformi ai requisiti richiesti. Gli studi che verranno effettuati nei prossimi mesi, non ultimi quelli relativi alla caratterizzazione del ROC e dello ShuntLDO dopo irraggiamento e pi\`u ampi test di sistema, daranno il via libera definitivo all'approccio dell'alimentazione seriale basata su ShuntLDO per l'IT di CMS a HL-LHC. 
 
 % Dal confronto tra i risultati ottenuti in configurazione con o senza shunt è emersa chiaramente l'importanza di questo elemento, non solo per evitare che un malfunzionamento del chip renda inutilizzabile tutta la catena, ma anche per rendere stabili le tensioni generate dal regolatore. 
 % In Fig.~\ref{alllin1}, infatti, sono riportate le tensioni $\VDDD$ e $\VDDA$ utilizzando il chip senza Shunt, quindi alimentato in tensione con il solo LDO attivo.
