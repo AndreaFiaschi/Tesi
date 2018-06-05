@@ -557,7 +557,7 @@ In questo caso l'andamento di $\mathrm{R_{eff}}$ e $\mathrm{V_{ofs}}$ al variare
 \label{LoadVIND}
 \end{figure}
 
-Per gli ShuntLDO il carico è rappresentato dal nucleo del ROC che, fino a che si trova nella configurazione di default, ha consumi di corrente tipici pari a:
+Per gli ShuntLDO il carico è rappresentato dal nucleo del ROC che, in configurazione di default, ha consumi di corrente tipici pari a:
 \begin{center}
 \begin{tabular}{cc}
 \hline
@@ -590,7 +590,7 @@ Come già evidenziato le misure fino ad ora riportate sono da considerarsi stazi
 \begin{figure}
 \centering
 \includegraphics[width=0.65\textwidth]{Immagini/HeadRoom}
-\caption{Illustrazione del metodo di misura delle fluttuazioni di $\VDDD$ per variazioni repentine del carico. In alto sono visibili, in funzione del tempo, le correnti analogiche e digitali. Quest'ultima, modificando la frazione di canali del ROC sui quali il clock \`e abilitato, cambia velocemente tra $300\mA$ e $500\mA$. In basso i grafici riportano il corrispondente andamento di $\VDDD$ misurato all'oscilloscopio confrontato con il profilo simulato. In questa misura $\mathrm{I_in =1.3 \A}$.}
+\caption{Illustrazione del metodo di misura delle fluttuazioni di $\VDDD$ per variazioni repentine del carico. In alto sono visibili, in funzione del tempo, le correnti analogiche e digitali. Quest'ultima, modificando la frazione di canali del ROC sui quali il clock \`e abilitato, cambia velocemente tra $300\mA$ e $500\mA$. In basso i grafici riportano il corrispondente andamento di $\VDDD$ misurato all'oscilloscopio confrontato con il profilo simulato. In questa misura $\mathrm{I_{in} =1.3 \A}$.}
 \label{LoadTransientScope}
 \end{figure}
 \begin{figure}[!b]
@@ -705,7 +705,7 @@ La distribuzione delle soglie, con sovrapposto il fit di una gaussiana, e la map
 %\item[meta$\_$tune$\_$threshold$\_$simple] La scansione fine delle soglie \`e una procedura che permette di equalizzare le soglie della matrice di pixel calibrando, canale per canale, il DAC a 4 bit concepito per questo scopo. Questo introduce una regolazione fine della soglia rispetto alla soglia globale di tutto il ROC.
 \end{description}
 
-Grazie alle procedure sopra descritte, anche in assenza di un sensore connesso al chip, \`e possibile verificare separatamente le funzionalità della parte analogica e digitale del ROC; analizzare la risposta dei tre front end ad un segnale di calibrazione; ricavare le distribuzioni delle soglie e del rumore e ottimizzare localmente le soglie.
+Grazie alle procedure sopra descritte, anche in assenza di un sensore connesso al chip, \`e possibile verificare separatamente le funzionalità della parte analogica e digitale del ROC; analizzare la risposta dei tre front end ad un segnale di calibrazione e ricavare le distribuzioni delle soglie e del rumore.
 
 %Queste procedure sono implementate sotto forma di script in python che leggono i parametri dei registri del ROC da un apposito file di configurazione trasmettendoli cos\`i al ROC stesso.
 %Altro file importante è il file contenente i parametri di configurazione dei registri \textbf{default$\_$chip.yaml}, che ogni volta che uno scan viene lanciato vengono scritti nel chip. 
