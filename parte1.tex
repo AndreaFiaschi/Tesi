@@ -51,7 +51,7 @@ Ad esempio, nel caso di un ROC dove servono due tensioni, generalmente diverse, 
 
 Per ovviare a queste criticità è stato sviluppato un regolatore \textit{Low Drop Out}\footnote{Un regolatore è definito Low Drop Out quando \`e minima la differenza tra la tensione in ingresso e quella in uscita a valle della regolazione; in particolare $\mathrm{V_{dropout}=V_{in}-V_{out}\simeq 0.1-0.2 \V}$.} accoppiato ad un circuito di shunt e capace di generare localmente una tensione fissa e di adattarsi dinamicamente all'assorbimento di corrente, denominato {\em ShuntLDO}, con caratteristiche elettriche tali da superare le problematiche a cui si \`e sopra accennato.
 
-Il regolatore ShuntLDO \`e stato inizialmente sviluppato dalla collaborazione ATLAS per un suo utilizzo nell'ambito del progetto {\em Insertable B-Layer} (IBL)~\cite{IBL}. Infatti la famiglia di ROC disegnati per IBL, FE-I3~\cite{ROCFEI3} e FE-I4~\cite{ROCFEI4}, implementano entrambi circuiti ShuntLDO dimensionati per correnti totali di $\sim 0.5\A$. Pur tuttavia IBL non implementa uno schema di alimentazione seriale perch\'e ad esso fu preferito uno schema di alimentazione pi\`u tradizionale.
+Il regolatore ShuntLDO \`e stato inizialmente sviluppato per un suo utilizzo nell'ambito del progetto {\em Insertable B-Layer} (IBL)~\cite{IBL} dalla collaborazione ATLAS. Infatti la famiglia di ROC disegnati per IBL, FE-I3~\cite{ROCFEI3} e FE-I4~\cite{ROCFEI4}, implementano entrambi circuiti ShuntLDO dimensionati per correnti totali di $\sim 0.5\A$. Pur tuttavia IBL non implementa uno schema di alimentazione seriale perch\'e ad esso fu preferito uno schema di alimentazione pi\`u tradizionale.
 
 Il disegno dello ShuntLDO \`e stato poi tradotto in tecnologia CMOS a $65\nm$ dalla collaborazione RD53 per la sfida di HL-LHC: inizialmente in una versione a $0.5\A$, necessaria per valutare il dispositivo in $65\nm$, per poi arrivare alle attuali versioni dimensionate per correnti massime di $2\A$.
 
@@ -97,7 +97,7 @@ La Fig.~\ref{SLDOprinciple} mostra graficamente il funzionamento dello ShuntLDO 
 \label{SLDOprinciple}
 \end{figure}
 
-\subsection{Lo ShuntLDO da $0.5\A$ in 65~nm}
+\subsection{Lo ShuntLDO da 0.5\,A in 65\,nm}
 
  
 \begin{figure}[!htbp]
@@ -139,7 +139,7 @@ Per una corretta funzione di regolazione, lo ShuntLDO da $0.5\A$ necessita di un
 % ma con lo svantaggio di aver minor spazio per le fluttuazioni del carico. 
 % Analogamente resistenze minori avranno l'effetto contrario: tensioni minori con correnti maggiori.
 
-\subsection{Lo ShuntLDO da $2\A$ in 65~nm}
+\subsection{Lo ShuntLDO da 2\,A in 65\,nm}
 \label{ShuntLDO2A}
 
 La successiva versione del prototipo di ShuntLDO a $65\nm$, progettata per correnti nominali di $2\A$, implementa un ulteriore parametro di configurazione della caratteristica IV per una maggiore flessibilit\`a di utilizzo e configurazione. In particolare \`e stata aggiunta una parte circuitale che permette di calibrare la tensione di offset che definisce la corrente di riferimento nella resistenza R3, pari semplicemente a $\mathrm{V_{thM6}}$, nella versione precedente. Nella Fig.~\ref{SLDO2A}, che mostra lo schema elettrico dello ShuntLDO da $2\A$, \`e visibile il complesso aggiunto per questo scopo costituito dal mosfet M7 controllato dall'amplificatore A4.
@@ -319,7 +319,7 @@ Per questo motivo nell'implementazione reale dello ShuntLDO sul ROC RD53A e vers
 
 In questo capitolo viene illustrata e discussa la corposa attivit\`a effettuata nell'ambito di questo lavoro di tesi per la caratterizzazione dell'elemento circuitale ShuntLDO introdotto nel capitolo precedente. Questa attività, svolta presso l'INFN, Sezione di Firenze, per quanto riguarda i prototipi discussi in questo capitolo, \`e di cruciale importanza per acquisire confidenza con l'innovativo approccio dell'alimentazione seriale e con la componentistica che la rende possibile e per verificare che il comportamento in contesti realistici sia compatibile con gli stringenti requisiti imposti dalle condizioni operative di HL-LHC. Questo lavoro sar\`a ulteriormente ampliato nei prossimi mesi includendo i fondamentali test di irraggiamento, qui non contemplati, e le pi\`u ampie prove di sistema su allestimenti prototipali pi\`u estesi.
 
-\section{Lo ShuntLDO da $0.5\A$}
+\section{Lo ShuntLDO da 0.5\,A}
 
 Riportiamo in questo paragrafo alcune misure effettuate sul prototipo di ShuntLDO da $0.5\A$ che hanno permesso di prendere confidenza con i concetti dell'alimentazione seriale e con l'utilizzo dello ShuntLDO.
 %A differenza della versione a $2\A$, in questa non è possibile inserire un valore di offset regolabile al $\mathrm{V_{out}}$.
@@ -360,7 +360,7 @@ Dato che la parte a sinistra del grafico corrisponde alla situazione in cui il r
 \end{array}
 \]
 
-\subsection{Misure di due ShuntLDO in serie con carico da 4 $\mathrm{\Omega}$}
+\subsection{Misure di due ShuntLDO in serie con carico da 4\,$\Ohm$}
 
 %La successiva misura di test che è stata eseguita con questo prototipo di shunt, prima del passaggio alla versione da 2A, è un serie di due SLDO entrambi con un carico resistivo di $\mathrm{4 \Omega}$. In questo caso i due elementi hanno $\mathrm{V_{ref}}$ diversi $\mathrm{V_{ref1}=0.497}$ V e $\mathrm{V_{ref2}=0.553 V}$. 
 %Ciò non rappresenta un problema in quanto il comportamento "esterno " non ne è influenzato.
@@ -410,7 +410,7 @@ Gli effetti visibili, nelle situazioni in cui $\mathrm{I_{mosfet} + I_{load} > I
 %ed andando a variare dinamicamente il carico di uno dei due, verificando se esternamente queste variazioni siano visibili, e quindi se influenzino l'altro elemento della catena seriale. 
 %Dal momento che l'interesse maggiore è per il prototipo a 2 A questo tipo di misura non è stato riportato nel caso dello SLDO da 0.5A, in quanto lo scopo di questa prima parte è quello di introdurre un certo tipo di approccio e  prendere confidenza con gli argomenti trattati.
 
-\section{Lo ShuntLDO da $2\A$}
+\section{Lo ShuntLDO da 2\,A}
 %\begin{figure}
 %\centering
 %\includegraphics[scale=.3]{Immagini/PCB2A}
